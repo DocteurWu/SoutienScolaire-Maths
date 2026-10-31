@@ -1,0 +1,1056 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+\tcbuselibrary{skins,breakable}
+
+\tcolorboxenvironment{proof}{
+  blanker,breakable,left=3mm,
+  before skip=10pt,after skip=10pt,
+  borderline west={1.5mm}{0pt}{gray!40}
+}
+
+\newtcolorbox{correctionbox}{
+  colback=blue!5!white,
+  colframe=blue!60!black,
+  title=\textbf{Correction détaillée},
+  fonttitle=\bfseries,
+  arc=2mm,
+  breakable
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{\textbf{Chapitre 1 : Les Suites Numériques}\\\large Fiche d'exercices d'approfondissement et corrections détaillées (Classe de Première)}
+\author{Soutien Scolaire -- Mathématiques}
+\date{Octobre 2021}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+
+\section{Suites arithmétiques, géométriques et arithmético-géométriques}
+
+% ----------------------------------------------------
+% EXERCICE 1
+% ----------------------------------------------------
+\subsection*{Exercice 1}
+On note $u_n$ le loyer annuel l'année $2021 + n$. En 2021, le loyer annuel est de $5000$~\euro{}. Chaque année, le loyer annuel augmente de $200$~\euro{}.
+\begin{enumerate}
+    \item Exprimer $u_{n+1}$ en fonction de $u_n$.
+    \item Exprimer $u_n$ en fonction de $u_0$ et $n$.
+    \item Calculer la somme des loyers payés de 2021 à 2030.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item L'année $2021$ correspond à $n=0$, donc $u_0 = 5000$. D'une année sur l'autre, le loyer augmente de $200$~\euro{}, d'où :
+    \[
+    \forall n \in \N, \quad u_{n+1} = u_n + 200.
+    \]
+    \item La relation précédente montre que $(u_n)_{n \in \N}$ est une suite arithmétique de premier terme $u_0 = 5000$ et de raison $r = 200$. Par propriété du cours :
+    \[
+    \forall n \in \N, \quad u_n = u_0 + n r = 5000 + 200n.
+    \]
+    \item L'année 2030 correspond à $2021 + 9$, soit $n = 9$. On cherche la somme :
+    \[
+    S = \sum_{k=0}^9 u_k = u_0 + u_1 + \dots + u_9.
+    \]
+    Il y a $9 - 0 + 1 = 10$ termes. La formule de la somme des termes consécutifs d'une suite arithmétique donne :
+    \[
+    S = (\text{nombre de termes}) \times \frac{\text{premier terme} + \text{dernier terme}}{2} = 10 \times \frac{u_0 + u_9}{2}.
+    \]
+    Or $u_9 = 5000 + 200 \times 9 = 5000 + 1800 = 6800$~\euro{}. Ainsi :
+    \[
+    S = 10 \times \frac{5000 + 6800}{2} = 10 \times \frac{11800}{2} = 10 \times 5900 = 59\,000\text{~\euro{}}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 2
+% ----------------------------------------------------
+\subsection*{Exercice 2}
+On note $u_n$ le loyer annuel l'année $2021 + n$. L'augmentation annuelle est fixe. Le loyer est de $5150$~\euro{} en 2024 et de $5900$~\euro{} en 2029.
+
+Calculer la somme des loyers de 2021 à 2030.
+
+\begin{correctionbox}
+L'augmentation étant constante, la suite $(u_n)_{n \in \N}$ est arithmétique de premier terme $u_0$ et de raison notée $r$.
+\begin{itemize}
+    \item L'année 2024 correspond à $n = 2024 - 2021 = 3$, donc $u_3 = 5150$.
+    \item L'année 2029 correspond à $n = 2029 - 2021 = 8$, donc $u_8 = 5900$.
+\end{itemize}
+Pour une suite arithmétique, $u_8 = u_3 + (8-3)r = u_3 + 5r$. On en déduit :
+\[
+5r = u_8 - u_3 = 5900 - 5150 = 750 \implies r = \frac{750}{5} = 150\text{~\euro{}}.
+\]
+On détermine alors le terme initial $u_0$ :
+\[
+u_3 = u_0 + 3r \implies u_0 = u_3 - 3r = 5150 - 3 \times 150 = 5150 - 450 = 4700\text{~\euro{}}.
+\]
+La somme demandée de 2021 ($n=0$) à 2030 ($n=9$) comprend 10 termes :
+\[
+S = \sum_{k=0}^9 u_k = 10 \times \frac{u_0 + u_9}{2}.
+\]
+Avec $u_9 = u_0 + 9r = 4700 + 9 \times 150 = 4700 + 1350 = 6050$~\euro{}, il vient :
+\[
+S = 10 \times \frac{4700 + 6050}{2} = 10 \times \frac{10750}{2} = 10 \times 5375 = 53\,750\text{~\euro{}}.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 3
+% ----------------------------------------------------
+\subsection*{Exercice 3}
+On note $u_n$ le loyer annuel l'année $2021 + n$. En 2021, le loyer annuel est de $5000$~\euro{}. Chaque année, le loyer augmente de $3\,\%$.
+\begin{enumerate}
+    \item Exprimer $u_{n+1}$ en fonction de $u_n$.
+    \item Exprimer $u_n$ en fonction de $u_0$ et $n$.
+    \item Calculer la somme des loyers payés de 2021 à 2030.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Une hausse de $3\,\%$ correspond à une multiplication par le coefficient multiplicateur $1 + \frac{3}{100} = 1{,}03$. Ainsi :
+    \[
+    \forall n \in \N, \quad u_{n+1} = 1{,}03 \, u_n.
+    \]
+    \item $(u_n)_{n \in \N}$ est donc une suite géométrique de premier terme $u_0 = 5000$ et de raison $q = 1{,}03$. Son terme général s'écrit :
+    \[
+    \forall n \in \N, \quad u_n = u_0 \times q^n = 5000 \times 1{,}03^n.
+    \]
+    \item De 2021 ($n=0$) à 2030 ($n=9$), la somme comporte $9 - 0 + 1 = 10$ termes :
+    \[
+    S = \sum_{k=0}^9 u_k = u_0 \times \frac{1 - q^{10}}{1 - q} = 5000 \times \frac{1 - 1{,}03^{10}}{1 - 1{,}03} = 5000 \times \frac{1{,}03^{10} - 1}{0{,}03}.
+    \]
+    Numériquement, $1{,}03^{10} \approx 1{,}343916$, d'où :
+    \[
+    S = \frac{5000}{0{,}03} \times (1{,}343916 - 1) \approx 57\,319{,}40\text{~\euro{}}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 4
+% ----------------------------------------------------
+\subsection*{Exercice 4}
+On note $c_n$ le capital au premier janvier au soir de l'année $2021 + n$. À partir de 2021, on dépose $50$~\euro{} chaque premier janvier au matin. Le compte est rémunéré à $2\,\%$ annuels, intérêts versés le premier janvier au matin (avant le dépôt).
+\begin{enumerate}
+    \item Calculer $c_1$ et $c_2$.
+    \item Exprimer $c_{n+1}$ en fonction de $c_n$.
+    \item On pose $v_n = c_n + 2500$.
+    \begin{enumerate}
+        \item Montrer que $(v_n)$ est une suite géométrique.
+        \item Exprimer $c_n$ en fonction de $n$.
+        \item Le soir du premier janvier de quelle année, le capital disponible sera-t-il supérieur ou égal à $2000$~\euro{} ?
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item En 2021 ($n=0$), le premier versement a lieu : $c_0 = 50$~\euro{}.
+    \begin{itemize}
+        \item Au premier janvier 2022 ($n=1$), les intérêts de $2\,\%$ s'appliquent sur $c_0$, puis on dépose $50$~\euro{} :
+        \[
+        c_1 = 1{,}02 \times c_0 + 50 = 1{,}02 \times 50 + 50 = 51 + 50 = 101\text{~\euro{}}.
+        \]
+        \item Au premier janvier 2023 ($n=2$) :
+        \[
+        c_2 = 1{,}02 \times c_1 + 50 = 1{,}02 \times 101 + 50 = 103{,}02 + 50 = 153{,}02\text{~\euro{}}.
+        \]
+    \end{itemize}
+    \item D'après le mécanisme de capitalisation, chaque année le capital précédent reçoit $2\,\%$ d'intérêts auquel s'ajoute le versement de $50$~\euro{} :
+    \[
+    \forall n \in \N, \quad c_{n+1} = 1{,}02 \, c_n + 50.
+    \]
+    \item
+    \begin{enumerate}
+        \item Pour tout $n \in \N$ :
+        \[
+        v_{n+1} = c_{n+1} + 2500 = (1{,}02 \, c_n + 50) + 2500 = 1{,}02 \, c_n + 2550.
+        \]
+        En factorisant par $1{,}02$, comme $\frac{2550}{1{,}02} = 2500$, il vient :
+        \[
+        v_{n+1} = 1{,}02(c_n + 2500) = 1{,}02 \, v_n.
+        \]
+        La suite $(v_n)_{n \in \N}$ est donc une suite géométrique de raison $q = 1{,}02$ et de premier terme :
+        \[
+        v_0 = c_0 + 2500 = 50 + 2500 = 2550.
+        \]
+        \item Par formule explicite d'une suite géométrique :
+        \[
+        v_n = v_0 \times q^n = 2550 \times 1{,}02^n.
+        \]
+        Puisque $c_n = v_n - 2500$, on en déduit :
+        \[
+        \forall n \in \N, \quad c_n = 2550 \times 1{,}02^n - 2500.
+        \]
+        \item On cherche le plus petit entier naturel $n$ tel que $c_n \ge 2000$ :
+        \[
+        2550 \times 1{,}02^n - 2500 \ge 2000 \iff 2550 \times 1{,}02^n \ge 4500 \iff 1{,}02^n \ge \frac{4500}{2550} = \frac{30}{17} \approx 1{,}7647.
+        \]
+        À l'aide de la calculatrice :
+        \begin{itemize}
+            \item Pour $n = 28$ : $c_{28} \approx 2550 \times 1{,}02^{28} - 2500 \approx 1939{,}57$~\euro{} $< 2000$~\euro{}.
+            \item Pour $n = 29$ : $c_{29} \approx 2550 \times 1{,}02^{29} - 2500 \approx 2028{,}36$~\euro{} $\ge 2000$~\euro{}.
+        \end{itemize}
+        Le capital dépassera $2000$~\euro{} pour $n = 29$, c'est-à-dire au soir du premier janvier de l'année $2021 + 29 = 2050$.
+    \end{enumerate}
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 5
+% ----------------------------------------------------
+\subsection*{Exercice 5}
+Un mur est situé à deux mètres devant vous. Vous faites un premier pas en direction du mur de $1\text{~m}$. Le deuxième pas sera de $50\text{~cm}$. Par la suite, chaque pas aura une longueur égale à la moitié de la longueur du pas précédent. Pour $n \ge 1$, on note $l_n$ la longueur du $n$-ième pas et $d_n$ la distance totale parcourue après le $n$-ième pas.
+\begin{enumerate}
+    \item Exprimer $l_n$ en fonction de $n$ et calculer la longueur du $10^{\text{ème}}$ pas.
+    \item Exprimer $d_n$ en fonction de $n$ et calculer $d_{10}$.
+    \item Combien de pas vous faudra-t-il pour atteindre le mur ?
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item La longueur du premier pas est $l_1 = 1\text{~m}$. Chaque pas mesurant la moitié du précédent :
+    \[
+    \forall n \ge 1, \quad l_{n+1} = \frac{1}{2}l_n.
+    \]
+    $(l_n)_{n \ge 1}$ est donc géométrique de premier terme $l_1 = 1$ et de raison $q = \frac{1}{2}$, d'où :
+    \[
+    l_n = l_1 \times q^{n-1} = \left(\frac{1}{2}\right)^{n-1}.
+    \]
+    Pour le 10\textsuperscript{ème} pas ($n=10$) :
+    \[
+    l_{10} = \left(\frac{1}{2}\right)^9 = \frac{1}{512}\text{~m} \approx 1{,}95\text{~mm}.
+    \]
+    \item La distance totale parcourue après $n$ pas est la somme :
+    \[
+    d_n = \sum_{k=1}^n l_k = l_1 \times \frac{1 - q^n}{1 - q} = 1 \times \frac{1 - \left(\frac{1}{2}\right)^n}{1 - \frac{1}{2}} = 2\left(1 - \frac{1}{2^n}\right)\text{~m}.
+    \]
+    Pour $n = 10$ :
+    \[
+    d_{10} = 2\left(1 - \frac{1}{1024}\right) = 2 \times \frac{1023}{1024} = \frac{1023}{512} \approx 1{,}9980\text{~m}.
+    \]
+    \item Pour atteindre le mur, il faudrait que $d_n \ge 2$, soit :
+    \[
+    2\left(1 - \frac{1}{2^n}\right) \ge 2 \iff 1 - \frac{1}{2^n} \ge 1 \iff -\frac{1}{2^n} \ge 0 \iff \frac{1}{2^n} \le 0,
+    \]
+    ce qui est strictement impossible car pour tout $n \in \N^*$, $\frac{1}{2^n} > 0$. On a donc toujours $d_n < 2$. Le marcheur ne touchera jamais le mur en un nombre fini de pas (paradoxe de Zénon d'Élée).
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 6
+% ----------------------------------------------------
+\subsection*{Exercice 6}
+Résoudre dans $\R$ l'équation :
+\[
+\frac{1}{x} + \frac{1}{x^2} + \dots + \frac{1}{x^8} = 0.
+\]
+
+\begin{correctionbox}
+L'équation n'a de sens que pour $x \ne 0$. Posons $Y = \frac{1}{x}$. L'équation s'écrit :
+\[
+Y + Y^2 + \dots + Y^8 = 0 \iff Y(1 + Y + Y^2 + \dots + Y^7) = 0.
+\]
+Puisque $x \in \R^*$, $Y \ne 0$, l'équation équivaut à :
+\[
+\sum_{k=0}^7 Y^k = 0.
+\]
+\begin{itemize}
+    \item Si $Y = 1$ (c'est-à-dire $x = 1$) : la somme vaut $1 + 1 + \dots + 1 = 8 \ne 0$, donc $x=1$ n'est pas solution.
+    \item Si $Y \ne 1$ (c'est-à-dire $x \ne 1$) : la somme des 8 termes d'une suite géométrique donne :
+    \[
+    \frac{1 - Y^8}{1 - Y} = 0 \iff 1 - Y^8 = 0 \iff Y^8 = 1 \iff \left(\frac{1}{x}\right)^8 = 1 \iff x^8 = 1.
+    \]
+\end{itemize}
+Dans $\R$, les seules solutions de $x^8 = 1$ sont $x = 1$ et $x = -1$.
+Comme le cas $x=1$ a été exclu car il donne une somme égale à 8, la seule solution réelle possible est $x = -1$.
+
+Vérification directe pour $x = -1$ :
+\[
+\frac{1}{-1} + \frac{1}{(-1)^2} + \dots + \frac{1}{(-1)^8} = -1 + 1 - 1 + 1 - 1 + 1 - 1 + 1 = 0.
+\]
+L'ensemble des solutions réelles est donc :
+\[
+\mathcal{S} = \{-1\}.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 7
+% ----------------------------------------------------
+\subsection*{Exercice 7}
+La fréquence du $LA$ d'un diapason est de $440\text{~Hz}$. La fréquence du $LA$ de l'octave supérieure est de $880\text{~Hz}$. Une octave se décompose en 12 demi-tons dont les fréquences sont les termes consécutifs d'une suite géométrique. Calculer la valeur approchée à $10^{-3}$ près de la raison à l'aide de la calculatrice.
+
+\begin{correctionbox}
+Notons $f_0 = 440\text{~Hz}$ la fréquence de base du premier $LA$.
+En gravissant les 12 intervalles (demi-tons tempérés) d'une octave, la fréquence de la note atteinte après $n$ demi-tons est modélisée par $f_n = f_0 \, q^n$.
+Le $LA$ de l'octave supérieure est situé 12 demi-tons au-dessus, d'où :
+\[
+f_{12} = f_0 \times q^{12} = 880 \implies q^{12} = \frac{880}{440} = 2.
+\]
+La raison $q$ est la racine douzième de 2 :
+\[
+q = 2^{1/12} = \sqrt[12]{2}.
+\]
+À la calculatrice :
+\[
+q \approx 1{,}059463\dots \implies q \approx 1{,}059 \text{ à } 10^{-3} \text{ près}.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 8
+% ----------------------------------------------------
+\subsection*{Exercice 8}
+En additionnant les numéros des pages que j'ai déjà lues, j'obtiens 351. En additionnant les numéros de celles qui me restent à lire, j'obtiens 469.
+\begin{enumerate}
+    \item Quel est le numéro de la dernière page que j'ai lue ?
+    \item Quel est le nombre total de pages de mon livre ?
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Soit $n$ le numéro de la dernière page lue ($n \in \N^*$).
+    La somme des numéros des pages déjà lues (de la page 1 à la page $n$) est :
+    \[
+    \sum_{k=1}^n k = \frac{n(n+1)}{2} = 351 \iff n(n+1) = 702 \iff n^2 + n - 702 = 0.
+    \]
+    Le discriminant de ce trinôme est :
+    \[
+    \Delta = 1^2 - 4 \times 1 \times (-702) = 1 + 2808 = 2809 = 53^2.
+    \]
+    Les racines sont :
+    \[
+    n = \frac{-1 - 53}{2} = -27 \quad \text{et} \quad n = \frac{-1 + 53}{2} = 26.
+    \]
+    Un numéro de page étant strictement positif, la dernière page lue est la page \textbf{26}.
+
+    \item Soit $N$ le nombre total de pages du livre ($N > 26$).
+    La somme totale des pages du livre est la somme des pages déjà lues plus celles restant à lire :
+    \[
+    \sum_{k=1}^N k = 351 + 469 = 820.
+    \]
+    Or $\sum_{k=1}^N k = \frac{N(N+1)}{2}$, donc :
+    \[
+    \frac{N(N+1)}{2} = 820 \iff N(N+1) = 1640 \iff N^2 + N - 1640 = 0.
+    \]
+    Le discriminant vaut :
+    \[
+    \Delta = 1^2 - 4 \times 1 \times (-1640) = 1 + 6560 = 6561 = 81^2.
+    \]
+    Les racines sont :
+    \[
+    N = \frac{-1 - 81}{2} = -41 \quad \text{et} \quad N = \frac{-1 + 81}{2} = 40.
+    \]
+    Puisque $N > 0$, le livre comporte au total \textbf{40 pages}.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 9
+% ----------------------------------------------------
+\subsection*{Exercice 9}
+La demi-vie du carbone 14 est d'environ 5700 années. Sur une période de temps donnée, le nombre d'atomes de carbone 14 qui se désintègrent en carbone 12 est proportionnel au nombre d'atomes de carbone 14 en début de période (principe de non vieillissement des atomes).
+
+À l'aide de la calculatrice,
+\begin{enumerate}
+    \item Calculer le coefficient de proportionnalité sur une période d'un siècle.
+    \item Calculer l'âge d'un os contenant $40\,\%$ de son carbone 14 initial.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Choisissons le siècle ($100$ ans) comme unité de temps. La demi-vie de 5700 ans correspond à une durée de 57 siècles.
+    À chaque siècle, la quantité restante est multipliée par un facteur constant $c \in ]0, 1[$. Au bout de 57 siècles, la quantité est divisée par 2 :
+    \[
+    c^{57} = \frac{1}{2} \iff c = \left(\frac{1}{2}\right)^{1/57} = 2^{-1/57} \approx 0{,}9879 \text{ par siècle}.
+    \]
+    Le coefficient de proportionnalité des atomes qui \emph{se désintègrent} par siècle est donc la proportion perdue :
+    \[
+    1 - c = 1 - 2^{-1/57} \approx 0{,}0121 \quad (\text{soit environ } 1{,}21\,\% \text{ par siècle}).
+    \]
+    \item Soit $n$ le temps écoulé en siècles. La proportion restante est $c^n$. On cherche $n$ tel que :
+    \[
+    c^n = 0{,}40 \iff \left(2^{-1/57}\right)^n = 0{,}40 \iff 2^{-n/57} = 0{,}40.
+    \]
+    En utilisant le logarithme népérien (ou par balayage à la calculatrice) :
+    \[
+    -\frac{n}{57} \ln(2) = \ln(0{,}40) \implies n = 57 \times \frac{\ln(0{,}40)}{-\ln(2)} = 57 \times \frac{\ln(2{,}5)}{\ln(2)} \approx 57 \times 1{,}321928 \approx 75{,}35\text{ siècles}.
+    \]
+    En années, l'âge de l'os est donc :
+    \[
+    t \approx 75{,}35 \times 100 \approx 7535\text{~ans} \quad (\text{entre 7500 et 7600 ans}).
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+
+\section{Suites homographiques}
+
+% ----------------------------------------------------
+% EXERCICE 10
+% ----------------------------------------------------
+\subsection*{Exercice 10}
+On considère la suite $(u_n)$ définie par :
+\[
+\begin{cases}
+u_0 = 3\\
+u_{n+1} = \dfrac{2}{u_n + 1} & \text{pour } n \in \N.
+\end{cases}
+\]
+On admet que $\forall n \in \N, u_n \ge 0$, et pour tout $n \in \N$, on pose $v_n = \dfrac{u_n - 1}{u_n + 2}$.
+\begin{enumerate}
+    \item Montrer que $(v_n)$ est une suite géométrique.
+    \item Exprimer $u_n$ en fonction de $n$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Pour tout $n \in \N$ :
+    \[
+    v_{n+1} = \frac{u_{n+1} - 1}{u_{n+1} + 2} = \frac{\dfrac{2}{u_n+1} - 1}{\dfrac{2}{u_n+1} + 2} = \frac{\dfrac{2 - (u_n+1)}{u_n+1}}{\dfrac{2 + 2(u_n+1)}{u_n+1}} = \frac{1 - u_n}{2u_n + 4} = \frac{-(u_n - 1)}{2(u_n + 2)} = -\frac{1}{2} \times \frac{u_n - 1}{u_n + 2} = -\frac{1}{2} v_n.
+    \]
+    La suite $(v_n)$ est donc géométrique de raison $q = -\frac{1}{2}$. Son premier terme est :
+    \[
+    v_0 = \frac{u_0 - 1}{u_0 + 2} = \frac{3 - 1}{3 + 2} = \frac{2}{5}.
+    \]
+    \item On a donc pour tout $n \in \N$ :
+    \[
+    v_n = v_0 \, q^n = \frac{2}{5} \left(-\frac{1}{2}\right)^n.
+    \]
+    Pour exprimer $u_n$, isolons $u_n$ dans la relation $v_n = \frac{u_n - 1}{u_n + 2}$ :
+    \[
+    v_n (u_n + 2) = u_n - 1 \iff u_n v_n + 2v_n = u_n - 1 \iff u_n(1 - v_n) = 2v_n + 1 \iff u_n = \frac{1 + 2v_n}{1 - v_n}.
+    \]
+    En remplaçant $v_n$ par son expression :
+    \[
+    u_n = \frac{1 + 2 \times \frac{2}{5}\left(-\frac{1}{2}\right)^n}{1 - \frac{2}{5}\left(-\frac{1}{2}\right)^n} = \frac{5 + 4\left(-\frac{1}{2}\right)^n}{5 - 2\left(-\frac{1}{2}\right)^n}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 11
+% ----------------------------------------------------
+\subsection*{Exercice 11}
+On définit la suite $(u_n)$ par :
+\[
+\begin{cases}
+u_0 = 1\\
+u_{n+1} = \dfrac{2u_n}{2 + 3u_n} & \text{pour } n \in \N
+\end{cases}
+\]
+et on pose $v_n = \dfrac{1}{u_n}, \forall n \in \N$. On admet l'existence des suites $(u_n)$ et $(v_n)$.
+\begin{enumerate}
+    \item Montrer que la suite $(v_n)$ est arithmétique.
+    \item Exprimer $u_n$ en fonction de $n$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Pour tout $n \in \N$ :
+    \[
+    v_{n+1} - v_n = \frac{1}{u_{n+1}} - \frac{1}{u_n} = \frac{2 + 3u_n}{2u_n} - \frac{1}{u_n} = \frac{2 + 3u_n - 2}{2u_n} = \frac{3u_n}{2u_n} = \frac{3}{2}.
+    \]
+    La différence $v_{n+1} - v_n$ est constante égale à $\frac{3}{2}$. Donc $(v_n)$ est une suite arithmétique de raison $r = \frac{3}{2}$ et de premier terme :
+    \[
+    v_0 = \frac{1}{u_0} = \frac{1}{1} = 1.
+    \]
+    \item On en déduit l'expression explicite de $v_n$ :
+    \[
+    v_n = v_0 + n r = 1 + \frac{3}{2}n = \frac{2 + 3n}{2}.
+    \]
+    Comme $u_n = \frac{1}{v_n}$, on obtient :
+    \[
+    \forall n \in \N, \quad u_n = \frac{2}{3n + 2}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 12
+% ----------------------------------------------------
+\subsection*{Exercice 12}
+Soit $b$ un réel positif ou nul distinct de $1$. On considère la suite $(u_n)$ définie sur $\N$ par :
+\[
+\begin{cases}
+u_0 = 1\\
+u_{n+1} = \dfrac{u_n + b}{u_n + 1}
+\end{cases}
+\]
+\begin{enumerate}
+    \item
+    \begin{enumerate}
+        \item Calculer $u_1$ et $u_2$ en fonction de $b$.
+        \item Justifier que si $u_n > 0$ alors $u_{n+1} > 0$.
+    \end{enumerate}
+    \item On suppose que $b = 4$. Pour $n \in \N$, on pose $v_n = \dfrac{u_n - 2}{u_n + 2}$.
+    \begin{enumerate}
+        \item Montrer que la suite $(v_n)$ est une suite géométrique dont on donnera le premier terme et la raison.
+        \item Exprimer $v_n$ puis $u_n$ en fonction de $n$.
+    \end{enumerate}
+    \item On suppose que $b = 0$. Pour $n \in \N$, on pose $w_n = \dfrac{1}{u_n}$.
+    \begin{enumerate}
+        \item Montrer que la suite $(w_n)$ est une suite arithmétique dont on donnera le premier terme et la raison.
+        \item Exprimer $u_n$ en fonction de $n$.
+    \end{enumerate}
+    \item On suppose que $b > 0$ et $b \ne 1$. Pour $n \in \N$, on pose $t_n = \dfrac{u_n - \sqrt{b}}{u_n + \sqrt{b}}$.
+    \begin{enumerate}
+        \item Déterminer la nature de la suite $(t_n)$ et exprimer $t_n$ en fonction de $n$.
+        \item Exprimer $u_n$ en fonction de $n$.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item
+    \begin{enumerate}
+        \item Pour $u_0 = 1$ :
+        \[
+        u_1 = \frac{u_0 + b}{u_0 + 1} = \frac{1+b}{2}.
+        \]
+        Puis :
+        \[
+        u_2 = \frac{u_1 + b}{u_1 + 1} = \frac{\frac{1+b}{2} + b}{\frac{1+b}{2} + 1} = \frac{\frac{1+3b}{2}}{\frac{3+b}{2}} = \frac{3b+1}{b+3}.
+        \]
+        \item Si $u_n > 0$, alors comme $b \ge 0$, le numérateur $u_n + b > 0$ et le dénominateur $u_n + 1 > 1 > 0$. Par quotient de réels strictement positifs, $u_{n+1} > 0$.
+    \end{enumerate}
+    \item Pour $b=4$, la relation de récurrence est $u_{n+1} = \frac{u_n + 4}{u_n + 1}$ et $v_n = \frac{u_n - 2}{u_n + 2}$.
+    \begin{enumerate}
+        \item Calculons $v_{n+1}$ :
+        \[
+        v_{n+1} = \frac{\frac{u_n+4}{u_n+1} - 2}{\frac{u_n+4}{u_n+1} + 2} = \frac{\frac{u_n+4 - 2(u_n+1)}{u_n+1}}{\frac{u_n+4 + 2(u_n+1)}{u_n+1}} = \frac{-u_n + 2}{3u_n + 6} = \frac{-(u_n - 2)}{3(u_n + 2)} = -\frac{1}{3} v_n.
+        \]
+        $(v_n)$ est donc géométrique de raison $q = -\frac{1}{3}$ et de premier terme $v_0 = \frac{u_0 - 2}{u_0 + 2} = \frac{1-2}{1+2} = -\frac{1}{3}$.
+        \item On en déduit :
+        \[
+        v_n = v_0 \, q^n = \left(-\frac{1}{3}\right)^{n+1}.
+        \]
+        En inversant l'homographie :
+        \[
+        v_n (u_n + 2) = u_n - 2 \iff u_n (1 - v_n) = 2(1 + v_n) \iff u_n = 2 \frac{1 + v_n}{1 - v_n} = 2 \frac{1 + \left(-\frac{1}{3}\right)^{n+1}}{1 - \left(-\frac{1}{3}\right)^{n+1}}.
+        \]
+    \end{enumerate}
+    \item Pour $b=0$, $u_{n+1} = \frac{u_n}{u_n+1}$ et $w_n = \frac{1}{u_n}$.
+    \begin{enumerate}
+        \item Calculons la différence :
+        \[
+        w_{n+1} - w_n = \frac{1}{u_{n+1}} - \frac{1}{u_n} = \frac{u_n+1}{u_n} - \frac{1}{u_n} = \frac{u_n}{u_n} = 1.
+        \]
+        $(w_n)$ est donc une suite arithmétique de raison $r=1$ et de premier terme $w_0 = \frac{1}{u_0} = 1$.
+        \item On a donc $w_n = 1 + n$. Comme $u_n = \frac{1}{w_n}$, il vient $u_n = \frac{1}{n+1}$.
+    \end{enumerate}
+    \item Généralisation pour $b > 0, b \ne 1$ avec $t_n = \frac{u_n - \sqrt{b}}{u_n + \sqrt{b}}$ :
+    \begin{enumerate}
+        \item Exprimons $t_{n+1}$ :
+        \[
+        t_{n+1} = \frac{\frac{u_n+b}{u_n+1} - \sqrt{b}}{\frac{u_n+b}{u_n+1} + \sqrt{b}} = \frac{u_n + b - \sqrt{b}(u_n+1)}{u_n + b + \sqrt{b}(u_n+1)} = \frac{(1 - \sqrt{b})u_n + \sqrt{b}(\sqrt{b} - 1)}{(1 + \sqrt{b})u_n + \sqrt{b}(\sqrt{b} + 1)}.
+        \]
+        En factorisant le numérateur par $(1 - \sqrt{b})$ et le dénominateur par $(1 + \sqrt{b})$ :
+        \[
+        t_{n+1} = \frac{(1-\sqrt{b})(u_n - \sqrt{b})}{(1+\sqrt{b})(u_n + \sqrt{b})} = \left(\frac{1-\sqrt{b}}{1+\sqrt{b}}\right) t_n.
+        \]
+        $(t_n)$ est une suite géométrique de raison $q = \frac{1-\sqrt{b}}{1+\sqrt{b}}$ et de premier terme $t_0 = \frac{1-\sqrt{b}}{1+\sqrt{b}} = q$.
+        D'où :
+        \[
+        t_n = q \times q^n = \left(\frac{1-\sqrt{b}}{1+\sqrt{b}}\right)^{n+1}.
+        \]
+        \item En résolvant par rapport à $u_n$ :
+        \[
+        t_n(u_n + \sqrt{b}) = u_n - \sqrt{b} \iff u_n(1 - t_n) = \sqrt{b}(1 + t_n) \iff u_n = \sqrt{b} \frac{1 + t_n}{1 - t_n} = \sqrt{b} \frac{1 + \left(\frac{1-\sqrt{b}}{1+\sqrt{b}}\right)^{n+1}}{1 - \left(\frac{1-\sqrt{b}}{1+\sqrt{b}}\right)^{n+1}}.
+        \]
+    \end{enumerate}
+\end{enumerate}
+\end{correctionbox}
+
+
+\section{Suites récurrentes linéaires d'ordre 2}
+
+% ----------------------------------------------------
+% EXERCICE 13
+% ----------------------------------------------------
+\subsection*{Exercice 13}
+Soit la suite $(u_n)_{n \in \N}$ définie par :
+\[
+\begin{cases}
+u_0 = 1, \quad u_1 = 2\\
+u_{n+2} = \dfrac{1}{2}(u_{n+1} + u_n) & \text{pour } n \in \N
+\end{cases}
+\]
+et la suite $(v_n)_{n \in \N}$ définie par $v_n = u_{n+1} - u_n$.
+\begin{enumerate}
+    \item Calculer $u_2$ et $u_3$.
+    \item Montrer que $(v_n)$ est une suite géométrique dont on précisera le premier terme et la raison.
+    \item Pour tout entier $n$ non nul, on pose $S_n = \sum_{k=0}^{n-1} v_k$.
+    \begin{enumerate}
+        \item Exprimer $S_n$ en fonction de $n$.
+        \item Exprimer $S_n$ en fonction de $u_n$ et $u_0$.
+        \item En déduire l'expression de $u_n$ en fonction de $n$.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Calcul des premiers termes :
+    \[
+    u_2 = \frac{1}{2}(u_1 + u_0) = \frac{1}{2}(2 + 1) = \frac{3}{2}, \quad u_3 = \frac{1}{2}(u_2 + u_1) = \frac{1}{2}\left(\frac{3}{2} + 2\right) = \frac{7}{4}.
+    \]
+    \item Pour tout $n \in \N$ :
+    \[
+    v_{n+1} = u_{n+2} - u_{n+1} = \frac{1}{2}u_{n+1} + \frac{1}{2}u_n - u_{n+1} = -\frac{1}{2}u_{n+1} + \frac{1}{2}u_n = -\frac{1}{2}(u_{n+1} - u_n) = -\frac{1}{2}v_n.
+    \]
+    $(v_n)$ est une suite géométrique de raison $q = -\frac{1}{2}$ et de premier terme $v_0 = u_1 - u_0 = 2 - 1 = 1$.
+    \item
+    \begin{enumerate}
+        \item Par somme d'une suite géométrique :
+        \[
+        S_n = \sum_{k=0}^{n-1} v_k = v_0 \frac{1 - q^n}{1 - q} = 1 \times \frac{1 - \left(-\frac{1}{2}\right)^n}{1 - \left(-\frac{1}{2}\right)} = \frac{2}{3}\left[1 - \left(-\frac{1}{2}\right)^n\right].
+        \]
+        \item Par somme télescopique :
+        \[
+        S_n = \sum_{k=0}^{n-1} (u_{k+1} - u_k) = (u_1 - u_0) + (u_2 - u_1) + \dots + (u_n - u_{n-1}) = u_n - u_0.
+        \]
+        \item On en déduit immédiatement $u_n = u_0 + S_n$ :
+        \[
+        \forall n \in \N, \quad u_n = 1 + \frac{2}{3}\left[1 - \left(-\frac{1}{2}\right)^n\right] = \frac{5}{3} - \frac{2}{3}\left(-\frac{1}{2}\right)^n.
+        \]
+    \end{enumerate}
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 14
+% ----------------------------------------------------
+\subsection*{Exercice 14 -- Étude théorique des suites récurrentes d'ordre 2}
+Soient $a$ et $b$ des réels et $(u_n)$ la suite définie par $u_0, u_1$ et $u_{n+2} = a u_{n+1} + b u_n$.
+On note $x^2 = ax + b$ l'équation caractéristique associée. On suppose que cette équation admet deux solutions réelles distinctes notées $r_1$ et $r_2$.
+\begin{enumerate}
+    \item Montrer que $(a - r_1) = r_2$.
+    \item Soit $r$ une solution de l'équation caractéristique. On pose $v_n = u_{n+1} - r u_n$. Montrer que $(v_n)$ est une suite géométrique de raison $(a - r)$.
+    \item Pour $n \in \N$, donner l'expression de $u_n$ en fonction de $n$ en montrant qu'il existe deux constantes $A$ et $B$ telles que :
+    \[
+    u_n = A r_1^n + B r_2^n.
+    \]
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item L'équation caractéristique s'écrit $x^2 - ax - b = 0$. Par les relations coefficients-racines d'un polynôme du second degré, la somme des racines vaut :
+    \[
+    r_1 + r_2 = a \implies a - r_1 = r_2 \quad (\text{et } a - r_2 = r_1).
+    \]
+    De plus, le produit des racines vaut $r_1 r_2 = -b$, donc $b = -r_1 r_2$.
+    \item Puisque $r$ est solution, $r^2 - ar - b = 0$, soit $b = r^2 - ar = r(r-a)$. Calculons $v_{n+1}$ :
+    \begin{align*}
+    v_{n+1} &= u_{n+2} - r u_{n+1} = (a u_{n+1} + b u_n) - r u_{n+1} \\
+    &= (a - r) u_{n+1} + b u_n = (a - r) u_{n+1} - r(a - r) u_n \\
+    &= (a - r)(u_{n+1} - r u_n) = (a - r) v_n.
+    \end{align*}
+    $(v_n)$ est bien géométrique de raison $(a - r)$.
+    \item En posant :
+    \[
+    v_n^{(1)} = u_{n+1} - r_1 u_n \quad \text{et} \quad v_n^{(2)} = u_{n+1} - r_2 u_n,
+    \]
+    ces suites sont géométriques de raisons respectives $a - r_1 = r_2$ et $a - r_2 = r_1$. D'où :
+    \[
+    v_n^{(1)} = v_0^{(1)} r_2^n \quad \text{et} \quad v_n^{(2)} = v_0^{(2)} r_1^n.
+    \]
+    En effectuant la différence des deux équations :
+    \[
+    v_n^{(1)} - v_n^{(2)} = (u_{n+1} - r_1 u_n) - (u_{n+1} - r_2 u_n) = (r_2 - r_1) u_n.
+    \]
+    Comme $r_1 \ne r_2$ :
+    \[
+    u_n = \frac{v_n^{(1)} - v_n^{(2)}}{r_2 - r_1} = \frac{v_0^{(1)} r_2^n - v_0^{(2)} r_1^n}{r_2 - r_1} = \left(\frac{-v_0^{(2)}}{r_2 - r_1}\right) r_1^n + \left(\frac{v_0^{(1)}}{r_2 - r_1}\right) r_2^n.
+    \]
+    En posant $A = \frac{v_0^{(2)}}{r_1 - r_2}$ et $B = \frac{v_0^{(1)}}{r_2 - r_1}$, on a bien $u_n = A r_1^n + B r_2^n$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 15
+% ----------------------------------------------------
+\subsection*{Exercice 15}
+On pose :
+\[
+\begin{cases}
+u_0 = 1, \quad u_1 = 2\\
+u_{n+2} = 3u_{n+1} - 2u_n, \quad \text{pour } n \in \N.
+\end{cases}
+\]
+Pour $n \in \N$, exprimer $u_n$ en fonction de $n$.
+
+\begin{correctionbox}
+L'équation caractéristique associée est $x^2 - 3x + 2 = 0$, dont les racines évidentes sont $r_1 = 1$ et $r_2 = 2$.
+D'après l'étude théorique précédente, $u_n$ est de la forme :
+\[
+u_n = A \times 1^n + B \times 2^n = A + B 2^n.
+\]
+En utilisant les conditions initiales :
+\[
+\begin{cases}
+u_0 = 1 \implies A + B = 1\\
+u_1 = 2 \implies A + 2B = 2
+\end{cases}
+\implies B = 1 \quad \text{puis} \quad A = 0.
+\]
+D'où pour tout $n \in \N$ :
+\[
+u_n = 2^n.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 16
+% ----------------------------------------------------
+\subsection*{Exercice 16}
+On définit la suite de Fibonacci $(F_n)$ par :
+\[
+\begin{cases}
+F_0 = 0, \quad F_1 = 1\\
+F_{n+2} = F_{n+1} + F_n & \text{pour } n \in \N.
+\end{cases}
+\]
+Pour $n \in \N$, exprimer $F_n$ en fonction de $n$ (Formule de Binet).
+
+\begin{correctionbox}
+L'équation caractéristique est $x^2 - x - 1 = 0$. Son discriminant est $\Delta = (-1)^2 - 4(1)(-1) = 5$.
+Les deux racines distinctes sont :
+\[
+\varphi = \frac{1 + \sqrt{5}}{2} \quad (\text{le nombre d'or}) \quad \text{et} \quad \psi = \frac{1 - \sqrt{5}}{2}.
+\]
+Ainsi, $F_n = A \varphi^n + B \psi^n$. Avec les conditions initiales :
+\[
+\begin{cases}
+F_0 = 0 \implies A + B = 0 \iff B = -A\\
+F_1 = 1 \implies A \varphi + B \psi = 1 \iff A(\varphi - \psi) = 1.
+\end{cases}
+\]
+Or $\varphi - \psi = \frac{1+\sqrt{5}}{2} - \frac{1-\sqrt{5}}{2} = \sqrt{5}$, d'où $A = \frac{1}{\sqrt{5}} = \frac{\sqrt{5}}{5}$ et $B = -\frac{\sqrt{5}}{5}$.
+On obtient la formule de Binet :
+\[
+\forall n \in \N, \quad F_n = \frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^n - \left(\frac{1-\sqrt{5}}{2}\right)^n\right].
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 17
+% ----------------------------------------------------
+\subsection*{Exercice 17}
+Dans une population d'écureuils, les jeunes naissent au printemps et un jeune peut se reproduire un an après sa naissance et devient alors adulte. D'un printemps à l'autre, le taux de survie est de $0{,}311$ chez les adultes et de $0{,}26$ chez les jeunes. Le taux de reproduction (nombre de jeunes nés d'un printemps à l'autre par adulte vivant au début de l'année) est de $2{,}65$. On appelle $A_n$ le nombre d'adultes l'année $n$ et $J_n$ le nombre de jeunes le printemps de l'année $n$. Une étude commence le printemps de l'année 0 avec 100 adultes et 50 jeunes ($A_0 = 100, J_0 = 50$).
+\begin{enumerate}
+    \item Calculer $A_1$ et $J_1$.
+    \item Exprimer $A_{n+2}$ en fonction de $A_{n+1}$ et $A_n$ pour $n \in \N$.
+    \item Pour $n \in \N$, exprimer $A_n$ en fonction de $n$.
+    \item Conjecturer l'évolution de cette population.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Les adultes au printemps suivant sont les adultes survivants ($31{,}1\,\%$) et les jeunes de l'année précédente ayant survécu ($26\,\%$) :
+    \[
+    A_{n+1} = 0{,}311 A_n + 0{,}26 J_n.
+    \]
+    Les jeunes nés sont issus de la reproduction des adultes présents :
+    \[
+    J_{n+1} = 2{,}65 A_n.
+    \]
+    Pour l'année 1 :
+    \[
+    A_1 = 0{,}311 \times 100 + 0{,}26 \times 50 = 31{,}1 + 13 = 44{,}1.
+    \]
+    \[
+    J_1 = 2{,}65 \times 100 = 265.
+    \]
+    \item En décalant d'un rang l'expression de $A_{n+1}$ :
+    \[
+    A_{n+2} = 0{,}311 A_{n+1} + 0{,}26 J_{n+1}.
+    \]
+    En remplaçant $J_{n+1}$ par $2{,}65 A_n$ :
+    \[
+    A_{n+2} = 0{,}311 A_{n+1} + 0{,}26 \times (2{,}65 A_n) = 0{,}311 A_{n+1} + 0{,}689 A_n.
+    \]
+    \item L'équation caractéristique est $x^2 - 0{,}311 x - 0{,}689 = 0$.
+    On remarque immédiatement la racine $x_1 = 1$ (car $1 - 0{,}311 - 0{,}689 = 0$).
+    Le produit des racines valant $-0{,}689$, la seconde racine est $x_2 = -0{,}689$.
+    Le terme général est donc :
+    \[
+    A_n = B \times 1^n + C \times (-0{,}689)^n = B + C(-0{,}689)^n.
+    \]
+    Avec les conditions initiales :
+    \[
+    \begin{cases}
+    A_0 = 100 \implies B + C = 100 \iff B = 100 - C\\
+    A_1 = 44{,}1 \implies B - 0{,}689 C = 44{,}1
+    \end{cases}
+    \]
+    On soustrait les deux lignes :
+    \[
+    1{,}689 C = 100 - 44{,}1 = 55{,}9 \implies C = \frac{55{,}9}{1{,}689} = \frac{55900}{1689} \approx 33{,}10.
+    \]
+    D'où $B = 100 - 33{,}10 \approx 66{,}90$.
+    \item Puisque $|-0{,}689| < 1$, $(-0{,}689)^n \xrightarrow[n \to +\infty]{} 0$.
+    Par conséquent :
+    \[
+    \lim_{n \to +\infty} A_n = B \approx 67 \text{ adultes}.
+    \]
+    Et pour les jeunes : $\lim_{n \to +\infty} J_n = 2{,}65 \times 67 \approx 177$ jeunes.
+    La population se stabilise donc à long terme autour de 67 adultes et 177 jeunes (soit environ 244 écureuils).
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 18
+% ----------------------------------------------------
+\subsection*{Exercice 18}
+\begin{enumerate}
+    \item Déterminer la nature d'une suite $(u_n)$ telle que pour tout $n$, $u_n + u_{n+2} = 2u_{n+1}$.
+    \item Déterminer la nature d'une suite $(u_n)$ à termes strictement positifs telle que pour tout $n$, $u_n u_{n+2} = u_{n+1}^2$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Réécrivons la relation :
+    \[
+    u_{n+2} - u_{n+1} = u_{n+1} - u_n.
+    \]
+    Posons $d_n = u_{n+1} - u_n$. L'égalité signifie que $d_{n+1} = d_n$. La suite $(d_n)$ est donc constante, égale à $d_0 = u_1 - u_0 = r$.
+    Ainsi, la différence entre deux termes consécutifs est constante : $(u_n)$ est une \textbf{suite arithmétique} de raison $r = u_1 - u_0$.
+    \item Comme tous les termes sont strictement positifs, on peut diviser :
+    \[
+    \frac{u_{n+2}}{u_{n+1}} = \frac{u_{n+1}}{u_n}.
+    \]
+    Le quotient de deux termes consécutifs est donc constant, égal à $q = \frac{u_1}{u_0}$.
+    La suite $(u_n)$ est une \textbf{suite géométrique} de raison $q = \frac{u_1}{u_0}$.
+\end{enumerate}
+\end{correctionbox}
+
+
+\section{Manipulations du symbole $\Sigma$}
+
+% ----------------------------------------------------
+% EXERCICE 19
+% ----------------------------------------------------
+\subsection*{Exercice 19}
+Pour $n \in \N^*$, calculer $S_n = \sum_{k=0}^{n-1} (2k+1)$ en fonction de $n$.
+
+\begin{correctionbox}
+Par linéarité de la somme :
+\[
+S_n = 2 \sum_{k=0}^{n-1} k + \sum_{k=0}^{n-1} 1 = 2 \times \frac{(n-1)n}{2} + n = n(n-1) + n = n^2 - n + n = n^2.
+\]
+\textit{Remarque :} On retrouve le résultat classique selon lequel la somme des $n$ premiers entiers impairs consécutifs est égale au carré parfait $n^2$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 20
+% ----------------------------------------------------
+\subsection*{Exercice 20}
+\begin{enumerate}
+    \item Calculer la somme des $(n+1)$ premiers entiers naturels.
+    \item Développer $(k+1)^3$.
+    \item Calculer $S = \sum_{k=0}^n k^2$, la somme des carrés des $(n+1)$ premiers entiers naturels.
+    \item Calculer la somme des carrés des $n$ premiers nombres impairs.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Les $(n+1)$ premiers entiers naturels vont de $k=0$ à $k=n$. Leur somme vaut :
+    \[
+    \sum_{k=0}^n k = \frac{n(n+1)}{2}.
+    \]
+    \item Par identité remarquable (formule du binôme) :
+    \[
+    (k+1)^3 = k^3 + 3k^2 + 3k + 1.
+    \]
+    \item En sommant cette relation pour $k$ allant de 0 à $n$ :
+    \[
+    \sum_{k=0}^n \left[(k+1)^3 - k^3\right] = 3 \sum_{k=0}^n k^2 + 3 \sum_{k=0}^n k + \sum_{k=0}^n 1.
+    \]
+    Le membre de gauche est une somme télescopique :
+    \[
+    \sum_{k=0}^n \left[(k+1)^3 - k^3\right] = (n+1)^3 - 0^3 = (n+1)^3.
+    \]
+    On a donc :
+    \[
+    (n+1)^3 = 3S + 3 \frac{n(n+1)}{2} + (n+1).
+    \]
+    En factorisant par $(n+1) \ne 0$ :
+    \[
+    (n+1)^2 = 3 \frac{S}{n+1} + \frac{3n}{2} + 1 \implies 3 \frac{S}{n+1} = (n+1)^2 - \frac{3n}{2} - 1 = n^2 + 2n + 1 - \frac{3n}{2} - 1 = n^2 + \frac{n}{2} = \frac{n(2n+1)}{2}.
+    \]
+    D'où la formule classique :
+    \[
+    S = \sum_{k=0}^n k^2 = \frac{n(n+1)(2n+1)}{6}.
+    \]
+    \item Les $n$ premiers nombres impairs sont de la forme $(2k+1)$ pour $k \in \{0, \dots, n-1\}$. On cherche :
+    \[
+    T = \sum_{k=0}^{n-1} (2k+1)^2 = \sum_{k=0}^{n-1} (4k^2 + 4k + 1) = 4 \sum_{k=0}^{n-1} k^2 + 4 \sum_{k=0}^{n-1} k + \sum_{k=0}^{n-1} 1.
+    \]
+    En injectant les formules démontrées au rang $n-1$ :
+    \[
+    T = 4 \times \frac{(n-1)n(2n-1)}{6} + 4 \times \frac{(n-1)n}{2} + n = \frac{2n(n-1)(2n-1)}{3} + 2n(n-1) + n.
+    \]
+    En factorisant par $\frac{n}{3}$ :
+    \[
+    T = \frac{n}{3}\left[2(n-1)(2n-1) + 6(n-1) + 3\right] = \frac{n}{3}\left[2(2n^2 - 3n + 1) + 6n - 6 + 3\right] = \frac{n(4n^2 - 1)}{3} = \frac{n(2n-1)(2n+1)}{3}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 21
+% ----------------------------------------------------
+\subsection*{Exercice 21}
+On considère la suite $(c_n)_{n \in \N}$ définie par $c_n = \left(\dfrac{n(n+1)}{2}\right)^2$.
+\begin{enumerate}
+    \item Montrer que $c_{n+1} - c_n = (n+1)^3$.
+    \item En déduire que $\sum_{k=1}^n k^3 = \left(\sum_{k=1}^n k\right)^2$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Exprimons $c_{n+1} - c_n$ :
+    \[
+    c_{n+1} = \left(\frac{(n+1)(n+2)}{2}\right)^2 = \frac{(n+1)^2(n+2)^2}{4}, \quad c_n = \frac{n^2(n+1)^2}{4}.
+    \]
+    Mettons en facteur $\frac{(n+1)^2}{4}$ :
+    \[
+    c_{n+1} - c_n = \frac{(n+1)^2}{4} \left[(n+2)^2 - n^2\right] = \frac{(n+1)^2}{4} \left[n^2 + 4n + 4 - n^2\right] = \frac{(n+1)^2}{4} (4n+4) = (n+1)^3.
+    \]
+    \item Par sommation télescopique pour $k$ variant de 1 à $n$ :
+    \[
+    \sum_{k=1}^n (c_k - c_{k-1}) = c_n - c_0 = c_n - 0 = c_n.
+    \]
+    Or d'après la question 1, $c_k - c_{k-1} = k^3$. On a donc :
+    \[
+    \sum_{k=1}^n k^3 = c_n = \left(\frac{n(n+1)}{2}\right)^2 = \left(\sum_{k=1}^n k\right)^2.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 22
+% ----------------------------------------------------
+\subsection*{Exercice 22}
+On considère la suite $(u_n)_{n \in \N}$ définie par $u_0 = 1$ et $u_{n+1} = u_n + 2n$. Exprimer $u_n$ en fonction de $n$.
+
+\begin{correctionbox}
+Pour $n \in \N^*$, écrivons la différence télescopique :
+\[
+u_n - u_0 = \sum_{k=0}^{n-1} (u_{k+1} - u_k) = \sum_{k=0}^{n-1} 2k = 2 \sum_{k=0}^{n-1} k = 2 \frac{(n-1)n}{2} = n(n-1).
+\]
+Comme $u_0 = 1$, il vient :
+\[
+u_n = 1 + n(n-1) = n^2 - n + 1.
+\]
+Cette relation reste valable pour $n=0$ car $0^2 - 0 + 1 = 1 = u_0$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 23
+% ----------------------------------------------------
+\subsection*{Exercice 23}
+Pour $n \in \N^*$, on pose $S_n = \sum_{k=1}^n k 2^k$.
+\begin{enumerate}
+    \item Pour $n \in \N^*$, exprimer $S_n$ en écrivant que $k = (k-1) + 1$.
+    \item Pour $n \in \N^*$, exprimer $S_n$ en remarquant que $k = \sum_{i=1}^k 1$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Méthode 1 :} Décomposons $k = (k-1) + 1$ :
+    \[
+    S_n = \sum_{k=1}^n [(k-1) + 1]2^k = \sum_{k=1}^n (k-1)2^k + \sum_{k=1}^n 2^k.
+    \]
+    Dans la première somme, effectuons le changement d'indice $j = k-1$ :
+    \[
+    \sum_{k=1}^n (k-1)2^k = \sum_{j=0}^{n-1} j 2^{j+1} = 2 \sum_{j=1}^{n-1} j 2^j = 2(S_n - n 2^n).
+    \]
+    La seconde somme est une somme géométrique : $\sum_{k=1}^n 2^k = 2 \frac{1 - 2^n}{1 - 2} = 2(2^n - 1)$.
+    L'égalité devient :
+    \[
+    S_n = 2 S_n - 2n 2^n + 2^{n+1} - 2 \iff S_n = 2n 2^n - 2^{n+1} + 2 = (n-1)2^{n+1} + 2.
+    \]
+    \item \textbf{Méthode 2 (Inversion de sommation) :}
+    Puisque $k = \sum_{i=1}^k 1$ :
+    \[
+    S_n = \sum_{k=1}^n \left(\sum_{i=1}^k 1\right) 2^k = \sum_{1 \le i \le k \le n} 2^k = \sum_{i=1}^n \left(\sum_{k=i}^n 2^k\right).
+    \]
+    La somme intérieure vaut :
+    \[
+    \sum_{k=i}^n 2^k = 2^i \frac{1 - 2^{n-i+1}}{1 - 2} = 2^{n+1} - 2^i.
+    \]
+    En sommant ensuite sur $i$ de 1 à $n$ :
+    \[
+    S_n = \sum_{i=1}^n (2^{n+1} - 2^i) = n 2^{n+1} - \sum_{i=1}^n 2^i = n 2^{n+1} - (2^{n+1} - 2) = (n-1)2^{n+1} + 2.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 24
+% ----------------------------------------------------
+\subsection*{Exercice 24}
+\begin{enumerate}
+    \item Montrer par deux méthodes que pour $q \ne 1$ et $n \in \N^*$ :
+    \[
+    \sum_{i=1}^n i q^{i-1} = \frac{n q^{n+1} - (n+1)q^n + 1}{(1-q)^2}.
+    \]
+    \item En admettant que $\lim_{n \to +\infty} n q^n = 0$ pour $-1 < q < 1$, déterminer la limite de cette somme quand $n \to +\infty$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item
+    \textbf{Méthode A (Dérivation de polynôme) :}
+    Pour tout $q \ne 1$, la somme des termes de la suite géométrique est :
+    \[
+    f(q) = \sum_{i=0}^n q^i = \frac{1 - q^{n+1}}{1 - q}.
+    \]
+    En dérivant terme à terme par rapport à $q$ :
+    \[
+    f'(q) = \sum_{i=1}^n i q^{i-1}.
+    \]
+    Or, en dérivant le quotient $\frac{u}{v}$ avec $u(q) = 1 - q^{n+1}$ et $v(q) = 1 - q$ ($u' = -(n+1)q^n, v' = -1$) :
+    \begin{align*}
+    f'(q) &= \frac{-(n+1)q^n (1-q) - (1-q^{n+1})(-1)}{(1-q)^2} \\
+    &= \frac{-(n+1)q^n + (n+1)q^{n+1} + 1 - q^{n+1}}{(1-q)^2} = \frac{n q^{n+1} - (n+1)q^n + 1}{(1-q)^2}.
+    \end{align*}
+
+    \textbf{Méthode B (Multiplication par $(1-q)$) :}
+    Posons $T_n = \sum_{i=1}^n i q^{i-1} = 1 + 2q + 3q^2 + \dots + n q^{n-1}$. Alors :
+    \[
+    q T_n = q + 2q^2 + \dots + (n-1)q^{n-1} + n q^n.
+    \]
+    Soustrayons les deux expressions :
+    \[
+    (1-q) T_n = 1 + q + q^2 + \dots + q^{n-1} - n q^n = \frac{1 - q^n}{1 - q} - n q^n = \frac{1 - q^n - n q^n(1-q)}{1 - q} = \frac{n q^{n+1} - (n+1)q^n + 1}{1-q}.
+    \]
+    En divisant par $(1-q)$, on retrouve la formule voulue.
+    \item Si $|q| < 1$, alors $q^n \to 0$ et par hypothèse $n q^n \to 0$ ainsi que $n q^{n+1} = q(n q^n) \to 0$.
+    Par passage à la limite :
+    \[
+    \lim_{n \to +\infty} \sum_{i=1}^n i q^{i-1} = \frac{0 - 0 + 1}{(1-q)^2} = \frac{1}{(1-q)^2}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\end{document}

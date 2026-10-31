@@ -1,0 +1,339 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{correctionbox}{
+  colback=green!5!white,
+  colframe=green!50!black,
+  title=\textbf{Correction et Barème indicatif},
+  fonttitle=\bfseries,
+  arc=2mm,
+  breakable
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{\textbf{Évaluation Sommative : DST 2 -- Les Suites Numériques}\\\large Sujet et Corrigé Rigoureux (Classe de Première Spécialité Maths)}
+\author{Soutien Scolaire -- Mathématiques}
+\date{10 Novembre 2021}
+
+\begin{document}
+
+\maketitle
+
+\hrule
+\vspace{0.5cm}
+
+% ----------------------------------------------------
+% EXERCICE 1
+% ----------------------------------------------------
+\subsection*{Exercice 1}
+\begin{enumerate}
+    \item Étudier le signe de $x^2 - x + 1$ pour $x \in \R$.
+    \item On définit la suite $(u_n)$ par :
+    \[
+    \begin{cases}
+    u_0 \in \R\\
+    \forall n \in \N, \quad u_{n+1} = u_n^2 + 1
+    \end{cases}
+    \]
+    Étudier le sens de variations de la suite $(u_n)$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Considérons le trinôme $P(x) = x^2 - x + 1$. Son discriminant est :
+    \[
+    \Delta = (-1)^2 - 4 \times 1 \times 1 = 1 - 4 = -3 < 0.
+    \]
+    Puisque $\Delta < 0$, le trinôme n'admet aucune racine réelle et garde un signe constant sur $\R$.
+    Le coefficient devant $x^2$ étant $a = 1 > 0$, on en déduit que pour tout $x \in \R$, $x^2 - x + 1 > 0$.
+    \item Étudions le signe de la différence $u_{n+1} - u_n$ pour tout $n \in \N$ :
+    \[
+    u_{n+1} - u_n = (u_n^2 + 1) - u_n = u_n^2 - u_n + 1.
+    \]
+    D'après la question 1 appliquée à $x = u_n \in \R$ :
+    \[
+    u_n^2 - u_n + 1 > 0 \implies u_{n+1} - u_n > 0 \iff u_{n+1} > u_n.
+    \]
+    La suite $(u_n)_{n \in \N}$ est donc \textbf{strictement croissante}, quelle que soit la valeur du terme initial $u_0 \in \R$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 2
+% ----------------------------------------------------
+\subsection*{Exercice 2}
+Une piscine contient $500\text{~m}^3$ d'eau. Chaque jour $5\,\%$ du volume s'évapore. On rajoute alors $20\text{~m}^3$ d'eau.
+Pour $n \in \N$, on note $u_n$ le volume d'eau de la piscine après $n$ jours. On a donc $u_0 = 500$.
+\begin{enumerate}
+    \item Calculer $u_1$ et $u_2$.
+    \item Pour $n \in \N$, exprimer $u_{n+1}$ en fonction de $u_n$.
+    \item Pour $n \in \N$, on pose $v_n = u_n - 400$.
+    \begin{enumerate}
+        \item Montrer que $(v_n)$ est une suite géométrique.
+        \item Pour $n \in \N$, exprimer $v_n$ en fonction de $n$.
+    \end{enumerate}
+    \item Pour $n \in \N$, exprimer $u_n$ en fonction de $n$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Après évaporation de $5\,\%$, le volume restant est multiplié par $1 - \frac{5}{100} = 0{,}95$. Avec l'ajout de $20\text{~m}^3$ :
+    \[
+    u_1 = 0{,}95 \times u_0 + 20 = 0{,}95 \times 500 + 20 = 475 + 20 = 495\text{~m}^3.
+    \]
+    \[
+    u_2 = 0{,}95 \times u_1 + 20 = 0{,}95 \times 495 + 20 = 470{,}25 + 20 = 490{,}25\text{~m}^3.
+    \]
+    \item Par le même raisonnement au jour $(n+1)$ :
+    \[
+    \forall n \in \N, \quad u_{n+1} = 0{,}95 u_n + 20.
+    \]
+    \item
+    \begin{enumerate}
+        \item Pour tout $n \in \N$ :
+        \[
+        v_{n+1} = u_{n+1} - 400 = (0{,}95 u_n + 20) - 400 = 0{,}95 u_n - 380.
+        \]
+        Or $0{,}95 \times 400 = 380$, donc :
+        \[
+        v_{n+1} = 0{,}95(u_n - 400) = 0{,}95 v_n.
+        \]
+        La suite $(v_n)$ est donc une suite géométrique de raison $q = 0{,}95$ et de premier terme :
+        \[
+        v_0 = u_0 - 400 = 500 - 400 = 100.
+        \]
+        \item On a donc directement pour tout $n \in \N$ :
+        \[
+        v_n = v_0 \, q^n = 100 \times (0{,}95)^n.
+        \]
+    \end{enumerate}
+    \item Comme $v_n = u_n - 400$, on en déduit immédiatement :
+    \[
+    u_n = v_n + 400 = 100 \times (0{,}95)^n + 400.
+    \]
+    \textit{Remarque :} Comme $0 < 0{,}95 < 1$, $\lim_{n \to +\infty} u_n = 400\text{~m}^3$, qui représente le volume d'équilibre de la piscine.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 3
+% ----------------------------------------------------
+\subsection*{Exercice 3}
+Soit $f$ la fonction définie par $f(x) = \dfrac{x - 4}{x - 3}$ sur $\R \setminus \{3\}$.
+Soit $(u_n)$ la suite définie pour $n \in \N$ par :
+\[
+\begin{cases}
+u_0 = 1\\
+u_{n+1} = f(u_n)
+\end{cases}
+\]
+On admet que la suite $(u_n)$ est bien définie.
+\begin{enumerate}
+    \item Justifier que l'équation $x = f(x)$ admet une unique solution $x_0$.
+    \item Justifier que la suite $(v_n)$ définie par $v_n = \dfrac{1}{u_n - x_0}$ est une suite arithmétique dont on précisera la raison et le premier terme. (On admet que la suite $(v_n)$ est définie.)
+    \item Exprimer $u_n$ en fonction de $v_n$.
+    \item Exprimer $u_n$ en fonction de $n$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Pour $x \ne 3$ :
+    \[
+    x = f(x) \iff x = \frac{x-4}{x-3} \iff x(x-3) = x-4 \iff x^2 - 3x = x - 4 \iff x^2 - 4x + 4 = 0.
+    \]
+    On reconnaît l'identité remarquable :
+    \[
+    (x-2)^2 = 0 \iff x = 2.
+    \]
+    Puisque $2 \ne 3$, l'équation $x = f(x)$ admet donc une unique solution $x_0 = 2$.
+    \item La suite auxiliaire est donc $v_n = \dfrac{1}{u_n - 2}$. Calculons la différence $v_{n+1} - v_n$ :
+    \[
+    v_{n+1} = \frac{1}{u_{n+1} - 2} = \frac{1}{\frac{u_n - 4}{u_n - 3} - 2} = \frac{1}{\frac{u_n - 4 - 2(u_n - 3)}{u_n - 3}} = \frac{u_n - 3}{-u_n + 2} = \frac{u_n - 3}{-(u_n - 2)}.
+    \]
+    Ainsi :
+    \[
+    v_{n+1} - v_n = \frac{u_n - 3}{-(u_n - 2)} - \frac{1}{u_n - 2} = \frac{-(u_n - 3) - 1}{u_n - 2} = \frac{-u_n + 3 - 1}{u_n - 2} = \frac{-(u_n - 2)}{u_n - 2} = -1.
+    \]
+    La différence étant constante, $(v_n)$ est une suite arithmétique de raison $r = -1$ et de premier terme :
+    \[
+    v_0 = \frac{1}{u_0 - 2} = \frac{1}{1 - 2} = -1.
+    \]
+    \item De la relation $v_n = \frac{1}{u_n - 2}$, on tire :
+    \[
+    u_n - 2 = \frac{1}{v_n} \iff u_n = 2 + \frac{1}{v_n} = \frac{2v_n + 1}{v_n}.
+    \]
+    \item L'expression explicite de la suite arithmétique donne :
+    \[
+    v_n = v_0 + n r = -1 - n = -(n+1).
+    \]
+    Par substitution :
+    \[
+    u_n = 2 + \frac{1}{-(n+1)} = 2 - \frac{1}{n+1} = \frac{2(n+1) - 1}{n+1} = \frac{2n + 1}{n+1}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 4
+% ----------------------------------------------------
+\subsection*{Exercice 4}
+Soient $a$ et $b$ des réels. On définit la suite $(u_n)$ pour $n \in \N$ par $u_0 \in \R$ et :
+\[
+\forall n \in \N, \quad u_{n+1} = u_n + an + b.
+\]
+Pour $n \in \N$, on pose $S_n = \sum_{k=0}^n (u_{k+1} - u_k)$.
+\begin{enumerate}
+    \item Pour $n \in \N$, exprimer $S_n$ en fonction de $u_{n+1}$ et $u_0$.
+    \item Pour $n \in \N$, exprimer $S_n$ en fonction de $a$, $b$ et $n$.
+    \item En déduire que pour $n \in \N$ :
+    \[
+    u_n = \frac{1}{2}a n^2 + \left(b - \frac{a}{2}\right)n + u_0.
+    \]
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item $S_n$ est une somme télescopique :
+    \[
+    S_n = (u_1 - u_0) + (u_2 - u_1) + \dots + (u_{n+1} - u_n) = u_{n+1} - u_0.
+    \]
+    \item D'après la relation de récurrence, $u_{k+1} - u_k = ak + b$. On a donc :
+    \[
+    S_n = \sum_{k=0}^n (ak + b) = a \sum_{k=0}^n k + b \sum_{k=0}^n 1 = a \frac{n(n+1)}{2} + b(n+1) = (n+1)\left[\frac{a}{2}n + b\right].
+    \]
+    \item En égalant les deux expressions obtenues aux questions 1 et 2 :
+    \[
+    u_{n+1} - u_0 = a \frac{n(n+1)}{2} + b(n+1) \implies u_{n+1} = \frac{a}{2}n(n+1) + b(n+1) + u_0.
+    \]
+    Pour obtenir l'expression au rang $n$ (pour $n \ge 1$), on remplace $n$ par $n-1$ :
+    \begin{align*}
+    u_n &= \frac{a}{2}(n-1)n + b n + u_0 \\
+    &= \frac{a}{2}(n^2 - n) + bn + u_0 \\
+    &= \frac{1}{2}an^2 + \left(b - \frac{a}{2}\right)n + u_0.
+    \end{align*}
+    Pour $n=0$, la formule donne bien $\frac{1}{2}a(0) + (b - \frac{a}{2})(0) + u_0 = u_0$. Elle est donc vraie pour tout $n \in \N$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 5
+% ----------------------------------------------------
+\subsection*{Exercice 5}
+On définit la suite $(u_n)$ par :
+\[
+\begin{cases}
+u_0 = 1\\
+u_1 = 1\\
+\forall n \in \N, \quad 2u_{n+2} - 5u_{n+1} + 2u_n = 0
+\end{cases}
+\]
+On pose pour tout $n \in \N$ :
+\[
+v_n = 3u_n - \frac{3}{2}u_{n+1} \quad \text{et} \quad w_n = -\frac{3}{4}u_n + \frac{3}{2}u_{n+1}.
+\]
+\begin{enumerate}
+    \item Montrer que $(v_n)$ est une suite géométrique de raison $\frac{1}{2}$.
+    \item Montrer que $(w_n)$ est une suite géométrique de raison $2$.
+    \item Calculer $v_n + w_n$ de deux façons différentes et en déduire l'expression de $u_n$ en fonction de $n$ sous la forme $A q_1^n + B q_2^n$.
+\end{enumerate}
+
+\begin{correctionbox}
+Remarquons d'abord que $2u_{n+2} = 5u_{n+1} - 2u_n \iff u_{n+2} = \frac{5}{2}u_{n+1} - u_n$.
+\begin{enumerate}
+    \item Exprimons $v_{n+1}$ :
+    \[
+    v_{n+1} = 3u_{n+1} - \frac{3}{2}u_{n+2} = 3u_{n+1} - \frac{3}{2}\left(\frac{5}{2}u_{n+1} - u_n\right) = \left(3 - \frac{15}{4}\right)u_{n+1} + \frac{3}{2}u_n = -\frac{3}{4}u_{n+1} + \frac{3}{2}u_n.
+    \]
+    En factorisant par $\frac{1}{2}$ :
+    \[
+    v_{n+1} = \frac{1}{2}\left(3u_n - \frac{3}{2}u_{n+1}\right) = \frac{1}{2}v_n.
+    \]
+    $(v_n)$ est donc une suite géométrique de raison $q_1 = \frac{1}{2}$ et de premier terme :
+    \[
+    v_0 = 3u_0 - \frac{3}{2}u_1 = 3(1) - \frac{3}{2}(1) = \frac{3}{2}.
+    \]
+    D'où $v_n = \frac{3}{2} \left(\frac{1}{2}\right)^n = 3 \left(\frac{1}{2}\right)^{n+1}$.
+    \item Exprimons $w_{n+1}$ :
+    \[
+    w_{n+1} = -\frac{3}{4}u_{n+1} + \frac{3}{2}u_{n+2} = -\frac{3}{4}u_{n+1} + \frac{3}{2}\left(\frac{5}{2}u_{n+1} - u_n\right) = \left(-\frac{3}{4} + \frac{15}{4}\right)u_{n+1} - \frac{3}{2}u_n = 3u_{n+1} - \frac{3}{2}u_n.
+    \]
+    En factorisant par 2 :
+    \[
+    w_{n+1} = 2\left(\frac{3}{2}u_{n+1} - \frac{3}{4}u_n\right) = 2 w_n.
+    \]
+    $(w_n)$ est donc une suite géométrique de raison $q_2 = 2$ et de premier terme :
+    \[
+    w_0 = -\frac{3}{4}u_0 + \frac{3}{2}u_1 = -\frac{3}{4} + \frac{3}{2} = \frac{3}{4}.
+    \]
+    D'où $w_n = \frac{3}{4} \times 2^n$.
+    \item
+    \textbf{Façon 1 :} En sommant les définitions de $v_n$ et $w_n$ :
+    \[
+    v_n + w_n = \left(3u_n - \frac{3}{2}u_{n+1}\right) + \left(-\frac{3}{4}u_n + \frac{3}{2}u_{n+1}\right) = \left(3 - \frac{3}{4}\right)u_n + 0 = \frac{9}{4}u_n.
+    \]
+    On a donc $u_n = \frac{4}{9}(v_n + w_n)$.
+
+    \textbf{Façon 2 :} En utilisant les formes géométriques explicites :
+    \[
+    v_n + w_n = \frac{3}{2}\left(\frac{1}{2}\right)^n + \frac{3}{4} \times 2^n.
+    \]
+    On en conclut :
+    \[
+    u_n = \frac{4}{9}\left[\frac{3}{2}\left(\frac{1}{2}\right)^n + \frac{3}{4} \times 2^n\right] = \frac{2}{3}\left(\frac{1}{2}\right)^n + \frac{1}{3} \times 2^n.
+    \]
+    On a bien la forme voulue avec $A = \frac{2}{3}, q_1 = \frac{1}{2}, B = \frac{1}{3}, q_2 = 2$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 6
+% ----------------------------------------------------
+\subsection*{Exercice 6}
+Calculer :
+\[
+S = \sum_{k=1}^{2021} (-1)^k k^2.
+\]
+\textit{Indication :} On pourra distinguer les termes en fonction de la parité de $k$ sans chercher à calculer de sommes de carrés.
+
+\begin{correctionbox}
+Regroupons les termes par paires consécutives : un terme impair suivi d'un terme pair.
+Pour un entier $m \ge 1$ :
+\[
+(-1)^{2m-1}(2m-1)^2 + (-1)^{2m}(2m)^2 = -(2m-1)^2 + (2m)^2 = (2m)^2 - (2m-1)^2.
+\]
+En utilisant l'identité remarquable $a^2 - b^2 = (a-b)(a+b)$ :
+\[
+(2m)^2 - (2m-1)^2 = \left[2m - (2m-1)\right] \times \left[2m + (2m-1)\right] = 1 \times (4m - 1) = 2m + (2m-1).
+\]
+Chaque paire consécutive $(-(2m-1)^2 + (2m)^2)$ se réduit simplement à la somme des deux entiers consécutifs $(2m-1) + 2m$ !
+
+Puisque la somme $S$ s'arrête à $2021$, isolons le tout premier terme $-1^2 = -1$, ou regroupons de $k=1$ à $2020$ (qui comprend 1010 paires) en gardant le dernier terme impair isolé :
+\[
+S = \sum_{m=1}^{1010} \left[-(2m-1)^2 + (2m)^2\right] - 2021^2.
+\]
+La somme des paires est :
+\[
+\sum_{m=1}^{1010} \left[(2m-1) + 2m\right] = \sum_{j=1}^{2020} j = \frac{2020 \times 2021}{2} = 1010 \times 2021.
+\]
+Il vient donc :
+\begin{align*}
+S &= 1010 \times 2021 - 2021^2 \\
+&= 2021 \times (1010 - 2021) \\
+&= 2021 \times (-1011) \\
+&= -2\,043\,231.
+\end{align*}
+\end{correctionbox}
+
+\end{document}
