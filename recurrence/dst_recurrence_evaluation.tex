@@ -1,0 +1,1164 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools}
+\usepackage[margin=1.8cm,top=2.2cm,bottom=2.2cm,headheight=14pt]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\tcbuselibrary{skins,breakable}
+\usetikzlibrary{calc,angles,quotes,shapes.geometric,patterns,arrows.meta}
+
+% ----------------------------------------------------
+% PALETTE DE COULEURS ÉLÉGANTE & SOBRE (STYLE MPSI / LLG)
+% ----------------------------------------------------
+\definecolor{primary}{RGB}{18, 48, 100}       % Bleu marine royal
+\definecolor{secondary}{RGB}{130, 25, 35}     % Grenat / Carmin
+\definecolor{forestgreen}{RGB}{24, 110, 50}   % Vert émeraude sombre
+\definecolor{darkamber}{RGB}{170, 95, 10}     % Ambre doré
+\definecolor{royalpurple}{RGB}{85, 35, 135}   % Pourpre / Violet MPSI
+\definecolor{lightgraybg}{RGB}{248, 250, 252} % Gris bleuté ultra clair
+\definecolor{linegray}{RGB}{215, 222, 230}    % Filet de séparation
+
+% ----------------------------------------------------
+% ENVIRONNEMENTS TCOLORBOX
+% ----------------------------------------------------
+% Boîte Énoncé
+\newtcolorbox{enoncebox}[1][]{
+  enhanced,
+  colback=lightgraybg,
+  colframe=primary,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  title={#1},
+  arc=1.5mm,
+  boxrule=0.8pt,
+  left=4mm, right=4mm, top=3mm, bottom=3mm,
+  breakable
+}
+
+% Boîte Corrigé
+\newtcolorbox{correctionbox}[1][]{
+  enhanced,
+  colback=forestgreen!4!white,
+  colframe=forestgreen!85!black,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  title={#1},
+  arc=1.5mm,
+  boxrule=0.8pt,
+  left=4mm, right=4mm, top=3mm, bottom=3mm,
+  breakable
+}
+
+% Boîte Méthode & Vigilance (Conseils du correcteur LLG)
+\newtcolorbox{vigilancebox}[1][]{
+  enhanced,
+  colback=darkamber!5!white,
+  colframe=darkamber!90!black,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily\small,
+  title={\textsc{Rigueur \& Rédaction : Les Pièges Classiques} \hfill #1},
+  arc=1.2mm,
+  boxrule=0.7pt,
+  left=3.5mm, right=3.5mm, top=2.5mm, bottom=2.5mm,
+  breakable
+}
+
+% Boîte Prolongement Mathématique (Niveau Prépa MPSI / Concours Général)
+\newtcolorbox{prolongementbox}[1][]{
+  enhanced,
+  colback=royalpurple!4!white,
+  colframe=royalpurple!85!black,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  title={\textsc{Prolongement Mathématique \& Culturel (MPSI / Approfondissement)} \hfill #1},
+  arc=1.5mm,
+  boxrule=0.8pt,
+  left=4mm, right=4mm, top=3mm, bottom=3mm,
+  breakable
+}
+
+% Badge de barème
+\newcommand{\bareme}[1]{\hfill\textbf{\textcolor{secondary}{\sffamily[#1]}}}
+\newcommand{\pts}[1]{\textbf{\textcolor{secondary}{\sffamily(#1)}}}
+
+% Macros mathématiques usuelles
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\dsp}{\displaystyle}
+
+% ----------------------------------------------------
+% CONFIGURATION DES EN-TÊTES ET PIEDS DE PAGE
+% ----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\footnotesize\sffamily\textbf{Lycée Louis-le-Grand} --- Classe de 1\iere{}E3 (Spécialité Maths)}
+\chead{\footnotesize\sffamily\textbf{DST Récurrence} --- Énoncé \& Corrigé Détaillé}
+\rhead{\footnotesize\sffamily 16 décembre 2021}
+\lfoot{\footnotesize\sffamily Soutien Scolaire d'Excellence --- Mathématiques}
+\rfoot{\footnotesize\sffamily Page \thepage{} / \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primary,
+  urlcolor=primary,
+  citecolor=secondary,
+  pdfauthor={Enseignant MPSI / Soutien Scolaire LLG},
+  pdftitle={DST Récurrence 1E3 - Sujet et Corrigé Intégral}
+}
+
+% ----------------------------------------------------
+% DÉBUT DU DOCUMENT
+% ----------------------------------------------------
+\begin{document}
+
+% ----------------------------------------------------
+% CARTOUCHE DE PRÉSENTATION OFFICIEL
+% ----------------------------------------------------
+\begin{center}
+  {\fontsize{17}{21}\selectfont\textbf{\textsc{Devoir Sur Table n°3 : Le Raisonnement par Récurrence}}}\\[4pt]
+  {\large\sffamily\textbf{Classe de Première 3 (Spécialité Mathématiques) --- 16 décembre 2021}}\\[2pt]
+  {\small\sffamily Niveau : Lycée Louis-le-Grand / Préparation aux Classes Préparatoires (MPSI-PCSI)}\\[6pt]
+  \rule{0.9\textwidth}{0.8pt}
+\end{center}
+
+\vspace{-0.3cm}
+
+\begin{tcolorbox}[enhanced, colback=white, colframe=linegray, boxrule=0.6pt, arc=1mm]
+\begin{tabularx}{\textwidth}{lXr}
+  \textbf{Durée de l'épreuve :} 2 heures & \textbf{Calculatrice :} Interdite (calcul formel et arithmétique manuels) & \textbf{Total :} 20 points + 2 bonus \\
+  \textbf{Notions testées :} & \multicolumn{2}{l}{Suites récurrentes, inégalités, géométrie pythagoricienne, sommes télescopiques, arithmétique.}
+\end{tabularx}
+\end{tcolorbox}
+
+\vspace{0.1cm}
+
+% Tableau récapitulatif du barème
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabularx}{\textwidth}{|c|X|c|c|}
+\hline
+\textbf{Exercice} & \textbf{Objet d'étude \& Thématique mathématique} & \textbf{Questions} & \textbf{Barème} \\
+\hline
+\textbf{Exercice 1} & Suite arithmético-géométrique : monotonie, minoration et terme général & 3 & \textbf{4 points} \\
+\hline
+\textbf{Exercice 2} & Géométrie euclidienne : la Spirale de Théodore de Cyrène ($\sqrt{n}$) & 3 & \textbf{4 points} \\
+\hline
+\textbf{Exercice 3} & Sommation cubique, conjecture inductive et formule du binôme & 3 & \textbf{4 points} \\
+\hline
+\textbf{Exercice 4} & Somme alternée d'entiers $\sum_{i=1}^n (-1)^i i$ et factorisations fines & 1 & \textbf{4 points} \\
+\hline
+\textbf{Exercice 5} & Arithmétique décimale : puissances de $10$ modulo $3$ et somme des chiffres & 2 & \textbf{4 points} \\
+\hline
+\textbf{Bonus} & Démonstration directe non inductive par télescopage cubique & 1 & \textbf{+2 points} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{Total général indicatif}} & \textbf{20 pts (+ 2 bonus)} \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{center}
+  \large\textbf{\textsc{Partie I : Énoncés Complets du Devoir}}
+\end{center}
+
+% ----------------------------------------------------
+% ÉNONCÉ EXERCICE 1
+% ----------------------------------------------------
+\begin{enoncebox}[Exercice 1 \bareme{4 points}]
+Soit $(u_n)$ la suite numérique définie par :
+\[
+\begin{cases}
+u_0 = 6 \\
+u_{n+1} = \dfrac{1}{2}u_n - 1 \quad (n \in \N)
+\end{cases}
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Montrer que la suite $(u_n)$ est décroissante. \bareme{1,25 pt}
+    \item Montrer que la suite est minorée par $-2$. \bareme{1,25 pt}
+    \item Montrer que pour tout $n \in \N$, $u_n = 2\left(2^{2-n} - 1\right)$. \bareme{1,5 pt}
+\end{enumerate}
+\end{enoncebox}
+
+% ----------------------------------------------------
+% ÉNONCÉ EXERCICE 2
+% ----------------------------------------------------
+\begin{enoncebox}[Exercice 2 --- La Spirale de Théodore de Cyrène \bareme{4 points}]
+Dans la figure ci-dessous, le triangle $OA_1A_2$ est un triangle rectangle isocèle en $A_1$ tel que $OA_1 = 1$.\\
+Pour $n \in \N^*$, on construit des triangles rectangles $OA_n A_{n+1}$ successifs d'hypothénuses $OA_{n+1}$ avec $A_k A_{k+1} = 1$ comme sur la figure ci-dessous.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=latex, line cap=round, line join=round]
+  % Point d'origine O
+  \coordinate (O) at (0,0);
+  \fill[black] (O) circle (1.8pt);
+  \node[below=3pt, font=\small] at (O) {$O$};
+
+  % Coordonnées exactes des sommets A1 à A7
+  \coordinate (A1) at (1.800, 0.000);
+  \coordinate (A2) at (1.800, 1.800);
+  \coordinate (A3) at (0.527, 3.073);
+  \coordinate (A4) at (-1.247, 3.377);
+  \coordinate (A5) at (-2.935, 2.754);
+  \coordinate (A6) at (-4.167, 1.441);
+  \coordinate (A7) at (-4.755, -0.260);
+
+  % Remplissages discrets des triangles
+  \fill[primary!7] (O) -- (A1) -- (A2) -- cycle;
+  \fill[primary!12] (O) -- (A2) -- (A3) -- cycle;
+  \fill[primary!7] (O) -- (A3) -- (A4) -- cycle;
+  \fill[primary!12] (O) -- (A4) -- (A5) -- cycle;
+  \fill[primary!7] (O) -- (A5) -- (A6) -- cycle;
+
+  % Rayons / Hypoténuses OA_k
+  \draw[thick, primary!80!black] (O) -- (A1) node[midway, below=2pt, font=\footnotesize] {$1$};
+  \draw[thick, primary!80!black] (O) -- (A2) node[midway, above left=-1pt, font=\scriptsize] {$OA_2$};
+  \draw[thick, primary!80!black] (O) -- (A3);
+  \draw[thick, primary!80!black] (O) -- (A4);
+  \draw[thick, primary!80!black] (O) -- (A5);
+  \draw[thick, primary!80!black] (O) -- (A6);
+  \draw[dashed, thick, gray!60] (O) -- (A7);
+
+  % Côtés extérieurs orthogonaux de longueur 1
+  \draw[very thick, secondary] (A1) -- (A2) node[midway, right=2pt, font=\footnotesize] {$1$};
+  \draw[very thick, secondary] (A2) -- (A3) node[midway, above right=1pt, font=\footnotesize] {$1$};
+  \draw[very thick, secondary] (A3) -- (A4) node[midway, above=2pt, font=\footnotesize] {$1$};
+  \draw[very thick, secondary] (A4) -- (A5) node[midway, above left=1pt, font=\footnotesize] {$1$};
+  \draw[very thick, secondary] (A5) -- (A6) node[midway, left=2pt, font=\footnotesize] {$1$};
+  \draw[dashed, very thick, secondary!60] (A6) -- (A7);
+
+  % Symboles d'angle droit en A1, A2, A3, A4, A5
+  \draw[black!60, thin] (1.55, 0) -- (1.55, 0.25) -- (1.8, 0.25);
+  \draw[black!60, thin] ($(A2)!3.2mm!(O)$) -- ($($(A2)!3.2mm!(O)$)+($(A2)!3.2mm!(A3)$)-(A2)$) -- ($(A2)!3.2mm!(A3)$);
+  \draw[black!60, thin] ($(A3)!3.2mm!(O)$) -- ($($(A3)!3.2mm!(O)$)+($(A3)!3.2mm!(A4)$)-(A3)$) -- ($(A3)!3.2mm!(A4)$);
+  \draw[black!60, thin] ($(A4)!3.2mm!(O)$) -- ($($(A4)!3.2mm!(O)$)+($(A4)!3.2mm!(A5)$)-(A4)$) -- ($(A4)!3.2mm!(A5)$);
+  \draw[black!60, thin] ($(A5)!3.2mm!(O)$) -- ($($(A5)!3.2mm!(O)$)+($(A5)!3.2mm!(A6)$)-(A5)$) -- ($(A5)!3.2mm!(A6)$);
+
+  % Sommets
+  \fill[black] (A1) circle (1.6pt) node[below right, font=\small] {$A_1$};
+  \fill[black] (A2) circle (1.6pt) node[right=2pt, font=\small] {$A_2$};
+  \fill[black] (A3) circle (1.6pt) node[above right=1pt, font=\small] {$A_3$};
+  \fill[black] (A4) circle (1.6pt) node[above=2pt, font=\small] {$A_4$};
+  \fill[black] (A5) circle (1.6pt) node[above left=1pt, font=\small] {$A_5$};
+  \fill[black] (A6) circle (1.6pt) node[left=2pt, font=\small] {$A_6$};
+
+  \node[font=\large] at (-3.2, 0.2) {$\dots$};
+\end{tikzpicture}
+\end{center}
+
+\noindent Conjecturer puis démontrer l'expression de $OA_n$ en fonction de $n$ pour $n \in \N^*$.
+\end{enoncebox}
+
+% ----------------------------------------------------
+% ÉNONCÉ EXERCICE 3
+% ----------------------------------------------------
+\begin{enoncebox}[Exercice 3 \bareme{4 points}]
+Soit $(u_n)$ la suite définie par :
+\[
+\begin{cases}
+u_0 = 0 \\
+u_{n+1} = u_n + 3n(n+1) + 1 \quad (n \in \N)
+\end{cases}
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Calculer $u_1$, $u_2$ et $u_3$. \bareme{1 pt}
+    \item Conjecturer l'expression de $u_n$ en fonction de $n$. \bareme{0,5 pt}
+    \item Démontrer la conjecture par récurrence. \bareme{2,5 pts}
+\end{enumerate}
+\end{enoncebox}
+
+% ----------------------------------------------------
+% ÉNONCÉ EXERCICE 4
+% ----------------------------------------------------
+\begin{enoncebox}[Exercice 4 \bareme{4 points}]
+Montrer que pour tout $n \in \N^*$ :
+\[
+\sum_{i=1}^n (-1)^i \, i = \frac{(-1)^n (2n+1) - 1}{4}
+\]
+\end{enoncebox}
+
+% ----------------------------------------------------
+% ÉNONCÉ EXERCICE 5
+% ----------------------------------------------------
+\begin{enoncebox}[Exercice 5 \bareme{4 points}]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Montrer que pour tout entier naturel $n$, il existe un entier naturel $b_n$ tel que :
+    \[
+    10^n = 3b_n + 1
+    \] \bareme{2 pts}
+    \item En déduire que si $a_0, a_1, \dots, a_p$ sont des entiers naturels, alors :
+    \[
+    \left( 3 \text{ divise } \sum_{k=0}^p a_k 10^k \right) \iff \left( 3 \text{ divise } \sum_{k=0}^p a_k \right)
+    \]
+    Interprétez cette équivalence arithmétique. \bareme{2 pts}
+\end{enumerate}
+\end{enoncebox}
+
+% ----------------------------------------------------
+% ÉNONCÉ DU BONUS
+% ----------------------------------------------------
+\begin{enoncebox}[Bonus (+2 points)]
+Démontrer la conjecture de l'exercice 3 de façon directe (sans raisonnement par récurrence). \bareme{+2 pts}
+\end{enoncebox}
+
+\newpage
+
+% ----------------------------------------------------
+% PARTIE II : CORRIGÉS DÉTAILLÉS & MÉTHODOLOGIE
+% ----------------------------------------------------
+\begin{center}
+  \large\textbf{\textsc{Partie II : Corrigé Exhaustif, Barème Détaillé \& Prolongements}}
+\end{center}
+
+\vspace{0.2cm}
+
+% ----------------------------------------------------
+% CORRIGÉ EXERCICE 1
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 1}
+
+\begin{correctionbox}[Corrigé de l'Exercice 1 \bareme{Total : 4 points}]
+La suite $(u_n)_{n \in \N}$ est définie par $u_0 = 6$ et pour tout $n \in \N$, $u_{n+1} = \dfrac{1}{2}u_n - 1$.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Démontrons par récurrence que la suite $(u_n)$ est strictement décroissante.} \bareme{1,25 pt}
+
+    Pour tout $n \in \N$, introduisons le prédicat :
+    \[
+    \mathcal{P}(n) : \quad \ll u_n > u_{n+1} \gg
+    \]
+    
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item \textbf{Initialisation ($n = 0$) :} \pts{0,25 pt}\\
+        Le premier terme est $u_0 = 6$.\\
+        Calculons le terme suivant grâce à la relation de récurrence :
+        \[
+        u_1 = \frac{1}{2} u_0 - 1 = \frac{1}{2} \times 6 - 1 = 3 - 1 = 2
+        \]
+        Puisque $6 > 2$, l'inégalité $u_0 > u_1$ est satisfaite.\\
+        Ainsi, la propriété $\mathcal{P}(0)$ est vraie.
+
+        \item \textbf{Hérédité :} \pts{0,75 pt}\\
+        Soit $k \in \N$ un entier fixé quelconque.\\
+        Supposons que la propriété $\mathcal{P}(k)$ soit vraie, c'est-à-dire que $u_k > u_{k+1}$ (\textbf{Hypothèse de Récurrence}).\\
+        Montrons que la propriété $\mathcal{P}(k+1)$ est vraie, c'est-à-dire que $u_{k+1} > u_{k+2}$.\\
+        
+        Partons de l'hypothèse de récurrence :
+        \[
+        u_k > u_{k+1}
+        \]
+        La fonction affine $x \mapsto \dfrac{1}{2}x - 1$ a pour coefficient directeur $\dfrac{1}{2} > 0$ ; elle est donc strictement croissante sur $\R$. En multipliant les deux membres par le réel strictement positif $\dfrac{1}{2}$ :
+        \[
+        \frac{1}{2}u_k > \frac{1}{2}u_{k+1}
+        \]
+        En retranchant le réel $1$ à chaque membre de l'inégalité :
+        \[
+        \frac{1}{2}u_k - 1 > \frac{1}{2}u_{k+1} - 1
+        \]
+        Or, par définition même de la suite récurrente :
+        \[
+        \frac{1}{2}u_k - 1 = u_{k+1} \quad \text{et} \quad \frac{1}{2}u_{k+1} - 1 = u_{k+2}
+        \]
+        On en déduit donc immédiatement :
+        \[
+        u_{k+1} > u_{k+2}
+        \]
+        Le prédicat $\mathcal{P}(k+1)$ est ainsi démontré. L'hérédité est établie pour tout $k \in \N$.
+
+        \item \textbf{Conclusion :} \pts{0,25 pt}\\
+        La propriété $\mathcal{P}(0)$ est initialisée et pour tout $k \in \N$, $\mathcal{P}(k) \implies \mathcal{P}(k+1)$.\\
+        D'après le principe de récurrence simple, $\mathcal{P}(n)$ est vraie pour tout tout entier naturel $n \in \N$.\\
+        Par conséquent, $\forall n \in \N, \; u_n > u_{n+1}$ : la suite $(u_n)_{n \in \N}$ est \textbf{strictement décroissante}.
+    \end{itemize}
+
+    \item \textbf{Démontrons par récurrence que la suite $(u_n)$ est minorée par $-2$.} \bareme{1,25 pt}
+
+    Pour tout $n \in \N$, définissons le prédicat :
+    \[
+    \mathcal{Q}(n) : \quad \ll u_n > -2 \gg
+    \]
+
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item \textbf{Initialisation ($n = 0$) :} \pts{0,25 pt}\\
+        $u_0 = 6$. Comme $6 > -2$, le prédicat $\mathcal{Q}(0)$ est rigoureusement vérifié.
+
+        \item \textbf{Hérédité :} \pts{0,75 pt}\\
+        Soit $k \in \N$. Supposons que $\mathcal{Q}(k)$ soit vraie, c'est-à-dire que $u_k > -2$ (\textbf{H.R.}).\\
+        Montrons que $\mathcal{Q}(k+1)$ est vraie, à savoir $u_{k+1} > -2$.\\
+        
+        En multipliant l'inégalité de l'hypothèse de récurrence par $\dfrac{1}{2} > 0$ :
+        \[
+        u_k > -2 \implies \frac{1}{2}u_k > \frac{1}{2} \times (-2) \iff \frac{1}{2}u_k > -1
+        \]
+        En soustrayant $1$ aux deux membres :
+        \[
+        \frac{1}{2}u_k - 1 > -1 - 1 \iff \frac{1}{2}u_k - 1 > -2
+        \]
+        Or, le membre de gauche correspond exactement à $u_{k+1}$. Il s'ensuit que :
+        \[
+        u_{k+1} > -2
+        \]
+        L'implication $\mathcal{Q}(k) \implies \mathcal{Q}(k+1)$ est donc vérifiée pour tout $k \in \N$.
+
+        \item \textbf{Conclusion :} \pts{0,25 pt}\\
+        Le principe de récurrence garantit que pour tout entier naturel $n \in \N$, $u_n > -2$.\\
+        La suite $(u_n)_{n \in \N}$ est donc \textbf{strictement minorée par $-2$}.
+    \end{itemize}
+
+    \item \textbf{Démontrons par récurrence que pour tout $n \in \N$, $u_n = 2\left(2^{2-n} - 1\right)$.} \bareme{1,5 pt}
+
+    Pour tout $n \in \N$, notons le prédicat :
+    \[
+    \mathcal{R}(n) : \quad \ll u_n = 2\left(2^{2-n} - 1\right) \gg
+    \]
+    Remarquons que cette formule s'écrit de manière équivalente :
+    \[
+    u_n = 2 \cdot 2^{2-n} - 2 = 2^{3-n} - 2 = 8 \left(\frac{1}{2}\right)^n - 2
+    \]
+
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item \textbf{Initialisation ($n = 0$) :} \pts{0,25 pt}\\
+        D'une part, par donnée de l'énoncé, le membre de gauche vaut : $u_0 = 6$.\\
+        D'autre part, en évaluant l'expression du membre de droite pour $n = 0$ :
+        \[
+        2\left(2^{2-0} - 1\right) = 2\left(2^2 - 1\right) = 2(4 - 1) = 2 \times 3 = 6
+        \]
+        Les deux membres coïncident parfaitement : $u_0 = 2\left(2^{2-0} - 1\right)$.\\
+        L'initialisation $\mathcal{R}(0)$ est donc avérée.
+
+        \item \textbf{Hérédité :} \pts{1,0 pt}\\
+        Soit $k \in \N$. Supposons que $\mathcal{R}(k)$ soit vraie, c'est-à-dire que :
+        \[
+        u_k = 2\left(2^{2-k} - 1\right) \quad \text{(\textbf{H.R.})}
+        \]
+        Montrons que $\mathcal{R}(k+1)$ est vraie, c'est-à-dire que :
+        \[
+        u_{k+1} = 2\left(2^{2-(k+1)} - 1\right) = 2\left(2^{1-k} - 1\right)
+        \]
+        Injectons l'hypothèse de récurrence dans la relation définissant $u_{k+1}$ :
+        \begin{align*}
+        u_{k+1} &= \frac{1}{2} u_k - 1 \\
+                &= \frac{1}{2} \left[ 2\left(2^{2-k} - 1\right) \right] - 1 \\
+                &= \left(2^{2-k} - 1\right) - 1 \quad \text{(car $\frac{1}{2} \times 2 = 1$)} \\
+                &= 2^{2-k} - 2
+        \end{align*}
+        Mettons à présent le facteur $2$ en évidence :
+        \[
+        u_{k+1} = 2\left(2^{1-k} - 1\right) = 2\left(2^{2-(k+1)} - 1\right)
+        \]
+        Ce qui correspond très exactement à la proposition $\mathcal{R}(k+1)$. L'hérédité est prouvée.
+
+        \item \textbf{Conclusion :} \pts{0,25 pt}\\
+        Par le principe de récurrence, pour tout $n \in \N$ :
+        \[
+        u_n = 2\left(2^{2-n} - 1\right) = 2^{3-n} - 2 = 8 \left(\frac{1}{2}\right)^n - 2
+        \]
+    \end{itemize}
+\end{enumerate}
+\end{correctionbox}
+
+\begin{vigilancebox}
+\textbf{Erreur classique n°1 :} Ne jamais écrire en amorce d'hérédité « \emph{Supposons que pour tout $k$, $\mathcal{P}(k)$ est vraie} ». Cela reviendrait à supposer ce que l'on cherche à démontrer ! Il faut fixer \textbf{un} entier quelconque $k$ et supposer $\mathcal{P}(k)$ pour \textbf{cet} entier.\\
+\textbf{Erreur classique n°2 :} Ne pas oublier de citer le sens de variation de la fonction affine sous-jacente ou de justifier que multiplier par $\dfrac{1}{2} > 0$ conserve le sens des inégalités.
+\end{vigilancebox}
+
+\begin{prolongementbox}[Théorie générale des suites arithmético-géométriques]
+Toute suite de la forme $u_{n+1} = a u_n + b$ avec $a \neq 1$ admet un unique \textbf{point fixe} $\ell$, solution de l'équation $\ell = a \ell + b \iff \ell = \dfrac{b}{1-a}$.
+Ici, avec $a = \frac{1}{2}$ et $b = -1$ :
+\[
+\ell = \frac{1}{2}\ell - 1 \iff \frac{1}{2}\ell = -1 \iff \ell = -2
+\]
+En posant la suite auxiliaire $v_n = u_n - \ell = u_n - (-2) = u_n + 2$, on a :
+\[
+v_{n+1} = u_{n+1} + 2 = \left(\frac{1}{2}u_n - 1\right) + 2 = \frac{1}{2}u_n + 1 = \frac{1}{2}(u_n + 2) = \frac{1}{2}v_n
+\]
+$(v_n)$ est donc une suite géométrique de raison $q = \frac{1}{2}$ et de premier terme $v_0 = u_0 + 2 = 6 + 2 = 8$.
+Ainsi :
+\[
+v_n = 8 \left(\frac{1}{2}\right)^n \implies u_n = v_n - 2 = 8 \left(\frac{1}{2}\right)^n - 2 = 2\left(2^{2-n} - 1\right)
+\]
+Puisque $|q| = \frac{1}{2} < 1$, on a $\lim_{n \to +\infty} \left(\frac{1}{2}\right)^n = 0$, donc $\lim_{n \to +\infty} u_n = -2$.
+Ce résultat confirme le \textbf{théorème de convergence monotone} : toute suite décroissante et minorée converge vers sa borne inférieure.
+\end{prolongementbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% CORRIGÉ EXERCICE 2
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 2}
+
+\begin{correctionbox}[Corrigé de l'Exercice 2 \bareme{Total : 4 points}]
+\textbf{Contexte géométrique :} Le premier triangle $OA_1A_2$ est rectangle en $A_1$ avec $OA_1 = 1$ et $A_1A_2 = 1$.\\
+Pour tout $n \in \N^*$, le triangle $OA_n A_{n+1}$ est rectangle en $A_n$, d'hypoténuse $OA_{n+1}$, et son côté adjacent vérifie $A_n A_{n+1} = 1$.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Calcul des premières longueurs (premiers termes) :} \bareme{1,0 pt}
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item Pour $n = 1$ : $OA_1 = 1 = \sqrt{1}$.
+        \item Dans le triangle $OA_1A_2$ rectangle en $A_1$, le théorème de Pythagore s'énonce :
+        \[
+        OA_2^2 = OA_1^2 + A_1A_2^2 = 1^2 + 1^2 = 1 + 1 = 2
+        \]
+        Puisque $OA_2$ est une distance géométrique ($OA_2 > 0$) :
+        \[
+        OA_2 = \sqrt{2} \bareme{0,5 pt}
+        \]
+        \item Dans le triangle $OA_2A_3$ rectangle en $A_2$, le théorème de Pythagore fournit :
+        \[
+        OA_3^2 = OA_2^2 + A_2A_3^2 = \left(\sqrt{2}\right)^2 + 1^2 = 2 + 1 = 3
+        \]
+        Puisque $OA_3 > 0$ :
+        \[
+        OA_3 = \sqrt{3} \bareme{0,5 pt}
+        \]
+    \end{itemize}
+
+    \item \textbf{Formulation de la conjecture :} \bareme{0,5 pt}\\
+    En calculant le terme suivant, on trouve $OA_4 = \sqrt{OA_3^2 + 1^2} = \sqrt{3 + 1} = \sqrt{4} = 2$.\\
+    Les premiers termes de la suite de longueurs $(OA_n)_{n \in \N^*}$ sont donc $\sqrt{1}, \sqrt{2}, \sqrt{3}, \sqrt{4}, \dots$\\
+    On conjecture que pour tout entier $n \in \N^*$ :
+    \[
+    OA_n = \sqrt{n}
+    \]
+
+    \item \textbf{Démonstration de la conjecture par récurrence :} \bareme{1,5 pt}
+
+    Pour tout $n \in \N^*$, définissons la propriété :
+    \[
+    \mathcal{P}(n) : \quad \ll OA_n = \sqrt{n} \gg
+    \]
+
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item \textbf{Initialisation ($n = 1$) :} \pts{0,25 pt}\\
+        Pour $n = 1$, $OA_1 = 1$. Or $\sqrt{1} = 1$.\\
+        L'égalité $OA_1 = \sqrt{1}$ est vérifiée : la propriété $\mathcal{P}(1)$ est vraie.
+
+        \item \textbf{Hérédité :} \pts{1,0 pt}\\
+        Soit $k \in \N^*$ un entier naturel fixé non nul.\\
+        Supposons que $\mathcal{P}(k)$ soit vraie, à savoir $OA_k = \sqrt{k}$ (\textbf{Hypothèse de Récurrence}).\\
+        Montrons que $\mathcal{P}(k+1)$ est vraie, c'est-à-dire que $OA_{k+1} = \sqrt{k+1}$.\\
+        
+        Considérons le triangle $OA_k A_{k+1}$. Par hypothèse géométrique de construction de la spirale, ce triangle est rectangle en $A_k$ et le côté $A_k A_{k+1}$ a pour longueur $1$.\\
+        D'après le \textbf{théorème de Pythagore} appliqué à ce triangle :
+        \[
+        OA_{k+1}^2 = OA_k^2 + A_k A_{k+1}^2
+        \]
+        Or, d'après l'hypothèse de récurrence, $OA_k = \sqrt{k}$, d'où $OA_k^2 = \left(\sqrt{k}\right)^2 = k$.\\
+        De plus, $A_k A_{k+1}^2 = 1^2 = 1$.\\
+        En remplaçant ces valeurs dans l'égalité pythagoricienne :
+        \[
+        OA_{k+1}^2 = k + 1
+        \]
+        $OA_{k+1}$ désignant une longueur géométrique, c'est un nombre réel strictement positif. Par passage à la racine carrée :
+        \[
+        OA_{k+1} = \sqrt{k+1}
+        \]
+        La proposition $\mathcal{P}(k+1)$ est donc exacte. L'hérédité est validée pour tout $k \in \N^*$.
+
+        \item \textbf{Conclusion :} \pts{0,25 pt}\\
+        La propriété est vraie au rang initial $n = 1$ et est héréditaire pour tout $n \ge 1$.\\
+        Par le principe de récurrence, pour tout $n \in \N^*$ :
+        \[
+        OA_n = \sqrt{n}
+        \]
+    \end{itemize}
+
+    \item \textbf{Synthèse géométrique et figure d'ensemble :} \bareme{1,0 pt}
+\end{enumerate}
+\end{correctionbox}
+
+\begin{prolongementbox}[La Spirale de Théodore dans l'Histoire et le dialogue du \emph{Théétète}]
+La construction de cette figure remonte au philosophe et mathématicien présocratique \textbf{Théodore de Cyrène} (V\ieme{} siècle av. J.-C.), maître de mathématiques de Platon. Dans le célèbre dialogue platonicien du \emph{Théétète} (147d--148b), Théodore expose la démonstration de l'incommensurabilité (l'irrationalité) des racines carrées d'entiers qui ne sont pas des carrés parfaits :
+\begin{quote}
+\og Théodore nous avait tracé des figures pour nous faire voir que les côtés des carrés de 3 pieds et de 5 pieds ne sont pas commensurables en longueur avec celui d'un pied, et il prit ainsi chaque cas particulier jusqu'à celui de 17 pieds, où il s'arrêta. \fg
+\end{quote}
+
+\textbf{Pourquoi Théodore s'est-il arrêté précisément à $\sqrt{17}$ ?}\\
+La réponse tient à la géométrie même de la spirale : à chaque étape, l'angle au sommet $O$ du triangle rectangle vaut :
+\[
+\alpha_k = \widehat{A_k O A_{k+1}} = \arctan\left(\frac{A_k A_{k+1}}{OA_k}\right) = \arctan\left(\frac{1}{\sqrt{k}}\right)
+\]
+L'angle polaire total cumulé après $n$ triangles vaut donc $\Theta(n) = \sum_{k=1}^n \arctan\left(\frac{1}{\sqrt{k}}\right)$.\\
+Or :
+\begin{align*}
+\Theta(16) &= \sum_{k=1}^{16} \arctan\left(\frac{1}{\sqrt{k}}\right) \approx 351{,}15^\circ < 360^\circ = 2\pi\text{ rad} \\
+\Theta(17) &= \Theta(16) + \arctan\left(\frac{1}{\sqrt{17}}\right) \approx 351{,}15^\circ + 13{,}63^\circ = 364{,}78^\circ > 360^\circ
+\end{align*}
+C'est donc au 17\ieme{} triangle ($OA_{16}A_{17}$) que la spirale effectue son premier tour complet sans jamais se croiser. Ajouter un 18\ieme{} triangle ferait chevaucher le segment initial $[OA_1]$ !
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1, >=latex, line cap=round, line join=round]
+  \coordinate (O) at (0,0);
+  \fill[black] (O) circle (1.8pt);
+  \node[below left=2pt, font=\small] at (O) {$O$};
+
+  % Coordonnées de la spirale complète (s = 1.05 cm)
+  \coordinate (B1) at (1.050, 0.000);
+  \coordinate (B2) at (1.050, 1.050);
+  \coordinate (B3) at (0.308, 1.792);
+  \coordinate (B4) at (-0.727, 1.970);
+  \coordinate (B5) at (-1.712, 1.606);
+  \coordinate (B6) at (-2.431, 0.841);
+  \coordinate (B7) at (-2.774, -0.152);
+  \coordinate (B8) at (-2.717, -1.200);
+  \coordinate (B9) at (-2.292, -2.161);
+  \coordinate (B10) at (-1.572, -2.925);
+  \coordinate (B11) at (-0.647, -3.422);
+  \coordinate (B12) at (0.385, -3.617);
+  \coordinate (B13) at (1.429, -3.506);
+  \coordinate (B14) at (2.401, -3.110);
+  \coordinate (B15) at (3.232, -2.468);
+  \coordinate (B16) at (3.869, -1.633);
+  \coordinate (B17) at (4.278, -0.666);
+
+  % Remplissage en dégradé subtil
+  \foreach \i/\j/\c in {1/2/5, 2/3/9, 3/4/13, 4/5/17, 5/6/21, 6/7/25, 7/8/29, 8/9/33, 9/10/37, 10/11/41, 11/12/45, 12/13/49, 13/14/53, 14/15/57, 15/16/61, 16/17/65} {
+    \fill[royalpurple!\c!white] (O) -- (B\i) -- (B\j) -- cycle;
+    \draw[thin, black!35] (O) -- (B\j);
+    \draw[thick, secondary] (B\i) -- (B\j);
+  }
+  \draw[thick, primary] (O) -- (B1);
+
+  % Étiquettes des hypoténuses
+  \node[below, font=\tiny] at ($(O)!0.5!(B1)$) {$1$};
+  \node[above left=-2pt, font=\tiny] at ($(O)!0.5!(B2)$) {$\sqrt{2}$};
+  \node[above=1pt, font=\tiny] at ($(O)!0.5!(B3)$) {$\sqrt{3}$};
+  \node[left=1pt, font=\tiny] at ($(O)!0.5!(B4)$) {$\sqrt{4}$};
+  \node[left=1pt, font=\tiny] at ($(O)!0.5!(B5)$) {$\sqrt{5}$};
+  \node[left=1pt, font=\tiny] at ($(O)!0.5!(B6)$) {$\sqrt{6}$};
+  \node[left=1pt, font=\tiny] at ($(O)!0.5!(B7)$) {$\sqrt{7}$};
+  \node[below left=1pt, font=\tiny] at ($(O)!0.5!(B8)$) {$\sqrt{8}$};
+  \node[below left=1pt, font=\tiny] at ($(O)!0.5!(B9)$) {$\sqrt{9}$};
+  \node[below=1pt, font=\tiny] at ($(O)!0.5!(B10)$) {$\sqrt{10}$};
+  \node[below=1pt, font=\tiny] at ($(O)!0.5!(B11)$) {$\sqrt{11}$};
+  \node[below=1pt, font=\tiny] at ($(O)!0.5!(B12)$) {$\sqrt{12}$};
+  \node[below right=1pt, font=\tiny] at ($(O)!0.5!(B13)$) {$\sqrt{13}$};
+  \node[below right=1pt, font=\tiny] at ($(O)!0.5!(B14)$) {$\sqrt{14}$};
+  \node[right=1pt, font=\tiny] at ($(O)!0.5!(B15)$) {$\sqrt{15}$};
+  \node[right=1pt, font=\tiny] at ($(O)!0.5!(B16)$) {$\sqrt{16}$};
+  \node[right=1pt, font=\tiny] at ($(O)!0.5!(B17)$) {$\sqrt{17}$};
+
+  % Sommets
+  \foreach \k in {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17} {
+    \fill[black] (B\k) circle (1.2pt);
+  }
+  \node[right, font=\scriptsize] at (B1) {$A_1$};
+  \node[above right, font=\scriptsize] at (B2) {$A_2$};
+  \node[above, font=\scriptsize] at (B4) {$A_4$};
+  \node[left, font=\scriptsize] at (B7) {$A_7$};
+  \node[below left, font=\scriptsize] at (B10) {$A_{10}$};
+  \node[below, font=\scriptsize] at (B12) {$A_{12}$};
+  \node[below right, font=\scriptsize] at (B14) {$A_{14}$};
+  \node[right, font=\scriptsize] at (B17) {$A_{17}$};
+
+  % Arc de cercle indiquant la fermeture angulaire à 351°
+  \draw[->, thick, primary, dashed] (0.8, 0) arc (0:351.15:0.8);
+  \node[above right, font=\tiny, primary] at (0.85, 0.2) {$\Theta(16) \approx 351{,}15^\circ$};
+\end{tikzpicture}
+\end{center}
+\end{prolongementbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% CORRIGÉ EXERCICE 3
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 3}
+
+\begin{correctionbox}[Corrigé de l'Exercice 3 \bareme{Total : 4 points}]
+La suite $(u_n)_{n \in \N}$ est définie par $u_0 = 0$ et pour tout $n \in \N$, $u_{n+1} = u_n + 3n(n+1) + 1$.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Calcul des premiers termes $u_1$, $u_2$ et $u_3$ :} \bareme{1,0 pt}
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item Pour $n = 0$ :
+        \[
+        u_1 = u_0 + 3 \times 0 \times (0+1) + 1 = 0 + 0 + 1 = 1 \bareme{0,25 pt}
+        \]
+        \item Pour $n = 1$ :
+        \[
+        u_2 = u_1 + 3 \times 1 \times (1+1) + 1 = 1 + 3 \times 2 + 1 = 1 + 6 + 1 = 8 \bareme{0,25 pt}
+        \]
+        \item Pour $n = 2$ :
+        \[
+        u_3 = u_2 + 3 \times 2 \times (2+1) + 1 = 8 + 3 \times 6 + 1 = 8 + 18 + 1 = 27 \bareme{0,5 pt}
+        \]
+    \end{itemize}
+
+    \item \textbf{Conjecture de l'expression de $u_n$ en fonction de $n$ :} \bareme{0,5 pt}\\
+    Dressons le tableau des premiers termes :
+    \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $n$ & 0 & 1 & 2 & 3 \\
+    \hline
+    $u_n$ & $0$ & $1$ & $8$ & $27$ \\
+    \hline
+    $n^3$ & $0^3 = 0$ & $1^3 = 1$ & $2^3 = 8$ & $3^3 = 27$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+    On observe que pour $n \in \{0, 1, 2, 3\}$, on a $u_n = n^3$. On conjecture donc que pour tout $n \in \N$ :
+    \[
+    u_n = n^3
+    \]
+
+    \item \textbf{Démonstration de la conjecture par récurrence :} \bareme{2,5 pts}
+
+    Pour tout $n \in \N$, notons le prédicat :
+    \[
+    \mathcal{P}(n) : \quad \ll u_n = n^3 \gg
+    \]
+
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item \textbf{Initialisation ($n = 0$) :} \pts{0,5 pt}\\
+        D'une part, $u_0 = 0$.\\
+        D'autre part, $0^3 = 0$.\\
+        L'égalité $u_0 = 0^3$ est donc satisfaite. La propriété $\mathcal{P}(0)$ est vraie.
+
+        \item \textbf{Hérédité :} \pts{1,5 pt}\\
+        Soit $k \in \N$ un entier naturel fixé.\\
+        Supposons que $\mathcal{P}(k)$ soit vraie, à savoir :
+        \[
+        u_k = k^3 \quad \text{(\textbf{Hypothèse de Récurrence})}
+        \]
+        Montrons que $\mathcal{P}(k+1)$ est vraie, à savoir :
+        \[
+        u_{k+1} = (k+1)^3
+        \]
+        Par la relation de récurrence liant les termes de la suite :
+        \[
+        u_{k+1} = u_k + 3k(k+1) + 1
+        \]
+        En substituant $u_k$ par sa valeur $k^3$ donnée par l'hypothèse de récurrence :
+        \[
+        u_{k+1} = k^3 + 3k(k+1) + 1
+        \]
+        Développons l'expression algébrique :
+        \[
+        u_{k+1} = k^3 + 3k^2 + 3k + 1
+        \]
+        Or, développons le cube $(k+1)^3$ à l'aide de la formule du binôme de Newton (ou par distributivité usuelle) :
+        \[
+        (k+1)^3 = (k+1)(k+1)^2 = (k+1)(k^2 + 2k + 1) = k^3 + 2k^2 + k + k^2 + 2k + 1 = k^3 + 3k^2 + 3k + 1
+        \]
+        On constate l'égalité parfaite des deux expressions :
+        \[
+        u_{k+1} = (k+1)^3
+        \]
+        La proposition $\mathcal{P}(k+1)$ est ainsi établie. L'hérédité est prouvée pour tout entier $k \in \N$.
+
+        \item \textbf{Conclusion :} \pts{0,5 pt}\\
+        La propriété est initialisée au rang $0$ et est héréditaire.\\
+        D'après le principe de raisonnement par récurrence, pour tout $n \in \N$ :
+        \[
+        u_n = n^3
+        \]
+    \end{itemize}
+\end{enumerate}
+\end{correctionbox}
+
+\begin{vigilancebox}
+\textbf{Conseil de calcul :} La formule du binôme de Newton $(a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3$ doit être maîtrisée sans hésitation en classe préparatoire. Savoir reconnaître immédiatement le développement $k^3 + 3k^2 + 3k + 1 = (k+1)^3$ fait gagner un temps précieux et évite les erreurs de signe.
+\end{vigilancebox}
+
+\begin{prolongementbox}[Formule de Faulhaber et calcul de la somme des carrés]
+L'exercice 3 fournit une méthode directe pour calculer la somme des carrés $\sum_{k=1}^n k^2$ sans connaître la formule à l'avance !\\
+En effet, la relation $u_{k+1} - u_k = 3k(k+1) + 1 = 3k^2 + 3k + 1$ s'écrit :
+\[
+(k+1)^3 - k^3 = 3k^2 + 3k + 1
+\]
+En sommant cette identité pour $k = 1$ jusqu'à $n$ :
+\[
+\sum_{k=1}^n \left( (k+1)^3 - k^3 \right) = 3 \sum_{k=1}^n k^2 + 3 \sum_{k=1}^n k + \sum_{k=1}^n 1
+\]
+Par télescopage, le membre de gauche vaut $(n+1)^3 - 1^3$. Sachant que $\sum_{k=1}^n k = \dfrac{n(n+1)}{2}$ et $\sum_{k=1}^n 1 = n$ :
+\[
+(n+1)^3 - 1 = 3 \sum_{k=1}^n k^2 + 3 \frac{n(n+1)}{2} + n
+\]
+En isolant $\sum_{k=1}^n k^2$, on retrouve la célèbre \textbf{formule de Faulhaber} pour les carrés :
+\[
+\sum_{k=1}^n k^2 = \frac{n(n+1)(2n+1)}{6}
+\]
+Ce principe se généralise à toutes les sommes de puissances $\sum_{k=1}^n k^p$ via les \textbf{polynômes de Bernoulli}.
+\end{prolongementbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% CORRIGÉ EXERCICE 4
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 4}
+
+\begin{correctionbox}[Corrigé de l'Exercice 4 \bareme{Total : 4 points}]
+\textbf{Énoncé :} Pour $n \in \N^*$, on souhaite démontrer par récurrence que :
+\[
+\sum_{i=1}^n (-1)^i \, i = \frac{(-1)^n (2n+1) - 1}{4}
+\]
+
+Pour tout entier naturel non nul $n \in \N^*$, posons le prédicat :
+\[
+\mathcal{P}(n) : \quad \ll \sum_{i=1}^n (-1)^i \, i = \frac{(-1)^n (2n+1) - 1}{4} \gg
+\]
+
+\begin{itemize}[leftmargin=*, label=$\bullet$]
+    \item \textbf{Initialisation ($n = 1$) :} \bareme{1,0 pt}
+    \begin{itemize}[leftmargin=*, label=$-$]
+        \item Calculons la valeur du membre de gauche pour $n = 1$ :
+        \[
+        \sum_{i=1}^1 (-1)^i \, i = (-1)^1 \times 1 = -1 \times 1 = -1
+        \]
+        \item Calculons la valeur du membre de droite pour $n = 1$ :
+        \[
+        \frac{(-1)^1 \big(2(1) + 1\big) - 1}{4} = \frac{-1 \times 3 - 1}{4} = \frac{-3 - 1}{4} = \frac{-4}{4} = -1
+        \]
+    \end{itemize}
+    Les deux membres coïncident rigoureusement : $-1 = -1$.\\
+    Le prédicat $\mathcal{P}(1)$ est donc vérifié.
+
+    \item \textbf{Hérédité :} \bareme{2,5 pts}\\
+    Soit $k \in \N^*$ un entier quelconque fixé.\\
+    Supposons que la propriété $\mathcal{P}(k)$ soit vraie, c'est-à-dire :
+    \[
+    \sum_{i=1}^k (-1)^i \, i = \frac{(-1)^k (2k+1) - 1}{4} \quad \text{(\textbf{Hypothèse de Récurrence})}
+    \]
+    Montrons que $\mathcal{P}(k+1)$ est vraie, c'est-à-dire que :
+    \[
+    \sum_{i=1}^{k+1} (-1)^i \, i = \frac{(-1)^{k+1} \big(2(k+1)+1\big) - 1}{4} = \frac{(-1)^{k+1} (2k+3) - 1}{4}
+    \]
+    
+    Décomposons la somme au rang $k+1$ en isolant son tout dernier terme :
+    \[
+    \sum_{i=1}^{k+1} (-1)^i \, i = \left(\sum_{i=1}^k (-1)^i \, i\right) + (-1)^{k+1} (k+1)
+    \]
+    Par application directe de l'hypothèse de récurrence :
+    \[
+    \sum_{i=1}^{k+1} (-1)^i \, i = \frac{(-1)^k (2k+1) - 1}{4} + (-1)^{k+1} (k+1)
+    \]
+    Réduisons au même dénominateur $4$ :
+    \[
+    \sum_{i=1}^{k+1} (-1)^i \, i = \frac{(-1)^k (2k+1) - 1 + 4 \cdot (-1)^{k+1} (k+1)}{4}
+    \]
+    Utilisons la relation algébrique fondamentale sur les signes alternés :
+    \[
+    (-1)^k = - (-1)^{k+1} \quad \left(\text{en effet, } (-1)^{k+1} = (-1) \times (-1)^k \iff (-1)^k = -(-1)^{k+1}\right)
+    \]
+    Substituons cette égalité dans le numérateur :
+    \begin{align*}
+    \text{Numérateur} &= \Big[ -(-1)^{k+1} \Big] (2k+1) - 1 + 4 \cdot (-1)^{k+1} (k+1) \\
+                      &= (-1)^{k+1} \Big[ -(2k+1) + 4(k+1) \Big] - 1 \\
+                      &= (-1)^{k+1} \Big[ -2k - 1 + 4k + 4 \Big] - 1 \\
+                      &= (-1)^{k+1} (2k + 3) - 1
+    \end{align*}
+    Or, remarquons que $2k + 3 = 2(k+1) + 1$.\\
+    Par conséquent :
+    \[
+    \sum_{i=1}^{k+1} (-1)^i \, i = \frac{(-1)^{k+1} \big(2(k+1)+1\big) - 1}{4}
+    \]
+    La proposition $\mathcal{P}(k+1)$ est ainsi établie. L'hérédité est démontrée pour tout $k \in \N^*$.
+
+    \item \textbf{Conclusion :} \bareme{0,5 pt}\\
+    La propriété $\mathcal{P}(1)$ est vraie et la transmission d'hérédité est assurée pour tout entier $n \ge 1$.\\
+    En vertu du principe de récurrence, pour tout $n \in \N^*$ :
+    \[
+    \sum_{i=1}^n (-1)^i \, i = \frac{(-1)^n (2n+1) - 1}{4}
+    \]
+\end{itemize}
+\end{correctionbox}
+
+\begin{vigilancebox}
+\textbf{Technique de factorisation de $(-1)^n$ :} L'erreur majeure des élèves consiste à développer sans factoriser les puissances de $(-1)$, conduisant à des blocages algébriques insolubles. Il faut systématiquement convertir $(-1)^k$ en $-(-1)^{k+1}$ (ou réciproquement factoriser par $(-1)^k$) pour mettre en facteur commun la puissance au rang cible.
+\end{vigilancebox}
+
+\begin{prolongementbox}[Démonstration alternative sans récurrence : Parité \& Analyse]
+\textbf{1. Approche arithmétique par regroupement selon la parité :}
+Écrivons la somme $S_n = \sum_{i=1}^n (-1)^i i = -1 + 2 - 3 + 4 - 5 + \dots + (-1)^n n$.
+\begin{itemize}[leftmargin=*, label=$\bullet$]
+    \item Si $n = 2m$ est pair, groupons les termes deux par deux :
+    \[
+    S_{2m} = (-1 + 2) + (-3 + 4) + \dots + (-(2m-1) + 2m) = \underbrace{1 + 1 + \dots + 1}_{m \text{ termes}} = m = \frac{n}{2}
+    \]
+    La formule donne : $\dfrac{(-1)^{2m}(2(2m)+1)-1}{4} = \dfrac{1 \cdot (4m+1)-1}{4} = \dfrac{4m}{4} = m$. La formule est vérifiée !
+    \item Si $n = 2m+1$ est impair :
+    \[
+    S_{2m+1} = S_{2m} + (-1)^{2m+1}(2m+1) = m - (2m+1) = -m - 1 = -\frac{n+1}{2}
+    \]
+    La formule donne : $\dfrac{(-1)^{2m+1}(2(2m+1)+1)-1}{4} = \dfrac{-(4m+3)-1}{4} = \dfrac{-4m-4}{4} = -(m+1)$. Concordance parfaite !
+\end{itemize}
+
+\textbf{2. Approche analytique par dérivation de série géométrique (Outil de Sup) :}\\
+Pour $x \neq 1$, considérons la somme géométrique $\sum_{i=0}^n x^i = \dfrac{1 - x^{n+1}}{1 - x}$.\\
+En dérivant terme à terme par rapport à $x$ :
+\[
+\sum_{i=1}^n i x^{i-1} = \frac{-(n+1)x^n(1-x) - (1-x^{n+1})(-1)}{(1-x)^2} = \frac{-(n+1)x^n + (n+1)x^{n+1} + 1 - x^{n+1}}{(1-x)^2}
+\]
+En multipliant par $x$ :
+\[
+\sum_{i=1}^n i x^i = \frac{-(n+1)x^{n+1} + n x^{n+2} + x}{(1-x)^2}
+\]
+En évaluant cette fraction rationnelle en $x = -1$ (le dénominateur valant $(1 - (-1))^2 = 4$) :
+\[
+\sum_{i=1}^n (-1)^i i = \frac{-(n+1)(-1)^{n+1} + n(-1)^{n+2} - 1}{4} = \frac{(-1)^n \Big[ (n+1) + n \Big] - 1}{4} = \frac{(-1)^n (2n+1) - 1}{4}
+\]
+On retrouve la formule en deux lignes de calcul différentiel formel !
+\end{prolongementbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% CORRIGÉ EXERCICE 5
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 5}
+
+\begin{correctionbox}[Corrigé de l'Exercice 5 \bareme{Total : 4 points}]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Démontrons par récurrence que pour tout $n \in \N$, il existe $b_n \in \N$ tel que $10^n = 3b_n + 1$.} \bareme{2,0 pts}
+
+    Pour tout entier naturel $n \in \N$, posons la propriété :
+    \[
+    \mathcal{P}(n) : \quad \ll \exists b_n \in \N, \quad 10^n = 3b_n + 1 \gg
+    \]
+
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item \textbf{Initialisation ($n = 0$) :} \pts{0,5 pt}\\
+        Pour $n = 0$, $10^0 = 1$.\\
+        Or, on peut écrire :
+        \[
+        1 = 3 \times 0 + 1
+        \]
+        Puisque $0 \in \N$, en posant $b_0 = 0$, on a bien $b_0 \in \N$ et $10^0 = 3b_0 + 1$.\\
+        La proposition $\mathcal{P}(0)$ est donc vraie.
+
+        \item \textbf{Hérédité :} \pts{1,25 pt}\\
+        Soit $k \in \N$ un entier naturel fixé.\\
+        Supposons que $\mathcal{P}(k)$ soit vraie, c'est-à-dire qu'il existe un entier $b_k \in \N$ vérifiant :
+        \[
+        10^k = 3b_k + 1 \quad \text{(\textbf{Hypothèse de Récurrence})}
+        \]
+        Montrons que $\mathcal{P}(k+1)$ est vraie, c'est-à-dire qu'il existe un entier $b_{k+1} \in \N$ tel que :
+        \[
+        10^{k+1} = 3b_{k+1} + 1
+        \]
+        Exprimons $10^{k+1}$ en fonction de $10^k$ :
+        \[
+        10^{k+1} = 10 \times 10^k
+        \]
+        Remplaçons $10^k$ par l'expression issue de l'hypothèse de récurrence :
+        \begin{align*}
+        10^{k+1} &= 10(3b_k + 1) \\
+                 &= 30 b_k + 10
+        \end{align*}
+        Décomposons astucieusement l'entier $10$ sous la forme $9 + 1 = 3 \times 3 + 1$ afin de faire émerger le reste $1$ :
+        \begin{align*}
+        10^{k+1} &= 30 b_k + 9 + 1 \\
+                 &= 3(10 b_k + 3) + 1
+        \end{align*}
+        Posons :
+        \[
+        b_{k+1} = 10 b_k + 3
+        \]
+        Puisque $b_k \in \N$, par produit et somme d'entiers naturels, on a de manière certaine $b_{k+1} = 10b_k + 3 \in \N$.\\
+        Nous avons ainsi prouvé l'existence d'un entier naturel $b_{k+1} \in \N$ tel que $10^{k+1} = 3b_{k+1} + 1$.\\
+        La propriété $\mathcal{P}(k+1)$ est donc vraie. L'hérédité est validée.
+
+        \item \textbf{Conclusion :} \pts{0,25 pt}\\
+        Par le principe de récurrence, pour tout $n \in \N$, il existe un entier $b_n \in \N$ tel que :
+        \[
+        10^n = 3b_n + 1
+        \]
+        \emph{Remarque constructive :} On observe que $b_0 = 0$, $b_1 = 3$, $b_2 = 33$, $b_3 = 333$ et d'une manière générale, $b_n = \underbrace{33\dots3}_{n \text{ fois}} = \dfrac{10^n - 1}{3}$.
+    \end{itemize}
+
+    \item \textbf{Démontrons l'équivalence de divisibilité par $3$ et interprétation :} \bareme{2,0 pts}
+
+    Soit $p \in \N$ et soient $a_0, a_1, \dots, a_p$ des entiers naturels (représentant les chiffres de l'écriture en base $10$).\\
+    Considérons la somme $\dsp N = \sum_{k=0}^p a_k 10^k$.\\
+    D'après le résultat de la question 1, pour chaque indice $k \in \{0, \dots, p\}$, il existe $b_k \in \N$ tel que $10^k = 3b_k + 1$.\\
+    Substituons cette identité dans la somme $N$ :
+    \[
+    \sum_{k=0}^p a_k 10^k = \sum_{k=0}^p a_k (3b_k + 1) = \sum_{k=0}^p \left( 3 a_k b_k + a_k \right)
+    \]
+    Par linéarité de la somme finie :
+    \[
+    \sum_{k=0}^p a_k 10^k = 3 \left( \sum_{k=0}^p a_k b_k \right) + \sum_{k=0}^p a_k
+    \]
+    Posons $M = \sum_{k=0}^p a_k b_k$. Puisque chaque $a_k \in \N$ et $b_k \in \N$, $M$ est un entier naturel ($M \in \N$).\\
+    L'égalité s'écrit de façon compacte :
+    \[
+    \sum_{k=0}^p a_k 10^k - \sum_{k=0}^p a_k = 3M
+    \]
+    Ce qui prouve que la différence entre le nombre $\sum_{k=0}^p a_k 10^k$ et la somme de ses coefficients $\sum_{k=0}^p a_k$ est un \textbf{multiple de $3$}. \pts{1,0 pt}
+
+    Établissons à présent la double implication :
+    \begin{itemize}[leftmargin=*, label=$\bullet$]
+        \item \textbf{Sens direct ($\implies$) :} Supposons que $3$ divise $\sum_{k=0}^p a_k 10^k$. Alors il existe un entier $q \in \Z$ tel que $\sum_{k=0}^p a_k 10^k = 3q$. Dès lors :
+        \[
+        \sum_{k=0}^p a_k = \sum_{k=0}^p a_k 10^k - 3M = 3q - 3M = 3(q - M)
+        \]
+        Puisque $(q - M) \in \Z$, $3$ divise $\sum_{k=0}^p a_k$.
+        \item \textbf{Sens réciproque ($\impliedby$) :} Réciproquement, supposons que $3$ divise $\sum_{k=0}^p a_k$. Alors il existe $q' \in \Z$ tel que $\sum_{k=0}^p a_k = 3q'$. Dès lors :
+        \[
+        \sum_{k=0}^p a_k 10^k = 3M + \sum_{k=0}^p a_k = 3M + 3q' = 3(M + q')
+        \]
+        Puisque $(M + q') \in \Z$, $3$ divise $\sum_{k=0}^p a_k 10^k$.
+    \end{itemize}
+    On a donc démontré rigoureusement l'équivalence :
+    \[
+    \left( 3 \text{ divise } \sum_{k=0}^p a_k 10^k \right) \iff \left( 3 \text{ divise } \sum_{k=0}^p a_k \right) \bareme{0,5 pt}
+    \]
+
+    \textbf{Interprétation arithmétique :} \bareme{0,5 pt}\\
+    Tout entier naturel $N$ non nul s'écrit de manière unique en base décimale sous la forme :
+    \[
+    N = a_p 10^p + a_{p-1} 10^{p-1} + \dots + a_1 10 + a_0 = \sum_{k=0}^p a_k 10^k
+    \]
+    où les $a_k \in \{0, 1, 2, \dots, 9\}$ sont les chiffres de son écriture usuelle en base 10.\\
+    Le terme $\sum_{k=0}^p a_k$ est précisément la \textbf{somme des chiffres décimaux} du nombre $N$.\\
+    L'équivalence obtenue démontre donc le résultat fondamental de l'arithmétique élémentaire :
+    \begin{center}
+    \textbf{\og Un nombre entier naturel est divisible par $3$ si et seulement si la somme de ses chiffres est divisible par $3$. \fg}
+    \end{center}
+\end{enumerate}
+\end{correctionbox}
+
+\begin{prolongementbox}[Arithmétique modulaire de Gauss et généralisation des critères]
+Dans le langage moderne des \textbf{congruences} forgé par Carl Friedrich Gauss dans ses \emph{Disquisitiones Arithmeticae} (1801) :
+\[
+10 = 3 \times 3 + 1 \implies 10 \equiv 1 \pmod 3
+\]
+Par compatibilité élémentaire de la congruence avec les puissances entières :
+\[
+\forall k \in \N, \quad 10^k \equiv 1^k \equiv 1 \pmod 3
+\]
+Par conséquent :
+\[
+\sum_{k=0}^p a_k 10^k \equiv \sum_{k=0}^p a_k (1) \equiv \sum_{k=0}^p a_k \pmod 3
+\]
+L'équivalence de divisibilité est donc un corollaire direct et immédiat de la structure d'anneau du quotient $\Z/3\Z$.
+
+\textbf{Généralisations universelles en base 10 :}
+\begin{enumerate}[leftmargin=*, label=$\bullet$]
+    \item \textbf{Critère par 9 :} Comme $10 = 9 \times 1 + 1$, $10 \equiv 1 \pmod 9 \implies 10^k \equiv 1 \pmod 9$. Un nombre est divisible par $9$ si et seulement si la somme de ses chiffres est divisible par $9$.
+    \item \textbf{Critère par 11 :} Comme $10 = 11 - 1$, on a $10 \equiv -1 \pmod{11}$. Par conséquent :
+    \[
+    10^k \equiv (-1)^k \pmod{11} \implies \sum_{k=0}^p a_k 10^k \equiv \sum_{k=0}^p (-1)^k a_k \pmod{11}
+    \]
+    Un nombre est divisible par $11$ si et seulement si la \textbf{somme alternée de ses chiffres} ($a_0 - a_1 + a_2 - a_3 + \dots$) est un multiple de $11$.
+    \item \textbf{Critère par 7 et 13 (Le Ruban de Pascal) :} Comme $1000 = 10^3 = 7 \times 143 - 1 = 13 \times 77 - 1$, on a $10^3 \equiv -1 \pmod 7$ et $10^3 \equiv -1 \pmod{13}$. Il suffit donc de faire la somme alternée des \textbf{tranches de trois chiffres} de droite à gauche !
+\end{enumerate}
+\end{prolongementbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% CORRIGÉ DU BONUS
+% ----------------------------------------------------
+\subsection*{Correction détaillée du Bonus}
+
+\begin{correctionbox}[Corrigé du Bonus (+2 points) \bareme{Total : +2 points}]
+\textbf{Objectif :} Démontrer la relation $u_n = n^3$ pour tout $n \in \N$ de façon directe, sans récurrence.
+
+\medskip
+Reprenons la relation de définition de la suite de l'exercice 3 :
+\[
+\begin{cases}
+u_0 = 0 \\
+u_{k+1} - u_k = 3k(k+1) + 1 \quad (k \in \N)
+\end{cases}
+\]
+Développons le membre de droite :
+\[
+3k(k+1) + 1 = 3k^2 + 3k + 1
+\]
+Or, considérons l'identité algébrique remarquable du cube de deux entiers consécutifs :
+\[
+(k+1)^3 - k^3 = \big(k^3 + 3k^2 + 3k + 1\big) - k^3 = 3k^2 + 3k + 1
+\]
+On observe donc une identité remarquable exacte terme à terme :
+\[
+u_{k+1} - u_k = (k+1)^3 - k^3 \bareme{0,75 pt}
+\]
+
+Soit $n \in \N^*$ un entier naturel fixé. Sommons cette égalité pour l'indice muet $k$ variant de $0$ jusqu'à $n-1$ :
+\[
+\sum_{k=0}^{n-1} (u_{k+1} - u_k) = \sum_{k=0}^{n-1} \left[ (k+1)^3 - k^3 \right] \bareme{0,5 pt}
+\]
+Ces deux sommes sont des \textbf{sommes télescopiques} où tous les termes intermédiaires s'annulent deux à deux :
+\begin{itemize}[leftmargin=*, label=$\bullet$]
+    \item Pour le membre de gauche :
+    \[
+    \sum_{k=0}^{n-1} (u_{k+1} - u_k) = (u_1 - u_0) + (u_2 - u_1) + (u_3 - u_2) + \dots + (u_n - u_{n-1}) = u_n - u_0
+    \]
+    \item Pour le membre de droite :
+    \[
+    \sum_{k=0}^{n-1} \left[ (k+1)^3 - k^3 \right] = (1^3 - 0^3) + (2^3 - 1^3) + (3^3 - 2^3) + \dots + (n^3 - (n-1)^3) = n^3 - 0^3 = n^3
+    \]
+\end{itemize}
+En égalant les deux bilans télescopiques :
+\[
+u_n - u_0 = n^3
+\]
+Comme la condition initiale est $u_0 = 0$, on obtient directement :
+\[
+u_n = n^3 \bareme{0,75 pt}
+\]
+Enfin, pour $n = 0$, $u_0 = 0$ et $0^3 = 0$, l'égalité est également vérifiée au rang 0.
+
+L'égalité $u_n = n^3$ est donc établie directement pour tout $n \in \N$ sans aucune induction.
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% FICHE DE SYNTHÈSE MÉTHODOLOGIQUE MPSI
+% ----------------------------------------------------
+\begin{tcolorbox}[enhanced, colback=white, colframe=primary, arc=2mm, boxrule=1pt, title={\textsc{Fiche Méthode MPSI : Les Trois Piliers du Raisonnement par Récurrence}}]
+\small
+Le raisonnement par récurrence repose sur la propriété du \textbf{bon ordre} de l'ensemble $\N$ (tout sous-ensemble non vide de $\N$ admet un plus petit élément), axiome fondamental formalisé par Giuseppe Peano (1889).
+
+Pour obtenir la note maximale aux concours et en prépa, toute copie doit respecter scrupuleusement le canevas en trois phases :
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Déclaration claire du prédicat :}
+    Ne jamais commencer par écrire des calculs dans le vide. Toujours poser explicitement :
+    \begin{center}
+    \og Pour tout $n \ge n_0$, notons $\mathcal{P}(n)$ la proposition : $\ll \dots \gg$. \fg
+    \end{center}
+
+    \item \textbf{L'Initialisation (Phase d'ancrage) :}
+    Évaluer séparément le membre de gauche et le membre de droite pour le plus petit rang $n_0$ (généralement $n_0 = 0$ ou $n_0 = 1$). Conclure par \og Donc $\mathcal{P}(n_0)$ est vraie. \fg
+
+    \item \textbf{L'Hérédité (Phase de transmission) :}
+    La rédaction doit être sans faille :
+    \begin{center}
+    \og \emph{Soit $k \ge n_0$ un entier fixé. Supposons $\mathcal{P}(k)$ vraie. Montrons que $\mathcal{P}(k+1)$ est vraie.} \fg
+    \end{center}
+    Dans le corps de la preuve, expliciter clairement l'étape où l'hypothèse de récurrence est injectée (mentionner \textbf{[D'après l'H.R.]}).
+
+    \item \textbf{La Conclusion logique :}
+    Rappeler que les deux conditions de l'axiome sont réunies :
+    \begin{center}
+    \og \emph{La proposition est initialisée en $n_0$ et est héréditaire. Par le principe de raisonnement par récurrence, $\mathcal{P}(n)$ est vraie pour tout entier $n \ge n_0$.} \fg
+    \end{center}
+\end{enumerate}
+\end{tcolorbox}
+
+\end{document}

@@ -1,0 +1,2155 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage[many]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{eurosym}
+
+% ----------------------------------------------------
+% Configuration des boîtes tcolorbox
+% ----------------------------------------------------
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{theoremebox}[1][]{
+  colback=red!3!white,
+  colframe=red!70!black,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  arc=2mm,
+  breakable,
+  boxrule=0.8pt
+}
+
+\newtcolorbox{methodebox}[1][]{
+  colback=teal!4!white,
+  colframe=teal!70!black,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  arc=2mm,
+  breakable,
+  boxrule=0.8pt
+}
+
+\newtcolorbox{warningbox}[1][]{
+  colback=orange!5!white,
+  colframe=orange!80!black,
+  fonttitle=\bfseries\sffamily,
+  title=#1,
+  arc=2mm,
+  breakable,
+  boxrule=0.8pt
+}
+
+\newtcolorbox{correctionbox}[1][]{
+  colback=blue!3!white,
+  colframe=blue!65!black,
+  fonttitle=\bfseries\sffamily,
+  title=\textbf{Correction détaillée}\ifstrempty{#1}{}{ -- #1},
+  arc=2mm,
+  breakable,
+  boxrule=0.8pt
+}
+
+\newtcolorbox{remarquabox}[1][]{
+  colback=purple!3!white,
+  colframe=purple!70!black,
+  fonttitle=\bfseries\sffamily,
+  title=\textbf{Remarque d'approfondissement (LLG / MPSI)}\ifstrempty{#1}{}{ -- #1},
+  arc=2mm,
+  breakable,
+  boxrule=0.6pt
+}
+
+% ----------------------------------------------------
+% Commandes mathématiques usuelles
+% ----------------------------------------------------
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% ----------------------------------------------------
+% En-têtes et pieds de page
+% ----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{1E3 -- Spécialité Mathématiques}}
+\chead{\textbf{Le Raisonnement par Récurrence}}
+\rhead{\textbf{Décembre 2021}}
+\lfoot{Lycée Louis-le-Grand / Préparation MPSI}
+\cfoot{\thepage}
+\rfoot{Soutien Scolaire d'Excellence}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!70!black
+}
+
+\title{\Huge \textbf{Le Raisonnement par Récurrence}\\[0.4cm]
+\Large Cours approfondi, méthodologie canonique et recueil exhaustif des 22 travaux dirigés}
+\author{\textbf{Classe de Première Spécialité Mathématiques (1E3)}\\
+\textit{Enseignement de haut niveau -- Approfondissement vers les CPGE Scientifiques (MPSI/PCSI)}}
+\date{Année scolaire 2021--2022 -- Décembre 2021}
+
+\begin{document}
+
+\maketitle
+
+\vspace{-0.5cm}
+\begin{abstract}
+Ce document constitue la référence complète et exhaustive du chapitre consacré au \textbf{Raisonnement par Récurrence} pour la classe de 1E3 (Décembre 2021). Il rassemble les fondements logiques et axiomatiques de l'arithmétique ordonnée (Axiome de Peano, principe du bon ordre de $\N$), le protocole de rédaction canonique en quatre temps exigé dans les classes préparatoires de référence (notamment au Lycée Louis-le-Grand), une étude détaillée des pathologies logiques et pièges classiques, ainsi que la correction intégrale, rigoureuse et commentée des \textbf{22 exercices} de la feuille de travaux dirigés.
+\end{abstract}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.3cm}
+\tableofcontents
+\vspace{0.5cm}
+\hrule
+\vspace{1cm}
+\section{Cadre conceptuel, fondements axiomatiques et méthode de rédaction}
+
+\subsection{Fondements axiomatiques : Le bon ordre de $\N$ et l'axiome de récurrence}
+
+L'ensemble des entiers naturels $\N = \{0, 1, 2, 3, \dots\}$ n'est pas un simple ensemble infini ; il est doté d'une structure d'ordre particulière qui le distingue fondamentalement de $\Z$, $\Q$ ou $\R$.
+
+\begin{theoremebox}[Axiome du Bon Ordre (Well-Ordering Principle)]
+L'ensemble $\N$ est \textbf{bien ordonné} : toute partie non vide de $\N$ admet un plus petit élément (un minimum).
+Autrement dit :
+\[
+\forall A \subset \N, \quad A \neq \emptyset \implies \exists m \in A, \; \forall x \in A, \; m \le x.
+\]
+\end{theoremebox}
+
+Le principe de récurrence simple est une conséquence directe et élégante de cet axiome.
+
+\begin{theoremebox}[Théorème -- Principe de raisonnement par récurrence]
+Soit $n_0 \in \N$. Pour tout entier naturel $n \ge n_0$, on considère une proposition mathématique $\mathcal{P}_n$ dépendant de $n$.
+Si les deux conditions suivantes sont satisfaites :
+\begin{enumerate}[label=(\arabic*)]
+    \item \textbf{Initialisation (ou base de l'induction)} : $\mathcal{P}_{n_0}$ est vraie ;
+    \item \textbf{Hérédité (ou étape inductive)} : Pour tout entier naturel $k \ge n_0$, la véracité de $\mathcal{P}_k$ implique la véracité de $\mathcal{P}_{k+1}$ :
+    \[
+    \forall k \in \N \text{ tel que } k \ge n_0, \quad \mathcal{P}_k \implies \mathcal{P}_{k+1}.
+    \]
+\end{enumerate}
+Alors la propriété $\mathcal{P}_n$ est vraie pour tout entier naturel $n \ge n_0$.
+\end{theoremebox}
+
+\begin{proof}[Démonstration du principe de récurrence à partir du bon ordre]
+Considérons l'ensemble des entiers supérieurs ou égaux à $n_0$ pour lesquels la propriété est en défaut :
+\[
+E = \{ n \in \N \mid n \ge n_0 \text{ et } \mathcal{P}_n \text{ est fausse} \}.
+\]
+Supposons par l'absurde que $E \neq \emptyset$.
+D'après l'axiome du bon ordre, $E$ étant une partie non vide de $\N$, elle admet un plus petit élément, noté $m = \min E \in E$.
+Examinons la position de $m$ :
+\begin{itemize}
+    \item Par hypothèse d'initialisation, $\mathcal{P}_{n_0}$ est vraie, ce qui prouve que $n_0 \notin E$. Par conséquent, $m > n_0$, soit encore $m - 1 \ge n_0$.
+    \item Puisque $m - 1 < m$ et que $m$ est le minimum absolu de $E$, l'entier $m - 1$ ne peut pas appartenir à $E$. Puisque $m-1 \ge n_0$, la proposition $\mathcal{P}_{m-1}$ est nécessairement \textbf{vraie}.
+    \item Or, l'hypothèse d'hérédité stipule que pour tout entier $k \ge n_0$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$. En appliquant cette implication au rang $k = m - 1 \ge n_0$, la véracité de $\mathcal{P}_{m-1}$ entraîne immédiatement que $\mathcal{P}_{(m-1)+1} = \mathcal{P}_m$ est vraie.
+\end{itemize}
+Ceci contredit formellement le fait que $m \in E$ (pour lequel $\mathcal{P}_m$ était fausse).
+Cette contradiction démontre que l'ensemble $E$ est vide : $E = \emptyset$.
+La propriété $\mathcal{P}_n$ est donc vraie pour tout entier $n \ge n_0$.
+\end{proof}
+
+\subsection{Le protocole canonique de rédaction en 4 temps (Standard Louis-le-Grand)}
+
+Une démonstration par récurrence ne supporte aucun flou rédactionnel ni approximation logique. Le standard de rédaction formalisé en 1E3 à Louis-le-Grand s'articule impérativement en \textbf{quatre temps clairement délimités} :
+
+\begin{methodebox}[Modèle de rédaction standardisé (Feuille 1E3)]
+\begin{enumerate}[label=\textbf{\Roman*.}]
+    \item \textbf{Définition explicite du prédicat} :
+    \begin{quote}
+    « Pour tout entier naturel $n \ge n_0$, notons $\mathcal{P}_n$ la propriété : [énoncé exact et précis de la proposition].\\
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout entier naturel $n \ge n_0$. »
+    \end{quote}
+
+    \item \textbf{Initialisation} :
+    \begin{quote}
+    « \textbf{Pour $n = n_0$} :\\
+    D'une part, [calcul explicite du membre gauche].\\
+    D'autre part, [calcul explicite du membre droit].\\
+    On constate l'égalité (ou l'inégalité), donc $\mathcal{P}_{n_0}$ est vraie. »
+    \end{quote}
+
+    \item \textbf{Hérédité} :
+    \begin{quote}
+    « Montrons que pour tout entier naturel $k \ge n_0$, $\mathcal{P}_k$ vraie implique $\mathcal{P}_{k+1}$ vraie.\\
+    \textbf{Soit $k \in \N$ tel que $k \ge n_0$.}\\
+    \textbf{Hypothèse de récurrence (HR) :} Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire [reformuler $\mathcal{P}_k$].\\
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, c'est-à-dire [reformuler l'objectif $\mathcal{P}_{k+1}$].\\
+    $[\dots \text{Calculs et raisonnements exploitant impérativement l'hypothèse de récurrence}\dots]$\\
+    Donc $\mathcal{P}_{k+1}$ est vraie.\\
+    Ainsi, pour tout $k \in \N$ tel que $k \ge n_0$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$. »
+    \end{quote}
+
+    \item \textbf{Conclusion} :
+    \begin{quote}
+    « La propriété est initialisée au rang $n_0$ et héréditaire à partir de ce rang. Par le principe de récurrence, pour tout $n \in \N$ tel que $n \ge n_0$, la propriété $\mathcal{P}_n$ est vraie. »
+    \end{quote}
+\end{enumerate}
+\end{methodebox}
+
+\subsection{Pathologies logiques, écueils majeurs et contre-exemples pédagogiques}
+
+\begin{warningbox}[Les trois péchés capitaux de l'apprenti logicien]
+\begin{enumerate}
+    \item \textbf{L'absence d'initialisation (L'effet domino sans chiquenaude)} :\\
+    Considérons la propriété $\mathcal{P}_n : « n = n + 1 »$.
+    Si l'on suppose $\mathcal{P}_k$ vraie pour un entier $k$, alors $k = k+1$. En ajoutant $1$ à chaque membre, on obtient $k+1 = k+2$, ce qui signifie exactement que $\mathcal{P}_{k+1}$ est vraie ! L'hérédité est mathématiquement irréprochable. Pourtant, la proposition $\mathcal{P}_n$ est fausse pour tout entier naturel $n \in \N$.
+    \textit{Moralité :} L'hérédité ne prouve que le mécanisme de transmission de la vérité, jamais la vérité intrinsèque de la chaîne !
+
+    \item \textbf{L'absence d'hérédité (L'illusion de la vérification numérique)} :\\
+    Considérons le polynôme d'Euler $P(n) = n^2 - n + 41$.
+    On vérifie aisément que pour $n = 0$, $P(0) = 41$ est premier ; pour $n = 1$, $P(1) = 41$ est premier ; pour $n = 2$, $P(2) = 43$ est premier ; et cela reste vrai pour tout entier jusqu'à $n = 40$ inclus !
+    La tentation empirique conclurait que $P(n)$ est premier pour tout $n \in \N$. Pourtant, pour $n = 41$, $P(41) = 41^2 - 41 + 41 = 41^2 = 1681$, qui est divisible par $41$ et donc composé !
+    \textit{Moralité :} Quarante vérifications initiales ne remplacent jamais une preuve universelle d'hérédité.
+
+    \item \textbf{La fausse quantification de l'hypothèse de récurrence (Pétition de principe)} :\\
+    Écrire au début de l'hérédité : \textit{« Supposons que pour tout $n \in \N$, $\mathcal{P}_n$ est vraie »} est une faute de logique rédhibitoire (sanctionnée par 0 à la question). En supposant la propriété vraie pour tout $n$, on suppose ce qu'on cherche précisément à démontrer !
+    Il faut obligatoirement \textbf{fixer un entier $k$} : \textit{« Soit $k \in \N$ tel que $k \ge n_0$. Supposons que $\mathcal{P}_k$ est vraie\dots »}.
+\end{enumerate}
+\end{warningbox}
+
+\begin{remarquabox}[Le paradoxe des chevaux de George Pólya : Quand l'hérédité trébuche au premier pas]
+George Pólya a proposé le sophisme suivant : \textit{« Tous les chevaux d'un groupe ont la même couleur »}.
+Notons $\mathcal{P}_n$ la propriété : \textit{« Dans tout ensemble de $n$ chevaux, tous les chevaux ont la même couleur »}.
+\begin{itemize}
+    \item \textbf{Initialisation} : Pour $n = 1$, dans un ensemble composé d'un seul cheval, tous les chevaux de cet ensemble ont évidemment la même couleur. Donc $\mathcal{P}_1$ est vraie.
+    \item \textbf{Hérédité fallacieuse} : Soit $k \ge 1$. Supposons $\mathcal{P}_k$ vraie. Soit un ensemble de $k+1$ chevaux $\{C_1, C_2, \dots, C_{k+1}\}$.
+    Le sous-ensemble $\{C_1, C_2, \dots, C_k\}$ contient $k$ chevaux, donc d'après $\mathcal{P}_k$, ils ont tous la même couleur (celle de $C_1$).
+    Le sous-ensemble $\{C_2, C_3, \dots, C_{k+1}\}$ contient également $k$ chevaux, donc d'après $\mathcal{P}_k$, ils ont tous la même couleur (celle de $C_2$).
+    L'intersection de ces deux ensembles contenant $C_2$, tous les chevaux auraient la même couleur que $C_2$, donc la même couleur ! Donc $\mathcal{P}_{k+1}$ serait vraie.
+\end{itemize}
+\textbf{Où réside la faille ?}
+L'argument d'intersection repose sur le fait que les deux sous-ensembles ont au moins un cheval commun, c'est-à-dire que leur intersection n'est pas vide : $\{C_1, \dots, C_k\} \cap \{C_2, \dots, C_{k+1}\} \neq \emptyset$.
+Or, pour $k = 1$, le premier sous-ensemble est $\{C_1\}$ et le second est $\{C_2\}$. Leur intersection est $\{C_1\} \cap \{C_2\} = \emptyset$ !
+L'implication $\mathcal{P}_1 \implies \mathcal{P}_2$ est donc \textbf{fausse}. La chaîne d'induction est brisée dès le premier pas.
+\end{remarquabox}
+
+\subsection{Variantes : Récurrence double et récurrence forte}
+
+\begin{theoremebox}[Principe de récurrence double]
+Soit $n_0 \in \N$. Soit $(\mathcal{P}_n)_{n \ge n_0}$ une famille de propriétés indexée par $n \ge n_0$.
+Si :
+\begin{enumerate}
+    \item $\mathcal{P}_{n_0}$ et $\mathcal{P}_{n_0+1}$ sont vraies (initialisation sur \textbf{deux rangs consécutifs}) ;
+    \item Pour tout $k \ge n_0$, $(\mathcal{P}_k \text{ et } \mathcal{P}_{k+1}) \implies \mathcal{P}_{k+2}$ ;
+\end{enumerate}
+alors pour tout entier $n \ge n_0$, $\mathcal{P}_n$ est vraie.
+\end{theoremebox}
+
+Ce principe est indispensable pour traiter les suites récurrentes d'ordre 2, telles que la suite de Fibonacci ou les équations aux différences finies $u_{n+2} = a u_{n+1} + b u_n$ (cf. Section 6, Exercices 21 et 22).
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 1 : Formes explicites de suites définies par récurrence}
+
+% ----------------------------------------------------
+% EXERCICE 1
+% ----------------------------------------------------
+\subsection*{Exercice 1 : Terme général d'une suite arithmétique}
+
+Soit $(u_n)_{n \in \N}$ une suite arithmétique de premier terme $u_0$ et de raison $r \in \R$.
+Montrer que pour tout entier naturel $n \in \N$, on a :
+\[
+u_n = u_0 + nr.
+\]
+
+\begin{correctionbox}
+Suivons scrupuleusement le protocole de rédaction en quatre temps.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; u_n = u_0 + nr \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout entier naturel $n \in \N$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 0$ :
+    \begin{itemize}
+        \item Le membre de gauche vaut $u_0$.
+        \item Le membre de droite vaut $u_0 + 0 \times r = u_0$.
+    \end{itemize}
+    Les deux membres étant égaux, $\mathcal{P}_0$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Montrons que pour tout entier naturel $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.\\
+    Soit $k \in \N$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire que :
+    \[
+    u_k = u_0 + kr \quad \text{(Hypothèse de récurrence)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que $u_{k+1} = u_0 + (k+1)r$.\\
+    Par définition d'une suite arithmétique de raison $r$, on a :
+    \[
+    u_{k+1} = u_k + r.
+    \]
+    En injectant l'hypothèse de récurrence dans cette égalité, il vient :
+    \[
+    u_{k+1} = (u_0 + kr) + r = u_0 + kr + r = u_0 + (k+1)r.
+    \]
+    La relation est donc vérifiée au rang $k+1$, ce qui prouve que $\mathcal{P}_{k+1}$ est vraie.\\
+    Ainsi, pour tout $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $0$ et héréditaire pour tout entier $k \ge 0$. Par le principe de récurrence, pour tout $n \in \N$, la propriété $\mathcal{P}_n$ est vraie, c'est-à-dire :
+    \[
+    \forall n \in \N, \quad u_n = u_0 + nr.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}
+Cette démonstration fonde rigoureusement la formule du terme général vue en classe de Première. De la même façon, on démontre par récurrence que pour une suite géométrique de premier terme $u_0$ et de raison $q$, on a $\forall n \in \N, \; u_n = u_0 q^n$.
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 2
+% ----------------------------------------------------
+\subsection*{Exercice 2 : Une suite arithmético-géométrique}
+
+On définit la suite $(u_n)_{n \in \N}$ par :
+\[
+\begin{cases}
+u_0 = 3 \\
+u_{n+1} = 5u_n - 4 \quad \text{pour tout } n \in \N.
+\end{cases}
+\]
+Montrer que pour tout $n \in \N$, on a :
+\[
+u_n = 2 \times 5^n + 1.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; u_n = 2 \times 5^n + 1 \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 0$ :
+    \begin{itemize}
+        \item D'après l'énoncé, le premier terme vaut $u_0 = 3$.
+        \item La formule proposée donne : $2 \times 5^0 + 1 = 2 \times 1 + 1 = 3$.
+    \end{itemize}
+    On constate que $u_0 = 2 \times 5^0 + 1$, donc la propriété $\mathcal{P}_0$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Montrons que pour tout $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.\\
+    Soit $k \in \N$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire que :
+    \[
+    u_k = 2 \times 5^k + 1 \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, c'est-à-dire que $u_{k+1} = 2 \times 5^{k+1} + 1$.\\
+    En utilisant la relation de récurrence régissant la suite :
+    \[
+    u_{k+1} = 5u_k - 4.
+    \]
+    En substituant $u_k$ par son expression issue de l'hypothèse de récurrence :
+    \begin{align*}
+    u_{k+1} &= 5(2 \times 5^k + 1) - 4 \\
+            &= 5 \times 2 \times 5^k + 5 \times 1 - 4 \\
+            &= 2 \times (5 \times 5^k) + 5 - 4 \\
+            &= 2 \times 5^{k+1} + 1.
+    \end{align*}
+    La propriété $\mathcal{P}_{k+1}$ est donc démontrée.\\
+    Ainsi, pour tout $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété $\mathcal{P}_n$ est initialisée pour $n=0$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \quad u_n = 2 \times 5^n + 1.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Méthode analytique de recherche du terme général (Hors récurrence)]
+Comment trouve-t-on l'expression $u_n = 2 \times 5^n + 1$ lorsqu'elle n'est pas fournie ?
+Il s'agit d'une suite arithmético-géométrique du type $u_{n+1} = a u_n + b$ avec $a=5$ et $b=-4$.
+\begin{enumerate}
+    \item On cherche le point fixe $c \in \R$ solution de l'équation $c = 5c - 4 \iff 4c = 4 \iff c = 1$.
+    \item On introduit la suite auxiliaire $v_n = u_n - c = u_n - 1$.
+    \item Pour tout $n \in \N$, $v_{n+1} = u_{n+1} - 1 = (5u_n - 4) - 1 = 5u_n - 5 = 5(u_n - 1) = 5v_n$.
+    La suite $(v_n)$ est donc une suite géométrique de raison $q = 5$ et de premier terme $v_0 = u_0 - 1 = 3 - 1 = 2$.
+    \item D'après le cours, $v_n = v_0 \times 5^n = 2 \times 5^n$.
+    \item On en déduit immédiatement $u_n = v_n + 1 = 2 \times 5^n + 1$.
+\end{enumerate}
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 3
+% ----------------------------------------------------
+\subsection*{Exercice 3 : Une suite homographique}
+
+On définit la suite $(u_n)_{n \in \N, n \ge 2}$ par :
+\[
+\begin{cases}
+u_2 = 3 \\
+u_{n+1} = \dfrac{3u_n + 1}{u_n + 3} \quad \text{pour tout } n \in \N, \; n \ge 2.
+\end{cases}
+\]
+Montrer que pour tout entier naturel $n \ge 2$, on a :
+\[
+u_n = \frac{2^n + 2}{2^n - 2}.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout entier $n \ge 2$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; u_n = \frac{2^n + 2}{2^n - 2} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout entier $n \ge 2$.
+
+    \item \textbf{Initialisation} :\\
+    Le premier rang de définition de la suite est $n_0 = 2$.
+    \begin{itemize}
+        \item Par hypothèse de l'énoncé, $u_2 = 3$.
+        \item La formule explicite pour $n=2$ donne :
+        \[
+        \frac{2^2 + 2}{2^2 - 2} = \frac{4 + 2}{4 - 2} = \frac{6}{2} = 3.
+        \]
+    \end{itemize}
+    On a bien $u_2 = \dfrac{2^2 + 2}{2^2 - 2}$, donc la propriété $\mathcal{P}_2$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Montrons que pour tout entier naturel $k \ge 2$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.\\
+    Soit $k \in \N$ tel que $k \ge 2$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    u_k = \frac{2^k + 2}{2^k - 2} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    u_{k+1} = \frac{2^{k+1} + 2}{2^{k+1} - 2}.
+    \]
+    Calculons $u_{k+1}$ à l'aide de la formule de récurrence :
+    \[
+    u_{k+1} = \frac{3u_k + 1}{u_k + 3}.
+    \]
+    En remplaçant $u_k$ par son expression issue de l'hypothèse de récurrence :
+    \[
+    u_{k+1} = \frac{3 \left(\dfrac{2^k + 2}{2^k - 2}\right) + 1}{\left(\dfrac{2^k + 2}{2^k - 2}\right) + 3}.
+    \]
+    Réduisons le numérateur et le dénominateur au même dénominateur $(2^k - 2)$ (qui est strictement positif car $k \ge 2 \implies 2^k \ge 4 > 2$) :
+    \begin{align*}
+    \text{Numérateur} &= \frac{3(2^k + 2) + 1(2^k - 2)}{2^k - 2} = \frac{3 \cdot 2^k + 6 + 2^k - 2}{2^k - 2} = \frac{4 \cdot 2^k + 4}{2^k - 2}, \\
+    \text{Dénominateur} &= \frac{(2^k + 2) + 3(2^k - 2)}{2^k - 2} = \frac{2^k + 2 + 3 \cdot 2^k - 6}{2^k - 2} = \frac{4 \cdot 2^k - 4}{2^k - 2}.
+    \end{align*}
+    Par quotient des deux fractions :
+    \[
+    u_{k+1} = \frac{\dfrac{4 \cdot 2^k + 4}{2^k - 2}}{\dfrac{4 \cdot 2^k - 4}{2^k - 2}} = \frac{4 \cdot 2^k + 4}{4 \cdot 2^k - 4}.
+    \]
+    Simplifions par $4$ au numérateur et au dénominateur :
+    \[
+    u_{k+1} = \frac{2^k + 1}{2^k - 1}.
+    \]
+    Multiplions le numérateur et le dénominateur par $2$ pour faire apparaître la puissance $k+1$ :
+    \[
+    u_{k+1} = \frac{2(2^k + 1)}{2(2^k - 1)} = \frac{2 \cdot 2^k + 2}{2 \cdot 2^k - 2} = \frac{2^{k+1} + 2}{2^{k+1} - 2}.
+    \]
+    La propriété $\mathcal{P}_{k+1}$ est donc rigoureusement démontrée.\\
+    Ainsi, pour tout entier $k \ge 2$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $n_0 = 2$ et est héréditaire pour tout $k \ge 2$. Par le principe de récurrence, pour tout $n \in \N, n \ge 2$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \; n \ge 2, \quad u_n = \frac{2^n + 2}{2^n - 2}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Théorie des suites homographiques]
+La transformation $f(x) = \frac{3x+1}{x+3}$ est une homographie. Ses points fixes vérifient $x = \frac{3x+1}{x+3} \iff x^2 + 3x = 3x + 1 \iff x^2 = 1 \iff x \in \{-1, 1\}$.
+En posant le bi-rapport $v_n = \frac{u_n - 1}{u_n + 1}$, un calcul direct montre que $(v_n)$ est une suite géométrique de raison $\frac{3 - 1}{3 + 1} = \frac{1}{2}$. On retrouve ainsi la formule sans connaître le résultat a priori.
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 4
+% ----------------------------------------------------
+\subsection*{Exercice 4 : Suite avec terme polynomial}
+
+On définit la suite $(u_n)_{n \in \N}$ par :
+\[
+\begin{cases}
+u_0 = 2 \\
+u_{n+1} = u_n + 2n + 5 \quad \text{pour tout } n \in \N.
+\end{cases}
+\]
+Montrer que pour tout $n \in \N$, on a :
+\[
+u_n = n^2 + 4n + 2.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; u_n = n^2 + 4n + 2 \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 0$ :
+    \begin{itemize}
+        \item D'après l'énoncé, $u_0 = 2$.
+        \item L'expression polynomiale donne : $0^2 + 4(0) + 2 = 2$.
+    \end{itemize}
+    On a bien $u_0 = 0^2 + 4(0) + 2$, donc $\mathcal{P}_0$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Montrons que pour tout entier naturel $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.\\
+    Soit $k \in \N$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    u_k = k^2 + 4k + 2 \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    u_{k+1} = (k+1)^2 + 4(k+1) + 2.
+    \]
+    Développons l'expression cible attendue au rang $k+1$ :
+    \[
+    (k+1)^2 + 4(k+1) + 2 = (k^2 + 2k + 1) + (4k + 4) + 2 = k^2 + 6k + 7.
+    \]
+    Calculons maintenant $u_{k+1}$ à partir de la relation de récurrence et de l'hypothèse de récurrence :
+    \begin{align*}
+    u_{k+1} &= u_k + 2k + 5 \\
+            &= (k^2 + 4k + 2) + 2k + 5 \quad \text{(par HR)} \\
+            &= k^2 + (4k + 2k) + (2 + 5) \\
+            &= k^2 + 6k + 7.
+    \end{align*}
+    On constate l'égalité parfaite des deux expressions :
+    \[
+    u_{k+1} = (k+1)^2 + 4(k+1) + 2.
+    \]
+    Donc la propriété $\mathcal{P}_{k+1}$ est vraie.\\
+    Ainsi, pour tout $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $0$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \quad u_n = n^2 + 4n + 2.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 5
+% ----------------------------------------------------
+\subsection*{Exercice 5 : Une première conjecture}
+
+On définit la suite $(u_n)_{n \in \N}$ par :
+\[
+\begin{cases}
+u_0 = 1 \\
+u_{n+1} = \sqrt{u_n^2 + 2} \quad \text{pour tout } n \in \N.
+\end{cases}
+\]
+Pour tout $n \in \N$, conjecturer puis démontrer l'expression explicite de $u_n$ en fonction de $n$.
+
+\begin{correctionbox}
+\textbf{Étape 1 : Calcul des premiers termes et formulation de la conjecture}\\
+Calculons pas à pas les premiers termes de la suite :
+\begin{itemize}
+    \item $u_0 = 1 = \sqrt{1}$ ;
+    \item $u_1 = \sqrt{u_0^2 + 2} = \sqrt{1^2 + 2} = \sqrt{3}$ ;
+    \item $u_2 = \sqrt{u_1^2 + 2} = \sqrt{(\sqrt{3})^2 + 2} = \sqrt{3 + 2} = \sqrt{5}$ ;
+    \item $u_3 = \sqrt{u_2^2 + 2} = \sqrt{(\sqrt{5})^2 + 2} = \sqrt{5 + 2} = \sqrt{7}$ ;
+    \item $u_4 = \sqrt{u_3^2 + 2} = \sqrt{(\sqrt{7})^2 + 2} = \sqrt{7 + 2} = \sqrt{9} = 3$.
+\end{itemize}
+On observe sous le radical les nombres impairs consécutifs : $1, 3, 5, 7, 9, \dots$\\
+Ces nombres s'écrivent sous la forme $2n+1$. On formule ainsi la :
+\[
+\textbf{Conjecture : } \forall n \in \N, \quad u_n = \sqrt{2n+1}.
+\]
+
+\textbf{Étape 2 : Démonstration de la conjecture par récurrence}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; u_n = \sqrt{2n+1} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 0$ :
+    \begin{itemize}
+        \item $u_0 = 1$ d'après l'énoncé ;
+        \item $\sqrt{2(0) + 1} = \sqrt{1} = 1$.
+    \end{itemize}
+    L'égalité est vérifiée, donc $\mathcal{P}_0$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$. Supposons $\mathcal{P}_k$ vraie, c'est-à-dire :
+    \[
+    u_k = \sqrt{2k+1} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que $u_{k+1} = \sqrt{2(k+1)+1} = \sqrt{2k+3}$.\\
+    En appliquant la formule de récurrence :
+    \[
+    u_{k+1} = \sqrt{u_k^2 + 2}.
+    \]
+    En utilisant l'hypothèse de récurrence, puisque $u_k = \sqrt{2k+1}$, on a $u_k^2 = 2k+1$. Il vient :
+    \[
+    u_{k+1} = \sqrt{(2k+1) + 2} = \sqrt{2k+3} = \sqrt{2(k+1) + 1}.
+    \]
+    La propriété $\mathcal{P}_{k+1}$ est donc vraie.\\
+    Ainsi, pour tout $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $0$ et héréditaire. Par le principe de récurrence, pour tout $n \in \N$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \quad u_n = \sqrt{2n+1}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 6
+% ----------------------------------------------------
+\subsection*{Exercice 6 : Une seconde conjecture}
+
+On définit la suite $(u_n)_{n \in \N^*}$ par :
+\[
+\begin{cases}
+u_1 = 1 \\
+u_{n+1} = \dfrac{u_n}{\sqrt{u_n^2 + 1}} \quad \text{pour tout } n \in \N^*.
+\end{cases}
+\]
+Pour tout $n \in \N^*$, conjecturer puis démontrer l'expression explicite de $u_n$ en fonction de $n$.
+
+\begin{correctionbox}
+\textbf{Étape 1 : Calcul des premiers termes et formulation de la conjecture}
+\begin{itemize}
+    \item $u_1 = 1 = \dfrac{1}{\sqrt{1}}$ ;
+    \item $u_2 = \dfrac{u_1}{\sqrt{u_1^2 + 1}} = \dfrac{1}{\sqrt{1^2 + 1}} = \dfrac{1}{\sqrt{2}} = \dfrac{\sqrt{2}}{2}$ ;
+    \item $u_3 = \dfrac{u_2}{\sqrt{u_2^2 + 1}} = \dfrac{\dfrac{1}{\sqrt{2}}}{\sqrt{\left(\dfrac{1}{\sqrt{2}}\right)^2 + 1}} = \dfrac{\dfrac{1}{\sqrt{2}}}{\sqrt{\dfrac{1}{2} + 1}} = \dfrac{\dfrac{1}{\sqrt{2}}}{\sqrt{\dfrac{3}{2}}} = \dfrac{\dfrac{1}{\sqrt{2}}}{\dfrac{\sqrt{3}}{\sqrt{2}}} = \dfrac{1}{\sqrt{3}} = \dfrac{\sqrt{3}}{3}$ ;
+    \item $u_4 = \dfrac{u_3}{\sqrt{u_3^2 + 1}} = \dfrac{\dfrac{1}{\sqrt{3}}}{\sqrt{\left(\dfrac{1}{\sqrt{3}}\right)^2 + 1}} = \dfrac{\dfrac{1}{\sqrt{3}}}{\sqrt{\dfrac{1}{3} + 1}} = \dfrac{\dfrac{1}{\sqrt{3}}}{\sqrt{\dfrac{4}{3}}} = \dfrac{\dfrac{1}{\sqrt{3}}}{\dfrac{2}{\sqrt{3}}} = \dfrac{1}{2} = \dfrac{1}{\sqrt{4}}$.
+\end{itemize}
+La régularité des dénominateurs est évidente : $1, \sqrt{2}, \sqrt{3}, \sqrt{4}, \dots$\\
+On formule donc la :
+\[
+\textbf{Conjecture : } \forall n \in \N^*, \quad u_n = \frac{1}{\sqrt{n}} = \frac{\sqrt{n}}{n}.
+\]
+
+\textbf{Étape 2 : Démonstration de la conjecture par récurrence}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N^*$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; u_n = \frac{1}{\sqrt{n}} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout entier naturel $n \ge 1$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 1$ :
+    \begin{itemize}
+        \item $u_1 = 1$ par hypothèse ;
+        \item $\dfrac{1}{\sqrt{1}} = 1$.
+    \end{itemize}
+    Donc $\mathcal{P}_1$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N^*$. Supposons $\mathcal{P}_k$ vraie, c'est-à-dire :
+    \[
+    u_k = \frac{1}{\sqrt{k}} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que $u_{k+1} = \dfrac{1}{\sqrt{k+1}}$.\\
+    En vertu de la définition de la suite :
+    \[
+    u_{k+1} = \frac{u_k}{\sqrt{u_k^2 + 1}}.
+    \]
+    En exploitant l'hypothèse de récurrence, on a $u_k^2 = \left(\dfrac{1}{\sqrt{k}}\right)^2 = \dfrac{1}{k}$. On en déduit :
+    \[
+    u_{k+1} = \frac{\dfrac{1}{\sqrt{k}}}{\sqrt{\dfrac{1}{k} + 1}} = \frac{\dfrac{1}{\sqrt{k}}}{\sqrt{\dfrac{1+k}{k}}} = \frac{\dfrac{1}{\sqrt{k}}}{\dfrac{\sqrt{k+1}}{\sqrt{k}}}.
+    \]
+    En simplifiant par $\dfrac{1}{\sqrt{k}} > 0$ :
+    \[
+    u_{k+1} = \frac{1}{\sqrt{k+1}}.
+    \]
+    La propriété $\mathcal{P}_{k+1}$ est donc démontrée.\\
+    Ainsi, pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $1$ et héréditaire pour tout $k \ge 1$. Par le principe de récurrence, pour tout $n \in \N^*$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N^*, \quad u_n = \frac{1}{\sqrt{n}}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Linéarisation par changement de variable]
+Si l'on pose $v_n = \frac{1}{u_n^2}$, la relation devient :
+\[
+v_{n+1} = \frac{1}{u_{n+1}^2} = \frac{u_n^2 + 1}{u_n^2} = 1 + \frac{1}{u_n^2} = v_n + 1.
+\]
+$(v_n)$ est une suite arithmétique de raison $1$ et de premier terme $v_1 = \frac{1}{1^2} = 1$.
+D'où $v_n = v_1 + (n-1) \times 1 = 1 + n - 1 = n$.
+Puisque $u_n > 0$, $u_n = \frac{1}{\sqrt{v_n}} = \frac{1}{\sqrt{n}}$.
+\end{remarquabox}
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 2 : Sommes et Produits finis}
+
+% ----------------------------------------------------
+% EXERCICE 7
+% ----------------------------------------------------
+\subsection*{Exercice 7 : Somme télescopique}
+
+Montrer que pour tout entier naturel non nul $n \in \N^*$, on a :
+\[
+\sum_{i=1}^n \frac{1}{i(i+1)} = \frac{n}{n+1}.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N^*$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; \sum_{i=1}^n \frac{1}{i(i+1)} = \frac{n}{n+1} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N^*$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 1$ :
+    \begin{itemize}
+        \item Le membre de gauche comporte un unique terme : $\sum_{i=1}^1 \dfrac{1}{i(i+1)} = \dfrac{1}{1(1+1)} = \dfrac{1}{2}$ ;
+        \item Le membre de droite vaut : $\dfrac{1}{1+1} = \dfrac{1}{2}$.
+    \end{itemize}
+    Les deux membres coïncident, donc $\mathcal{P}_1$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Montrons que pour tout entier naturel non nul $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.\\
+    Soit $k \in \N^*$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    \sum_{i=1}^k \frac{1}{i(i+1)} = \frac{k}{k+1} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    \sum_{i=1}^{k+1} \frac{1}{i(i+1)} = \frac{k+1}{(k+1)+1} = \frac{k+1}{k+2}.
+    \]
+    Isolons le dernier terme de la somme au rang $k+1$ :
+    \[
+    \sum_{i=1}^{k+1} \frac{1}{i(i+1)} = \left(\sum_{i=1}^k \frac{1}{i(i+1)}\right) + \frac{1}{(k+1)(k+2)}.
+    \]
+    En appliquant l'hypothèse de récurrence :
+    \[
+    \sum_{i=1}^{k+1} \frac{1}{i(i+1)} = \frac{k}{k+1} + \frac{1}{(k+1)(k+2)}.
+    \]
+    Réduisons au même dénominateur commun $(k+1)(k+2)$ :
+    \begin{align*}
+    \sum_{i=1}^{k+1} \frac{1}{i(i+1)} &= \frac{k(k+2) + 1}{(k+1)(k+2)} \\
+                                     &= \frac{k^2 + 2k + 1}{(k+1)(k+2)} \\
+                                     &= \frac{(k+1)^2}{(k+1)(k+2)}.
+    \end{align*}
+    Puisque $k \ge 1$, $k+1 \neq 0$. Simplifions par $(k+1)$ :
+    \[
+    \sum_{i=1}^{k+1} \frac{1}{i(i+1)} = \frac{k+1}{k+2}.
+    \]
+    La propriété $\mathcal{P}_{k+1}$ est donc démontrée.\\
+    Ainsi, pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $1$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N^*$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N^*, \quad \sum_{i=1}^n \frac{1}{i(i+1)} = \frac{n}{n+1}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Démonstration directe par décomposition en éléments simples]
+Remarquons l'identité algébrique remarquable :
+\[
+\frac{1}{i(i+1)} = \frac{(i+1) - i}{i(i+1)} = \frac{1}{i} - \frac{1}{i+1}.
+\]
+La somme devient alors une somme télescopique :
+\[
+\sum_{i=1}^n \frac{1}{i(i+1)} = \sum_{i=1}^n \left(\frac{1}{i} - \frac{1}{i+1}\right) = \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \dots + \left(\frac{1}{n} - \frac{1}{n+1}\right).
+\]
+Tous les termes intermédiaires s'annulent deux à deux, il ne reste que le premier et le dernier :
+\[
+\sum_{i=1}^n \frac{1}{i(i+1)} = 1 - \frac{1}{n+1} = \frac{n+1 - 1}{n+1} = \frac{n}{n+1}.
+\]
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 8
+% ----------------------------------------------------
+\subsection*{Exercice 8 : Somme arithmético-géométrique}
+
+Montrer que pour tout entier naturel non nul $n \in \N^*$, on a :
+\[
+\sum_{i=1}^n i 2^i = (n-1)2^{n+1} + 2.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N^*$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; \sum_{i=1}^n i 2^i = (n-1)2^{n+1} + 2 \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N^*$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 1$ :
+    \begin{itemize}
+        \item Membre de gauche : $\sum_{i=1}^1 i 2^i = 1 \times 2^1 = 2$.
+        \item Membre de droite : $(1 - 1)2^{1+1} + 2 = 0 \times 2^2 + 2 = 2$.
+    \end{itemize}
+    On a bien $2 = 2$, donc $\mathcal{P}_1$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Montrons que pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.\\
+    Soit $k \in \N^*$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    \sum_{i=1}^k i 2^i = (k-1)2^{k+1} + 2 \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    \sum_{i=1}^{k+1} i 2^i = ((k+1)-1)2^{(k+1)+1} + 2 = k 2^{k+2} + 2.
+    \]
+    Décomposons la somme au rang $k+1$ :
+    \[
+    \sum_{i=1}^{k+1} i 2^i = \left(\sum_{i=1}^k i 2^i\right) + (k+1)2^{k+1}.
+    \]
+    En utilisant l'hypothèse de récurrence :
+    \begin{align*}
+    \sum_{i=1}^{k+1} i 2^i &= \Big( (k-1)2^{k+1} + 2 \Big) + (k+1)2^{k+1} \\
+                          &= \Big( (k-1) + (k+1) \Big) 2^{k+1} + 2 \\
+                          &= (2k) \times 2^{k+1} + 2 \\
+                          &= k \times \left(2 \times 2^{k+1}\right) + 2 \\
+                          &= k 2^{k+2} + 2.
+    \end{align*}
+    Or $k 2^{k+2} + 2 = ((k+1)-1)2^{(k+1)+1} + 2$, ce qui établit précisément $\mathcal{P}_{k+1}$.\\
+    Ainsi, pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $1$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N^*$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N^*, \quad \sum_{i=1}^n i 2^i = (n-1)2^{n+1} + 2.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Méthode de sommation d'Abel ou dérivation formelle]
+En MPSI, pour calculer $S = \sum_{i=1}^n i x^i$, on considère la fonction $f(x) = \sum_{i=0}^n x^i = \frac{x^{n+1}-1}{x-1}$ pour $x \neq 1$.
+En dérivant terme à terme : $f'(x) = \sum_{i=1}^n i x^{i-1}$.
+Ainsi $S = x f'(x) = x \frac{(n+1)x^n(x-1) - (x^{n+1}-1)}{(x-1)^2}$.
+En évaluant cette formule pour $x = 2$, on obtient directement $(n-1)2^{n+1} + 2$.
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 9
+% ----------------------------------------------------
+\subsection*{Exercice 9 : Somme alternée de carrés}
+
+Montrer que pour tout entier naturel non nul $n \in \N^*$, on a :
+\[
+\sum_{i=1}^n (-1)^{i+1} i^2 = \frac{(-1)^{n+1} n(n+1)}{2}.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N^*$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; \sum_{i=1}^n (-1)^{i+1} i^2 = \frac{(-1)^{n+1} n(n+1)}{2} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N^*$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 1$ :
+    \begin{itemize}
+        \item Membre de gauche : $(-1)^{1+1} \times 1^2 = (-1)^2 \times 1 = 1$.
+        \item Membre de droite : $\dfrac{(-1)^{1+1} \times 1 \times (1+1)}{2} = \dfrac{1 \times 2}{2} = 1$.
+    \end{itemize}
+    L'égalité est vérifiée, donc $\mathcal{P}_1$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Montrons que pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.\\
+    Soit $k \in \N^*$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    \sum_{i=1}^k (-1)^{i+1} i^2 = \frac{(-1)^{k+1} k(k+1)}{2} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    \sum_{i=1}^{k+1} (-1)^{i+1} i^2 = \frac{(-1)^{k+2} (k+1)(k+2)}{2}.
+    \]
+    Décomposons la somme au rang $k+1$ :
+    \[
+    \sum_{i=1}^{k+1} (-1)^{i+1} i^2 = \left(\sum_{i=1}^k (-1)^{i+1} i^2\right) + (-1)^{k+2} (k+1)^2.
+    \]
+    En utilisant l'hypothèse de récurrence :
+    \[
+    \sum_{i=1}^{k+1} (-1)^{i+1} i^2 = \frac{(-1)^{k+1} k(k+1)}{2} + (-1)^{k+2} (k+1)^2.
+    \]
+    Remarquons que $(-1)^{k+1} = - (-1)^{k+2}$. Factorisons par $(-1)^{k+2}(k+1)$ :
+    \begin{align*}
+    \sum_{i=1}^{k+1} (-1)^{i+1} i^2 &= (-1)^{k+2}(k+1) \left[ -\frac{k}{2} + (k+1) \right] \\
+                                   &= (-1)^{k+2}(k+1) \left[ \frac{-k + 2(k+1)}{2} \right] \\
+                                   &= (-1)^{k+2}(k+1) \left[ \frac{-k + 2k + 2}{2} \right] \\
+                                   &= (-1)^{k+2}(k+1) \left[ \frac{k+2}{2} \right] \\
+                                   &= \frac{(-1)^{k+2} (k+1)(k+2)}{2}.
+    \end{align*}
+    La propriété $\mathcal{P}_{k+1}$ est donc démontrée.\\
+    Ainsi, pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $1$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N^*$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N^*, \quad \sum_{i=1}^n (-1)^{i+1} i^2 = \frac{(-1)^{n+1} n(n+1)}{2}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 10
+% ----------------------------------------------------
+\subsection*{Exercice 10 : Somme des carrés des $n$ premiers entiers}
+
+Montrer que pour tout entier naturel non nul $n \in \N^*$, on a :
+\[
+\sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}.
+\]
+
+\begin{correctionbox}
+Nous présentons les deux démonstrations demandées : par récurrence et par la méthode constructive directe de sommation télescopique.
+
+\subsubsection*{Méthode 1 : Démonstration par récurrence}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N^*$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; \sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N^*$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 1$ :
+    \begin{itemize}
+        \item Membre de gauche : $\sum_{i=1}^1 i^2 = 1^2 = 1$.
+        \item Membre de droite : $\dfrac{1(1+1)(2(1)+1)}{6} = \dfrac{1 \times 2 \times 3}{6} = \dfrac{6}{6} = 1$.
+    \end{itemize}
+    On a bien $1 = 1$, donc $\mathcal{P}_1$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N^*$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    \sum_{i=1}^k i^2 = \frac{k(k+1)(2k+1)}{6} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    \sum_{i=1}^{k+1} i^2 = \frac{(k+1)((k+1)+1)(2(k+1)+1)}{6} = \frac{(k+1)(k+2)(2k+3)}{6}.
+    \]
+    Par séparation du dernier terme :
+    \[
+    \sum_{i=1}^{k+1} i^2 = \left(\sum_{i=1}^k i^2\right) + (k+1)^2.
+    \]
+    En injectant l'hypothèse de récurrence :
+    \[
+    \sum_{i=1}^{k+1} i^2 = \frac{k(k+1)(2k+1)}{6} + (k+1)^2.
+    \]
+    Factorisons par $(k+1)$ en réduisant au dénominateur $6$ :
+    \begin{align*}
+    \sum_{i=1}^{k+1} i^2 &= \frac{k+1}{6} \Big[ k(2k+1) + 6(k+1) \Big] \\
+                         &= \frac{k+1}{6} \Big[ 2k^2 + k + 6k + 6 \Big] \\
+                         &= \frac{k+1}{6} \Big[ 2k^2 + 7k + 6 \Big].
+    \end{align*}
+    Factorisons le trinôme du second degré $T(k) = 2k^2 + 7k + 6$ :\\
+    Le discriminant est $\Delta = 7^2 - 4(2)(6) = 49 - 48 = 1 > 0$.\\
+    Les racines sont $k_1 = \dfrac{-7 - 1}{4} = -2$ et $k_2 = \dfrac{-7 + 1}{4} = -\dfrac{3}{2}$.\\
+    Ainsi : $2k^2 + 7k + 6 = 2(k+2)\left(k + \dfrac{3}{2}\right) = (k+2)(2k+3)$.\\
+    En substituant dans l'expression de la somme :
+    \[
+    \sum_{i=1}^{k+1} i^2 = \frac{(k+1)(k+2)(2k+3)}{6}.
+    \]
+    La proposition $\mathcal{P}_{k+1}$ est donc vraie.\\
+    Ainsi, pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    Par principe de récurrence, pour tout $n \in \N^*$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N^*, \quad \sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}.
+    \]
+\end{enumerate}
+
+\subsubsection*{Méthode 2 : Démonstration constructive directe sans récurrence (Télescopage cubique)}
+
+Développons pour tout entier $i \ge 1$ le cube $(i+1)^3$ :
+\[
+(i+1)^3 = i^3 + 3i^2 + 3i + 1 \iff (i+1)^3 - i^3 = 3i^2 + 3i + 1.
+\]
+Sommons cette égalité pour $i$ variant de $1$ à $n$ :
+\[
+\sum_{i=1}^n \Big( (i+1)^3 - i^3 \Big) = \sum_{i=1}^n \Big( 3i^2 + 3i + 1 \Big).
+\]
+\begin{itemize}
+    \item Par linéarité de la somme, le membre de droite se décompose en :
+    \[
+    3 \sum_{i=1}^n i^2 + 3 \sum_{i=1}^n i + \sum_{i=1}^n 1 = 3 \sum_{i=1}^n i^2 + 3 \frac{n(n+1)}{2} + n.
+    \]
+    \item Le membre de gauche est une somme télescopique pure :
+    \[
+    \sum_{i=1}^n \Big( (i+1)^3 - i^3 \Big) = (2^3 - 1^3) + (3^3 - 2^3) + \dots + ((n+1)^3 - n^3) = (n+1)^3 - 1^3 = (n+1)^3 - 1.
+    \]
+\end{itemize}
+On a donc l'égalité fondamentale :
+\[
+(n+1)^3 - 1 = 3 \sum_{i=1}^n i^2 + \frac{3n(n+1)}{2} + n.
+\]
+Regroupons les termes en isolant la somme des carrés :
+\begin{align*}
+3 \sum_{i=1}^n i^2 &= (n+1)^3 - 1 - n - \frac{3n(n+1)}{2} \\
+                   &= (n+1)^3 - (n+1) - \frac{3n(n+1)}{2} \\
+                   &= (n+1) \left[ (n+1)^2 - 1 - \frac{3n}{2} \right] \\
+                   &= (n+1) \left[ n^2 + 2n - \frac{3n}{2} \right] \\
+                   &= (n+1) \left[ n^2 + \frac{n}{2} \right] \\
+                   &= \frac{n(n+1)(2n+1)}{2}.
+\end{align*}
+En divisant les deux membres par $3$, on obtient sans conjecture préalable :
+\[
+\sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 11
+% ----------------------------------------------------
+\subsection*{Exercice 11 : Somme des cubes (Formule de Nicomaque)}
+
+Pour tout entier naturel non nul $n \in \N^*$, montrer que :
+\[
+\sum_{k=1}^n k^3 = \left(\sum_{k=1}^n k\right)^2 = \left(\frac{n(n+1)}{2}\right)^2 = \frac{n^2(n+1)^2}{4}.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N^*$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; \sum_{k=1}^n k^3 = \frac{n^2(n+1)^2}{4} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N^*$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 1$ :
+    \begin{itemize}
+        \item Membre de gauche : $\sum_{k=1}^1 k^3 = 1^3 = 1$.
+        \item Membre de droite : $\dfrac{1^2 (1+1)^2}{4} = \dfrac{1 \times 4}{4} = 1$.
+    \end{itemize}
+    On a bien $1 = 1$, donc $\mathcal{P}_1$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N^*$. Supposons $\mathcal{P}_k$ vraie, c'est-à-dire :
+    \[
+    \sum_{i=1}^k i^3 = \frac{k^2(k+1)^2}{4} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    \sum_{i=1}^{k+1} i^3 = \frac{(k+1)^2 ((k+1)+1)^2}{4} = \frac{(k+1)^2(k+2)^2}{4}.
+    \]
+    Isolons le dernier terme de la somme :
+    \[
+    \sum_{i=1}^{k+1} i^3 = \left(\sum_{i=1}^k i^3\right) + (k+1)^3.
+    \]
+    En utilisant l'hypothèse de récurrence :
+    \[
+    \sum_{i=1}^{k+1} i^3 = \frac{k^2(k+1)^2}{4} + (k+1)^3.
+    \]
+    Factorisons par $(k+1)^2$ en réduisant au dénominateur commun $4$ :
+    \begin{align*}
+    \sum_{i=1}^{k+1} i^3 &= \frac{(k+1)^2}{4} \Big[ k^2 + 4(k+1) \Big] \\
+                         &= \frac{(k+1)^2}{4} \Big[ k^2 + 4k + 4 \Big] \\
+                         &= \frac{(k+1)^2(k+2)^2}{4}.
+    \end{align*}
+    On reconnaît l'expression attendue au rang $k+1$, donc $\mathcal{P}_{k+1}$ est vraie.\\
+    Ainsi, pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $1$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N^*$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N^*, \quad \sum_{k=1}^n k^3 = \left(\frac{n(n+1)}{2}\right)^2 = \left(\sum_{k=1}^n k\right)^2.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Théorème de Nicomaque de Gérase]
+Ce résultat extraordinaire, connu depuis l'Antiquité (Nicomaque de Gérase, vers l'an 100 après J.-C.), affirme que la somme des $n$ premiers cubes est exactement égale au carré de la somme des $n$ premiers entiers.
+On peut également l'établir sans récurrence par télescopage sur l'identité $(k+1)^4 - k^4 = 4k^3 + 6k^2 + 4k + 1$.
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 12
+% ----------------------------------------------------
+\subsection*{Exercice 12 : Somme des termes consécutifs d'une suite géométrique}
+
+Soit $(u_n)_{n \in \N}$ une suite géométrique de raison $q \in \R$ avec $q \neq 1$.\\
+Soit $p \in \N$ fixé. Montrer que pour tout entier naturel $n \ge p$, on a :
+\[
+\sum_{i=p}^n u_i = u_p \frac{1 - q^{n+1-p}}{1 - q}.
+\]
+
+\begin{correctionbox}
+Rappelons que pour une suite géométrique de raison $q$, pour tout entier $i \ge p$, on a $u_i = u_p q^{i-p}$.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Soit $p \in \N$ fixé. Pour tout entier $n \ge p$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; \sum_{i=p}^n u_i = u_p \frac{1 - q^{n+1-p}}{1 - q} \; ».
+    \]
+    Montrons par récurrence sur $n$ que $\mathcal{P}_n$ est vraie pour tout entier $n \ge p$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = p$ :
+    \begin{itemize}
+        \item Membre de gauche : $\sum_{i=p}^p u_i = u_p$.
+        \item Membre de droite : $u_p \dfrac{1 - q^{p+1-p}}{1 - q} = u_p \dfrac{1 - q^1}{1 - q} = u_p \times 1 = u_p$ (car $q \neq 1$).
+    \end{itemize}
+    L'égalité est vérifiée, donc $\mathcal{P}_p$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$ tel que $k \ge p$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    \sum_{i=p}^k u_i = u_p \frac{1 - q^{k+1-p}}{1 - q} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    \sum_{i=p}^{k+1} u_i = u_p \frac{1 - q^{(k+1)+1-p}}{1 - q} = u_p \frac{1 - q^{k+2-p}}{1 - q}.
+    \]
+    Par séparation du dernier terme :
+    \[
+    \sum_{i=p}^{k+1} u_i = \left(\sum_{i=p}^k u_i\right) + u_{k+1}.
+    \]
+    Puisque $(u_n)$ est géométrique de raison $q$, $u_{k+1} = u_p q^{(k+1)-p} = u_p q^{k+1-p}$.\\
+    En substituant la somme par l'hypothèse de récurrence :
+    \begin{align*}
+    \sum_{i=p}^{k+1} u_i &= u_p \frac{1 - q^{k+1-p}}{1 - q} + u_p q^{k+1-p} \\
+                        &= u_p \left[ \frac{1 - q^{k+1-p}}{1 - q} + \frac{(1-q)q^{k+1-p}}{1 - q} \right] \\
+                        &= u_p \left[ \frac{1 - q^{k+1-p} + q^{k+1-p} - q^{k+2-p}}{1 - q} \right] \\
+                        &= u_p \frac{1 - q^{k+2-p}}{1 - q}.
+    \end{align*}
+    La propriété $\mathcal{P}_{k+1}$ est donc établie.\\
+    Ainsi, pour tout $k \ge p$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    Par principe de récurrence, pour tout entier naturel $n \ge p$, la propriété $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \; n \ge p, \quad \sum_{i=p}^n u_i = u_p \frac{1 - q^{n+1-p}}{1 - q}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 13
+% ----------------------------------------------------
+\subsection*{Exercice 13 : Somme des termes consécutifs d'une suite arithmétique}
+
+Soit $(u_n)_{n \in \N}$ une suite arithmétique de raison $r \in \R$.\\
+Soit $p \in \N$ fixé. Montrer que pour tout entier naturel $n \ge p$, on a :
+\[
+\sum_{i=p}^n u_i = (n - p + 1) \frac{u_p + u_n}{2}.
+\]
+
+\begin{correctionbox}
+Rappelons que pour une suite arithmétique, $u_n = u_p + (n-p)r$, et en particulier $u_{k+1} = u_k + r$.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Soit $p \in \N$ fixé. Pour tout entier $n \ge p$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; \sum_{i=p}^n u_i = (n - p + 1) \frac{u_p + u_n}{2} \; ».
+    \]
+    Montrons par récurrence sur $n$ que $\mathcal{P}_n$ est vraie pour tout $n \ge p$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = p$ :
+    \begin{itemize}
+        \item Membre de gauche : $\sum_{i=p}^p u_i = u_p$.
+        \item Membre de droite : $(p - p + 1)\dfrac{u_p + u_p}{2} = 1 \times \dfrac{2u_p}{2} = u_p$.
+    \end{itemize}
+    L'égalité est vérifiée, donc $\mathcal{P}_p$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$ tel que $k \ge p$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    \sum_{i=p}^k u_i = (k - p + 1) \frac{u_p + u_k}{2} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    \sum_{i=p}^{k+1} u_i = ((k+1) - p + 1) \frac{u_p + u_{k+1}}{2} = (k - p + 2) \frac{u_p + u_{k+1}}{2}.
+    \]
+    En décomposant la somme :
+    \[
+    \sum_{i=p}^{k+1} u_i = \left(\sum_{i=p}^k u_i\right) + u_{k+1} = (k - p + 1) \frac{u_p + u_k}{2} + u_{k+1}.
+    \]
+    Exprimons $u_k$ en fonction de $u_{k+1}$ : puisque $u_{k+1} = u_k + r$, on a $u_k = u_{k+1} - r$.\\
+    Remplaçons dans la formule au même dénominateur $2$ :
+    \begin{align*}
+    \sum_{i=p}^{k+1} u_i &= \frac{(k - p + 1)(u_p + u_{k+1} - r) + 2u_{k+1}}{2} \\
+                        &= \frac{(k - p + 1)(u_p + u_{k+1}) - (k - p + 1)r + 2u_{k+1}}{2}.
+    \end{align*}
+    Or, d'après le cours sur les suites arithmétiques, $u_{k+1} = u_p + (k+1-p)r$, ce qui équivaut à :
+    \[
+    (k+1-p)r = u_{k+1} - u_p \iff -(k-p+1)r = u_p - u_{k+1}.
+    \]
+    Substituons cette quantité dans le numérateur :
+    \begin{align*}
+    -(k - p + 1)r + 2u_{k+1} &= (u_p - u_{k+1}) + 2u_{k+1} = u_p + u_{k+1}.
+    \end{align*}
+    Ainsi, le numérateur complet devient :
+    \[
+    (k - p + 1)(u_p + u_{k+1}) + (u_p + u_{k+1}) = (k - p + 1 + 1)(u_p + u_{k+1}) = (k - p + 2)(u_p + u_{k+1}).
+    \]
+    On obtient donc immédiatement :
+    \[
+    \sum_{i=p}^{k+1} u_i = (k - p + 2) \frac{u_p + u_{k+1}}{2} = ((k+1) - p + 1) \frac{u_p + u_{k+1}}{2}.
+    \]
+    La propriété $\mathcal{P}_{k+1}$ est donc démontrée.\\
+    Ainsi, pour tout $k \ge p$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    Par principe de récurrence, pour tout $n \in \N$ tel que $n \ge p$, la propriété $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \; n \ge p, \quad \sum_{i=p}^n u_i = (\text{nombre de termes}) \times \frac{\text{premier terme} + \text{dernier terme}}{2}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 14
+% ----------------------------------------------------
+\subsection*{Exercice 14 : Décomposition de $1$ en somme de fractions égyptiennes distinctes}
+
+Montrer que pour tout entier naturel $n$ supérieur ou égal à $3$, il existe $n$ entiers distincts strictement positifs $x_1 < x_2 < \dots < x_n$ tels que :
+\[
+1 = \sum_{i=1}^n \frac{1}{x_i}.
+\]
+
+\begin{correctionbox}
+Ce magnifique problème classique d'arithmétique porte sur les sommes de fractions unitaires (dites \textit{fractions égyptiennes}).
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout entier $n \ge 3$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; \exists (x_1, x_2, \dots, x_n) \in (\N^*)^n \text{ tels que } x_1 < x_2 < \dots < x_n \text{ et } \sum_{i=1}^n \frac{1}{x_i} = 1 \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout entier $n \ge 3$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 3$, cherchons trois fractions unitaires distinctes dont la somme fait $1$.
+    Considérons les entiers $x_1 = 2$, $x_2 = 3$, $x_3 = 6$.
+    \begin{itemize}
+        \item Ce sont bien trois entiers naturels strictement positifs ;
+        \item Ils sont strictement ordonnés : $2 < 3 < 6$ ;
+        \item Calculons la somme de leurs inverses :
+        \[
+        \frac{1}{2} + \frac{1}{3} + \frac{1}{6} = \frac{3}{6} + \frac{2}{6} + \frac{1}{6} = \frac{3 + 2 + 1}{6} = \frac{6}{6} = 1.
+        \]
+    \end{itemize}
+    La propriété $\mathcal{P}_3$ est donc vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$ tel que $k \ge 3$. Supposons $\mathcal{P}_k$ vraie.\\
+    Il existe donc $k$ entiers naturels $x_1 < x_2 < \dots < x_k$ dans $\N^*$ tels que :
+    \[
+    \sum_{i=1}^k \frac{1}{x_i} = 1.
+    \]
+    \textbf{Remarque fondamentale :} Puisque $k \ge 3$ et que les entiers $x_i$ sont strictement croissants, on a obligatoirement $x_1 \ge 2$. En effet, si $x_1 = 1$, alors $\sum_{i=1}^k \frac{1}{x_i} = 1 + \sum_{i=2}^k \frac{1}{x_i} > 1$, ce qui est impossible.\\
+    Utilisons l'identité arithmétique remarquable :
+    \[
+    1 = \frac{1}{2} + \frac{1}{2} = \frac{1}{2} + \frac{1}{2} \times 1 = \frac{1}{2} + \frac{1}{2} \left(\sum_{i=1}^k \frac{1}{x_i}\right) = \frac{1}{2} + \sum_{i=1}^k \frac{1}{2x_i}.
+    \]
+    Définissons une nouvelle famille de $k+1$ entiers $(y_1, y_2, \dots, y_{k+1})$ en posant :
+    \[
+    y_1 = 2 \quad \text{et pour tout } j \in \{1, \dots, k\}, \quad y_{j+1} = 2x_j.
+    \]
+    Vérifions scrupuleusement les conditions requises pour cette nouvelle famille :
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Appartenance à $\N^*$} : Comme pour tout $j$, $x_j \in \N^*$, on a clairement $y_1 = 2 \in \N^*$ et $y_{j+1} = 2x_j \in \N^*$.
+        \item \textbf{Ordre strict et distinction} :
+        \begin{itemize}
+            \item Puisque $x_1 \ge 2$, on a $y_2 = 2x_1 \ge 2 \times 2 = 4 > 2 = y_1$, donc $y_1 < y_2$.
+            \item Pour tout $j \in \{1, \dots, k-1\}$, l'hypothèse $x_j < x_{j+1}$ entraîne en multipliant par $2 > 0$ que $2x_j < 2x_{j+1}$, c'est-à-dire $y_{j+1} < y_{j+2}$.
+        \end{itemize}
+        On a donc la chaîne d'inégalités strictes :
+        \[
+        y_1 < y_2 < y_3 < \dots < y_{k+1}.
+        \]
+        Ces $k+1$ entiers sont donc deux à deux distincts.
+        \item \textbf{Somme des inverses} :
+        \[
+        \sum_{m=1}^{k+1} \frac{1}{y_m} = \frac{1}{y_1} + \sum_{j=1}^k \frac{1}{y_{j+1}} = \frac{1}{2} + \sum_{j=1}^k \frac{1}{2x_j} = \frac{1}{2} + \frac{1}{2} \sum_{j=1}^k \frac{1}{x_j} = \frac{1}{2} + \frac{1}{2}(1) = 1.
+        \]
+    \end{enumerate}
+    La famille $(y_1, \dots, y_{k+1})$ satisfait toutes les conditions au rang $k+1$, donc $\mathcal{P}_{k+1}$ est vraie.\\
+    Ainsi, pour tout $k \ge 3$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $3$ et est héréditaire. Par le principe de récurrence, pour tout entier $n \ge 3$, il existe $n$ entiers distincts strictement positifs dont la somme des inverses est égale à $1$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 15
+% ----------------------------------------------------
+\subsection*{Exercice 15 : Un produit télescopique}
+
+Pour tout entier naturel supérieur ou égal à $2$, on pose :
+\[
+S_n = \prod_{k=2}^n \left(1 - \frac{1}{k^2}\right).
+\]
+\begin{enumerate}
+    \item Calculer les $4$ premiers termes de la suite : $S_2, S_3, S_4, S_5$.
+    \item Conjecturer puis démontrer par récurrence l'expression de $S_n$ en fonction de $n$.
+\end{enumerate}
+
+\begin{correctionbox}
+\textbf{1. Calcul des 4 premiers termes}
+\begin{itemize}
+    \item Pour $n = 2$ :
+    \[
+    S_2 = 1 - \frac{1}{2^2} = 1 - \frac{1}{4} = \frac{3}{4}.
+    \]
+    \item Pour $n = 3$ :
+    \[
+    S_3 = S_2 \times \left(1 - \frac{1}{3^2}\right) = \frac{3}{4} \times \left(1 - \frac{1}{9}\right) = \frac{3}{4} \times \frac{8}{9} = \frac{24}{36} = \frac{2}{3} = \frac{4}{6}.
+    \]
+    \item Pour $n = 4$ :
+    \[
+    S_4 = S_3 \times \left(1 - \frac{1}{4^2}\right) = \frac{2}{3} \times \left(1 - \frac{1}{16}\right) = \frac{2}{3} \times \frac{15}{16} = \frac{30}{48} = \frac{5}{8}.
+    \]
+    \item Pour $n = 5$ :
+    \[
+    S_5 = S_4 \times \left(1 - \frac{1}{5^2}\right) = \frac{5}{8} \times \left(1 - \frac{1}{25}\right) = \frac{5}{8} \times \frac{24}{25} = \frac{120}{200} = \frac{3}{5} = \frac{6}{10}.
+    \]
+\end{itemize}
+
+\textbf{2. Formulation de la conjecture et démonstration par récurrence}\\
+En observant les termes écrits sous forme non réduite au dénominateur $2n$ :
+\[
+S_2 = \frac{3}{4} = \frac{2+1}{2 \times 2}, \quad S_3 = \frac{4}{6} = \frac{3+1}{2 \times 3}, \quad S_4 = \frac{5}{8} = \frac{4+1}{2 \times 4}, \quad S_5 = \frac{6}{10} = \frac{5+1}{2 \times 5}.
+\]
+On conjecture naturellement :
+\[
+\textbf{Conjecture : } \forall n \ge 2, \quad S_n = \frac{n+1}{2n}.
+\]
+
+Démontrons cette conjecture par récurrence :
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout entier $n \ge 2$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; S_n = \frac{n+1}{2n} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \ge 2$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 2$ :
+    \begin{itemize}
+        \item $S_2 = \dfrac{3}{4}$ ;
+        \item La formule conjecturée donne : $\dfrac{2+1}{2 \times 2} = \dfrac{3}{4}$.
+    \end{itemize}
+    On a bien l'égalité, donc $\mathcal{P}_2$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$ tel que $k \ge 2$. Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+    \[
+    S_k = \frac{k+1}{2k} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    S_{k+1} = \frac{(k+1)+1}{2(k+1)} = \frac{k+2}{2(k+1)}.
+    \]
+    Par définition du produit fini, on a :
+    \[
+    S_{k+1} = S_k \times \left(1 - \frac{1}{(k+1)^2}\right).
+    \]
+    En utilisant l'hypothèse de récurrence :
+    \[
+    S_{k+1} = \frac{k+1}{2k} \times \left(1 - \frac{1}{(k+1)^2}\right).
+    \]
+    Factorisons le second facteur via l'identité $a^2 - b^2 = (a-1)(a+1)$ :
+    \[
+    1 - \frac{1}{(k+1)^2} = \frac{(k+1)^2 - 1}{(k+1)^2} = \frac{((k+1)-1)((k+1)+1)}{(k+1)^2} = \frac{k(k+2)}{(k+1)^2}.
+    \]
+    En réinjectant dans le produit :
+    \[
+    S_{k+1} = \frac{k+1}{2k} \times \frac{k(k+2)}{(k+1)^2}.
+    \]
+    Simplifions par $k > 0$ et par $(k+1) > 0$ :
+    \[
+    S_{k+1} = \frac{k+2}{2(k+1)}.
+    \]
+    Ceci démontre que $\mathcal{P}_{k+1}$ est vraie.\\
+    Ainsi, pour tout $k \ge 2$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $2$ et est héréditaire pour tout $k \ge 2$. Par le principe de récurrence, pour tout entier $n \ge 2$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \; n \ge 2, \quad S_n = \frac{n+1}{2n}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Preuve directe par décomposition en produit télescopique]
+En réécrivant le terme général $1 - \frac{1}{k^2} = \frac{k^2-1}{k^2} = \frac{k-1}{k} \times \frac{k+1}{k}$, le produit se sépare en deux produits télescopiques :
+\[
+S_n = \left(\prod_{k=2}^n \frac{k-1}{k}\right) \times \left(\prod_{k=2}^n \frac{k+1}{k}\right) = \left(\frac{1}{2} \times \frac{2}{3} \times \dots \times \frac{n-1}{n}\right) \times \left(\frac{3}{2} \times \frac{4}{3} \times \dots \times \frac{n+1}{n}\right).
+\]
+Le premier produit se simplifie en $\frac{1}{n}$, et le second en $\frac{n+1}{2}$. Le produit vaut donc immédiatement $\frac{1}{n} \times \frac{n+1}{2} = \frac{n+1}{2n}$.
+\end{remarquabox}
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 3 : Inégalités et Comparaisons}
+
+% ----------------------------------------------------
+% EXERCICE 16
+% ----------------------------------------------------
+\subsection*{Exercice 16 : L'inégalité de Bernoulli}
+
+Soit $x$ un réel positif ($x \ge 0$). Montrer que pour tout entier naturel non nul $n \in \N^*$, on a :
+\[
+(1+x)^n \ge 1 + nx.
+\]
+
+\begin{correctionbox}
+L'inégalité de Bernoulli est un monument de l'analyse réelle classique.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Soit $x \ge 0$ fixé. Pour tout $n \in \N^*$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; (1+x)^n \ge 1 + nx \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N^*$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 1$ :
+    \begin{itemize}
+        \item Membre de gauche : $(1+x)^1 = 1+x$.
+        \item Membre de droite : $1 + 1 \times x = 1+x$.
+    \end{itemize}
+    Comme $1+x \ge 1+x$, la propriété $\mathcal{P}_1$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N^*$. Supposons $\mathcal{P}_k$ vraie, c'est-à-dire :
+    \[
+    (1+x)^k \ge 1 + kx \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que :
+    \[
+    (1+x)^{k+1} \ge 1 + (k+1)x.
+    \]
+    Puisque $x \ge 0$, on a $1+x \ge 1 > 0$. On peut donc multiplier les deux membres de l'inégalité de l'hypothèse de récurrence par $(1+x)$ sans changer le sens de l'inégalité :
+    \[
+    (1+x)^{k+1} = (1+x)^k (1+x) \ge (1 + kx)(1 + x).
+    \]
+    Développons le membre de droite :
+    \begin{align*}
+    (1 + kx)(1 + x) &= 1 + x + kx + kx^2 \\
+                    &= 1 + (k+1)x + kx^2.
+    \end{align*}
+    Or, par hypothèse, $k \ge 1$ et $x \ge 0$, donc $kx^2 \ge 0$. On en déduit :
+    \[
+    1 + (k+1)x + kx^2 \ge 1 + (k+1)x.
+    \]
+    Par transitivité de la relation d'ordre $\ge$ sur $\R$ :
+    \[
+    (1+x)^{k+1} \ge 1 + (k+1)x.
+    \]
+    La propriété $\mathcal{P}_{k+1}$ est donc démontrée.\\
+    Ainsi, pour tout $k \in \N^*$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $1$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N^*$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N^*, \quad (1+x)^n \ge 1 + nx.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Généralisation et convexité]
+1. \textbf{Extension à $x \ge -1$} : La démonstration reste rigoureusement identique pour tout réel $x \ge -1$, car la seule condition requise pour conserver le sens de l'inégalité lors de la multiplication est $1+x \ge 0$.\\
+2. \textbf{Application fondamentale aux suites géométriques} : Si $q > 1$, on pose $q = 1+a$ avec $a = q-1 > 0$. D'après Bernoulli, $q^n = (1+a)^n \ge 1 + na$. Comme $\lim_{n \to +\infty} (1+na) = +\infty$, on en déduit par théorème de comparaison que $\lim_{n \to +\infty} q^n = +\infty$.
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 17
+% ----------------------------------------------------
+\subsection*{Exercice 17 : Étude fine de l'inégalité $2^n > n^2$}
+
+Soit $n \in \N$. On considère la propriété :
+\[
+\mathcal{P}_n : « \; 2^n > n^2 \; ».
+\]
+\begin{enumerate}
+    \item Montrer que pour tout entier $k \ge 3$, la proposition $\mathcal{P}_k \implies \mathcal{P}_{k+1}$ est vraie.
+    \item Pour quelles valeurs de l'entier naturel $n$ la propriété $\mathcal{P}_n$ est-elle vraie ?
+\end{enumerate}
+
+\begin{correctionbox}
+Cet exercice illustre de manière éclatante la dissociation fondamentale entre la validité logique d'une implication héréditaire et la vérité de son point de départ.
+
+\subsubsection*{1. Démonstration de l'hérédité pour $k \ge 3$}
+
+Soit $k \in \N$ un entier tel que $k \ge 3$.\\
+Supposons que $\mathcal{P}_k$ est vraie, c'est-à-dire :
+\[
+2^k > k^2 \quad \text{(HR)}.
+\]
+Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que $2^{k+1} > (k+1)^2$.\\
+En multipliant l'hypothèse de récurrence par $2 > 0$ :
+\[
+2^{k+1} = 2 \times 2^k > 2k^2.
+\]
+Pour prouver que $2^{k+1} > (k+1)^2$, il suffit de démontrer que :
+\[
+2k^2 \ge (k+1)^2.
+\]
+Étudions la différence $D(k) = 2k^2 - (k+1)^2$ :
+\begin{align*}
+D(k) &= 2k^2 - (k^2 + 2k + 1) \\
+     &= k^2 - 2k - 1 \\
+     &= (k - 1)^2 - 1 - 1 \\
+     &= (k - 1)^2 - 2.
+\end{align*}
+Puisque par hypothèse $k \ge 3$, on a $k - 1 \ge 2$, d'où :
+\[
+(k - 1)^2 \ge 4 \implies D(k) = (k - 1)^2 - 2 \ge 4 - 2 = 2 > 0.
+\]
+On a donc rigoureusement prouvé que pour tout $k \ge 3$ :
+\[
+2k^2 > (k+1)^2.
+\]
+En combinant nos deux inégalités strictes :
+\[
+2^{k+1} > 2k^2 > (k+1)^2 \implies 2^{k+1} > (k+1)^2.
+\]
+La proposition $\mathcal{P}_{k+1}$ est donc vraie.\\
+\textbf{Conclusion de la question 1 :} Pour tout entier naturel $k \ge 3$, on a bien $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+\subsubsection*{2. Étude exhaustive des valeurs de $n \in \N$}
+
+Testons les premières valeurs entières de $n$ :
+\begin{itemize}
+    \item \textbf{Pour $n = 0$} : $2^0 = 1$ et $0^2 = 0$. Comme $1 > 0$, $\mathcal{P}_0$ est \textbf{VRAIE}.
+    \item \textbf{Pour $n = 1$} : $2^1 = 2$ et $1^2 = 1$. Comme $2 > 1$, $\mathcal{P}_1$ est \textbf{VRAIE}.
+    \item \textbf{Pour $n = 2$} : $2^2 = 4$ et $2^2 = 4$. L'inégalité stricte $4 > 4$ est \textbf{FAUSSE} (on a égalité).
+    \item \textbf{Pour $n = 3$} : $2^3 = 8$ et $3^2 = 9$. Comme $8 < 9$, $\mathcal{P}_3$ est \textbf{FAUSSE}.
+    \item \textbf{Pour $n = 4$} : $2^4 = 16$ et $4^2 = 16$. L'inégalité stricte $16 > 16$ est \textbf{FAUSSE} (égalité).
+    \item \textbf{Pour $n = 5$} : $2^5 = 32$ et $5^2 = 25$. Comme $32 > 25$, $\mathcal{P}_5$ est \textbf{VRAIE} !
+\end{itemize}
+
+\textbf{Enclenchement de la récurrence à partir du rang $n_0 = 5$ :}
+\begin{itemize}
+    \item \textbf{Initialisation} : $\mathcal{P}_5$ est vraie.
+    \item \textbf{Hérédité} : D'après la question 1, pour tout $k \ge 3$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$. En particulier, cette implication est vraie pour tout $k \ge 5$.
+    \item \textbf{Conclusion inductive} : Par principe de récurrence, $\mathcal{P}_n$ est vraie pour tout entier $n \ge 5$.
+\end{itemize}
+
+\textbf{Bilan complet :}\\
+L'ensemble des entiers naturels $n$ vérifiant l'inégalité $2^n > n^2$ est :
+\[
+\mathcal{S} = \{0, 1\} \cup \{n \in \N \mid n \ge 5\} = \N \setminus \{2, 3, 4\}.
+\]
+\end{correctionbox}
+
+\begin{remarquabox}[Portée pédagogique de cet exercice]
+Cet exercice démontre pourquoi l'hérédité seule ne suffit jamais : l'implication $\mathcal{P}_k \implies \mathcal{P}_{k+1}$ est parfaitement vraie pour $k = 3$ et $k = 4$, mais comme $\mathcal{P}_3$ et $\mathcal{P}_4$ sont fausses, l'implication $(\text{Faux} \implies \text{Faux})$ ou $(\text{Faux} \implies \text{Vrai})$ ne transmet aucune vérité ! La propagation de la vérité n'opère qu'à partir de la première marche vérifiée dans le domaine d'hérédité, qui est ici $n_0 = 5$.
+\end{remarquabox}
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 4 : Majoration, Minoration et Variations de suites}
+
+% ----------------------------------------------------
+% EXERCICE 18
+% ----------------------------------------------------
+\subsection*{Exercice 18 : Majoration, minoration et variations d'une suite sous radicaux}
+
+Pour tout $n \in \N$, on définit la suite $(u_n)_{n \in \N}$ par :
+\[
+\begin{cases}
+u_0 = 1 \\
+u_{n+1} = \sqrt{u_n + 1} \quad \text{pour tout } n \in \N.
+\end{cases}
+\]
+\begin{enumerate}
+    \item Montrer que pour tout $n \in \N$, on a $0 < u_n < 2$.
+    \item Montrer que la suite $(u_n)$ est strictement croissante.
+\end{enumerate}
+
+\begin{correctionbox}
+\subsubsection*{1. Encadrement de la suite : $0 < u_n < 2$}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; 0 < u_n < 2 \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 0$, $u_0 = 1$. On a clairement $0 < 1 < 2$, donc $\mathcal{P}_0$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$. Supposons $\mathcal{P}_k$ vraie, c'est-à-dire :
+    \[
+    0 < u_k < 2 \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir que $0 < u_{k+1} < 2$.\\
+    En ajoutant $1$ à chaque membre de l'encadrement de l'hypothèse de récurrence :
+    \[
+    1 < u_k + 1 < 3.
+    \]
+    La fonction racine carrée $x \mapsto \sqrt{x}$ étant \textbf{strictement croissante} sur $[0, +\infty[$, elle conserve l'ordre strict :
+    \[
+    \sqrt{1} < \sqrt{u_k + 1} < \sqrt{3}.
+    \]
+    Or $\sqrt{1} = 1 > 0$ et $\sqrt{3} < \sqrt{4} = 2$. Il vient donc :
+    \[
+    0 < 1 < u_{k+1} < \sqrt{3} < 2 \implies 0 < u_{k+1} < 2.
+    \]
+    La propriété $\mathcal{P}_{k+1}$ est donc démontrée.\\
+    Ainsi, pour tout $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    Par principe de récurrence, pour tout $n \in \N$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \quad 0 < u_n < 2.
+    \]
+\end{enumerate}
+
+\subsubsection*{2. Stricte croissance de la suite $(u_n)$}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N$, notons $\mathcal{Q}_n$ la propriété :
+    \[
+    \mathcal{Q}_n : « \; u_n < u_{n+1} \; ».
+    \]
+    Montrons par récurrence que $\mathcal{Q}_n$ est vraie pour tout $n \in \N$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 0$ :
+    \begin{itemize}
+        \item $u_0 = 1$ ;
+        \item $u_1 = \sqrt{u_0 + 1} = \sqrt{1 + 1} = \sqrt{2} \approx 1{,}414$.
+    \end{itemize}
+    Puisque $1 < \sqrt{2}$, on a bien $u_0 < u_1$, donc $\mathcal{Q}_0$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$. Supposons $\mathcal{Q}_k$ vraie, c'est-à-dire :
+    \[
+    u_k < u_{k+1} \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{Q}_{k+1}$ est vraie, à savoir que $u_{k+1} < u_{k+2}$.\\
+    En ajoutant $1$ aux deux membres de l'inégalité :
+    \[
+    u_k + 1 < u_{k+1} + 1.
+    \]
+    D'après la question 1, $u_k > 0$ et $u_{k+1} > 0$, donc $u_k + 1 > 0$ et $u_{k+1} + 1 > 0$.\\
+    Par stricte croissance de la fonction racine carrée sur $[0, +\infty[$ :
+    \[
+    \sqrt{u_k + 1} < \sqrt{u_{k+1} + 1}.
+    \]
+    Or $\sqrt{u_k + 1} = u_{k+1}$ et $\sqrt{u_{k+1} + 1} = u_{k+2}$. On en déduit :
+    \[
+    u_{k+1} < u_{k+2}.
+    \]
+    La propriété $\mathcal{Q}_{k+1}$ est donc vraie.\\
+    Ainsi, pour tout $k \in \N$, $\mathcal{Q}_k \implies \mathcal{Q}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    Par principe de récurrence, pour tout $n \in \N$, $\mathcal{Q}_n$ est vraie : la suite $(u_n)_{n \in \N}$ est strictement croissante.
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Théorème de convergence monotone et le Nombre d'Or]
+La suite $(u_n)$ étant strictement croissante et majorée par $2$, le \textbf{théorème de convergence monotone} assure qu'elle converge vers une limite finie $\ell \in [1, 2]$.
+Par continuité de la fonction $f(x) = \sqrt{x+1}$ sur $[0, +\infty[$, la limite vérifie l'équation du point fixe :
+\[
+\ell = \sqrt{\ell + 1} \iff \ell^2 = \ell + 1 \iff \ell^2 - \ell - 1 = 0.
+\]
+L'équation caractéristique admet deux racines réelles : $\ell_1 = \dfrac{1 - \sqrt{5}}{2} < 0$ et $\ell_2 = \dfrac{1 + \sqrt{5}}{2} > 0$.\\
+Puisque $u_n > 0$ pour tout $n$, la limite est nécessairement positive :
+\[
+\lim_{n \to +\infty} u_n = \frac{1 + \sqrt{5}}{2} = \varphi \approx 1{,}618\dots \quad \text{(Le Nombre d'Or !)}.
+\]
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 19
+% ----------------------------------------------------
+\subsection*{Exercice 19 : Une suite arithmético-géométrique et ses régimes dynamiques}
+
+Soit une suite $(u_n)_{n \in \N}$ vérifiant pour tout $n \in \N$ :
+\[
+u_{n+1} = \frac{1}{2} u_n + 1.
+\]
+\begin{enumerate}
+    \item On suppose que $u_0 = 1$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Montrer que pour tout $n \in \N$, $u_n < 2$.
+        \item Montrer que la suite $(u_n)$ est croissante.
+    \end{enumerate}
+    \item On suppose que $u_0 = 3$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Montrer que pour tout $n \in \N$, $u_n > 2$.
+        \item Montrer que la suite $(u_n)$ est décroissante.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}
+\subsubsection*{1. Premier régime : Condition initiale $u_0 = 1 < 2$}
+
+\textbf{(a) Démontrons que pour tout $n \in \N$, $u_n < 2$ :}
+\begin{itemize}
+    \item \textbf{Propriété} : $\mathcal{P}_n : « \; u_n < 2 \; »$.
+    \item \textbf{Initialisation} : Pour $n = 0$, $u_0 = 1 < 2$. Donc $\mathcal{P}_0$ est vraie.
+    \item \textbf{Hérédité} : Soit $k \in \N$. Supposons $\mathcal{P}_k$ vraie, c'est-à-dire $u_k < 2$.
+    En multipliant par $\dfrac{1}{2} > 0$ : $\dfrac{1}{2}u_k < 1$.
+    En ajoutant $1$ : $\dfrac{1}{2}u_k + 1 < 2$, ce qui donne $u_{k+1} < 2$.
+    Donc $\mathcal{P}_{k+1}$ est vraie.
+    \item \textbf{Conclusion} : Par récurrence, pour tout $n \in \N$, $u_n < 2$.
+\end{itemize}
+
+\textbf{(b) Démontrons que la suite $(u_n)$ est croissante :}
+\begin{itemize}
+    \item \textbf{Propriété} : $\mathcal{Q}_n : « \; u_n < u_{n+1} \; »$.
+    \item \textbf{Initialisation} : Pour $n = 0$, $u_0 = 1$ et $u_1 = \dfrac{1}{2}(1) + 1 = \dfrac{3}{2} = 1{,}5$. Comme $1 < 1{,}5$, $u_0 < u_1$, donc $\mathcal{Q}_0$ est vraie.
+    \item \textbf{Hérédité} : Soit $k \in \N$. Supposons $u_k < u_{k+1}$.
+    Alors $\dfrac{1}{2}u_k < \dfrac{1}{2}u_{k+1}$.
+    En ajoutant $1$ : $\dfrac{1}{2}u_k + 1 < \dfrac{1}{2}u_{k+1} + 1$, soit $u_{k+1} < u_{k+2}$.
+    Donc $\mathcal{Q}_{k+1}$ est vraie.
+    \item \textbf{Conclusion} : Par récurrence, $(u_n)$ est strictement croissante.
+\end{itemize}
+\textit{Autre méthode pour (b) :} $u_{n+1} - u_n = \dfrac{1}{2}u_n + 1 - u_n = 1 - \dfrac{1}{2}u_n = \dfrac{1}{2}(2 - u_n)$. Puisque $u_n < 2$ d'après (a), $2 - u_n > 0$, d'où $u_{n+1} - u_n > 0$.
+
+\subsubsection*{2. Second régime : Condition initiale $u_0 = 3 > 2$}
+
+\textbf{(a) Démontrons que pour tout $n \in \N$, $u_n > 2$ :}
+\begin{itemize}
+    \item \textbf{Propriété} : $\mathcal{P}'_n : « \; u_n > 2 \; »$.
+    \item \textbf{Initialisation} : Pour $n = 0$, $u_0 = 3 > 2$. Donc $\mathcal{P}'_0$ est vraie.
+    \item \textbf{Hérédité} : Soit $k \in \N$. Supposons $u_k > 2$.
+    Alors $\dfrac{1}{2}u_k > 1 \implies \dfrac{1}{2}u_k + 1 > 2 \implies u_{k+1} > 2$.
+    Donc $\mathcal{P}'_{k+1}$ est vraie.
+    \item \textbf{Conclusion} : Par récurrence, pour tout $n \in \N$, $u_n > 2$.
+\end{itemize}
+
+\textbf{(b) Démontrons que la suite $(u_n)$ est décroissante :}
+\begin{itemize}
+    \item \textbf{Propriété} : $\mathcal{Q}'_n : « \; u_n > u_{n+1} \; »$.
+    \item \textbf{Initialisation} : Pour $n = 0$, $u_0 = 3$ et $u_1 = \dfrac{1}{2}(3) + 1 = \dfrac{5}{2} = 2{,}5$. Comme $3 > 2{,}5$, $u_0 > u_1$, donc $\mathcal{Q}'_0$ est vraie.
+    \item \textbf{Hérédité} : Soit $k \in \N$. Supposons $u_k > u_{k+1}$.
+    Alors $\dfrac{1}{2}u_k > \dfrac{1}{2}u_{k+1} \implies \dfrac{1}{2}u_k + 1 > \dfrac{1}{2}u_{k+1} + 1 \implies u_{k+1} > u_{k+2}$.
+    Donc $\mathcal{Q}'_{k+1}$ est vraie.
+    \item \textbf{Conclusion} : Par récurrence, $(u_n)$ est strictement décroissante.
+\end{itemize}
+\textit{Autre méthode pour (b) :} $u_{n+1} - u_n = \dfrac{1}{2}(2 - u_n)$. Puisque $u_n > 2$ d'après (a), $2 - u_n < 0$, d'où $u_{n+1} - u_n < 0$.
+\end{correctionbox}
+
+\begin{remarquabox}[Le point d'équilibre $\ell = 2$]
+L'abscisse d'intersection de la droite d'itération $y = \frac{1}{2}x + 1$ et de la première bissectrice $y = x$ est le point fixe $x = 2$.
+\begin{itemize}
+    \item Si $u_0 < 2$, la suite croît vers le point fixe $2$ en restant inférieure à $2$.
+    \item Si $u_0 > 2$, la suite décroît vers le point fixe $2$ en restant supérieure à $2$.
+    \item Si $u_0 = 2$, la suite est constante égale à $2$.
+\end{itemize}
+Le point fixe $\ell = 2$ est un \textbf{attracteur global} puisque $|f'| = \frac{1}{2} < 1$.
+\end{remarquabox}
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 5 : Arithmétique}
+
+% ----------------------------------------------------
+% EXERCICE 20
+% ----------------------------------------------------
+\subsection*{Exercice 20 : Divisibilité de $10^n - 1$ par $9$}
+
+Montrer que pour tout entier naturel $n \in \N$, le nombre $9$ est un diviseur de $10^n - 1$ (ce que l'on note $9 \mid (10^n - 1)$).
+
+\begin{correctionbox}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout entier $n \in \N$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; 9 \text{ divise } 10^n - 1 \; », \quad \text{c'est-à-dire} \quad « \; \exists b \in \Z \text{ tel que } 10^n - 1 = 9b \; ».
+    \]
+    Montrons par récurrence que $\mathcal{P}_n$ est vraie pour tout $n \in \N$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 0$ :
+    \[
+    10^0 - 1 = 1 - 1 = 0.
+    \]
+    Or, $0 = 9 \times 0$ avec $0 \in \Z$, donc $9$ divise $0$. Ainsi, $\mathcal{P}_0$ est vraie.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$. Supposons $\mathcal{P}_k$ vraie, c'est-à-dire qu'il existe un entier $b \in \Z$ tel que :
+    \[
+    10^k - 1 = 9b \iff 10^k = 9b + 1 \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{P}_{k+1}$ est vraie, à savoir qu'il existe un entier $b' \in \Z$ tel que $10^{k+1} - 1 = 9b'$.\\
+    Exprimons $10^{k+1} - 1$ à l'aide de $10^k$ :
+    \begin{align*}
+    10^{k+1} - 1 &= 10 \times 10^k - 1.
+    \end{align*}
+    En injectant l'hypothèse de récurrence $10^k = 9b + 1$ :
+    \begin{align*}
+    10^{k+1} - 1 &= 10(9b + 1) - 1 \\
+                 &= 90b + 10 - 1 \\
+                 &= 90b + 9 \\
+                 &= 9(10b + 1).
+    \end{align*}
+    Posons $b' = 10b + 1$. Comme $b \in \Z$, $b'$ est un entier relatif ($b' \in \Z$).\\
+    On a donc :
+    \[
+    10^{k+1} - 1 = 9b', \quad \text{avec } b' \in \Z.
+    \]
+    Ce qui prouve rigoureusement que $9$ divise $10^{k+1} - 1$, donc $\mathcal{P}_{k+1}$ est vraie.\\
+    Ainsi, pour tout $k \in \N$, $\mathcal{P}_k \implies \mathcal{P}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $0$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \quad 9 \mid (10^n - 1).
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Variantes de démonstration et critère de divisibilité par 9]
+1. \textbf{Variante d'écriture pour l'hérédité} : On peut écrire directement sans introduire la lettre $b$ :
+\[
+10^{k+1} - 1 = 10 \cdot 10^k - 1 = 10(10^k - 1) + 9.
+\]
+Puisque $9$ divise $10^k - 1$ par hypothèse de récurrence et que $9$ divise $9$, par combinaison linéaire à coefficients entiers, $9$ divise $10(10^k - 1) + 9 = 10^{k+1} - 1$.\\
+2. \textbf{Preuve directe par factorisation polynomiale} : Pour tout $n \ge 1$ :
+\[
+10^n - 1 = (10 - 1)\left(10^{n-1} + 10^{n-2} + \dots + 10 + 1\right) = 9 \times \underbrace{111\dots1}_{n \text{ chiffres } 1}.
+\]
+3. \textbf{Fondement du critère de divisibilité par 9} : Tout entier naturel $N$ s'écrit en base $10$ :
+\[
+N = \sum_{k=0}^p a_k 10^k = \sum_{k=0}^p a_k (10^k - 1) + \sum_{k=0}^p a_k.
+\]
+Comme $9$ divise chaque terme $10^k - 1$, $N$ a le même reste que la somme de ses chiffres $\sum a_k$ dans la division par $9$.
+\end{remarquabox}
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 6 : Récurrences d'ordre supérieur (Récurrence double)}
+
+% ----------------------------------------------------
+% EXERCICE 21
+% ----------------------------------------------------
+\subsection*{Exercice 21 : Suite récurrente linéaire d'ordre 2}
+
+On définit la suite $(u_n)_{n \in \N}$ par :
+\[
+\begin{cases}
+u_0 = 2 \\
+u_1 = 3 \\
+u_{n+2} = 3u_{n+1} - 2u_n \quad \text{pour tout } n \in \N.
+\end{cases}
+\]
+Montrer par \textbf{récurrence double} que pour tout entier naturel $n \in \N$, on a :
+\[
+u_n = 1 + 2^n.
+\]
+
+\begin{correctionbox}
+Puisque le terme $u_{n+2}$ dépend simultanément des \textbf{deux termes précédents} $u_{n+1}$ et $u_n$, une récurrence simple ne suffit pas : il est indispensable de recourir au principe de \textbf{récurrence double}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; u_n = 1 + 2^n \; ».
+    \]
+    Montrons par récurrence double que $\mathcal{P}_n$ est vraie pour tout $n \in \N$.
+
+    \item \textbf{Initialisation (sur deux rangs consécutifs)} :
+    \begin{itemize}
+        \item \textbf{Pour $n = 0$} :
+        D'une part, $u_0 = 2$ par définition.\\
+        D'autre part, $1 + 2^0 = 1 + 1 = 2$.\\
+        On a bien $u_0 = 1 + 2^0$, donc $\mathcal{P}_0$ est vraie.
+        \item \textbf{Pour $n = 1$} :
+        D'une part, $u_1 = 3$ par définition.\\
+        D'autre part, $1 + 2^1 = 1 + 2 = 3$.\\
+        On a bien $u_1 = 1 + 2^1$, donc $\mathcal{P}_1$ est vraie.
+    \end{itemize}
+    L'initialisation est donc parfaitement validée pour les deux premiers rangs $n = 0$ et $n = 1$.
+
+    \item \textbf{Hérédité} :\\
+    Montrons que pour tout entier naturel $k \in \N$, $(\mathcal{P}_k \text{ et } \mathcal{P}_{k+1}) \implies \mathcal{P}_{k+2}$.\\
+    Soit $k \in \N$. Supposons que $\mathcal{P}_k$ et $\mathcal{P}_{k+1}$ sont vraies, c'est-à-dire :
+    \[
+    \begin{cases}
+    u_k = 1 + 2^k \\
+    u_{k+1} = 1 + 2^{k+1}
+    \end{cases}
+    \quad \text{(Hypothèse de récurrence double)}.
+    \]
+    Montrons que $\mathcal{P}_{k+2}$ est vraie, à savoir que :
+    \[
+    u_{k+2} = 1 + 2^{k+2}.
+    \]
+    D'après la relation de récurrence liant les termes de la suite :
+    \[
+    u_{k+2} = 3u_{k+1} - 2u_k.
+    \]
+    En remplaçant $u_{k+1}$ et $u_k$ par leurs expressions issues de l'hypothèse de récurrence :
+    \begin{align*}
+    u_{k+2} &= 3(1 + 2^{k+1}) - 2(1 + 2^k) \\
+            &= 3 + 3 \times 2^{k+1} - 2 - 2 \times 2^k.
+    \end{align*}
+    Remarquons que $2 \times 2^k = 2^{k+1}$. Il vient donc :
+    \begin{align*}
+    u_{k+2} &= (3 - 2) + 3 \times 2^{k+1} - 2^{k+1} \\
+            &= 1 + (3 - 1) \times 2^{k+1} \\
+            &= 1 + 2 \times 2^{k+1} \\
+            &= 1 + 2^{k+2}.
+    \end{align*}
+    La proposition $\mathcal{P}_{k+2}$ est donc rigoureusement démontrée.\\
+    Ainsi, pour tout $k \in \N$, $(\mathcal{P}_k \text{ et } \mathcal{P}_{k+1}) \implies \mathcal{P}_{k+2}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée pour $n=0$ et $n=1$, et est héréditaire d'ordre $2$. Par le principe de récurrence double, pour tout $n \in \N$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N, \quad u_n = 1 + 2^n.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Théorie générale des suites récurrentes linéaires d'ordre 2]
+En classes préparatoires, l'équation caractéristique associée à la récurrence $u_{n+2} - 3u_{n+1} + 2u_n = 0$ est :
+\[
+r^2 - 3r + 2 = 0 \iff (r - 1)(r - 2) = 0.
+\]
+Les racines étant distinctes ($r_1 = 1$ et $r_2 = 2$), la théorie des équations linéaires affirme que le terme général est de la forme :
+\[
+u_n = \lambda \cdot (1)^n + \mu \cdot (2)^n = \lambda + \mu 2^n.
+\]
+Les conditions initiales déterminent le couple $(\lambda, \mu)$ :
+\[
+\begin{cases}
+u_0 = \lambda + \mu = 2 \\
+u_1 = \lambda + 2\mu = 3
+\end{cases}
+\iff
+\begin{cases}
+\mu = 3 - 2 = 1 \\
+\lambda = 2 - 1 = 1.
+\end{cases}
+\]
+On retrouve de façon immédiate et constructive $u_n = 1 + 2^n$.
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 22
+% ----------------------------------------------------
+\subsection*{Exercice 22 : Suite de Fibonacci et Formule de Cassini}
+
+On définit la célèbre suite de Fibonacci $(F_n)_{n \in \N}$ par :
+\[
+\begin{cases}
+F_0 = 1 \\
+F_1 = 1 \\
+F_{n+2} = F_{n+1} + F_n \quad \text{pour tout } n \in \N.
+\end{cases}
+\]
+\begin{enumerate}
+    \item Montrer par récurrence que pour tout entier naturel non nul $n \in \N^*$, on a $F_n \ge n$.
+    \item Montrer que pour tout entier naturel $n \in \N$, on a l'identité de Cassini :
+    \[
+    F_n F_{n+2} - F_{n+1}^2 = (-1)^n.
+    \]
+\end{enumerate}
+
+\begin{correctionbox}
+\subsubsection*{1. Minoration linéaire : $F_n \ge n$ pour tout $n \in \N^*$}
+
+La relation de récurrence de Fibonacci fait intervenir les deux rangs précédents, ce qui invite naturellement à une \textbf{récurrence double}.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N^*$, notons $\mathcal{P}_n$ la propriété :
+    \[
+    \mathcal{P}_n : « \; F_n \ge n \; ».
+    \]
+    Montrons par récurrence double que $\mathcal{P}_n$ est vraie pour tout $n \in \N^*$.
+
+    \item \textbf{Initialisation} :
+    \begin{itemize}
+        \item Pour $n = 1$ : $F_1 = 1$, et $1 \ge 1$. Donc $\mathcal{P}_1$ est vraie.
+        \item Pour $n = 2$ : $F_2 = F_1 + F_0 = 1 + 1 = 2$, et $2 \ge 2$. Donc $\mathcal{P}_2$ est vraie.
+    \end{itemize}
+    L'initialisation est vérifiée sur les deux premiers rangs consécutifs $n=1$ et $n=2$.
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N^*$ tel que $k \ge 1$. Supposons que $\mathcal{P}_k$ et $\mathcal{P}_{k+1}$ sont vraies, c'est-à-dire :
+    \[
+    F_k \ge k \quad \text{et} \quad F_{k+1} \ge k+1 \quad \text{(HR double)}.
+    \]
+    Montrons que $\mathcal{P}_{k+2}$ est vraie, à savoir que $F_{k+2} \ge k+2$.\\
+    Par définition de la suite :
+    \[
+    F_{k+2} = F_{k+1} + F_k.
+    \]
+    En appliquant les deux inégalités de l'hypothèse de récurrence :
+    \[
+    F_{k+2} \ge (k+1) + k = 2k + 1.
+    \]
+    Or, puisque $k \in \N^*$, on a $k \ge 1$. Par conséquent :
+    \[
+    2k + 1 = k + k + 1 \ge k + 1 + 1 = k + 2.
+    \]
+    Par transitivité :
+    \[
+    F_{k+2} \ge k+2.
+    \]
+    La propriété $\mathcal{P}_{k+2}$ est donc démontrée.\\
+    Ainsi, pour tout $k \in \N^*$, $(\mathcal{P}_k \text{ et } \mathcal{P}_{k+1}) \implies \mathcal{P}_{k+2}$.
+
+    \item \textbf{Conclusion} :\\
+    Par principe de récurrence double, pour tout $n \in \N^*$, $\mathcal{P}_n$ est vraie :
+    \[
+    \forall n \in \N^*, \quad F_n \ge n.
+    \]
+\end{enumerate}
+
+\subsubsection*{2. Démonstration de l'Identité de Cassini : $F_n F_{n+2} - F_{n+1}^2 = (-1)^n$}
+
+Remarquons ici que nous cherchons à établir une relation entre triplets consécutifs : une \textbf{récurrence simple sur $n$} suffit amplement, car la substitution de $F_{n+3}$ par $F_{n+2} + F_{n+1}$ permet de décaler directement l'expression d'un rang !
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Définition de la propriété} :\\
+    Pour tout $n \in \N$, notons $\mathcal{C}_n$ la propriété :
+    \[
+    \mathcal{C}_n : « \; F_n F_{n+2} - F_{n+1}^2 = (-1)^n \; ».
+    \]
+    Montrons par récurrence que $\mathcal{C}_n$ est vraie pour tout $n \in \N$.
+
+    \item \textbf{Initialisation} :\\
+    Pour $n = 0$ :
+    \begin{itemize}
+        \item Membre de gauche : $F_0 F_2 - F_1^2 = 1 \times 2 - 1^2 = 2 - 1 = 1$.
+        \item Membre de droite : $(-1)^0 = 1$.
+    \end{itemize}
+    On a bien $1 = 1$, donc $\mathcal{C}_0$ est vraie.\\
+    \textit{(Vérification au rang 1 pour conforter la vision : $F_1 F_3 - F_2^2 = 1 \times 3 - 2^2 = 3 - 4 = -1 = (-1)^1$. Parfait !)}
+
+    \item \textbf{Hérédité} :\\
+    Soit $k \in \N$. Supposons $\mathcal{C}_k$ vraie, c'est-à-dire :
+    \[
+    F_k F_{k+2} - F_{k+1}^2 = (-1)^k \quad \text{(HR)}.
+    \]
+    Montrons que $\mathcal{C}_{k+1}$ est vraie, à savoir que :
+    \[
+    F_{k+1} F_{k+3} - F_{k+2}^2 = (-1)^{k+1}.
+    \]
+    Calculons la quantité au rang $k+1$, notée $\Delta_{k+1} = F_{k+1} F_{k+3} - F_{k+2}^2$.\\
+    D'après la relation de récurrence de Fibonacci au rang $k+1$, on a $F_{k+3} = F_{k+2} + F_{k+1}$.\\
+    En substituant cette somme :
+    \begin{align*}
+    \Delta_{k+1} &= F_{k+1} (F_{k+2} + F_{k+1}) - F_{k+2}^2 \\
+                 &= F_{k+1} F_{k+2} + F_{k+1}^2 - F_{k+2}^2.
+    \end{align*}
+    Regroupons les deux termes comportant $F_{k+2}$ en factorisant :
+    \begin{align*}
+    \Delta_{k+1} &= F_{k+2} (F_{k+1} - F_{k+2}) + F_{k+1}^2.
+    \end{align*}
+    Or, la relation de définition de la suite donne $F_{k+2} = F_{k+1} + F_k$, ce qui équivaut à :
+    \[
+    F_{k+1} - F_{k+2} = - F_k.
+    \]
+    Remplaçons cette différence :
+    \begin{align*}
+    \Delta_{k+1} &= F_{k+2} (-F_k) + F_{k+1}^2 \\
+                 &= - F_k F_{k+2} + F_{k+1}^2 \\
+                 &= - \Big( F_k F_{k+2} - F_{k+1}^2 \Big).
+    \end{align*}
+    On reconnaît exactement entre parenthèses la quantité du rang $k$ !\\
+    En injectant l'hypothèse de récurrence $\mathcal{C}_k$, il vient immédiatement :
+    \[
+    \Delta_{k+1} = - (-1)^k = (-1)^{k+1}.
+    \]
+    La propriété $\mathcal{C}_{k+1}$ est donc rigoureusement démontrée.\\
+    Ainsi, pour tout $k \in \N$, $\mathcal{C}_k \implies \mathcal{C}_{k+1}$.
+
+    \item \textbf{Conclusion} :\\
+    La propriété est initialisée au rang $0$ et est héréditaire. Par le principe de récurrence, pour tout $n \in \N$, $\mathcal{C}_n$ est vraie :
+    \[
+    \forall n \in \N, \quad F_n F_{n+2} - F_{n+1}^2 = (-1)^n.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Origine historique, interprétation matricielle et le paradoxe de Lewis Carroll]
+1. \textbf{Perspective historique} : Cette formule a été découverte en 1680 par l'astronome et mathématicien franco-italien \textbf{Giovanni Domenico Cassini} (Jean-Dominique Cassini), premier directeur de l'Observatoire de Paris.\\
+2. \textbf{Interprétation matricielle (MPSI)} :\\
+En posant la matrice fondamentale $M = \begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}$, une récurrence immédiate montre que :
+\[
+M^{n+1} = \begin{pmatrix} F_{n+2} & F_{n+1} \\ F_{n+1} & F_n \end{pmatrix}.
+\]
+En prenant le déterminant des deux membres et sachant que $\det(A \cdot B) = \det(A) \det(B)$ :
+\[
+\det(M^{n+1}) = (\det M)^{n+1} = (1 \times 0 - 1 \times 1)^{n+1} = (-1)^{n+1}.
+\]
+Or, le déterminant explicite donne :
+\[
+\det \begin{pmatrix} F_{n+2} & F_{n+1} \\ F_{n+1} & F_n \end{pmatrix} = F_{n+2} F_n - F_{n+1}^2.
+\]
+On retrouve l'identité de Cassini en une seule ligne de calcul matriciel !\\
+3. \textbf{Le paradoxe de l'échiquier de Lewis Carroll} :\\
+Découpons un carré de côté $F_{2k} = 8$ (aire $64$) en 4 pièces (deux triangles rectangles et deux trapèzes). Réassemblons-les pour former un rectangle de dimensions $F_{2k-1} = 5$ et $F_{2k+1} = 13$ : l'aire semble être $5 \times 13 = 65$ !\\
+D'où provient ce carré apparu de nulle part ? L'identité de Cassini l'explique précisément :
+\[
+F_{2k-1} F_{2k+1} - F_{2k}^2 = 5 \times 13 - 8^2 = 65 - 64 = (-1)^{2k} = +1.
+\]
+Les pièces ne se superposent pas exactement sur la diagonale : elles laissent un interstice minuscule en forme de parallélogramme très effilé, dont l'aire exacte vaut précisément $1$ !
+\end{remarquabox}
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\begin{center}
+\textbf{\Large Fin du document d'exercices et de cours approfondi}
+\end{center}
+
+\end{document}
