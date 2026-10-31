@@ -1,0 +1,2320 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{eurosym}
+
+% ----------------------------------------------------
+% Couleurs officielles du projet (Charte LLG / MPSI)
+% ----------------------------------------------------
+\definecolor{llgblue}{RGB}{20, 50, 115}
+\definecolor{llglight}{RGB}{246, 249, 255}
+
+\definecolor{emeraldframe}{RGB}{18, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{12, 80, 52}
+
+\definecolor{prepaframe}{RGB}{30, 70, 135}
+\definecolor{prepaback}{RGB}{246, 249, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 105}
+
+\definecolor{alertframe}{RGB}{185, 75, 20}
+\definecolor{alertback}{RGB}{255, 249, 245}
+\definecolor{alerttitle}{RGB}{145, 55, 12}
+
+\definecolor{bonusframe}{RGB}{120, 40, 140}
+\definecolor{bonusback}{RGB}{252, 247, 255}
+\definecolor{bonustitle}{RGB}{90, 25, 110}
+
+\definecolor{methodframe}{RGB}{15, 115, 115}
+\definecolor{methodback}{RGB}{242, 252, 252}
+\definecolor{methodtitle}{RGB}{10, 80, 80}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=llgblue,
+    urlcolor=llgblue,
+    citecolor=llgblue
+}
+
+% ----------------------------------------------------
+% En-têtes et pieds de page
+% ----------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité Mathématiques (1E3)}
+\fancyhead[C]{\small\textbf{Travaux Dirigés : Dérivation \& Calcul Différentiel}}
+\fancyhead[R]{\small Janvier 2022}
+\fancyfoot[L]{\footnotesize Classe 1E3 -- Année scolaire 2021/2022}
+\fancyfoot[C]{\footnotesize Énoncés \& Corrigés Exhaustifs des 22 Exercices}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% ----------------------------------------------------
+% Boîtes tcolorbox personnalisées
+% ----------------------------------------------------
+\newtcolorbox{theoremebox}[1][]{
+  colback=red!3!white,
+  colframe=red!70!black,
+  fonttitle=\bfseries\sffamily,
+  title={Théorème fondamental / Définition canonique\ifstrempty{#1}{}{ -- #1}},
+  arc=2mm,
+  breakable,
+  boxrule=0.8pt,
+  before skip=0.35cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{methodebox}[1][]{
+  colback=methodback,
+  colframe=methodframe,
+  fonttitle=\bfseries\sffamily\color{white},
+  coltitle=white,
+  colbacktitle=methodtitle,
+  title={Méthode \& Stratégie de résolution\ifstrempty{#1}{}{ -- #1}},
+  arc=2mm,
+  breakable,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  before skip=0.35cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{warningbox}[1][]{
+  colback=alertback,
+  colframe=alertframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=alerttitle,
+  title={Point de vigilance \& Piège classique\ifstrempty{#1}{}{ -- #1}},
+  arc=1.5mm,
+  breakable,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Correction détaillée pas à pas\ifstrempty{#1}{}{ -- #1}},
+  arc=2mm,
+  breakable,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  before skip=0.4cm,
+  after skip=0.5cm
+}
+
+\newtcolorbox{remarquabox}[1][]{
+  colback=bonusback,
+  colframe=bonusframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=bonustitle,
+  title={Remarque d'approfondissement \& Regard MPSI\ifstrempty{#1}{}{ -- #1}},
+  arc=1.5mm,
+  breakable,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+% Commandes mathématiques usuelles
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\dd}{\mathrm{d}}
+
+\begin{document}
+
+% ====================================================
+% EN-TÊTE DU DOCUMENT
+% ====================================================
+\begin{center}
+    {\LARGE \bfseries Lycée Louis-le-Grand -- Paris}\\[0.2cm]
+    {\large \textbf{Classe de Première Spécialité Mathématiques -- Classe 1E3}}\\[0.15cm]
+    {\normalsize Enseignement d'approfondissement -- Préparation aux CPGE Scientifiques (MPSI/PCSI)}\\[0.35cm]
+    \hrule height 1.2pt
+    \vspace{0.25cm}
+    {\Huge \bfseries TRAVAUX DIRIGÉS : DÉRIVATION}\\[0.2cm]
+    {\Large \textbf{Analyse locale, Étude de tangentes, Optimisation \& Problèmes d'approfondissement}}\\[0.25cm]
+    \hrule height 0.6pt
+    \vspace{0.25cm}
+    {\small \textbf{Année scolaire :} 2021--2022 \quad $\vert$ \quad \textbf{Période :} Janvier 2022 \quad $\vert$ \quad \textbf{Niveau :} Première S d'Excellence / CPGE}
+\end{center}
+
+\vspace{-0.2cm}
+\begin{abstract}
+Ce fascicule constitue le recueil exhaustif de cours, de méthodes canoniques et d'exercices d'approfondissement sur le chapitre de la \textbf{Dérivation} pour la classe de Première 1E3 du Lycée Louis-le-Grand (Janvier 2022). Le document s'ouvre sur un exposé axiomatique et conceptuel de l'analyse locale au premier ordre (taux d'accroissement, écriture différentielle de Weierstrass, contact géométrique et multiplicité des racines de l'écart à la tangente). Il propose ensuite la résolution intégrale, rigoureusement rédigée et commentée des \textbf{22 exercices} de la feuille de Travaux Dirigés, regroupés en six sections thématiques : définition et identification polynomiale, tangentes et positions relatives, régularité et dérivabilité (gauche/droite, radicaux, valeur absolue), optimisation géométrique et économique, inégalités fonctionnelles et statistiques, et enfin pathologies différentielles et regards vers la classe de MPSI (régularisation $\mathcal{C}^\infty$, points isolés).
+\end{abstract}
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.2cm}
+\tableofcontents
+\vspace{0.4cm}
+\hrule
+\vspace{0.8cm}
+
+% ====================================================
+% COURS THÉORIQUE ET FORMULAIRE CANONIQUE
+% ====================================================
+\section{Cadre conceptuel, fondements théoriques et formulaire canonique}
+
+\subsection{Définition du nombre dérivé et approximation affine}
+
+Soit $I$ un intervalle ouvert de $\R$, $f : I \to \R$ une fonction et $a \in I$.
+La dérivation répond à une question géométrique et analytique fondamentale : \emph{comment approcher au mieux une courbe par une droite au voisinage immédiat d'un point ?}
+
+\begin{theoremebox}[Nombre dérivé et taux d'accroissement]
+Pour tout $h \in \R^*$ tel que $a+h \in I$, on définit le \textbf{taux d'accroissement} de la fonction $f$ entre $a$ et $a+h$ par :
+\[
+\tau_a(h) = \frac{f(a+h) - f(a)}{h}.
+\]
+On dit que $f$ est \textbf{dérivable en $a$} si le taux d'accroissement $\tau_a(h)$ admet une limite finie lorsque $h$ tend vers $0$.
+Cette limite finie est appelée le \textbf{nombre dérivé de $f$ en $a$}, et est notée $f'(a)$ :
+\[
+f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h} = \lim_{x \to a} \frac{f(x) - f(a)}{x - a}.
+\]
+Si cette limite est infinie ou n'existe pas, la fonction $f$ n'est pas dérivable en $a$.
+\end{theoremebox}
+
+\begin{theoremebox}[Formule d'approximation affine (Weierstrass / Peano)]
+La dérivabilité de $f$ en $a$ équivaut à l'existence d'un réel $A \in \R$ et d'une fonction $\epsilon : I - a \to \R$ vérifiant $\lim_{h \to 0} \epsilon(h) = 0$ tels que :
+\[
+\forall h \text{ tel que } a+h \in I, \quad f(a+h) = f(a) + A \cdot h + h\,\epsilon(h).
+\]
+Dans cette écriture, le réel $A$ est unique et coïncide avec $f'(a)$.
+L'application affine $x \mapsto f(a) + f'(a)(x-a)$ constitue la \textbf{meilleure approximation affine} de $f$ au voisinage de $a$.
+\end{theoremebox}
+
+\begin{remarquabox}[Lien fondamental entre dérivabilité et continuité]
+Si une fonction $f$ est dérivable en $a$, alors $f$ est continue en $a$.\\
+En effet, pour tout $h \neq 0$ :
+\[
+f(a+h) - f(a) = h \cdot \frac{f(a+h) - f(a)}{h} \xrightarrow[h \to 0]{} 0 \times f'(a) = 0.
+\]
+D'où $\lim_{h \to 0} f(a+h) = f(a)$, ce qui prouve la continuité.
+\textbf{Attention réciproque fausse :} la continuité en un point n'implique absolument pas la dérivabilité (la fonction valeur absolue $x \mapsto |x|$ est continue en $0$ mais non dérivable en $0$ ; il existe même, selon la construction de Weierstrass (1872), des fonctions continues sur $\R$ nulle part dérivables).
+\end{remarquabox}
+
+\subsection{Interprétation géométrique : Sécantes, Tangentes et Demi-tangentes}
+
+Soit $\mathcal{C}_f$ la courbe représentative de $f$ dans un repère orthonormal.
+Pour $h \neq 0$, considérons le point fixe $A(a, f(a))$ et le point mobile $M_h(a+h, f(a+h))$.
+La droite sécante $(AM_h)$ possède pour coefficient directeur le taux d'accroissement $\tau_a(h)$.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Tangente ordinaire} :\\
+    Lorsque $h \to 0$, le point $M_h$ glisse le long de $\mathcal{C}_f$ vers $A$. Si $f$ est dérivable en $a$, la droite sécante pivote et converge vers une position limite appelée \textbf{tangente à $\mathcal{C}_f$ au point $A$}, d'équation cartésienne :
+    \[
+    \mathcal{T}_a : \quad y = f'(a)(x - a) + f(a).
+    \]
+    \item \textbf{Demi-tangentes à gauche et à droite} :\\
+    Lorsque la fonction admet des dérivées unilatérales distinctes $f'_g(a) = \lim_{h \to 0^-} \tau_a(h)$ et $f'_d(a) = \lim_{h \to 0^+} \tau_a(h)$ avec $f'_g(a) \neq f'_d(a)$, la courbe admet au point $A(a, f(a))$ deux demi-tangentes formant un angle non plat : on dit que le point $A$ est un \textbf{point anguleux}.
+    \item \textbf{Tangente verticale} :\\
+    Si $\lim_{h \to 0} \tau_a(h) = \pm \infty$ (ou si les limites à gauche/droite sont infinies), la fonction n'est pas dérivable en $a$, mais la courbe admet en $A$ une tangente (ou demi-tangente) verticale d'équation $x = a$.
+\end{enumerate}
+
+\subsection{Contact, position relative et point d'inflexion}
+
+Pour étudier la position de la courbe $\mathcal{C}_f$ par rapport à sa tangente $\mathcal{T}_a$, on étudie le signe de l'écart :
+\[
+d(x) = f(x) - \Big( f'(a)(x - a) + f(a) \Big).
+\]
+\begin{itemize}
+    \item Si $d(x) \ge 0$ au voisinage de $a$, la courbe reste au-dessus de sa tangente.
+    \item Si $d(x) \le 0$ au voisinage de $a$, la courbe reste en-dessous de sa tangente.
+    \item Si $d(x)$ change de signe en $a$, la courbe \textbf{traverse sa tangente} au point $A(a, f(a))$ : on dit que $A$ est un \textbf{point d'inflexion}.
+\end{itemize}
+
+\begin{theoremebox}[Multiplicité algébrique de la racine $a$ dans l'écart $d(x)$]
+Pour une fonction polynomiale ou suffisamment régulière :
+\begin{itemize}
+    \item Le réel $a$ est toujours racine au moins \textbf{double} de $d(x)$, car $d(a) = 0$ et $d'(a) = f'(a) - f'(a) = 0$. Ainsi, $d(x)$ est factorisable par $(x-a)^2$.
+    \item Si la multiplicité de la racine $a$ dans $d(x)$ est \textbf{paire} (par exemple $2$), $(x-a)^2$ garde un signe constant positif au voisinage de $a$ : la courbe ne traverse pas sa tangente (contact ordinaire).
+    \item Si la multiplicité de la racine $a$ dans $d(x)$ est \textbf{impaire} (par exemple $3$), $(x-a)^3$ change de signe en $a$ : la courbe traverse sa tangente, le point $A$ est un point d'inflexion.
+\end{itemize}
+\end{theoremebox}
+
+\subsection{Algèbre des fonctions dérivées}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Opération} & \textbf{Fonction} & \textbf{Fonction dérivée} & \textbf{Conditions de validité} \\
+\hline
+Somme & $u + v$ & $u' + v'$ & $u$ et $v$ dérivables sur $I$ \\
+Multiplication par un scalaire & $\lambda u$ & $\lambda u'$ & $u$ dérivable sur $I$, $\lambda \in \R$ \\
+Produit & $u \cdot v$ & $u' v + u v'$ & $u$ et $v$ dérivables sur $I$ \\
+Inverse & $\frac{1}{v}$ & $-\frac{v'}{v^2}$ & $v$ dérivable sur $I$, $v(x) \neq 0$ \\
+Quotient & $\frac{u}{v}$ & $\frac{u' v - u v'}{v^2}$ & $u, v$ dérivables, $v(x) \neq 0$ \\
+Puissance entière & $u^n$ ($n \in \N^*$) & $n u^{n-1} u'$ & $u$ dérivable sur $I$ \\
+Racine carrée d'une fonction & $\sqrt{u}$ & $\frac{u'}{2\sqrt{u}}$ & $u$ dérivable et $u(x) > 0$ \\
+Composée générale & $g \circ u$ & $(g' \circ u) \cdot u'$ & $u$ dérivable sur $I$, $g$ dérivable sur $u(I)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Lien entre signe de la dérivée et sens de variation}
+
+\begin{theoremebox}[Sens de variation sur un intervalle]
+Soit $f$ une fonction dérivable sur un intervalle $I$ de $\R$.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item $f$ est \textbf{croissante} sur $I$ si et seulement si pour tout $x \in I$, $f'(x) \ge 0$.
+    \item $f$ est \textbf{décroissante} sur $I$ si et seulement si pour tout $x \in I$, $f'(x) \le 0$.
+    \item $f$ est \textbf{constante} sur $I$ si et seulement si pour tout $x \in I$, $f'(x) = 0$.
+    \item Si pour tout $x \in I$, $f'(x) > 0$ (sauf éventuellement en un nombre fini de points isolés où $f'(x) = 0$), alors $f$ est \textbf{strictement croissante} sur $I$.
+\end{enumerate}
+\end{theoremebox}
+
+\begin{warningbox}[Condition d'intervalle obligatoire]
+Ces équivalences sont valables \textbf{uniquement sur un intervalle}. Si le domaine est une réunion d'intervalles disjoints, la positivité de la dérivée n'implique pas la croissance globale ! Par exemple, pour $f(x) = -1/x$ sur $\R^*$, $f'(x) = 1/x^2 > 0$ sur $]-\infty, 0[$ et sur $]0, +\infty[$, mais $f(-1) = 1 > f(1) = -1$ : $f$ n'est pas croissante sur $\R^*$.
+\end{warningbox}
+
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 1 : Définition du nombre dérivé et identification polynomiale}
+
+% ----------------------------------------------------
+% EXERCICE 1
+% ----------------------------------------------------
+\subsection*{Exercice 1 : Dérivabilité par le taux d'accroissement}
+
+Soit $f$ la fonction définie par :
+\[
+f(x) = \frac{x}{1+x}.
+\]
+On note $\mathcal{C}_f$ sa courbe représentative dans un repère orthonormal.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Déterminer l'ensemble de définition $\mathcal{D}_f$ de la fonction $f$.
+    \item Soit $a \in \mathcal{D}_f$. Pour tout réel $h \neq 0$ tel que $a+h \in \mathcal{D}_f$, exprimer et simplifier sous forme d'une fraction irréductible le taux d'accroissement :
+    \[
+    \tau_a(h) = \frac{f(a+h) - f(a)}{h}.
+    \]
+    \item En déduire que la fonction $f$ est dérivable en tout point $a \in \mathcal{D}_f$. Donner l'expression de $f'(a)$ et préciser l'ensemble de dérivabilité $\mathcal{D}_{f'}$.
+    \item Déterminer l'équation réduite de la tangente $\mathcal{T}_0$ à $\mathcal{C}_f$ au point d'abscisse $0$, puis celle de la tangente $\mathcal{T}_1$ au point d'abscisse $1$.
+    \item Retrouver l'expression de $f'(x)$ en utilisant les théorèmes généraux sur la dérivation d'un quotient.
+\end{enumerate}
+
+\begin{correctionbox}[Dérivabilité élémentaire par le taux d'accroissement]
+Reprenons pas à pas chaque étape de la démarche analytique.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Ensemble de définition} :\\
+    La fonction $f$ est une fonction rationnelle définie pour tout réel $x$ tel que son dénominateur ne s'annule pas :
+    \[
+    1 + x = 0 \iff x = -1.
+    \]
+    Par conséquent, l'ensemble de définition de $f$ est :
+    \[
+    \mathcal{D}_f = \R \setminus \{-1\} = ]-\infty, -1[\, \cup\, ]-1, +\infty[.
+    \]
+
+    \item \textbf{Calcul et simplification du taux d'accroissement} :\\
+    Soit $a \in \mathcal{D}_f$, c'est-à-dire $a \neq -1$. Soit $h \neq 0$ tel que $a+h \neq -1$.\\
+    Calculons la différence $f(a+h) - f(a)$ en réduisant au même dénominateur :
+    \begin{align*}
+    f(a+h) - f(a) &= \frac{a+h}{1+a+h} - \frac{a}{1+a} \\
+    &= \frac{(a+h)(1+a) - a(1+a+h)}{(1+a+h)(1+a)} \\
+    &= \frac{\big(a + a^2 + h + ah\big) - \big(a + a^2 + ah\big)}{(1+a+h)(1+a)} \\
+    &= \frac{h}{(1+a+h)(1+a)}.
+    \end{align*}
+    Puisque $h \neq 0$, nous pouvons diviser par $h$ pour former le taux d'accroissement :
+    \[
+    \tau_a(h) = \frac{f(a+h) - f(a)}{h} = \frac{1}{h} \times \frac{h}{(1+a+h)(1+a)} = \frac{1}{(1+a+h)(1+a)}.
+    \]
+    La simplification par $h$ est rigoureusement légitime car $h \neq 0$.
+
+    \item \textbf{Passage à la limite et dérivabilité} :\\
+    Étudions la limite de $\tau_a(h)$ lorsque $h$ tend vers $0$ :
+    \[
+    \lim_{h \to 0} (1+a+h) = 1+a.
+    \]
+    Puisque $a \neq -1$, le dénominateur tend vers $(1+a)(1+a) = (1+a)^2 \neq 0$.\\
+    Par quotient de limites, on en déduit que :
+    \[
+    \lim_{h \to 0} \tau_a(h) = \frac{1}{(1+a)^2}.
+    \]
+    Cette limite existe et est un nombre réel fini pour tout $a \in \mathcal{D}_f$.
+    Par définition, la fonction $f$ est donc dérivable en tout réel $a \in \R \setminus \{-1\}$, de nombre dérivé :
+    \[
+    f'(a) = \frac{1}{(1+a)^2}.
+    \]
+    L'ensemble de dérivabilité de $f$ coïncide donc parfaitement avec son ensemble de définition :
+    \[
+    \mathcal{D}_{f'} = \mathcal{D}_f = \R \setminus \{-1\}.
+    \]
+
+    \item \textbf{Équations des tangentes} :
+    \begin{itemize}
+        \item \textbf{En $a = 0$} :\\
+        On calcule $f(0) = \frac{0}{1+0} = 0$ et $f'(0) = \frac{1}{(1+0)^2} = 1$.\\
+        L'équation de la tangente $\mathcal{T}_0$ est donnée par la formule canonique :
+        \[
+        y = f'(0)(x - 0) + f(0) \iff y = 1 \cdot x + 0 \iff y = x.
+        \]
+        La tangente à l'origine est la première bissectrice.
+        \item \textbf{En $a = 1$} :\\
+        On calcule $f(1) = \frac{1}{1+1} = \frac{1}{2}$ et $f'(1) = \frac{1}{(1+1)^2} = \frac{1}{4}$.\\
+        L'équation de la tangente $\mathcal{T}_1$ est donnée par :
+        \[
+        y = f'(1)(x - 1) + f(1) \iff y = \frac{1}{4}(x - 1) + \frac{1}{2} = \frac{1}{4}x - \frac{1}{4} + \frac{2}{4} \iff y = \frac{1}{4}x + \frac{1}{4}.
+        \]
+    \end{itemize}
+
+    \item \textbf{Vérification par la formule du quotient} :\\
+    La fonction $f = \frac{u}{v}$ avec $u(x) = x$ et $v(x) = 1+x$. Les fonctions $u$ et $v$ sont dérivables sur $\R$ avec $u'(x) = 1$ et $v'(x) = 1$.\\
+    Pour tout $x \in \R \setminus \{-1\}$, $v(x) \neq 0$, donc par le théorème de dérivation d'un quotient :
+    \[
+    f'(x) = \frac{u'(x)v(x) - u(x)v'(x)}{\big(v(x)\big)^2} = \frac{1 \cdot (1+x) - x \cdot 1}{(1+x)^2} = \frac{1+x-x}{(1+x)^2} = \frac{1}{(1+x)^2}.
+    \]
+    Le résultat coïncide parfaitement avec le calcul initial par le taux d'accroissement.
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Interprétation géométrique et écriture de Weierstrass]
+Remarquons que pour tout $x \neq -1$, $f(x) = \frac{x+1-1}{x+1} = 1 - \frac{1}{x+1}$. $\mathcal{C}_f$ est donc une hyperbole équilatère translatée.
+Au voisinage de $0$, la formule d'approximation affine s'écrit :
+\[
+f(h) = f(0) + f'(0)h + h\,\epsilon(h) = h + h\,\epsilon(h) \quad \text{avec } \lim_{h \to 0} \epsilon(h) = 0.
+\]
+En effet : $\frac{h}{1+h} - h = \frac{h - h(1+h)}{1+h} = \frac{-h^2}{1+h} = h \times \left(\frac{-h}{1+h}\right)$, et $\lim_{h \to 0} \frac{-h}{1+h} = 0$.
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 2
+% ----------------------------------------------------
+\subsection*{Exercice 2 : Détermination d'une fonction du second degré sous contraintes différentielles}
+
+On considère la fonction polynôme du second degré définie sur $\R$ par :
+\[
+f(x) = ax^2 + bx + c, \quad \text{où } a, b, c \in \R \text{ avec } a \neq 0.
+\]
+On note $\mathcal{P}$ sa parabole représentative dans un repère orthonormal.
+Déterminer les coefficients réels $a, b, c$ sachant que la fonction satisfait simultanément aux trois conditions suivantes :
+\begin{enumerate}[label=(\roman*)]
+    \item La parabole $\mathcal{P}$ passe par le point $A(1, -3)$ ;
+    \item La parabole $\mathcal{P}$ passe par le point $B(-2, 12)$ ;
+    \item La tangente à $\mathcal{P}$ au point $A$ admet pour coefficient directeur $-4$.
+\end{enumerate}
+Préciser ensuite les coordonnées du sommet $S$ de la parabole $\mathcal{P}$.
+
+\begin{correctionbox}[Résolution par système linéaire $3 \times 3$]
+Traduisons analytiquement les données de l'énoncé :
+\begin{itemize}
+    \item La fonction $f$ est une fonction polynomiale, donc dérivable sur $\R$, de dérivée :
+    \[
+    f'(x) = 2ax + b.
+    \]
+    \item Le point $A(1, -3) \in \mathcal{P} \iff f(1) = -3 \iff a(1)^2 + b(1) + c = -3 \iff a + b + c = -3$.
+    \item Le point $B(-2, 12) \in \mathcal{P} \iff f(-2) = 12 \iff a(-2)^2 + b(-2) + c = 12 \iff 4a - 2b + c = 12$.
+    \item Le coefficient directeur de la tangente en $A$ (d'abscisse $1$) vaut $-4 \iff f'(1) = -4 \iff 2a(1) + b = -4 \iff 2a + b = -4$.
+\end{itemize}
+
+Nous obtenons ainsi le système linéaire de trois équations à trois inconnues $(a, b, c)$ :
+\[
+(S) : \begin{cases}
+a + b + c = -3 & (L_1) \\
+4a - 2b + c = 12 & (L_2) \\
+2a + b = -4 & (L_3)
+\end{cases}
+\]
+
+\textbf{Résolution méthodique du système :}
+\begin{enumerate}[label=\textbf{Étape \arabic* :}]
+    \item \textbf{Élimination de $c$ entre $(L_1)$ et $(L_2)$} :\\
+    En effectuant la combinaison linéaire $(L_2) - (L_1)$, l'inconnue $c$ s'élimine :
+    \[
+    (4a - 2b + c) - (a + b + c) = 12 - (-3) \iff 3a - 3b = 15.
+    \]
+    En divisant par $3$, nous obtenons une relation linéaire simple entre $a$ et $b$ :
+    \[
+    a - b = 5 \quad (L_4).
+    \]
+
+    \item \textbf{Détermination de $a$ et $b$} :\\
+    Exprimons $b$ à partir de l'équation $(L_3)$ :
+    \[
+    b = -4 - 2a.
+    \]
+    Injectons cette expression de $b$ dans l'équation $(L_4)$ :
+    \[
+    a - (-4 - 2a) = 5 \iff a + 4 + 2a = 5 \iff 3a + 4 = 5 \iff 3a = 1 \iff a = \frac{1}{3}.
+    \]
+    Puisque $a = \frac{1}{3} \neq 0$, la condition d'existence d'un polynôme de degré 2 est respectée.\\
+    Calculons à présent la valeur de $b$ :
+    \[
+    b = -4 - 2 \times \frac{1}{3} = -4 - \frac{2}{3} = -\frac{14}{3}.
+    \]
+
+    \item \textbf{Détermination de $c$} :\\
+    Utilisons l'équation $(L_1)$ pour isoler $c$ :
+    \[
+    c = -3 - a - b = -3 - \frac{1}{3} - \left(-\frac{14}{3}\right) = -3 - \frac{1}{3} + \frac{14}{3} = -3 + \frac{13}{3} = -\frac{9}{3} + \frac{13}{3} = \frac{4}{3}.
+    \]
+\end{enumerate}
+
+Le triplet unique solution est donc :
+\[
+(a, b, c) = \left(\frac{1}{3}, -\frac{14}{3}, \frac{4}{3}\right).
+\]
+L'expression de la fonction est :
+\[
+f(x) = \frac{1}{3}x^2 - \frac{14}{3}x + \frac{4}{3}.
+\]
+
+\textbf{Vérification rigoureuse des trois conditions :}
+\begin{itemize}
+    \item $f(1) = \frac{1}{3}(1)^2 - \frac{14}{3}(1) + \frac{4}{3} = \frac{1 - 14 + 4}{3} = -\frac{9}{3} = -3$ \quad \checkmark
+    \item $f(-2) = \frac{1}{3}(-2)^2 - \frac{14}{3}(-2) + \frac{4}{3} = \frac{4 + 28 + 4}{3} = \frac{36}{3} = 12$ \quad \checkmark
+    \item $f'(x) = \frac{2}{3}x - \frac{14}{3} \implies f'(1) = \frac{2}{3}(1) - \frac{14}{3} = -\frac{12}{3} = -4$ \quad \checkmark
+\end{itemize}
+
+\textbf{Coordonnées du sommet $S$ de la parabole :}
+L'abscisse du sommet $S$ est donnée par la formule canonique (point où la dérivée s'annule) :
+\[
+x_S = -\frac{b}{2a} = \frac{14/3}{2 \times (1/3)} = \frac{14/3}{2/3} = 7.
+\]
+L'ordonnée du sommet est :
+\[
+y_S = f(7) = \frac{1}{3}(7)^2 - \frac{14}{3}(7) + \frac{4}{3} = \frac{49 - 98 + 4}{3} = -\frac{45}{3} = -15.
+\]
+Le sommet de la parabole est le point $S(7, -15)$. Comme $a = \frac{1}{3} > 0$, la parabole est convexe (tournée vers le haut) et $S$ correspond au minimum absolu de $f$ sur $\R$.
+\end{correctionbox}
+
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 2 : Tangentes et positions relatives}
+
+% ----------------------------------------------------
+% EXERCICE 3
+% ----------------------------------------------------
+\subsection*{Exercice 3 : Tangentes à la parabole canonique et classification du nombre de tangentes}
+
+Soit $f$ la fonction carrée définie sur $\R$ par $f(x) = x^2$. On note $\mathcal{P}$ sa parabole représentative dans un repère orthonormal $(O; \vec{i}, \vec{j})$.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Déterminer l'équation de la tangente $\mathcal{T}$ à $\mathcal{P}$ parallèle à la droite $\Delta$ d'équation $y = 6x - 4$. Préciser les coordonnées du point de contact.
+    \item Soit le point $A(1, 3)$.
+    \begin{enumerate}[label=\alph*.]
+        \item Déterminer les tangentes éventuelles à la parabole $\mathcal{P}$ passant par le point $A$.
+        \item Généralisation : soit $M(x_0, y_0)$ un point quelconque du plan. Déterminer, selon les valeurs de $x_0$ et $y_0$, le nombre de tangentes à la parabole $\mathcal{P}$ passant par le point $M$. Interpréter géométriquement en termes de régions du plan.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}[Étude complète des tangentes à la parabole]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Tangente parallèle à une direction donnée} :\\
+    La fonction $f : x \mapsto x^2$ est dérivable sur $\R$ avec $f'(x) = 2x$.\\
+    Le coefficient directeur de la droite $\Delta : y = 6x - 4$ est $m = 6$.\\
+    Une tangente à $\mathcal{P}$ au point d'abscisse $a$ est parallèle à $\Delta$ si et seulement si son coefficient directeur est égal à $6$ :
+    \[
+    f'(a) = 6 \iff 2a = 6 \iff a = 3.
+    \]
+    Le point de contact est $T(3, f(3)) = (3, 9)$.\\
+    L'équation de cette tangente est donnée par :
+    \[
+    y = f'(3)(x - 3) + f(3) = 6(x - 3) + 9 = 6x - 18 + 9 = 6x - 9.
+    \]
+    L'unique tangente à $\mathcal{P}$ parallèle à $\Delta$ a pour équation $y = 6x - 9$.
+
+    \item \textbf{Tangentes passant par un point extérieur} :
+    \begin{enumerate}[label=\alph*.]
+        \item Soit $a \in \R$. L'équation de la tangente $\mathcal{T}_a$ à $\mathcal{P}$ au point d'abscisse $a$ est :
+        \[
+        \mathcal{T}_a : \quad y = f'(a)(x - a) + f(a) = 2a(x - a) + a^2 = 2ax - 2a^2 + a^2 = 2ax - a^2.
+        \]
+        La droite $\mathcal{T}_a$ passe par le point $A(1, 3)$ si et seulement si les coordonnées de $A$ vérifient cette équation :
+        \[
+        3 = 2a(1) - a^2 \iff a^2 - 2a + 3 = 0.
+        \]
+        Il s'agit d'une équation du second degré en l'inconnue $a$. Calculons son discriminant :
+        \[
+        \Delta = (-2)^2 - 4 \times 1 \times 3 = 4 - 12 = -8 < 0.
+        \]
+        Le discriminant étant strictement négatif, cette équation n'admet aucune solution réelle dans $\R$.\\
+        \textbf{Conclusion :} il n'existe aucune tangente à la parabole $\mathcal{P}$ passant par le point $A(1, 3)$.
+
+        \item \textbf{Discussion générale pour un point $M(x_0, y_0)$} :\\
+        La tangente $\mathcal{T}_a : y = 2ax - a^2$ passe par $M(x_0, y_0)$ si et seulement si :
+        \[
+        y_0 = 2a x_0 - a^2 \iff a^2 - 2x_0 a + y_0 = 0.
+        \]
+        C'est une équation polynomiale du second degré en l'inconnue $a$ de discriminant réduit :
+        \[
+        \Delta' = (-x_0)^2 - 1 \times y_0 = x_0^2 - y_0.
+        \]
+        Le nombre de tangentes à $\mathcal{P}$ issues de $M$ dépend donc du signe de $x_0^2 - y_0$ :
+        \begin{itemize}
+            \item \textbf{Cas 1 : $y_0 < x_0^2$ ($\Delta' > 0$)} :\\
+            L'équation admet deux solutions réelles distinctes $a_1 = x_0 - \sqrt{x_0^2 - y_0}$ et $a_2 = x_0 + \sqrt{x_0^2 - y_0}$.\\
+            Il existe donc \textbf{deux tangentes distinctes} à la parabole passant par $M$. Géométriquement, le point $M$ est situé « sous » la parabole (dans la région convexe extérieure).
+            \item \textbf{Cas 2 : $y_0 = x_0^2$ ($\Delta' = 0$)} :\\
+            L'équation admet une unique solution double $a = x_0$.\\
+            Le point $M$ appartient à la parabole $\mathcal{P}$. Il existe \textbf{une unique tangente} passant par $M$, qui est la tangente à $\mathcal{P}$ en ce point.
+            \item \textbf{Cas 3 : $y_0 > x_0^2$ ($\Delta' < 0$)} :\\
+            L'équation n'admet aucune racine réelle.\\
+            Il existe \textbf{zéro tangente} issue de $M$. Le point $M$ est situé « à l'intérieur » de la cuvette de la parabole.
+        \end{itemize}
+        Pour le point $A(1, 3)$, on a $y_0 = 3$ et $x_0^2 = 1^2 = 1$, donc $y_0 > x_0^2$ : $A$ est à l'intérieur de la cuvette, ce qui confirme l'impossibilité de tracer une tangente issue de $A$.
+    \end{enumerate}
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 4
+% ----------------------------------------------------
+\subsection*{Exercice 4 : Détermination effective des tangentes issues d'un point extérieur}
+
+Soit $\mathcal{P}$ la parabole d'équation $y = x^2$ dans un repère orthonormal.
+Déterminer les équations des tangentes à la parabole $\mathcal{P}$ passant par le point $A(2, 3)$, ainsi que les coordonnées des points de contact respectifs.
+
+\begin{correctionbox}[Calcul explicite des points de contact]
+Reprenons l'équation de la tangente à $\mathcal{P}$ au point d'abscisse $a$ établie à l'exercice précédent :
+\[
+\mathcal{T}_a : \quad y = 2ax - a^2.
+\]
+La droite $\mathcal{T}_a$ passe par $A(2, 3)$ si et seulement si :
+\[
+3 = 2a(2) - a^2 \iff 3 = 4a - a^2 \iff a^2 - 4a + 3 = 0.
+\]
+Calculons le discriminant de cette équation du second degré :
+\[
+\Delta = (-4)^2 - 4 \times 1 \times 3 = 16 - 12 = 4 = 2^2 > 0.
+\]
+L'équation admet donc deux racines réelles distinctes :
+\[
+a_1 = \frac{4 - 2}{2} = 1 \quad \text{et} \quad a_2 = \frac{4 + 2}{2} = 3.
+\]
+Puisque $y_A = 3 < 2^2 = 4$, le point $A$ est bien situé à l'extérieur de la parabole, ce qui confirme l'existence de deux tangentes distinctes.
+
+\textbf{Points de contact et équations des tangentes :}
+\begin{itemize}
+    \item \textbf{Pour la racine $a_1 = 1$} :\\
+    Le point de contact est $T_1(1, 1^2) = (1, 1)$.\\
+    Le coefficient directeur vaut $f'(1) = 2 \times 1 = 2$.\\
+    L'équation de la première tangente est :
+    \[
+    \mathcal{T}_1 : \quad y = 2(1)x - 1^2 \iff y = 2x - 1.
+    \]
+    Vérification pour le point $A(2, 3)$ : $2 \times 2 - 1 = 3$ (la droite passe bien par $A$).
+
+    \item \textbf{Pour la racine $a_2 = 3$} :\\
+    Le point de contact est $T_2(3, 3^2) = (3, 9)$.\\
+    Le coefficient directeur vaut $f'(3) = 2 \times 3 = 6$.\\
+    L'équation de la seconde tangente est :
+    \[
+    \mathcal{T}_2 : \quad y = 2(3)x - 3^2 \iff y = 6x - 9.
+    \]
+    Vérification pour le point $A(2, 3)$ : $6 \times 2 - 9 = 3$ (la droite passe bien par $A$).
+\end{itemize}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 5
+% ----------------------------------------------------
+\subsection*{Exercice 5 : Tangentes à une courbe cubique parallèles à une droite}
+
+Soit $f$ la fonction polynôme du troisième degré définie sur $\R$ par :
+\[
+f(x) = x^3 + 2x^2 - 5x + 1.
+\]
+On note $\mathcal{C}_f$ sa courbe représentative.
+Déterminer les équations des tangentes à $\mathcal{C}_f$ qui sont parallèles à la droite $D$ d'équation $y = 2x$. Préciser les coordonnées exactes des points de contact.
+
+\begin{correctionbox}[Résolution différentielle pour un polynôme de degré 3]
+La fonction $f$ est dérivable sur $\R$ comme fonction polynomiale, et pour tout $x \in \R$ :
+\[
+f'(x) = 3x^2 + 4x - 5.
+\]
+La droite $D : y = 2x$ admet pour coefficient directeur $m = 2$.\\
+La tangente à $\mathcal{C}_f$ au point d'abscisse $x$ est parallèle à $D$ si et seulement si $f'(x) = 2$ :
+\[
+3x^2 + 4x - 5 = 2 \iff 3x^2 + 4x - 7 = 0.
+\]
+Remarquons immédiatement que $x = 1$ est une racine évidente puisque $3(1)^2 + 4(1) - 7 = 3 + 4 - 7 = 0$.\\
+Le produit des racines d'un trinôme $ax^2 + bx + c$ valant $\frac{c}{a} = -\frac{7}{3}$, la seconde racine est :
+\[
+x_2 = -\frac{7}{3}.
+\]
+(On peut vérifier par le discriminant : $\Delta = 4^2 - 4(3)(-7) = 16 + 84 = 100 = 10^2$, d'où $x = \frac{-4 \pm 10}{6}$, qui redonne bien $1$ et $-7/3$).
+
+Il existe donc deux points de la courbe où la tangente est parallèle à $D$ :
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Premier point de contact ($x_1 = 1$)} :\\
+    L'ordonnée du point est :
+    \[
+    f(1) = 1^3 + 2(1)^2 - 5(1) + 1 = 1 + 2 - 5 + 1 = -1.
+    \]
+    Le premier point de contact est $M_1(1, -1)$.\\
+    L'équation de la tangente $\mathcal{T}_1$ en ce point est :
+    \[
+    y = f'(1)(x - 1) + f(1) = 2(x - 1) - 1 = 2x - 3.
+    \]
+
+    \item \textbf{Second point de contact ($x_2 = -7/3$)} :\\
+    Calculons l'ordonnée $f(-7/3)$ avec soin :
+    \begin{align*}
+    f(-7/3) &= \left(-\frac{7}{3}\right)^3 + 2\left(-\frac{7}{3}\right)^2 - 5\left(-\frac{7}{3}\right) + 1 \\
+    &= -\frac{343}{27} + 2 \times \frac{49}{9} + \frac{35}{3} + 1 \\
+    &= -\frac{343}{27} + \frac{294}{27} + \frac{315}{27} + \frac{27}{27} \\
+    &= \frac{-343 + 294 + 315 + 27}{27} = \frac{293}{27}.
+    \end{align*}
+    Le second point de contact est $M_2\left(-\frac{7}{3}, \frac{293}{27}\right)$.\\
+    L'équation de la tangente $\mathcal{T}_2$ en ce point est :
+    \[
+    y = 2\left(x - \left(-\frac{7}{3}\right)\right) + \frac{293}{27} = 2x + \frac{14}{3} + \frac{293}{27} = 2x + \frac{126}{27} + \frac{293}{27} = 2x + \frac{419}{27}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 6
+% ----------------------------------------------------
+\subsection*{Exercice 6 : Tangence d'une droite à la courbe de la fonction racine carrée}
+
+Soit $f$ la fonction racine carrée définie sur $[0, +\infty[$ par $f(x) = \sqrt{x}$. On note $\mathcal{C}_f$ sa courbe représentative.
+On considère la droite $d$ d'équation cartésienne :
+\[
+d : \quad y = \frac{1}{6}x + \frac{3}{2}.
+\]
+Démontrer que la droite $d$ est tangente à la courbe $\mathcal{C}_f$ en un point dont on déterminera les coordonnées exactes.
+
+\begin{correctionbox}[Preuve de tangence d'une droite affine]
+Rappelons que la fonction racine carrée est dérivable sur $]0, +\infty[$ de dérivée :
+\[
+f'(x) = \frac{1}{2\sqrt{x}}.
+\]
+La droite $d$ admet pour coefficient directeur $m = \frac{1}{6}$ et pour ordonnée à l'origine $p = \frac{3}{2}$.\\
+Pour que la droite $d$ soit tangente à la courbe $\mathcal{C}_f$ en un point d'abscisse $a > 0$, il est nécessaire et suffisant que deux conditions soient réunies simultanément :
+\begin{enumerate}[label=(\alph*)]
+    \item Le coefficient directeur de la tangente en $a$ doit être égal à celui de $d$, c'est-à-dire $f'(a) = \frac{1}{6}$ ;
+    \item Le point de contact $(a, f(a))$ doit appartenir à la droite $d$.
+\end{enumerate}
+
+\textbf{1. Détermination de l'abscisse candidate $a$ :}
+\[
+f'(a) = \frac{1}{6} \iff \frac{1}{2\sqrt{a}} = \frac{1}{6} \iff 2\sqrt{a} = 6 \iff \sqrt{a} = 3 \iff a = 3^2 = 9.
+\]
+Puisque $9 > 0$, $a = 9$ est l'unique abscisse candidate.
+
+\textbf{2. Calcul de l'équation de la tangente en $a = 9$ :}
+\begin{itemize}
+    \item L'image vaut $f(9) = \sqrt{9} = 3$.
+    \item Le nombre dérivé vaut $f'(9) = \frac{1}{2\sqrt{9}} = \frac{1}{6}$.
+\end{itemize}
+L'équation de la tangente $\mathcal{T}_9$ à $\mathcal{C}_f$ au point d'abscisse $9$ est :
+\[
+y = f'(9)(x - 9) + f(9) = \frac{1}{6}(x - 9) + 3 = \frac{1}{6}x - \frac{9}{6} + 3 = \frac{1}{6}x - \frac{3}{2} + \frac{6}{2} = \frac{1}{6}x + \frac{3}{2}.
+\]
+Cette équation est identique à celle de la droite $d$.\\
+\textbf{Conclusion :} La droite $d$ est bien tangente à la courbe $\mathcal{C}_f$ au point de coordonnées $(9, 3)$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 7
+% ----------------------------------------------------
+\subsection*{Exercice 7 : Tangente commune et points d'intersection de deux courbes}
+
+On considère les fonctions $f$ et $g$ définies respectivement par :
+\[
+f(x) = \frac{1}{2}x^2 + \frac{3}{2}x \quad \text{sur } \R, \qquad g(x) = \frac{3x}{x+2} \quad \text{sur } \R \setminus \{-2\}.
+\]
+On note $\mathcal{C}_f$ et $\mathcal{C}_g$ leurs courbes représentatives respectives.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Déterminer les coordonnées des points d'intersection des courbes $\mathcal{C}_f$ et $\mathcal{C}_g$.
+    \item En chacun de ces points d'intersection, déterminer si les courbes admettent une tangente commune. Le cas échéant, donner l'équation de cette tangente.
+\end{enumerate}
+
+\begin{correctionbox}[Intersection et tangence commune]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Recherche des points d'intersection} :\\
+    Pour tout $x \in \R \setminus \{-2\}$, les points d'intersection vérifient l'équation $f(x) = g(x)$ :
+    \[
+    \frac{1}{2}x^2 + \frac{3}{2}x = \frac{3x}{x+2} \iff \frac{x(x+3)}{2} = \frac{3x}{x+2}.
+    \]
+    Regroupons tous les termes d'un même côté et factorisons par $x$ :
+    \[
+    x \left[ \frac{x+3}{2} - \frac{3}{x+2} \right] = 0.
+    \]
+    Une première solution évidente est $x = 0$.\\
+    Pour $x \neq 0$, nous devons résoudre :
+    \[
+    \frac{x+3}{2} = \frac{3}{x+2} \iff (x+3)(x+2) = 6 \iff x^2 + 5x + 6 = 6 \iff x^2 + 5x = 0 \iff x(x+5) = 0.
+    \]
+    Puisque $x \neq 0$, la seconde solution est $x = -5$ (qui est bien différent de $-2$).\\
+    Calculons les ordonnées correspondantes :
+    \begin{itemize}
+        \item Pour $x = 0$ : $f(0) = 0$ et $g(0) = 0$. Le premier point d'intersection est l'origine $O(0, 0)$.
+        \item Pour $x = -5$ : $f(-5) = \frac{1}{2}(-5)^2 + \frac{3}{2}(-5) = \frac{25 - 15}{2} = 5$.\\
+        Vérifions avec $g$ : $g(-5) = \frac{3(-5)}{-5+2} = \frac{-15}{-3} = 5$.\\
+        Le second point d'intersection est $P(-5, 5)$.
+    \end{itemize}
+
+    \item \textbf{Étude des tangentes aux points d'intersection} :\\
+    Calculons les fonctions dérivées :
+    \begin{itemize}
+        \item $f$ est polynomiale donc dérivable sur $\R$ avec $f'(x) = x + \frac{3}{2}$.
+        \item $g$ est rationnelle donc dérivable sur $\R \setminus \{-2\}$ avec :
+        \[
+        g'(x) = \frac{3(x+2) - 3x(1)}{(x+2)^2} = \frac{3x + 6 - 3x}{(x+2)^2} = \frac{6}{(x+2)^2}.
+        \]
+    \end{itemize}
+
+    \textbf{Au point $O(0, 0)$ :}
+    \[
+    f'(0) = 0 + \frac{3}{2} = \frac{3}{2}, \qquad g'(0) = \frac{6}{(0+2)^2} = \frac{6}{4} = \frac{3}{2}.
+    \]
+    Puisque $f'(0) = g'(0) = \frac{3}{2}$ et que $f(0) = g(0) = 0$, les deux courbes partagent le même point et la même pente : elles admettent une \textbf{tangente commune} en $O$, d'équation :
+    \[
+    y = \frac{3}{2}(x - 0) + 0 \iff y = \frac{3}{2}x.
+    \]
+
+    \textbf{Au point $P(-5, 5)$ :}
+    \[
+    f'(-5) = -5 + \frac{3}{2} = -\frac{7}{2}, \qquad g'(-5) = \frac{6}{(-5+2)^2} = \frac{6}{(-3)^2} = \frac{6}{9} = \frac{2}{3}.
+    \]
+    Puisque $f'(-5) = -\frac{7}{2} \neq \frac{2}{3} = g'(-5)$, les deux courbes n'ont pas la même pente en $P$ : leurs tangentes respectives sont sécantes avec un angle non nul, il n'y a donc pas de tangente commune en ce point.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 8
+% ----------------------------------------------------
+\subsection*{Exercice 8 : Position relative d'une cubique et point d'inflexion}
+
+Soit $f$ la fonction définie sur $\R$ par :
+\[
+f(x) = x^3 - 6x^2 + 4x + 3.
+\]
+On note $\mathcal{C}_f$ sa courbe représentative.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Déterminer l'équation réduite de la tangente $\mathcal{T}_2$ à la courbe $\mathcal{C}_f$ au point d'abscisse $x = 2$.
+    \item Étudier la position relative de la courbe $\mathcal{C}_f$ par rapport à sa tangente $\mathcal{T}_2$.
+    \item Que peut-on en déduire pour le point de contact $I(2, f(2))$ ? Interpréter à l'aide de la dérivée seconde $f''$.
+\end{enumerate}
+
+\begin{correctionbox}[Écart cubique et point d'inflexion]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Équation de la tangente $\mathcal{T}_2$} :\\
+    La fonction $f$ est dérivable sur $\R$ et pour tout $x \in \R$ :
+    \[
+    f'(x) = 3x^2 - 12x + 4.
+    \]
+    Calculons l'image et le nombre dérivé en $x = 2$ :
+    \[
+    f(2) = 2^3 - 6(2)^2 + 4(2) + 3 = 8 - 24 + 8 + 3 = -5,
+    \]
+    \[
+    f'(2) = 3(2)^2 - 12(2) + 4 = 12 - 24 + 4 = -8.
+    \]
+    L'équation de la tangente $\mathcal{T}_2$ est donc :
+    \[
+    y = f'(2)(x - 2) + f(2) = -8(x - 2) - 5 = -8x + 16 - 5 = -8x + 11.
+    \]
+
+    \item \textbf{Étude de la position relative} :\\
+    Considérons la différence $d(x) = f(x) - (-8x + 11)$ :
+    \[
+    d(x) = (x^3 - 6x^2 + 4x + 3) - (-8x + 11) = x^3 - 6x^2 + 12x - 8.
+    \]
+    Reconnaissons le développement remarquable du cube d'un binôme $(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$ avec $a = x$ et $b = 2$ :
+    \[
+    d(x) = (x - 2)^3.
+    \]
+    Étudions le signe de $d(x) = (x - 2)^3$ sur $\R$ :
+    \begin{itemize}
+        \item Pour $x \in ]-\infty, 2[$, $x - 2 < 0 \implies d(x) < 0$. La courbe $\mathcal{C}_f$ est \textbf{strictement en-dessous} de la tangente $\mathcal{T}_2$.
+        \item Pour $x = 2$, $d(2) = 0$. La courbe et la tangente coïncident au point $(2, -5)$.
+        \item Pour $x \in ]2, +\infty[$, $x - 2 > 0 \implies d(x) > 0$. La courbe $\mathcal{C}_f$ est \textbf{strictement au-dessus} de la tangente $\mathcal{T}_2$.
+    \end{itemize}
+
+    \item \textbf{Interprétation géométrique et dérivée seconde} :\\
+    Puisque la différence $d(x)$ change de signe en $x = 2$, la courbe représentative \textbf{traverse sa tangente} en ce point.
+    Le point $I(2, -5)$ est donc un \textbf{point d'inflexion} de la courbe $\mathcal{C}_f$.\\
+    Calculons la dérivée seconde de $f$ :
+    \[
+    f''(x) = (f')'(x) = 6x - 12 = 6(x - 2).
+    \]
+    On constate que $f''(2) = 0$ et que $f''(x)$ change de signe en $x = 2$ (négative pour $x < 2$, positive pour $x > 2$). La fonction $f$ est donc concave sur $]-\infty, 2]$ et convexe sur $[2, +\infty[$, ce qui confirme analytiquement le point d'inflexion.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 9
+% ----------------------------------------------------
+\subsection*{Exercice 9 : Position relative d'une cubique et contact d'ordre pair}
+
+Soit $f$ la fonction définie sur $\R$ par :
+\[
+f(x) = x^3 - 3x + 1.
+\]
+On note $\mathcal{C}_f$ sa courbe représentative.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Déterminer l'équation réduite de la tangente $\mathcal{T}_{1/2}$ à la courbe au point d'abscisse $x = \frac{1}{2}$.
+    \item Étudier la position relative de $\mathcal{C}_f$ par rapport à $\mathcal{T}_{1/2}$. La courbe traverse-t-elle sa tangente au point de contact ?
+\end{enumerate}
+
+\begin{correctionbox}[Multiplicité 2 et non-traversée]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Équation de la tangente $\mathcal{T}_{1/2}$} :\\
+    $f$ est dérivable sur $\R$ avec $f'(x) = 3x^2 - 3$.\\
+    Calculons $f(1/2)$ et $f'(1/2)$ :
+    \[
+    f(1/2) = \left(\frac{1}{2}\right)^3 - 3\left(\frac{1}{2}\right) + 1 = \frac{1}{8} - \frac{3}{2} + 1 = \frac{1 - 12 + 8}{8} = -\frac{3}{8},
+    \]
+    \[
+    f'(1/2) = 3\left(\frac{1}{2}\right)^2 - 3 = \frac{3}{4} - 3 = \frac{3 - 12}{4} = -\frac{9}{4}.
+    \]
+    L'équation de la tangente $\mathcal{T}_{1/2}$ est :
+    \[
+    y = -\frac{9}{4}\left(x - \frac{1}{2}\right) - \frac{3}{8} = -\frac{9}{4}x + \frac{9}{8} - \frac{3}{8} = -\frac{9}{4}x + \frac{6}{8} = -\frac{9}{4}x + \frac{3}{4}.
+    \]
+
+    \item \textbf{Étude de la différence $d(x) = f(x) - \left(-\frac{9}{4}x + \frac{3}{4}\right)$} :
+    \[
+    d(x) = x^3 - 3x + 1 + \frac{9}{4}x - \frac{3}{4} = x^3 - \frac{3}{4}x + \frac{1}{4}.
+    \]
+    Par le théorème général sur les tangentes, $x = 1/2$ est racine au moins double de $d(x)$. Factorisons $d(x)$ par $(x - 1/2)^2 = x^2 - x + \frac{1}{4}$ :
+    \[
+    \left(x^2 - x + \frac{1}{4}\right)(x + 1) = x^3 + x^2 - x^2 - x + \frac{1}{4}x + \frac{1}{4} = x^3 - \frac{3}{4}x + \frac{1}{4} = d(x).
+    \]
+    L'expression est donc exactement factorisée par :
+    \[
+    d(x) = \left(x - \frac{1}{2}\right)^2 (x + 1).
+    \]
+    Étudions le signe de $d(x)$ sur $\R$ :
+    \begin{itemize}
+        \item Pour tout $x \in \R$, $(x - 1/2)^2 \ge 0$, avec annulation uniquement en $x = 1/2$.
+        \item Le signe de $d(x)$ est donc entièrement gouverné par le facteur affine $(x + 1)$ :
+        \begin{itemize}
+            \item Pour $x \in ]-\infty, -1[$, $x + 1 < 0 \implies d(x) < 0$ : $\mathcal{C}_f$ est \textbf{strictement en-dessous} de $\mathcal{T}_{1/2}$.
+            \item Pour $x = -1$, $d(-1) = 0$ : la tangente recoupe la courbe en un point sécant de coordonnées $\left(-1, \frac{12}{4}\right) = (-1, 3)$.
+            \item Pour $x \in ]-1, 1/2[ \, \cup \, ]1/2, +\infty[$, $d(x) > 0$ : $\mathcal{C}_f$ est \textbf{strictement au-dessus} de $\mathcal{T}_{1/2}$.
+        \end{itemize}
+    \end{itemize}
+    \textbf{Conclusion :} Au point de contact d'abscisse $x = 1/2$, la différence $d(x)$ ne change pas de signe : la courbe ne traverse pas sa tangente, elle reste localement au-dessus de sa tangente. Le point n'est donc pas un point d'inflexion.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 10
+% ----------------------------------------------------
+\subsection*{Exercice 10 : Position relative et point de recoupement sécant}
+
+Soit $f$ la fonction définie sur $\R$ par :
+\[
+f(x) = x^3 - 2x^2 + 1.
+\]
+On note $\mathcal{C}_f$ sa courbe représentative.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Déterminer l'équation réduite de la tangente $\mathcal{T}_2$ à la courbe $\mathcal{C}_f$ au point d'abscisse $x = 2$.
+    \item Déterminer les coordonnées de tous les points d'intersection entre la courbe $\mathcal{C}_f$ et sa tangente $\mathcal{T}_2$.
+    \item Étudier le signe de la différence $f(x) - y_{\mathcal{T}_2}$ et dresser un bilan complet de la position relative de $\mathcal{C}_f$ par rapport à $\mathcal{T}_2$.
+\end{enumerate}
+
+\begin{correctionbox}[Factorisation systématique par $(x-a)^2$]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Équation de la tangente $\mathcal{T}_2$} :\\
+    $f$ est dérivable sur $\R$ avec $f'(x) = 3x^2 - 4x$.\\
+    Calculons :
+    \[
+    f(2) = 2^3 - 2(2)^2 + 1 = 8 - 8 + 1 = 1,
+    \]
+    \[
+    f'(2) = 3(2)^2 - 4(2) = 12 - 8 = 4.
+    \]
+    L'équation de la tangente $\mathcal{T}_2$ est :
+    \[
+    y = f'(2)(x - 2) + f(2) = 4(x - 2) + 1 = 4x - 8 + 1 = 4x - 7.
+    \]
+
+    \item \textbf{Points d'intersection et factorisation} :\\
+    Les abscisses des points d'intersection sont les solutions de $f(x) = 4x - 7$, soit $d(x) = 0$ avec :
+    \[
+    d(x) = x^3 - 2x^2 + 1 - (4x - 7) = x^3 - 2x^2 - 4x + 8.
+    \]
+    Factorisons par groupement de termes :
+    \[
+    d(x) = x^2(x - 2) - 4(x - 2) = (x - 2)(x^2 - 4) = (x - 2)(x - 2)(x + 2) = (x - 2)^2 (x + 2).
+    \]
+    Les points d'intersection sont donc :
+    \begin{itemize}
+        \item Le point de tangence $T(2, 1)$, correspondant à la racine double $x = 2$ ;
+        \item Le point de recoupement sécant $S(-2, f(-2)) = (-2, -15)$, correspondant à la racine simple $x = -2$ (vérif : $4(-2) - 7 = -15$).
+    \end{itemize}
+
+    \item \textbf{Position relative} :
+    Puisque $(x - 2)^2 > 0$ pour tout $x \neq 2$, le signe de $d(x)$ est strictement identique à celui de $(x + 2)$ :
+    \begin{itemize}
+        \item Sur $]-\infty, -2[$, $x + 2 < 0 \implies d(x) < 0$ : $\mathcal{C}_f$ est \textbf{strictement en-dessous} de $\mathcal{T}_2$.
+        \item En $x = -2$, la droite et la courbe se coupent transversalement (recoupement sécant).
+        \item Sur $]-2, 2[\, \cup\, ]2, +\infty[$, $x + 2 > 0 \implies d(x) > 0$ : $\mathcal{C}_f$ est \textbf{strictement au-dessus} de $\mathcal{T}_2$.
+        \item En $x = 2$, la courbe est tangente à $\mathcal{T}_2$ sans la traverser.
+    \end{itemize}
+\end{enumerate}
+\end{correctionbox}
+
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 3 : Dérivabilité (opérations, composition et dérivabilité à gauche/droite)}
+
+% ----------------------------------------------------
+% EXERCICE 11
+% ----------------------------------------------------
+\subsection*{Exercice 11 : Étude systématique de la dérivabilité de fonctions remarquables}
+
+Pour chacune des fonctions suivantes, déterminer son ensemble de définition $\mathcal{D}$, étudier la dérivabilité sur $\mathcal{D}$ en distinguant les cas où les dérivées unilatérales sont nécessaires, préciser l'ensemble de dérivabilité $\mathcal{D}'$, calculer la fonction dérivée là où elle existe et interpréter géométriquement les éventuels points de non-dérivabilité (points anguleux, demi-tangentes) :
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item $f_1(x) = |x|$
+    \item $f_2(x) = \frac{1}{1 + |x|}$
+    \item $f_3(x) = |x(x+1)|$
+    \item $f_4(x) = \sqrt{x^2+1}$
+    \item $f_5(x) = x\sqrt{x}$
+\end{enumerate}
+
+\begin{correctionbox}[Étude exhaustive des 5 fonctions]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    % --- SOUS-QUESTION 1 ---
+    \item \textbf{Étude de $f_1(x) = |x|$} :
+    \begin{itemize}
+        \item \textbf{Ensemble de définition} : $\mathcal{D}_{f_1} = \R$.
+        \item \textbf{Expression sans valeur absolue} :
+        \[
+        f_1(x) = \begin{cases}
+        x & \text{si } x \ge 0, \\
+        -x & \text{si } x < 0.
+        \end{cases}
+        \]
+        \item \textbf{Dérivabilité sur les ouverts} :
+        \begin{itemize}
+            \item Sur $]0, +\infty[$, $f_1(x) = x$ est une fonction affine donc dérivable sur $]0, +\infty[$ avec $f_1'(x) = 1$.
+            \item Sur $]-\infty, 0[$, $f_1(x) = -x$ est une fonction affine donc dérivable sur $]-\infty, 0[$ avec $f_1'(x) = -1$.
+        \end{itemize}
+        \item \textbf{Dérivabilité en $0$} :\\
+        Étudions le taux d'accroissement en $0$ pour $h \neq 0$ :
+        \[
+        \tau_0(h) = \frac{f_1(0+h) - f_1(0)}{h} = \frac{|h| - 0}{h} = \frac{|h|}{h}.
+        \]
+        Calculons les limites unilatérales à droite et à gauche :
+        \begin{itemize}
+            \item \textbf{Limite à droite ($h > 0$)} : $|h| = h$, donc $\tau_0(h) = \frac{h}{h} = 1 \implies \lim_{h \to 0^+} \tau_0(h) = 1 = (f_1)'_d(0)$.
+            \item \textbf{Limite à gauche ($h < 0$)} : $|h| = -h$, donc $\tau_0(h) = \frac{-h}{h} = -1 \implies \lim_{h \to 0^-} \tau_0(h) = -1 = (f_1)'_g(0)$.
+        \end{itemize}
+        Puisque $(f_1)'_d(0) = 1 \neq -1 = (f_1)'_g(0)$, le taux d'accroissement n'admet pas de limite en $0$.\\
+        \textbf{Conclusion} : $f_1$ n'est pas dérivable en $0$. L'ensemble de dérivabilité est $\mathcal{D}_{f_1'} = \R^* = \R \setminus \{0\}$.\\
+        \textbf{Interprétation géométrique} : L'origine $O(0, 0)$ est un \textbf{point anguleux}. La courbe admet deux demi-tangentes sécantes formant un angle droit :
+        \[
+        \mathcal{T}_d : y = x \quad (x \ge 0) \qquad \text{et} \qquad \mathcal{T}_g : y = -x \quad (x \le 0).
+        \]
+    \end{itemize}
+
+    % --- SOUS-QUESTION 2 ---
+    \item \textbf{Étude de $f_2(x) = \frac{1}{1 + |x|}$} :
+    \begin{itemize}
+        \item \textbf{Ensemble de définition} : Pour tout $x \in \R$, $|x| \ge 0 \implies 1 + |x| \ge 1 > 0$. Le dénominateur ne s'annule jamais, donc $\mathcal{D}_{f_2} = \R$.
+        \item \textbf{Parité} : Pour tout $x \in \R$, $f_2(-x) = \frac{1}{1+|-x|} = \frac{1}{1+|x|} = f_2(x)$. La fonction $f_2$ est paire (courbe symétrique par rapport à l'axe des ordonnées).
+        \item \textbf{Dérivabilité sur $\R^*$} :
+        \begin{itemize}
+            \item Pour $x > 0$, $f_2(x) = \frac{1}{1+x}$. Par dérivation d'un quotient, $f_2'(x) = -\frac{1}{(1+x)^2}$.
+            \item Pour $x < 0$, $f_2(x) = \frac{1}{1-x}$. Par dérivation d'un quotient, $f_2'(x) = -\frac{-1}{(1-x)^2} = \frac{1}{(1-x)^2}$.
+        \end{itemize}
+        \item \textbf{Dérivabilité en $0$} :\\
+        Remarquons que $f_2(0) = \frac{1}{1+0} = 1$. Formons le taux d'accroissement pour $h \neq 0$ :
+        \[
+        \tau_0(h) = \frac{f_2(h) - f_2(0)}{h} = \frac{\frac{1}{1+|h|} - 1}{h} = \frac{1 - (1+|h|)}{h(1+|h|)} = \frac{-|h|}{h(1+|h|)}.
+        \]
+        Calculons les limites unilatérales :
+        \begin{itemize}
+            \item Pour $h > 0$ : $\tau_0(h) = \frac{-h}{h(1+h)} = \frac{-1}{1+h} \xrightarrow[h \to 0^+]{} -1 = (f_2)'_d(0)$.
+            \item Pour $h < 0$ : $\tau_0(h) = \frac{-(-h)}{h(1-h)} = \frac{h}{h(1-h)} = \frac{1}{1-h} \xrightarrow[h \to 0^-]{} 1 = (f_2)'_g(0)$.
+        \end{itemize}
+        Les dérivées à droite et à gauche étant différentes ($-1 \neq 1$), $f_2$ n'est pas dérivable en $0$.\\
+        \textbf{Conclusion} : $\mathcal{D}_{f_2'} = \R^*$. Le point $A(0, 1)$ est un \textbf{point anguleux} présentant deux demi-tangentes de pentes $-1$ et $+1$.
+    \end{itemize}
+
+    % --- SOUS-QUESTION 3 ---
+    \item \textbf{Étude de $f_3(x) = |x(x+1)|$} :
+    \begin{itemize}
+        \item \textbf{Ensemble de définition} : $\mathcal{D}_{f_3} = \R$.
+        \item \textbf{Signe de $P(x) = x(x+1) = x^2 + x$} :\\
+        Les racines de $P(x)$ sont $x = 0$ et $x = -1$.
+        Le polynôme $x(x+1)$ est strictement positif à l'extérieur des racines et strictement négatif entre les racines :
+        \begin{itemize}
+            \item Si $x \in ]-\infty, -1] \cup [0, +\infty[$, $x(x+1) \ge 0 \implies f_3(x) = x^2 + x$.
+            \item Si $x \in [-1, 0]$, $x(x+1) \le 0 \implies f_3(x) = -(x^2 + x) = -x^2 - x$.
+        \end{itemize}
+        \item \textbf{Dérivabilité sur les intervalles ouverts} :
+        \begin{itemize}
+            \item Sur $]-\infty, -1[\, \cup\, ]0, +\infty[$, $f_3(x) = x^2 + x$ est polynomiale donc dérivable avec :
+            \[
+            f_3'(x) = 2x + 1.
+            \]
+            \item Sur $]-1, 0[$, $f_3(x) = -x^2 - x$ est polynomiale donc dérivable avec :
+            \[
+            f_3'(x) = -2x - 1.
+            \]
+        \end{itemize}
+        \item \textbf{Dérivabilité en $0$} :\\
+        $f_3(0) = 0$. Pour $h \neq 0$ :
+        \begin{itemize}
+            \item Pour $h > 0$ : $\tau_0(h) = \frac{h^2 + h}{h} = h + 1 \xrightarrow[h \to 0^+]{} 1 = (f_3)'_d(0)$.
+            \item Pour $h < 0$ (avec $h \in ]-1, 0[$) : $\tau_0(h) = \frac{-h^2 - h}{h} = -h - 1 \xrightarrow[h \to 0^-]{} -1 = (f_3)'_g(0)$.
+        \end{itemize}
+        Puisque $(f_3)'_d(0) = 1 \neq -1 = (f_3)'_g(0)$, $f_3$ n'est pas dérivable en $0$.
+        \item \textbf{Dérivabilité en $-1$} :\\
+        $f_3(-1) = 0$. Posons $x = -1 + h$ avec $h \neq 0$. Alors :
+        \[
+        x(x+1) = (-1+h)(-1+h+1) = (-1+h)h = h^2 - h = h(h-1).
+        \]
+        \begin{itemize}
+            \item Pour $h > 0$ petit ($h \in ]0, 1[$), $h - 1 < 0$ donc $h(h-1) < 0$.\\
+            Alors $f_3(-1+h) = -h(h-1) = h - h^2$.\\
+            Le taux d'accroissement à droite est :
+            \[
+            \tau_{-1}(h) = \frac{h - h^2}{h} = 1 - h \xrightarrow[h \to 0^+]{} 1 = (f_3)'_d(-1).
+            \]
+            \item Pour $h < 0$ petit, $h < 0$ et $h - 1 < 0$ donc $h(h-1) > 0$.\\
+            Alors $f_3(-1+h) = h(h-1) = h^2 - h$.\\
+            Le taux d'accroissement à gauche est :
+            \[
+            \tau_{-1}(h) = \frac{h^2 - h}{h} = h - 1 \xrightarrow[h \to 0^-]{} -1 = (f_3)'_g(-1).
+            \]
+        \end{itemize}
+        Puisque $(f_3)'_d(-1) = 1 \neq -1 = (f_3)'_g(-1)$, $f_3$ n'est pas dérivable en $-1$.\\
+        \textbf{Conclusion} : L'ensemble de dérivabilité est $\mathcal{D}_{f_3'} = \R \setminus \{-1, 0\}$. La courbe admet deux points anguleux en $(-1, 0)$ et $(0, 0)$.
+    \end{itemize}
+
+    % --- SOUS-QUESTION 4 ---
+    \item \textbf{Étude de $f_4(x) = \sqrt{x^2+1}$} :
+    \begin{itemize}
+        \item \textbf{Ensemble de définition} : Pour tout $x \in \R$, $x^2 \ge 0 \implies x^2 + 1 \ge 1 > 0$. La quantité sous le radical étant strictement positive pour tout réel, $\mathcal{D}_{f_4} = \R$.
+        \item \textbf{Dérivabilité par composition} :\\
+        Posons $u(x) = x^2 + 1$. La fonction $u$ est polynomiale, donc dérivable sur $\R$.\\
+        De plus, pour tout $x \in \R$, $u(x) \ge 1 > 0$.\\
+        La fonction racine carrée $t \mapsto \sqrt{t}$ est dérivable sur l'intervalle ouvert $]0, +\infty[$.\\
+        Puisque pour tout $x \in \R$, $u(x) \in ]0, +\infty[$, la fonction composée $f_4 = \sqrt{u}$ est \textbf{dérivable sur tout $\R$}.
+        \item \textbf{Calcul de la dérivée} :\\
+        Par la formule de dérivation d'une racine d'une fonction $(\sqrt{u})' = \frac{u'}{2\sqrt{u}}$ :
+        \[
+        f_4'(x) = \frac{2x}{2\sqrt{x^2+1}} = \frac{x}{\sqrt{x^2+1}}.
+        \]
+        \textbf{Conclusion} : $\mathcal{D}_{f_4'} = \R$. La fonction $f_4$ ne présente aucune singularité ni aucun point anguleux sur $\R$.\\
+        Notons qu'en $x = 0$, $f_4'(0) = 0$ : la courbe admet une tangente horizontale d'équation $y = 1$.
+    \end{itemize}
+
+    % --- SOUS-QUESTION 5 ---
+    \item \textbf{Étude de $f_5(x) = x\sqrt{x}$} :
+    \begin{itemize}
+        \item \textbf{Ensemble de définition} : La racine carrée impose $x \ge 0$, donc $\mathcal{D}_{f_5} = [0, +\infty[$.
+        \item \textbf{Dérivabilité sur $]0, +\infty[$} :\\
+        Sur $]0, +\infty[$, les fonctions $x \mapsto x$ et $x \mapsto \sqrt{x}$ sont toutes deux dérivables. Par produit de fonctions dérivables, $f_5$ est dérivable sur $]0, +\infty[$ et :
+        \[
+        f_5'(x) = 1 \times \sqrt{x} + x \times \frac{1}{2\sqrt{x}} = \sqrt{x} + \frac{x}{2\sqrt{x}} = \sqrt{x} + \frac{\sqrt{x}}{2} = \frac{3}{2}\sqrt{x}.
+        \]
+        (On pouvait aussi écrire $f_5(x) = x^{3/2}$, d'où $f_5'(x) = \frac{3}{2}x^{1/2} = \frac{3}{2}\sqrt{x}$).
+        \item \textbf{Dérivabilité en $0$ (à droite)} :\\
+        Attention : la fonction racine carrée n'est pas dérivable en $0$, on ne peut donc pas appliquer le théorème sur la dérivation d'un produit en $0$. Il est obligatoire de revenir à la définition par le taux d'accroissement !\\
+        Calculons pour $h > 0$ le taux d'accroissement en $0$ :
+        \[
+        \tau_0(h) = \frac{f_5(h) - f_5(0)}{h} = \frac{h\sqrt{h} - 0}{h} = \frac{h\sqrt{h}}{h} = \sqrt{h}.
+        \]
+        Passons à la limite lorsque $h \to 0^+$ :
+        \[
+        \lim_{h \to 0^+} \tau_0(h) = \lim_{h \to 0^+} \sqrt{h} = 0.
+        \]
+        Cette limite existe et est \textbf{finie} (elle vaut $0$).\\
+        Par conséquent, la fonction $f_5$ est \textbf{dérivable à droite en $0$}, et son nombre dérivé à droite est :
+        \[
+        (f_5)'_d(0) = 0.
+        \]
+        \textbf{Conclusion} : L'ensemble de dérivabilité de $f_5$ est l'intervalle fermé :
+        \[
+        \mathcal{D}_{f_5'} = [0, +\infty[.
+        \]
+        La fonction dérivée est continue sur $[0, +\infty[$ avec $f_5'(x) = \frac{3}{2}\sqrt{x}$ pour tout $x \ge 0$.\\
+        \textbf{Interprétation géométrique} : À l'origine $O(0, 0)$, la courbe $\mathcal{C}_{f_5}$ admet une \textbf{demi-tangente horizontale} d'équation $y = 0$ pour $x \ge 0$.
+    \end{itemize}
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Régularisation par produit et exposant critique]
+L'exemple de $f_5(x) = x\sqrt{x}$ illustre un principe fondamental d'analyse : bien que $x \mapsto \sqrt{x}$ présente une singularité verticale en $0$ (taux d'accroissement infini), la multiplication par le facteur $x$ « écrase » la pente et restaure non seulement la continuité, mais également la dérivabilité !\\
+Plus généralement, pour $\alpha > 0$, la fonction $x \mapsto x^\alpha$ est dérivable à droite en $0$ si et seulement si $\alpha > 1$.
+\end{remarquabox}
+
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 4 : Variations et Optimisation géométrique/économique}
+
+% ----------------------------------------------------
+% EXERCICE 12
+% ----------------------------------------------------
+\subsection*{Exercice 12 : Variations et extremum global d'un polynôme de degré 4}
+
+On considère la fonction polynôme $f$ définie sur $\R$ par :
+\[
+f(x) = x^4 - x^3 + x^2 - \frac{3}{4}x + 1.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Calculer la fonction dérivée $f'(x)$.
+    \item Démontrer que $f'\left(\frac{1}{2}\right) = 0$ et factoriser $f'(x)$ sous la forme d'un produit d'un binôme du premier degré et d'un trinôme du second degré.
+    \item Étudier le signe de $f'(x)$ sur $\R$ et en déduire le tableau de variations complet de $f$ (en précisant les limites en $\pm\infty$).
+    \item Prouver que $f$ admet un minimum absolu sur $\R$, préciser le point où il est atteint ainsi que sa valeur exacte.
+\end{enumerate}
+
+\begin{correctionbox}[Étude complète et factorisation de la dérivée]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Calcul de la dérivée} :\\
+    La fonction $f$ est polynomiale donc dérivable sur $\R$. Pour tout $x \in \R$ :
+    \[
+    f'(x) = 4x^3 - 3x^2 + 2x - \frac{3}{4}.
+    \]
+
+    \item \textbf{Annulation en $1/2$ et factorisation} :\\
+    Évaluons $f'(1/2)$ :
+    \[
+    f'\left(\frac{1}{2}\right) = 4\left(\frac{1}{8}\right) - 3\left(\frac{1}{4}\right) + 2\left(\frac{1}{2}\right) - \frac{3}{4} = \frac{1}{2} - \frac{3}{4} + 1 - \frac{3}{4} = \frac{1}{2} - \frac{6}{4} + 1 = \frac{1}{2} - \frac{3}{2} + 1 = -1 + 1 = 0.
+    \]
+    Le réel $1/2$ est donc une racine de $f'(x)$. Par le théorème de factorisation des polynômes, $f'(x)$ est factorisable par $\left(x - \frac{1}{2}\right)$.\\
+    Cherchons trois réels $a, b, c$ tels que :
+    \[
+    f'(x) = \left(x - \frac{1}{2}\right)(ax^2 + bx + c) = ax^3 + \left(b - \frac{a}{2}\right)x^2 + \left(c - \frac{b}{2}\right)x - \frac{c}{2}.
+    \]
+    Par identification des coefficients avec $4x^3 - 3x^2 + 2x - \frac{3}{4}$ :
+    \begin{itemize}
+        \item Terme en $x^3$ : $a = 4$ ;
+        \item Terme en $x^2$ : $b - \frac{4}{2} = -3 \iff b - 2 = -3 \iff b = -1$ ;
+        \item Terme constant : $-\frac{c}{2} = -\frac{3}{4} \iff c = \frac{3}{2}$ ;
+        \item Terme en $x$ (vérification) : $c - \frac{b}{2} = \frac{3}{2} - \left(-\frac{1}{2}\right) = \frac{3}{2} + \frac{1}{2} = 2$ \quad \checkmark
+    \end{itemize}
+    On obtient donc la factorisation canonique :
+    \[
+    f'(x) = \left(x - \frac{1}{2}\right)\left(4x^2 - x + \frac{3}{2}\right).
+    \]
+
+    \item \textbf{Signe de $f'(x)$ et variations de $f$} :\\
+    Étudions le trinôme du second degré $T(x) = 4x^2 - x + \frac{3}{2}$ :
+    \[
+    \Delta = (-1)^2 - 4 \times 4 \times \frac{3}{2} = 1 - 24 = -23 < 0.
+    \]
+    Le discriminant étant strictement négatif et le coefficient dominant étant $a = 4 > 0$, le trinôme $T(x)$ ne s'annule jamais sur $\R$ et est \textbf{strictement positif} pour tout $x \in \R$ :
+    \[
+    \forall x \in \R, \quad 4x^2 - x + \frac{3}{2} > 0.
+    \]
+    Par conséquent, le signe de $f'(x)$ est exactement celui de $\left(x - \frac{1}{2}\right)$ :
+    \begin{itemize}
+        \item Sur $\left]-\infty, \frac{1}{2}\right[$, $f'(x) < 0$ : la fonction $f$ est \textbf{strictement décroissante}.
+        \item En $x = \frac{1}{2}$, $f'\left(\frac{1}{2}\right) = 0$.
+        \item Sur $\left]\frac{1}{2}, +\infty\right[$, $f'(x) > 0$ : la fonction $f$ est \textbf{strictement croissante}.
+    \end{itemize}
+    \textbf{Limites aux bornes} :\\
+    Puisque $f$ est polynomiale de terme de plus haut degré $x^4$ avec un coefficient $+1 > 0$ :
+    \[
+    \lim_{x \to -\infty} f(x) = \lim_{x \to -\infty} x^4 = +\infty \qquad \text{et} \qquad \lim_{x \to +\infty} f(x) = \lim_{x \to +\infty} x^4 = +\infty.
+    \]
+
+    \item \textbf{Minimum absolu} :\\
+    D'après le tableau de variations, la fonction $f$ admet un minimum absolu strict sur $\R$ atteint uniquement en $x = \frac{1}{2}$.\\
+    Calculons sa valeur exacte :
+    \begin{align*}
+    f\left(\frac{1}{2}\right) &= \left(\frac{1}{2}\right)^4 - \left(\frac{1}{2}\right)^3 + \left(\frac{1}{2}\right)^2 - \frac{3}{4}\left(\frac{1}{2}\right) + 1 \\
+    &= \frac{1}{16} - \frac{1}{8} + \frac{1}{4} - \frac{3}{8} + 1 \\
+    &= \frac{1}{16} - \frac{2}{16} + \frac{4}{16} - \frac{6}{16} + \frac{16}{16} = \frac{1 - 2 + 4 - 6 + 16}{16} = \frac{13}{16}.
+    \end{align*}
+    Le minimum absolu de $f$ sur $\R$ vaut donc $\frac{13}{16}$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 13
+% ----------------------------------------------------
+\subsection*{Exercice 13 : Dérivation implicite et stricte monotonie}
+
+Soit $n \in \N$ un entier naturel fixé. On suppose qu'il existe une fonction $f : \R \to \R$ dérivable sur $\R$ vérifiant pour tout réel $x \in \R$ la relation implicite :
+\[
+\big(f(x)\big)^{2n+1} + f(x) = x.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item En dérivant chaque membre de cette relation par rapport à la variable $x$, exprimer la fonction dérivée $f'(x)$ en fonction de $f(x)$.
+    \item Justifier soigneusement que pour tout $x \in \R$, $f'(x) > 0$.
+    \item En déduire le sens de variation de la fonction $f$ sur $\R$.
+    \item Montrer que pour tout $x \in \R$, $0 < f'(x) \le 1$. Pour quelle valeur de $x$ a-t-on $f'(x) = 1$ ?
+\end{enumerate}
+
+\begin{correctionbox}[Calcul différentiel implicite]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Dérivation membre à membre} :\\
+    La fonction $f$ étant supposée dérivable sur $\R$, la fonction $x \mapsto \big(f(x)\big)^{2n+1}$ est dérivable sur $\R$ comme puissance entière d'une fonction dérivable, de dérivée :
+    \[
+    \frac{\dd}{\dd x} \left( \big(f(x)\big)^{2n+1} \right) = (2n+1)\big(f(x)\big)^{2n} f'(x).
+    \]
+    La fonction $x \mapsto x$ est dérivable sur $\R$ de dérivée $1$.\\
+    En dérivant membre à membre l'identité $[f(x)]^{2n+1} + f(x) = x$, il vient :
+    \[
+    (2n+1)\big(f(x)\big)^{2n} f'(x) + f'(x) = 1.
+    \]
+    Mettons $f'(x)$ en facteur dans le membre de gauche :
+    \[
+    f'(x) \left[ (2n+1)\big(f(x)\big)^{2n} + 1 \right] = 1.
+    \]
+
+    \item \textbf{Étude du dénominateur et stricte positivité de $f'(x)$} :\\
+    Puisque $2n$ est un entier pair, on a pour tout $x \in \R$ :
+    \[
+    \big(f(x)\big)^{2n} = \left( [f(x)]^n \right)^2 \ge 0.
+    \]
+    De plus, $n \ge 0 \implies 2n+1 \ge 1 > 0$, d'où :
+    \[
+    (2n+1)\big(f(x)\big)^{2n} \ge 0.
+    \]
+    En ajoutant $1$, on obtient pour tout $x \in \R$ :
+    \[
+    (2n+1)\big(f(x)\big)^{2n} + 1 \ge 1 > 0.
+    \]
+    La quantité entre crochets ne s'annule donc jamais et est strictement positive. Nous pouvons diviser sans restriction :
+    \[
+    f'(x) = \frac{1}{(2n+1)\big(f(x)\big)^{2n} + 1}.
+    \]
+    Puisque le numérateur $1 > 0$ et le dénominateur est strictement positif, on conclut que :
+    \[
+    \forall x \in \R, \quad f'(x) > 0.
+    \]
+
+    \item \textbf{Sens de variation} :\\
+    La fonction $f$ étant dérivable sur l'intervalle $\R$ et sa dérivée étant strictement positive sur $\R$, $f$ est \textbf{strictement croissante} sur $\R$.
+
+    \item \textbf{Encadrement de la dérivée} :\\
+    Pour tout $x \in \R$, le dénominateur vérifie $(2n+1)\big(f(x)\big)^{2n} + 1 \ge 1$.\\
+    Par décroissance de la fonction inverse sur $]0, +\infty[$ :
+    \[
+    f'(x) = \frac{1}{(2n+1)\big(f(x)\big)^{2n} + 1} \le \frac{1}{1} = 1.
+    \]
+    Comme $f'(x) > 0$, nous avons bien :
+    \[
+    \forall x \in \R, \quad 0 < f'(x) \le 1.
+    \]
+    Le cas d'égalité $f'(x) = 1$ est atteint si et seulement si le dénominateur est égal à $1$, c'est-à-dire :
+    \[
+    (2n+1)\big(f(x)\big)^{2n} = 0 \iff f(x) = 0.
+    \]
+    En réinjectant $f(x) = 0$ dans l'équation implicite $[f(x)]^{2n+1} + f(x) = x$, il vient :
+    \[
+    0^{2n+1} + 0 = x \iff x = 0.
+    \]
+    Ainsi, $f'(x) = 1$ si et seulement si $x = 0$.
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Théorème des fonctions implicites et bijection de classe $\mathcal{C}^\infty$]
+Considérons la fonction $\phi : \R \to \R$ définie par $\phi(y) = y^{2n+1} + y$.
+$\phi$ est une fonction polynomiale impaire, dérivable sur $\R$ avec $\phi'(y) = (2n+1)y^{2n} + 1 \ge 1 > 0$.
+$\phi$ est donc continue et strictement croissante sur $\R$. Comme $\lim_{y \to \pm\infty} \phi(y) = \pm\infty$, par le théorème de la bijection (TVI strict), $\phi$ réalise une bijection de $\R$ sur $\R$.
+La relation de l'exercice signifie exactement que $f(x) = \phi^{-1}(x)$.
+Le théorème de dérivation des bijections réciproques garantit alors que $f = \phi^{-1}$ est de classe $\mathcal{C}^\infty$ sur $\R$, avec $(\phi^{-1})'(x) = \frac{1}{\phi'(f(x))}$, ce qui redémontre notre formule en une seule ligne.
+\end{remarquabox}
+
+% ----------------------------------------------------
+% EXERCICE 14
+% ----------------------------------------------------
+\subsection*{Exercice 14 : Optimisation d'un parallélépipède rectangle de volume fixé}
+
+On souhaite fabriquer une boîte fermée en carton ayant la forme d'un parallélépipède rectangle (pavé droit) à base carrée.
+On impose que le volume intérieur de la boîte soit exactement de $1\text{ dm}^3$.
+On note $x$ la longueur du côté de la base carrée (en dm) et $h$ la hauteur du parallélépipède (en dm).
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Exprimer la hauteur $h$ en fonction de $x$.
+    \item Démontrer que l'aire totale $S(x)$ de la surface de carton nécessaire (en $\text{dm}^2$) s'exprime pour $x > 0$ par :
+    \[
+    S(x) = 2x^2 + \frac{4}{x}.
+    \]
+    \item Étudier les variations de la fonction $S$ sur $]0, +\infty[$.
+    \item En déduire les dimensions optimales de la boîte permettant de minimiser la surface de carton utilisée, ainsi que la valeur minimale de cette surface. Quelle est la nature géométrique de la boîte optimale ?
+\end{enumerate}
+
+\begin{correctionbox}[Optimisation géométrique sous contrainte de volume]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Liaison entre $h$ et $x$} :\\
+    Le volume d'un parallélépipède rectangle à base carrée de côté $x$ et de hauteur $h$ est :
+    \[
+    V = \text{Aire de la base} \times \text{hauteur} = x^2 \times h.
+    \]
+    La contrainte $V = 1\text{ dm}^3$ impose donc :
+    \[
+    x^2 h = 1 \iff h = \frac{1}{x^2} \quad (\text{avec } x > 0).
+    \]
+
+    \item \textbf{Expression de l'aire totale de carton} :\\
+    La boîte étant entièrement fermée, sa surface est composée de :
+    \begin{itemize}
+        \item Deux bases carrées identiques (le fond et le couvercle), chacune d'aire $x^2$ ;
+        \item Quatre faces latérales rectangulaires identiques de dimensions $x \times h$, chacune d'aire $x \times h$.
+    \end{itemize}
+    L'aire totale est donc la somme :
+    \[
+    S(x) = 2x^2 + 4xh = 2x^2 + 4x \left(\frac{1}{x^2}\right) = 2x^2 + \frac{4}{x}.
+    \]
+
+    \item \textbf{Étude des variations de $S$ sur $]0, +\infty[$} :\\
+    La fonction $S$ est dérivable sur $]0, +\infty[$ comme somme de fonctions dérivables :
+    \[
+    S'(x) = 4x - \frac{4}{x^2} = \frac{4x^3 - 4}{x^2} = \frac{4(x^3 - 1)}{x^2}.
+    \]
+    Factorisons $x^3 - 1$ grâce à l'identité remarquable $a^3 - b^3 = (a-b)(a^2+ab+b^2)$ :
+    \[
+    S'(x) = \frac{4(x - 1)(x^2 + x + 1)}{x^2}.
+    \]
+    Pour tout $x > 0$ :
+    \begin{itemize}
+        \item $x^2 > 0$ ;
+        \item Le trinôme $x^2 + x + 1$ a pour discriminant $\Delta = 1 - 4 = -3 < 0$ et son coefficient dominant est $1 > 0$, donc $x^2 + x + 1 > 0$ pour tout réel $x$.
+    \end{itemize}
+    Le signe de $S'(x)$ sur $]0, +\infty[$ est donc strictement identique à celui de $(x - 1)$ :
+    \begin{itemize}
+        \item Pour $x \in ]0, 1[$, $x - 1 < 0 \implies S'(x) < 0$ : la fonction $S$ est \textbf{strictement décroissante}.
+        \item Pour $x = 1$, $S'(1) = 0$.
+        \item Pour $x \in ]1, +\infty[$, $x - 1 > 0 \implies S'(x) > 0$ : la fonction $S$ est \textbf{strictement croissante}.
+    \end{itemize}
+
+    \item \textbf{Conclusion et dimensions optimales} :\\
+    La fonction $S$ admet un minimum absolu unique sur $]0, +\infty[$ atteint en $x = 1\text{ dm}$.\\
+    Pour cette valeur de $x$, la hauteur est :
+    \[
+    h = \frac{1}{1^2} = 1\text{ dm}.
+    \]
+    Puisque $x = h = 1\text{ dm}$, la boîte optimale est un \textbf{cube de côté $1\text{ dm}$}.\\
+    L'aire minimale de carton nécessaire est :
+    \[
+    S(1) = 2(1)^2 + \frac{4}{1} = 2 + 4 = 6\text{ dm}^2.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 15
+% ----------------------------------------------------
+\subsection*{Exercice 15 : Optimisation économique : Coût moyen et coût marginal}
+
+Une entreprise industrielle fabrique une quantité $q$ de composants électroniques de haute précision, où $q$ est exprimé en milliers de pièces ($q \in ]0, 10]$).\\
+Le coût total de production pour une quantité $q$ est modélisé par la fonction $C$ (en milliers d'euros) définie par :
+\[
+C(q) = \frac{q^3 + 6q^2 + 12q + 108}{12}.
+\]
+Le coût unitaire moyen de fabrication par millier de pièces est modélisé par la fonction $f$ définie sur $]0, 10]$ par :
+\[
+f(q) = \frac{C(q)}{q} = \frac{q^3 + 6q^2 + 12q + 108}{12q}.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Calculer la fonction dérivée $f'(q)$ et montrer que pour tout $q \in ]0, 10]$ :
+    \[
+    f'(q) = \frac{(q - 3)(q^2 + 6q + 18)}{6q^2}.
+    \]
+    \item Étudier le signe de $f'(q)$ sur $]0, 10]$ et dresser le tableau de variations de la fonction $f$.
+    \item En déduire le niveau de production $q_0$ qui minimise le coût unitaire moyen de fabrication.
+    \item Calculer la valeur exacte du coût unitaire moyen minimal (en euros par pièce) ainsi que le coût total de production correspondant (en euros).
+    \item \textbf{Interprétation économique} : Calculer le coût marginal $C'(q_0)$ au niveau optimal et commenter l'égalité remarquable obtenue.
+\end{enumerate}
+
+\begin{correctionbox}[Minimisation du coût unitaire de production]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Calcul de la dérivée du coût moyen} :\\
+    Écrivons $f(q)$ sous forme développée :
+    \[
+    f(q) = \frac{1}{12}\left(q^2 + 6q + 12 + \frac{108}{q}\right).
+    \]
+    La fonction $f$ est dérivable sur $]0, 10]$ comme somme de fonctions dérivables :
+    \[
+    f'(q) = \frac{1}{12}\left(2q + 6 - \frac{108}{q^2}\right) = \frac{2q^3 + 6q^2 - 108}{12q^2} = \frac{q^3 + 3q^2 - 54}{6q^2}.
+    \]
+    Factorisons le numérateur $P(q) = q^3 + 3q^2 - 54$.\\
+    Testons la valeur $q = 3$ :
+    \[
+    P(3) = 3^3 + 3(3^2) - 54 = 27 + 27 - 54 = 0.
+    \]
+    $q = 3$ est une racine de $P(q)$. Effectuons la division euclidienne de $P(q)$ par $(q - 3)$ :
+    \[
+    q^3 + 3q^2 - 54 = (q - 3)(q^2 + 6q + 18).
+    \]
+    (Vérification : $(q-3)(q^2+6q+18) = q^3 + 6q^2 + 18q - 3q^2 - 18q - 54 = q^3 + 3q^2 - 54$).\\
+    On obtient bien :
+    \[
+    f'(q) = \frac{(q - 3)(q^2 + 6q + 18)}{6q^2}.
+    \]
+
+    \item \textbf{Signe de $f'(q)$ et variations de $f$} :\\
+    Pour tout $q \in ]0, 10]$ :
+    \begin{itemize}
+        \item Le dénominateur $6q^2 > 0$.
+        \item Pour le trinôme $q^2 + 6q + 18$, calculons son discriminant :
+        \[
+        \Delta = 6^2 - 4 \times 1 \times 18 = 36 - 72 = -36 < 0.
+        \]
+        Puisque $\Delta < 0$ et le coefficient dominant est $1 > 0$, le trinôme est strictement positif pour tout $q \in \R$ :
+        \[
+        \forall q \in ]0, 10], \quad q^2 + 6q + 18 > 0.
+        \]
+    \end{itemize}
+    Le signe de $f'(q)$ sur $]0, 10]$ est donc strictement déterminé par celui du facteur $(q - 3)$ :
+    \begin{itemize}
+        \item Pour $q \in ]0, 3[$, $f'(q) < 0$ : le coût moyen $f$ est \textbf{strictement décroissant}.
+        \item Pour $q = 3$, $f'(3) = 0$.
+        \item Pour $q \in ]3, 10]$, $f'(q) > 0$ : le coût moyen $f$ est \textbf{strictement croissant}.
+    \end{itemize}
+
+    \item \textbf{Production optimale} :\\
+    Le coût moyen unitaire est minimal pour $q_0 = 3$ milliers de pièces, soit une fabrication de \textbf{3 000 pièces}.
+
+    \item \textbf{Valeurs de l'optimum} :\\
+    Calculons la valeur du coût unitaire moyen minimal :
+    \[
+    f(3) = \frac{3^3 + 6(3^2) + 12(3) + 108}{12 \times 3} = \frac{27 + 54 + 36 + 108}{36} = \frac{225}{36} = \frac{25}{4} = 6{,}25 \text{ milliers d'euros / millier de pièces}.
+    \]
+    Soit très exactement \textbf{$6{,}25$ euros par pièce}.\\
+    Le coût total de production pour ces 3 000 pièces est :
+    \[
+    C(3) = 3 \times f(3) = 3 \times 6{,}25 = 18{,}75 \text{ milliers d'euros}, \quad \text{soit } \mathbf{18\,750\text{ \euro}}.
+    \]
+
+    \item \textbf{Lien avec le coût marginal} :\\
+    Le coût marginal est modélisé par la dérivée du coût total $C'(q)$ :
+    \[
+    C'(q) = \frac{3q^2 + 12q + 12}{12} = \frac{q^2 + 4q + 4}{4} = \frac{(q+2)^2}{4}.
+    \]
+    Pour $q_0 = 3$ :
+    \[
+    C'(3) = \frac{(3+2)^2}{4} = \frac{25}{4} = 6{,}25 \text{ milliers d'euros / millier de pièces}.
+    \]
+    On constate l'égalité fondamentale en économie d'entreprise :
+    \[
+    C'(q_0) = f(q_0).
+    \]
+    En effet, comme $f(q) = \frac{C(q)}{q}$, on a $f'(q) = \frac{C'(q)q - C(q)}{q^2} = \frac{1}{q}\big(C'(q) - f(q)\big)$.
+    L'annulation de la dérivée du coût moyen ($f'(q_0) = 0$) correspond exactement au point où \textbf{le coût marginal coupe la courbe du coût moyen en son minimum}.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 16
+% ----------------------------------------------------
+\subsection*{Exercice 16 : Résistance maximale d'une poutre dans un tronc cylindrique}
+
+On désire tailler dans un tronc d'arbre de section circulaire de rayon $R = 1\text{ m}$ une poutre de section rectangulaire de largeur $\ell$ et de hauteur $h$.\\
+D'après les lois de la résistance des matériaux (théorie des poutres de Navier-Bernoulli), la résistance mécanique à la flexion d'une telle poutre est proportionnelle au produit de sa largeur par le carré de sa hauteur :
+\[
+\mathcal{R} = k \cdot \ell \cdot h^2, \quad \text{où } k > 0 \text{ est une constante physique}.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Montrer que la largeur $\ell$ appartient à l'intervalle $]0, 2[$ et exprimer $h^2$ en fonction de $\ell$.
+    \item En déduire que la résistance est proportionnelle à la fonction $g(\ell) = 4\ell - \ell^3$.
+    \item Déterminer les dimensions optimales $\ell$ et $h$ permettant de maximiser la résistance mécanique de la poutre.
+    \item Calculer le rapport optimal $\frac{h}{\ell}$ ainsi que l'angle $\alpha$ que fait la diagonale de la section rectangulaire avec sa base.
+\end{enumerate}
+
+\begin{correctionbox}[Optimisation mécanique et géométrie du cercle]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Relation pythagoricienne} :\\
+    Le tronc ayant une section circulaire de rayon $R = 1\text{ m}$, le diamètre de la section est $D = 2R = 2\text{ m}$.\\
+    Pour que la poutre rectangulaire de dimensions $(\ell, h)$ soit entièrement inscrite dans le disque, la diagonale du rectangle doit être un diamètre du cercle.\\
+    Par le théorème de Pythagore dans le triangle rectangle formé par les côtés et la diagonale :
+    \[
+    \ell^2 + h^2 = D^2 = 2^2 = 4.
+    \]
+    Les dimensions $\ell$ et $h$ étant strictement positives, on en déduit que $\ell \in ]0, 2[$ et :
+    \[
+    h^2 = 4 - \ell^2.
+    \]
+
+    \item \textbf{Modélisation de la résistance} :\\
+    En injectant l'expression de $h^2$ dans la formule de résistance mécanique, il vient :
+    \[
+    \mathcal{R} = k \cdot \ell(4 - \ell^2) = k(4\ell - \ell^3) = k \cdot g(\ell), \quad \text{où } g(\ell) = 4\ell - \ell^3.
+    \]
+    La constante $k > 0$ étant fixée, maximiser $\mathcal{R}$ équivaut strictement à maximiser la fonction polynomiale $g$ sur l'intervalle $]0, 2[$.
+
+    \item \textbf{Maximisation de $g(\ell)$} :\\
+    La fonction $g$ est dérivable sur $]0, 2[$ de dérivée :
+    \[
+    g'(\ell) = 4 - 3\ell^2.
+    \]
+    Cherchons l'annulation de la dérivée sur $]0, 2[$ :
+    \[
+    g'(\ell) = 0 \iff 3\ell^2 = 4 \iff \ell^2 = \frac{4}{3} \iff \ell = \sqrt{\frac{4}{3}} = \frac{2}{\sqrt{3}} = \frac{2\sqrt{3}}{3}.
+    \]
+    Étudions le signe de $g'(\ell) = 4 - 3\ell^2$ :
+    \begin{itemize}
+        \item Pour $\ell \in \left]0, \frac{2\sqrt{3}}{3}\right[$, $3\ell^2 < 4 \implies g'(\ell) > 0$ : la résistance est \textbf{strictement croissante}.
+        \item Pour $\ell = \frac{2\sqrt{3}}{3}$, $g'(\ell) = 0$.
+        \item Pour $\ell \in \left]\frac{2\sqrt{3}}{3}, 2\right[$, $3\ell^2 > 4 \implies g'(\ell) < 0$ : la résistance est \textbf{strictement décroissante}.
+    \end{itemize}
+    La résistance est donc maximale pour la largeur :
+    \[
+    \ell = \frac{2\sqrt{3}}{3}\text{ m} \approx 1{,}155\text{ m}.
+    \]
+    Calculons la hauteur correspondante :
+    \[
+    h = \sqrt{4 - \ell^2} = \sqrt{4 - \frac{4}{3}} = \sqrt{\frac{8}{3}} = \frac{2\sqrt{2}}{\sqrt{3}} = \frac{2\sqrt{6}}{3}\text{ m} \approx 1{,}633\text{ m}.
+    \]
+
+    \item \textbf{Rapport d'aspect et angle d'inclinaison} :\\
+    Le rapport hauteur sur largeur optimal est :
+    \[
+    \frac{h}{\ell} = \frac{\sqrt{8/3}}{\sqrt{4/3}} = \sqrt{\frac{8}{4}} = \sqrt{2} \approx 1{,}414.
+    \]
+    La hauteur doit donc être exactement $\sqrt{2}$ fois plus grande que la largeur.\\
+    Calculons l'angle $\alpha$ que fait la diagonale avec la largeur $\ell$ :
+    \[
+    \cos \alpha = \frac{\ell}{D} = \frac{2/\sqrt{3}}{2} = \frac{1}{\sqrt{3}} = \frac{\sqrt{3}}{3} \approx 0{,}57735.
+    \]
+    Par suite :
+    \[
+    \alpha = \arccos\left(\frac{1}{\sqrt{3}}\right) \approx 54{,}74^\circ \approx 55^\circ.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 17
+% ----------------------------------------------------
+\subsection*{Exercice 17 : Volume maximal d'un cône taillé dans un disque}
+
+Dans une feuille de carton circulaire de rayon fixe $R$, on découpe un secteur angulaire d'angle au centre $\theta \in ]0, 2\pi[$. En rapprochant les deux bords de coupe bord à bord, on forme la surface latérale d'un cône de révolution de hauteur $h$ et de rayon de base $r$.\\
+La génératrice (apothème) de ce cône est égale au rayon du disque initial, soit $R$.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Rappeler la relation liant $r, h$ et $R$. En déduire l'expression du volume $V$ du cône en fonction du seul rayon $r$.
+    \item On pose $k = \frac{r}{R} \in ]0, 1[$. Exprimer le volume $V$ en fonction de $k$ et de $R$.
+    \item Déterminer la valeur de $k$ pour laquelle le volume du cône est maximal.
+    \item En déduire les dimensions optimales $r$ et $h$ en fonction de $R$, ainsi que la mesure de l'angle $\alpha = 2\pi - \theta$ du secteur angulaire utilisé (en radians puis en degrés).
+\end{enumerate}
+
+\begin{correctionbox}[Volume d'un cône et découpe angulaire]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Relation pythagoricienne et volume} :\\
+    Le triangle formé par l'axe du cône, le rayon de la base et la génératrice étant rectangle, le théorème de Pythagore donne :
+    \[
+    r^2 + h^2 = R^2 \implies h = \sqrt{R^2 - r^2} \quad (\text{avec } 0 < r < R).
+    \]
+    Le volume d'un cône de révolution est donné par $V = \frac{1}{3}\pi r^2 h$. En remplaçant $h$ :
+    \[
+    V(r) = \frac{1}{3}\pi r^2 \sqrt{R^2 - r^2}.
+    \]
+
+    \item \textbf{Changement de variable adimensionnée} :\\
+    En posant $k = \frac{r}{R} \in ]0, 1[$, on a $r = kR$ et $h = \sqrt{R^2 - (kR)^2} = R\sqrt{1 - k^2}$.\\
+    L'expression du volume devient :
+    \[
+    V(k) = \frac{1}{3}\pi (kR)^2 \cdot R\sqrt{1 - k^2} = \frac{1}{3}\pi R^3 \cdot k^2 \sqrt{1 - k^2}.
+    \]
+
+    \item \textbf{Maximisation du volume} :\\
+    Puisque la fonction racine carrée et l'élévation au carré sont des bijections strictement croissantes sur $\R^+$, maximiser $V(k)$ équivaut à maximiser son carré (ou la quantité sans la constante multiplicative positive $\frac{1}{3}\pi R^3$) :
+    \[
+    G(k) = \left( k^2 \sqrt{1 - k^2} \right)^2 = k^4 (1 - k^2) = k^4 - k^6 \quad \text{pour } k \in ]0, 1[.
+    \]
+    La fonction $G$ est dérivable sur $]0, 1[$ de dérivée :
+    \[
+    G'(k) = 4k^3 - 6k^5 = 2k^3(2 - 3k^2).
+    \]
+    Pour tout $k \in ]0, 1[$, $2k^3 > 0$. Le signe de $G'(k)$ est donc celui de $2 - 3k^2$ :
+    \[
+    2 - 3k^2 = 0 \iff k^2 = \frac{2}{3} \iff k = \sqrt{\frac{2}{3}} = \frac{\sqrt{6}}{3}.
+    \]
+    \begin{itemize}
+        \item Pour $k \in \left]0, \sqrt{2/3}\right[$, $G'(k) > 0 \implies V$ est \textbf{strictement croissant}.
+        \item Pour $k \in \left]\sqrt{2/3}, 1\right[$, $G'(k) < 0 \implies V$ est \textbf{strictement décroissant}.
+    \end{itemize}
+    Le volume est donc maximal pour :
+    \[
+    k = \sqrt{\frac{2}{3}} \approx 0{,}8165.
+    \]
+
+    \item \textbf{Dimensions optimales et angle de découpe} :\\
+    Les dimensions optimales sont :
+    \[
+    r = R \sqrt{\frac{2}{3}} = \frac{R\sqrt{6}}{3}, \qquad h = R \sqrt{1 - \frac{2}{3}} = R \sqrt{\frac{1}{3}} = \frac{R\sqrt{3}}{3}.
+    \]
+    Remarquons le rapport d'aspect remarquable :
+    \[
+    \frac{h}{r} = \frac{R/\sqrt{3}}{R\sqrt{2}/\sqrt{3}} = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2} \approx 0{,}707.
+    \]
+    \textbf{Calcul de l'angle du secteur conservé $\alpha$} :\\
+    Le périmètre de la base circulaire du cône doit être égal à la longueur de l'arc de cercle du secteur conservé :
+    \[
+    2\pi r = R \cdot \alpha \iff \alpha = 2\pi \frac{r}{R} = 2\pi k = 2\pi \sqrt{\frac{2}{3}}\text{ radians}.
+    \]
+    En degrés :
+    \[
+    \alpha = 360^\circ \times \sqrt{\frac{2}{3}} \approx 360^\circ \times 0{,}81649658 \approx 293{,}94^\circ \approx 294^\circ.
+    \]
+    L'angle du secteur éliminé (coupé et jeté) est donc $\theta = 360^\circ - 294^\circ = 66^\circ$.
+\end{enumerate}
+\end{correctionbox}
+
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 5 : Inégalités et Statistiques}
+
+% ----------------------------------------------------
+% EXERCICE 18
+% ----------------------------------------------------
+\subsection*{Exercice 18 : Démonstration analytique de l'inégalité Arithmético-Géométrique (AM-GM)}
+
+L'inégalité arithmético-géométrique (notée AM-GM, pour \emph{Arithmetic Mean -- Geometric Mean}) stipule que pour toute famille de réels strictement positifs, la moyenne arithmétique est toujours supérieure ou égale à la moyenne géométrique.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Cas de deux variables} :\\
+    Soient $a, b > 0$.
+    \begin{enumerate}[label=\alph*.]
+        \item Démontrer par voie purement algébrique que :
+        \[
+        \frac{a+b}{2} \ge \sqrt{ab},
+        \]
+        avec égalité si et seulement si $a = b$.
+        \item Retrouver ce résultat par voie analytique en étudiant les variations sur $]0, +\infty[$ de la fonction $x \mapsto \frac{x+b}{2} - \sqrt{bx}$ où $b > 0$ est fixé.
+    \end{enumerate}
+
+    \item \textbf{Cas de trois variables par optimisation différentielle} :\\
+    Soient $a, b > 0$ deux réels strictement positifs fixés. On définit sur $]0, +\infty[$ la fonction auxiliaire $f$ par :
+    \[
+    f(x) = \frac{1}{x} \left( \frac{a+b+x}{3} \right)^3.
+    \]
+    \begin{enumerate}[label=\alph*.]
+        \item Démontrer que $f$ est dérivable sur $]0, +\infty[$ et que pour tout $x > 0$ :
+        \[
+        f'(x) = \frac{(a+b+x)^2 \big(2x - (a+b)\big)}{27x^2}.
+        \]
+        \item Dresser le tableau de variations complet de $f$ sur $]0, +\infty[$ et en déduire que $f$ admet un minimum absolu en un réel $x_0$ que l'on précisera.
+        \item Calculer la valeur exacte de $f(x_0)$. En utilisant l'inégalité AM-GM à deux termes sur $(a, b)$, démontrer que :
+        \[
+        f(x_0) \ge ab.
+        \]
+        \item En déduire que pour tout réel $c > 0$ :
+        \[
+        \left( \frac{a+b+c}{3} \right)^3 \ge abc \iff \frac{a+b+c}{3} \ge \sqrt[3]{abc}.
+        \]
+        \item Déterminer la condition nécessaire et suffisante pour que l'égalité ait lieu.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}[Preuve analytique de l'inégalité AM-GM]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Cas de deux variables} :
+    \begin{enumerate}[label=\alph*.]
+        \item \textbf{Preuve algébrique} :\\
+        Puisque $a, b > 0$, les racines carrées $\sqrt{a}$ et $\sqrt{b}$ sont bien définies dans $\R$.
+        Considérons le carré remarquable :
+        \[
+        (\sqrt{a} - \sqrt{b})^2 \ge 0.
+        \]
+        En développant cette identité :
+        \[
+        (\sqrt{a})^2 - 2\sqrt{a}\sqrt{b} + (\sqrt{b})^2 \ge 0 \iff a - 2\sqrt{ab} + b \ge 0 \iff a + b \ge 2\sqrt{ab}.
+        \]
+        En divisant par $2 > 0$, on obtient directement :
+        \[
+        \frac{a+b}{2} \ge \sqrt{ab}.
+        \]
+        Un carré étant nul si et seulement si le terme élevé au carré est nul :
+        \[
+        (\sqrt{a} - \sqrt{b})^2 = 0 \iff \sqrt{a} = \sqrt{b} \iff a = b.
+        \]
+        L'égalité est donc réalisée si et seulement si $a = b$.
+
+        \item \textbf{Preuve analytique par dérivation} :\\
+        Soit $b > 0$ fixé. Posons $\phi(x) = \frac{x+b}{2} - \sqrt{b}\sqrt{x}$ pour $x > 0$.\\
+        La fonction $\phi$ est dérivable sur $]0, +\infty[$ de dérivée :
+        \[
+        \phi'(x) = \frac{1}{2} - \frac{\sqrt{b}}{2\sqrt{x}} = \frac{\sqrt{x} - \sqrt{b}}{2\sqrt{x}}.
+        \]
+        Puisque $2\sqrt{x} > 0$, le signe de $\phi'(x)$ est celui de $\sqrt{x} - \sqrt{b}$ :
+        \begin{itemize}
+            \item Pour $x \in ]0, b[$, $\sqrt{x} < \sqrt{b} \implies \phi'(x) < 0$ : $\phi$ est strictement décroissante.
+            \item Pour $x = b$, $\phi'(b) = 0$.
+            \item Pour $x \in ]b, +\infty[$, $\sqrt{x} > \sqrt{b} \implies \phi'(x) > 0$ : $\phi$ est strictement croissante.
+        \end{itemize}
+        La fonction $\phi$ admet donc un minimum absolu unique en $x = b$, dont la valeur vaut :
+        \[
+        \phi(b) = \frac{b+b}{2} - \sqrt{b}\sqrt{b} = b - b = 0.
+        \]
+        Par conséquent, pour tout $x > 0$, $\phi(x) \ge 0 \iff \frac{x+b}{2} \ge \sqrt{bx}$. En posant $x = a$, on retrouve $\frac{a+b}{2} \ge \sqrt{ab}$.
+    \end{enumerate}
+
+    \item \textbf{Cas de trois variables} :
+    \begin{enumerate}[label=\alph*.]
+        \item \textbf{Calcul de la dérivée de $f$} :\\
+        Écrivons $f(x) = \frac{(a+b+x)^3}{27x}$. C'est un quotient de fonctions dérivables $\frac{u(x)}{v(x)}$ avec $u(x) = (a+b+x)^3$ et $v(x) = 27x$.\\
+        On a $u'(x) = 3(a+b+x)^2$ et $v'(x) = 27$.\\
+        Par la formule de dérivation d'un quotient :
+        \begin{align*}
+        f'(x) &= \frac{3(a+b+x)^2 \cdot 27x - (a+b+x)^3 \cdot 27}{(27x)^2} \\
+        &= \frac{27(a+b+x)^2 \Big[ 3x - (a+b+x) \Big]}{27^2 x^2} \\
+        &= \frac{(a+b+x)^2 \big( 2x - (a+b) \big)}{27 x^2}.
+        \end{align*}
+
+        \item \textbf{Variations et minimum absolu} :\\
+        Puisque $a > 0, b > 0$ et $x > 0$, la quantité $a+b+x > 0$, donc $(a+b+x)^2 > 0$.\\
+        De même, $27x^2 > 0$.
+        Le signe de $f'(x)$ sur $]0, +\infty[$ est donc exclusivement celui de $2x - (a+b)$ :
+        \[
+        2x - (a+b) = 0 \iff x_0 = \frac{a+b}{2}.
+        \]
+        \begin{itemize}
+            \item Sur $\left]0, \frac{a+b}{2}\right[$, $f'(x) < 0$ : la fonction $f$ est \textbf{strictement décroissante}.
+            \item En $x_0 = \frac{a+b}{2}$, $f'(x_0) = 0$.
+            \item Sur $\left]\frac{a+b}{2}, +\infty\right[$, $f'(x) > 0$ : la fonction $f$ est \textbf{strictement croissante}.
+        \end{itemize}
+        La fonction $f$ atteint donc son minimum absolu strict sur $]0, +\infty[$ en $x_0 = \frac{a+b}{2}$.
+
+        \item \textbf{Calcul de la valeur minimale} :\\
+        Calculons $f(x_0)$ pour $x_0 = \frac{a+b}{2}$ :
+        \[
+        a+b+x_0 = a+b+\frac{a+b}{2} = \frac{3(a+b)}{2} \implies \frac{a+b+x_0}{3} = \frac{a+b}{2}.
+        \]
+        D'où :
+        \[
+        f(x_0) = \frac{1}{x_0} \left( \frac{a+b+x_0}{3} \right)^3 = \frac{1}{\frac{a+b}{2}} \left( \frac{a+b}{2} \right)^3 = \left( \frac{a+b}{2} \right)^2.
+        \]
+        Or, d'après l'inégalité AM-GM pour deux variables démontrée à la question 1 :
+        \[
+        \frac{a+b}{2} \ge \sqrt{ab} > 0.
+        \]
+        En élevant au carré (la fonction carré étant strictement croissante sur $\R^+$) :
+        \[
+        f(x_0) = \left( \frac{a+b}{2} \right)^2 \ge (\sqrt{ab})^2 = ab.
+        \]
+
+        \item \textbf{Conclusion de l'inégalité AM-GM à trois termes} :\\
+        Puisque $f(x_0)$ est le minimum absolu de $f$ sur $]0, +\infty[$, pour tout réel $x > 0$ :
+        \[
+        f(x) \ge f(x_0) \ge ab.
+        \]
+        En remplaçant $f(x)$ par son expression :
+        \[
+        \frac{1}{x} \left( \frac{a+b+x}{3} \right)^3 \ge ab \iff \left( \frac{a+b+x}{3} \right)^3 \ge abx.
+        \]
+        Cette inégalité étant vraie pour tout $x > 0$, choisissons en particulier $x = c > 0$ :
+        \[
+        \left( \frac{a+b+c}{3} \right)^3 \ge abc.
+        \]
+        En appliquant la fonction racine cubique $t \mapsto \sqrt[3]{t}$ (strictement croissante sur $\R^+$), on conclut :
+        \[
+        \frac{a+b+c}{3} \ge \sqrt[3]{abc}.
+        \]
+
+        \item \textbf{Condition d'égalité} :\\
+        Pour avoir égalité $\left(\frac{a+b+c}{3}\right)^3 = abc$, il faut simultanément que :
+        \begin{itemize}
+            \item $f(c) = f(x_0)$, ce qui impose $c = x_0 = \frac{a+b}{2}$ par stricte convexité / unicité du minimum de $f$ ;
+            \item $f(x_0) = ab$, ce qui impose $\frac{a+b}{2} = \sqrt{ab}$, soit $a = b$ d'après le cas d'égalité à 2 termes.
+        \end{itemize}
+        Ainsi : $a = b$ et $c = \frac{a+a}{2} = a \iff a = b = c$. L'égalité a lieu si et seulement si les trois réels sont égaux.
+    \end{enumerate}
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 19
+% ----------------------------------------------------
+\subsection*{Exercice 19 : L'inégalité de Bernoulli par étude différentielle sur $[-2, +\infty[$}
+
+Soit $n \in \N$ un entier fixé avec $n \ge 2$. L'inégalité classique de Bernoulli affirme que pour tout réel $x \ge -1$ :
+\[
+(1+x)^n \ge 1 + nx.
+\]
+L'objet de cet exercice est d'établir ce résultat et de l'étendre à l'intervalle élargi $[-2, +\infty[$ grâce au calcul différentiel.
+Pour cela, on pose pour tout $x \in [-2, +\infty[$ :
+\[
+f(x) = (1+x)^n - nx - 1.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Étude sur l'intervalle $[-1, +\infty[$} :
+    \begin{enumerate}[label=\alph*.]
+        \item Calculer $f'(x)$ et factoriser son expression.
+        \item Étudier le signe de $f'(x)$ sur $[-1, 0]$ puis sur $[0, +\infty[$.
+        \item En déduire que $f$ admet un minimum absolu sur $[-1, +\infty[$ atteint en $0$. Conclure que $(1+x)^n \ge 1+nx$ pour tout $x \ge -1$.
+    \end{enumerate}
+
+    \item \textbf{Extension à l'intervalle $[-2, -1]$} :
+    \begin{enumerate}[label=\alph*.]
+        \item On suppose dans cette sous-question que l'exposant $n$ est \textbf{pair}. Démontrer que pour tout $x \in [-2, -1]$, $(1+x)^n \ge 0$ et $1+nx < 0$. Conclure.
+        \item On suppose que l'exposant $n$ est \textbf{impair} ($n \ge 3$). En posant le changement de variable $t = -(1+x) \in [0, 1]$, démontrer que l'inégalité $(1+x)^n \ge 1+nx$ reste strictement vérifiée pour tout $x \in [-2, -1]$.
+    \end{enumerate}
+
+    \item \textbf{Regard géométrique et convexité} :\\
+    Calculer la dérivée seconde $f''(x)$ pour $x > -1$. Interpréter l'inégalité de Bernoulli comme la position de la courbe d'une fonction convexe par rapport à sa tangente en $x = 0$.
+\end{enumerate}
+
+\begin{correctionbox}[Preuve complète de l'inégalité de Bernoulli]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Étude sur $[-1, +\infty[$} :
+    \begin{enumerate}[label=\alph*.]
+        \item La fonction $f$ est dérivable sur $\R$ comme fonction polynomiale :
+        \[
+        f'(x) = n(1+x)^{n-1} - n = n \left[ (1+x)^{n-1} - 1 \right].
+        \]
+
+        \item Étudions le signe de $f'(x)$ selon la position de $x$ par rapport à $0$ :
+        \begin{itemize}
+            \item Pour $x \ge 0$ : on a $1+x \ge 1$. Puisque $n-1 \ge 1$, la fonction puissance $t \mapsto t^{n-1}$ est strictement croissante sur $[1, +\infty[$, donc $(1+x)^{n-1} \ge 1^{n-1} = 1$. Par conséquent :
+            \[
+            (1+x)^{n-1} - 1 \ge 0 \implies f'(x) \ge 0.
+            \]
+            La fonction $f$ est donc \textbf{croissante} sur $[0, +\infty[$.
+            \item Pour $x \in [-1, 0]$ : on a $0 \le 1+x \le 1$. Par croissance de la fonction puissance sur $[0, 1]$, on a $(1+x)^{n-1} \le 1^{n-1} = 1$. Par suite :
+            \[
+            (1+x)^{n-1} - 1 \le 0 \implies f'(x) \le 0.
+            \]
+            La fonction $f$ est donc \textbf{décroissante} sur $[-1, 0]$.
+        \end{itemize}
+
+        \item D'après ce tableau de variations, $f$ est décroissante sur $[-1, 0]$ et croissante sur $[0, +\infty[$. Elle admet donc un minimum absolu unique sur $[-1, +\infty[$ atteint en $x = 0$ :
+        \[
+        f(0) = (1+0)^n - n(0) - 1 = 1 - 0 - 1 = 0.
+        \]
+        On en déduit que pour tout $x \in [-1, +\infty[$ :
+        \[
+        f(x) \ge f(0) = 0 \iff (1+x)^n - nx - 1 \ge 0 \iff (1+x)^n \ge 1+nx.
+        \]
+        L'égalité a lieu si et seulement si $x = 0$ (pour $n \ge 2$).
+    \end{enumerate}
+
+    \item \textbf{Extension à l'intervalle $[-2, -1]$} :
+    \begin{enumerate}[label=\alph*.]
+        \item \textbf{Cas où $n$ est pair} :\\
+        Puisque $n$ est pair, pour tout $x \in \R$, $(1+x)^n \ge 0$.\\
+        D'autre part, si $x \in [-2, -1]$, alors comme $n \ge 2$ :
+        \[
+        nx \le n(-1) = -n \implies 1 + nx \le 1 - n \le 1 - 2 = -1 < 0.
+        \]
+        Ainsi, sur $[-2, -1]$, on a :
+        \[
+        (1+x)^n \ge 0 > -1 \ge 1 + nx.
+        \]
+        L'inégalité $(1+x)^n > 1+nx$ est donc trivialement vérifiée (et stricte) sur tout $[-2, -1]$.
+
+        \item \textbf{Cas où $n$ est impair ($n \ge 3$)} :\\
+        Soit $x \in [-2, -1]$. Posons $t = -(1+x)$.\\
+        Puisque $-2 \le x \le -1$, on a $-1 \le 1+x \le 0$, d'où $0 \le t \le 1$.\\
+        Exprimons chaque terme en fonction de $t$ :
+        \begin{itemize}
+            \item $1+x = -t \implies (1+x)^n = (-t)^n = (-1)^n t^n = -t^n$ car $n$ est impair.
+            \item $x = -1 - t \implies 1 + nx = 1 + n(-1 - t) = 1 - n - nt$.
+        \end{itemize}
+        L'inégalité $(1+x)^n \ge 1+nx$ équivaut donc à :
+        \[
+        -t^n \ge 1 - n - nt \iff (n - 1) + nt - t^n \ge 0.
+        \]
+        Or, pour tout $t \in [0, 1]$ et $n \ge 3$ :
+        \begin{itemize}
+            \item $t^n \le t \le nt \implies nt - t^n \ge 0$ ;
+            \item $n \ge 3 \implies n - 1 \ge 2 > 0$.
+        \end{itemize}
+        Par conséquent :
+        \[
+        (n - 1) + nt - t^n \ge 2 + 0 = 2 > 0.
+        \]
+        L'inégalité est donc encore strictement vérifiée pour tout $x \in [-2, -1]$.\\
+        \textbf{Conclusion générale} : Pour tout entier $n \ge 2$ et pour tout $x \in [-2, +\infty[$, on a bien $(1+x)^n \ge 1+nx$.
+    \end{enumerate}
+
+    \item \textbf{Interprétation par la convexité} :\\
+    Calculons la dérivée seconde de $f$ pour $x > -1$ :
+    \[
+    f''(x) = \big(f'\big)'(x) = n(n-1)(1+x)^{n-2}.
+    \]
+    Pour tout $n \ge 2$ et pour tout $x > -1$, $1+x > 0$ et $n(n-1) > 0$, donc :
+    \[
+    f''(x) > 0.
+    \]
+    La fonction $g(x) = (1+x)^n$ est donc \textbf{strictement convexe} sur $[-1, +\infty[$.\\
+    L'équation de sa tangente en $x = 0$ est :
+    \[
+    y = g'(0)(x - 0) + g(0) = n(x) + 1 = 1 + nx.
+    \]
+    Une fonction convexe se situant toujours au-dessus de chacune de ses tangentes, la courbe de $g$ est située au-dessus de sa tangente en $0$, ce qui fournit une justification géométrique lumineuse de l'inégalité de Bernoulli !
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 20
+% ----------------------------------------------------
+\subsection*{Exercice 20 : Propriété barycentrique et minimisation différentielle de la variance}
+
+Soit $n \ge 2$ un entier naturel et $(a_1, a_2, \dots, a_n)$ une série statistique de $n$ nombres réels fixés.\\
+On définit sur $\R$ la fonction $f$ représentant la somme quadratique moyenne des écarts à un paramètre $x \in \R$ :
+\[
+f(x) = \frac{1}{n} \sum_{i=1}^n (a_i - x)^2.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Justifier que la fonction $f$ est dérivable sur $\R$ et démontrer que pour tout $x \in \R$ :
+    \[
+    f'(x) = 2(x - \bar{a}), \quad \text{où } \bar{a} = \frac{1}{n} \sum_{i=1}^n a_i \text{ est la moyenne arithmétique de la série}.
+    \]
+    \item Étudier le signe de $f'(x)$ et dresser le tableau de variations de $f$ sur $\R$.
+    \item En déduire que $f$ admet un minimum absolu unique sur $\R$. En quel réel est-il atteint ?
+    \item Démontrer que la valeur de ce minimum est égale à la variance statistique $V$ de la série :
+    \[
+    V = \frac{1}{n} \sum_{i=1}^n (a_i - \bar{a})^2.
+    \]
+    \item En développant l'expression de $f(x)$, retrouver la formule canonique de König-Huygens :
+    \[
+    V = \overline{a^2} - (\bar{a})^2, \quad \text{où } \overline{a^2} = \frac{1}{n} \sum_{i=1}^n a_i^2.
+    \]
+\end{enumerate}
+
+\begin{correctionbox}[Caractérisation différentielle de la moyenne et de la variance]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Dérivabilité et calcul de $f'(x)$} :\\
+    Pour chaque indice $i \in \{1, \dots, n\}$, la fonction $u_i : x \mapsto (a_i - x)^2$ est polynomiale du second degré donc dérivable sur $\R$, de dérivée :
+    \[
+    u_i'(x) = 2(a_i - x) \times (-1) = -2(a_i - x) = 2(x - a_i).
+    \]
+    Par linéarité de l'opérateur de dérivation, la fonction $f = \frac{1}{n}\sum_{i=1}^n u_i$ est dérivable sur $\R$ et pour tout $x \in \R$ :
+    \[
+    f'(x) = \frac{1}{n} \sum_{i=1}^n 2(x - a_i) = 2 \left( \frac{1}{n} \sum_{i=1}^n x - \frac{1}{n} \sum_{i=1}^n a_i \right).
+    \]
+    Or la somme de $n$ termes égaux à $x$ vaut $\sum_{i=1}^n x = n x$, donc $\frac{1}{n}(nx) = x$.\\
+    En posant $\bar{a} = \frac{1}{n}\sum_{i=1}^n a_i$, nous obtenons :
+    \[
+    f'(x) = 2(x - \bar{a}).
+    \]
+
+    \item \textbf{Signe de $f'(x)$ et tableau de variations} :\\
+    Le signe de $f'(x) = 2(x - \bar{a})$ est immédiat :
+    \begin{itemize}
+        \item Pour $x \in ]-\infty, \bar{a}[$, $x - \bar{a} < 0 \implies f'(x) < 0$ : la fonction $f$ est \textbf{strictement décroissante}.
+        \item Pour $x = \bar{a}$, $f'(\bar{a}) = 0$.
+        \item Pour $x \in ]\bar{a}, +\infty[$, $x - \bar{a} > 0 \implies f'(x) > 0$ : la fonction $f$ est \textbf{strictement croissante}.
+    \end{itemize}
+
+    \item \textbf{Minimum absolu et interprétation statistique} :\\
+    La fonction $f$ admet donc un minimum absolu strict sur $\R$ atteint uniquement en :
+    \[
+    x = \bar{a}.
+    \]
+    \textbf{Théorème fondamental de Fréchet} : \emph{La moyenne arithmétique d'une série statistique est l'unique réel qui minimise la somme des carrés des écarts aux données.}
+
+    \item \textbf{Valeur du minimum} :\\
+    En évaluant $f$ en son point de minimum $\bar{a}$, on obtient par définition :
+    \[
+    f(\bar{a}) = \frac{1}{n} \sum_{i=1}^n (a_i - \bar{a})^2 = V.
+    \]
+    Le minimum absolu de la fonction d'inertie est donc très exactement la \textbf{variance} de la série de données.
+
+    \item \textbf{Retrouvaille de la formule de König-Huygens} :\\
+    Développons directement $(a_i - x)^2 = x^2 - 2a_i x + a_i^2$ dans la définition de $f(x)$ :
+    \begin{align*}
+    f(x) &= \frac{1}{n} \sum_{i=1}^n \big( x^2 - 2a_i x + a_i^2 \big) \\
+    &= \frac{1}{n}\left( \sum_{i=1}^n x^2 - 2x \sum_{i=1}^n a_i + \sum_{i=1}^n a_i^2 \right) \\
+    &= x^2 - 2x \left(\frac{1}{n}\sum_{i=1}^n a_i\right) + \left(\frac{1}{n}\sum_{i=1}^n a_i^2\right) \\
+    &= x^2 - 2\bar{a}x + \overline{a^2}.
+    \end{align*}
+    Écrivons la forme canonique de ce trinôme du second degré en $x$ :
+    \[
+    f(x) = (x - \bar{a})^2 - (\bar{a})^2 + \overline{a^2} = (x - \bar{a})^2 + \left( \overline{a^2} - (\bar{a})^2 \right).
+    \]
+    Le terme $(x - \bar{a})^2$ étant toujours positif ou nul et s'annulant en $x = \bar{a}$, le minimum de $f(x)$ vaut exactement le terme constant :
+    \[
+    \min_{x \in \R} f(x) = f(\bar{a}) = \overline{a^2} - (\bar{a})^2.
+    \]
+    En identifiant avec la variance $V = f(\bar{a})$, on retrouve de façon éclatante la célèbre \textbf{formule de König-Huygens} :
+    \[
+    V = \overline{a^2} - (\bar{a})^2.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquabox}[Moyenne vs Médiane : distances $L^2$ et $L^1$]
+Cette propriété met en lumière la dualité mathématique fondamentale en statistique :
+\begin{itemize}
+    \item La \textbf{moyenne arithmétique} minimise la distance quadratique ($L^2$) : $\min_x \sum (a_i - x)^2 \implies x = \bar{a}$ (obtenu par dérivation).
+    \item La \textbf{médiane} minimise la distance absolue ($L^1$) : $\min_x \sum |a_i - x| \implies x = \text{Med}$ (obtenu par étude des pentes des fonctions affines par morceaux).
+\end{itemize}
+\end{remarquabox}
+
+
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+\section{Section 6 : Approfondissements MPSI et Pathologies de la Dérivation}
+
+% ----------------------------------------------------
+% EXERCICE 21
+% ----------------------------------------------------
+\subsection*{Exercice 21 : Régularisation $\mathcal{C}^\infty$ de la valeur absolue et rupture de dérivabilité à la limite}
+
+On sait que la fonction valeur absolue $x \mapsto |x|$ est continue sur $\R$ mais non dérivable en $0$.
+Pour tout entier $n \in \N^*$, on définit sur $\R$ la fonction $f_n$ par :
+\[
+f_n(x) = \sqrt{x^2 + \frac{1}{n}}.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Régularité de $f_n$} :\\
+    Démontrer que pour tout entier $n \in \N^*$, la fonction $f_n$ est de classe $\mathcal{C}^\infty$ (indéfiniment dérivable) sur $\R$.
+    Calculer sa fonction dérivée $f_n'(x)$ et préciser la valeur de $f_n'(0)$.
+    \item \textbf{Convergence uniforme vers la valeur absolue} :\\
+    Démontrer que pour tout réel $x \in \R$ et pour tout $n \in \N^*$ :
+    \[
+    0 \le f_n(x) - |x| \le \frac{1}{\sqrt{n}}.
+    \]
+    En déduire que la suite de fonctions $(f_n)_{n \ge 1}$ converge simplement et uniformément sur $\R$ vers la fonction valeur absolue $x \mapsto |x|$.
+    \item \textbf{Comportement asymptotique de la suite des dérivées} :\\
+    Étudier, pour chaque réel $x \in \R$, la limite de $f_n'(x)$ lorsque $n$ tend vers $+\infty$. On distinguera les cas $x > 0$, $x < 0$ et $x = 0$.
+    \item \textbf{Regard MPSI} :\\
+    Comparer la limite de la suite $(f_n'(0))_{n \ge 1}$ avec le caractère dérivable de la fonction limite en $0$. Quel théorème fondamental d'analyse cela illustre-t-il ?
+\end{enumerate}
+
+\begin{correctionbox}[Régularisation différentielle et non-commutation limite/dérivée]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Dérivabilité et régularité de $f_n$} :\\
+    Pour tout $n \in \N^*$ et pour tout $x \in \R$, on a :
+    \[
+    x^2 \ge 0 \implies x^2 + \frac{1}{n} \ge \frac{1}{n} > 0.
+    \]
+    La fonction polynomiale $u_n : x \mapsto x^2 + \frac{1}{n}$ est de classe $\mathcal{C}^\infty$ sur $\R$ et prend ses valeurs dans l'intervalle ouvert $]0, +\infty[$.\\
+    La fonction racine carrée $t \mapsto \sqrt{t}$ est de classe $\mathcal{C}^\infty$ sur $]0, +\infty[$.\\
+    Par composition de fonctions de classe $\mathcal{C}^\infty$, $f_n = \sqrt{u_n}$ est \textbf{de classe $\mathcal{C}^\infty$ sur tout $\R$}.\\
+    Calculons sa dérivée première :
+    \[
+    f_n'(x) = \frac{u_n'(x)}{2\sqrt{u_n(x)}} = \frac{2x}{2\sqrt{x^2 + \frac{1}{n}}} = \frac{x}{\sqrt{x^2 + \frac{1}{n}}}.
+    \]
+    En évaluant en $x = 0$ :
+    \[
+    f_n'(0) = \frac{0}{\sqrt{0 + \frac{1}{n}}} = 0.
+    \]
+    Chaque courbe $\mathcal{C}_{f_n}$ admet donc une tangente parfaitement horizontale à l'origine.
+
+    \item \textbf{Majoration uniforme de l'écart et convergence} :\\
+    Pour tout $x \in \R$, remarquons que $\sqrt{x^2} = |x|$.\\
+    Puisque $\frac{1}{n} > 0$, on a $x^2 + \frac{1}{n} > x^2$, donc par stricte croissance de la racine carrée sur $\R^+$ :
+    \[
+    f_n(x) = \sqrt{x^2 + \frac{1}{n}} > \sqrt{x^2} = |x| \implies f_n(x) - |x| > 0.
+    \]
+    Multiplions et divisons par la quantité conjuguée $\sqrt{x^2 + \frac{1}{n}} + |x| > 0$ :
+    \[
+    f_n(x) - |x| = \frac{\left(\sqrt{x^2 + \frac{1}{n}} - |x|\right)\left(\sqrt{x^2 + \frac{1}{n}} + |x|\right)}{\sqrt{x^2 + \frac{1}{n}} + |x|} = \frac{\left(x^2 + \frac{1}{n}\right) - x^2}{\sqrt{x^2 + \frac{1}{n}} + |x|} = \frac{\frac{1}{n}}{\sqrt{x^2 + \frac{1}{n}} + |x|}.
+    \]
+    Minorons le dénominateur en remarquant que $|x| \ge 0$ et $x^2 \ge 0$ :
+    \[
+    \sqrt{x^2 + \frac{1}{n}} + |x| \ge \sqrt{0 + \frac{1}{n}} + 0 = \sqrt{\frac{1}{n}} = \frac{1}{\sqrt{n}}.
+    \]
+    Par suite :
+    \[
+    f_n(x) - |x| \le \frac{\frac{1}{n}}{\frac{1}{\sqrt{n}}} = \frac{\sqrt{n}}{n} = \frac{1}{\sqrt{n}}.
+    \]
+    Nous avons ainsi établi l'encadrement uniforme valable pour tout $x \in \R$ :
+    \[
+    0 \le f_n(x) - |x| \le \frac{1}{\sqrt{n}}.
+    \]
+    Puisque $\lim_{n \to +\infty} \frac{1}{\sqrt{n}} = 0$, le théorème des gendarmes entraîne que :
+    \[
+    \lim_{n \to +\infty} \sup_{x \in \R} |f_n(x) - |x|| = 0.
+    \]
+    La suite de fonctions $(f_n)$ converge donc \textbf{uniformément sur $\R$} vers la fonction valeur absolue.
+
+    \item \textbf{Limite ponctuelle de la suite des dérivées} :\\
+    Soit $x \in \R$. Étudions la limite de $f_n'(x) = \frac{x}{\sqrt{x^2 + \frac{1}{n}}}$ quand $n \to +\infty$ :
+    \begin{itemize}
+        \item \textbf{Si $x > 0$} :\\
+        Quand $n \to +\infty$, $\sqrt{x^2 + \frac{1}{n}} \to \sqrt{x^2} = x$.
+        D'où :
+        \[
+        \lim_{n \to +\infty} f_n'(x) = \frac{x}{x} = 1.
+        \]
+        \item \textbf{Si $x < 0$} :\\
+        Quand $n \to +\infty$, $\sqrt{x^2 + \frac{1}{n}} \to \sqrt{x^2} = |x| = -x$.
+        D'où :
+        \[
+        \lim_{n \to +\infty} f_n'(x) = \frac{x}{-x} = -1.
+        \]
+        \item \textbf{Si $x = 0$} :\\
+        Pour tout $n \in \N^*$, $f_n'(0) = 0$, donc la suite numérique constante $(f_n'(0))$ converge vers :
+        \[
+        \lim_{n \to +\infty} f_n'(0) = 0.
+        \]
+    \end{itemize}
+
+    \item \textbf{Analyse du résultat et portée théorique en CPGE} :\\
+    Résumons la situation :
+    \begin{itemize}
+        \item Chaque fonction $f_n$ est indéfiniment dérivable ($\mathcal{C}^\infty$) sur $\R$.
+        \item La suite $(f_n)$ converge uniformément sur $\R$ vers la fonction $f : x \mapsto |x|$.
+        \item Pourtant, la fonction limite $f$ \textbf{n'est pas dérivable en $0$} (elle y présente un point anguleux).
+        \item De plus, en $x = 0$, la limite des dérivées vaut $\lim_{n \to +\infty} f_n'(0) = 0$, alors que les dérivées unilatérales de $|x|$ en $0$ valent $-1$ et $+1$.
+    \end{itemize}
+    \textbf{Théorème fondamental de dérivation des suites de fonctions (MPSI)} :\\
+    La convergence uniforme d'une suite de fonctions régulières $(f_n) \to f$ \textbf{ne garantit absolument pas} la dérivabilité de la fonction limite $f$.
+    Pour pouvoir intervertir la dérivation et la limite :
+    \[
+    \left( \lim_{n \to +\infty} f_n \right)'(x) = \lim_{n \to +\infty} f_n'(x),
+    \]
+    il est indispensable que la suite des dérivées $(f_n')$ converge \textbf{uniformément} sur un voisinage de $x$, ce qui est manifestement mis en défaut ici au voisinage de $0$ (la suite $(f_n')$ présente un phénomène de Gibbs / discontinuité limite de type saut de $-1$ à $+1$).
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 22
+% ----------------------------------------------------
+\subsection*{Exercice 22 : Dérivabilité sous radicaux, tangentes verticales et points isolés}
+
+L'objet de cet exercice est d'étudier deux pathologies géométriques et topologiques classiques du calcul différentiel.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Comportement en bord de domaine et demi-tangente verticale} :\\
+    Soit $f$ la fonction définie par :
+    \[
+    f(x) = \sqrt{x^3 - 1}.
+    \]
+    \begin{enumerate}[label=\alph*.]
+        \item Déterminer l'ensemble de définition $\mathcal{D}_f$ de la fonction $f$.
+        \item Étudier la dérivabilité de $f$ sur l'intervalle ouvert $]1, +\infty[$ et exprimer $f'(x)$.
+        \item Étudier la dérivabilité de $f$ à droite en $x = 1$ en calculant la limite du taux d'accroissement :
+        \[
+        \lim_{h \to 0^+} \frac{f(1+h) - f(1)}{h}.
+        \]
+        \item Interpréter géométriquement ce résultat pour la courbe représentative $\mathcal{C}_f$.
+    \end{enumerate}
+
+    \item \textbf{Topologie du domaine et non-sens de la dérivation en un point isolé} :\\
+    Soit $g$ la fonction définie par :
+    \[
+    g(x) = \sqrt{x^4 - x^2}.
+    \]
+    \begin{enumerate}[label=\alph*.]
+        \item Résoudre l'inéquation $x^4 - x^2 \ge 0$ et en déduire l'ensemble de définition $\mathcal{D}_g$ de la fonction $g$.
+        \item Quelle est la nature topologique du point $0$ au sein de $\mathcal{D}_g$ ?
+        \item La fonction $g$ est-elle dérivable en $0$ ? Justifier rigoureusement pourquoi la question même de la dérivabilité en $0$ constitue un non-sens mathématique.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}[Analyse locale aux frontières du domaine]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Étude de $f(x) = \sqrt{x^3 - 1}$} :
+    \begin{enumerate}[label=\alph*.]
+        \item La fonction racine carrée impose que la quantité sous le radical soit positive ou nulle :
+        \[
+        x^3 - 1 \ge 0 \iff x^3 \ge 1 \iff x \ge 1.
+        \]
+        Par conséquent, l'ensemble de définition de $f$ est :
+        \[
+        \mathcal{D}_f = [1, +\infty[.
+        \]
+
+        \item Posons $u(x) = x^3 - 1$. La fonction $u$ est polynomiale donc dérivable sur $\R$ avec $u'(x) = 3x^2$.\\
+        Pour tout $x \in ]1, +\infty[$, $x^3 - 1 > 0$.
+        Par le théorème de composition $(\sqrt{u})' = \frac{u'}{2\sqrt{u}}$, la fonction $f$ est dérivable sur $]1, +\infty[$ et :
+        \[
+        f'(x) = \frac{3x^2}{2\sqrt{x^3 - 1}}.
+        \]
+
+        \item En $x = 1$, la quantité sous la racine s'annule : on ne peut pas appliquer la formule ci-dessus. Calculons la limite du taux d'accroissement à droite en $1$ pour $h > 0$ :
+        \[
+        \tau_1(h) = \frac{f(1+h) - f(1)}{h} = \frac{\sqrt{(1+h)^3 - 1} - 0}{h} = \frac{\sqrt{(1+h)^3 - 1}}{h}.
+        \]
+        Développons le cube $(1+h)^3$ :
+        \[
+        (1+h)^3 - 1 = (1 + 3h + 3h^2 + h^3) - 1 = 3h + 3h^2 + h^3 = h(3 + 3h + h^2).
+        \]
+        Puisque $h > 0$, $\sqrt{h}$ est bien défini et $h = \sqrt{h} \times \sqrt{h}$ :
+        \[
+        \tau_1(h) = \frac{\sqrt{h} \sqrt{3 + 3h + h^2}}{h} = \frac{\sqrt{3 + 3h + h^2}}{\sqrt{h}}.
+        \]
+        Déterminons les limites des facteurs lorsque $h \to 0^+$ :
+        \begin{itemize}
+            \item Numérateur : $\lim_{h \to 0^+} \sqrt{3 + 3h + h^2} = \sqrt{3} > 0$ ;
+            \item Dénominateur : $\lim_{h \to 0^+} \sqrt{h} = 0^+$.
+        \end{itemize}
+        Par quotient de limites :
+        \[
+        \lim_{h \to 0^+} \tau_1(h) = +\infty.
+        \]
+        La limite n'étant pas un nombre réel fini, la fonction $f$ \textbf{n'est pas dérivable à droite en $1$}.
+
+        \item \textbf{Interprétation géométrique} :\\
+        Au point $A(1, 0)$, la courbe représentative $\mathcal{C}_f$ admet une \textbf{demi-tangente verticale} orientée vers le haut, d'équation :
+        \[
+        x = 1 \quad (\text{avec } y \ge 0).
+        \]
+    \end{enumerate}
+
+    \item \textbf{Étude de $g(x) = \sqrt{x^4 - x^2}$} :
+    \begin{enumerate}[label=\alph*.]
+        \item La fonction $g$ est définie pour les réels $x$ tels que :
+        \[
+        x^4 - x^2 \ge 0 \iff x^2(x^2 - 1) \ge 0.
+        \]
+        Puisque pour tout $x \in \R$, $x^2 \ge 0$, le produit est positif ou nul dans deux cas :
+        \begin{itemize}
+            \item Soit $x^2 = 0 \iff x = 0$ ;
+            \item Soit $x^2 - 1 \ge 0 \iff x^2 \ge 1 \iff x \in ]-\infty, -1] \cup [1, +\infty[$.
+        \end{itemize}
+        L'ensemble de définition de $g$ est donc la réunion :
+        \[
+        \mathcal{D}_g = ]-\infty, -1] \, \cup \, \{0\} \, \cup \, [1, +\infty[.
+        \]
+
+        \item \textbf{Nature topologique du point $0$} :\\
+        Considérons un intervalle ouvert centré en $0$, par exemple $V = ]-1, 1[$.\\
+        L'intersection de ce voisinage avec le domaine de définition se réduit à un singleton :
+        \[
+        V \cap \mathcal{D}_g = ]-1, 1[ \, \cap \, \big( ]-\infty, -1] \cup \{0\} \cup [1, +\infty[ \big) = \{0\}.
+        \]
+        Il n'existe aucun autre point du domaine de définition dans tout le disque ouvert de rayon $1$ autour de $0$.\\
+        En topologie générale, un tel point est appelé un \textbf{point isolé} de l'ensemble $\mathcal{D}_g$.
+
+        \item \textbf{Non-sens de la dérivabilité en un point isolé} :\\
+        Rappelons la définition canonique du nombre dérivé :
+        \[
+        g'(0) = \lim_{\substack{h \to 0 \\ h \neq 0, \, 0+h \in \mathcal{D}_g}} \frac{g(0+h) - g(0)}{h}.
+        \]
+        Pour que cette limite ait un sens mathématique, il est logiquement impératif de pouvoir faire tendre $h$ vers $0$ tout en restant dans le domaine, c'est-à-dire qu'il doit exister des réels non nuls $h$ arbitrairement proches de $0$ tels que $h \in \mathcal{D}_g$.\\
+        Or, d'après la question précédente, pour tout $h \in ]-1, 1[ \setminus \{0\}$, on a :
+        \[
+        h \notin \mathcal{D}_g.
+        \]
+        Par conséquent, le taux d'accroissement $\frac{g(h) - g(0)}{h}$ n'est même pas défini sur un voisinage épointé de $0$ !
+        Il est rigoureusement impossible de faire tendre $h$ vers $0$.\\
+        \textbf{Conclusion fondamentale (LLG / MPSI)} : La notion de dérivabilité (tout comme celle de limite) n'a de sens qu'en un \textbf{point d'accumulation} du domaine de définition. En un point isolé, parler de dérivabilité est une hérésie conceptuelle : la fonction n'est ni dérivable, ni non dérivable au sens usuel, la dérivée y est \textbf{intrinsèquement indéfinissable}.
+    \end{enumerate}
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{1cm}
+\begin{center}
+    \rule{0.5\textwidth}{0.8pt}\\[0.3cm]
+    {\small \textbf{Fin de la feuille de Travaux Dirigés -- Félicitations pour ce travail approfondi !}}\\[0.15cm]
+    {\footnotesize Lycée Louis-le-Grand -- Première Spécialité Mathématiques (1E3) -- Janvier 2022}
+\end{center}
+
+\end{document}

@@ -1,0 +1,912 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+
+% ----------------------------------------------------
+% Couleurs officielles du projet (Charte LLG / MPSI)
+% ----------------------------------------------------
+\definecolor{llgblue}{RGB}{20, 50, 115}
+\definecolor{llglight}{RGB}{246, 249, 255}
+
+\definecolor{emeraldframe}{RGB}{18, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{12, 80, 52}
+
+\definecolor{prepaframe}{RGB}{30, 70, 135}
+\definecolor{prepaback}{RGB}{246, 249, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 105}
+
+\definecolor{alertframe}{RGB}{185, 75, 20}
+\definecolor{alertback}{RGB}{255, 249, 245}
+\definecolor{alerttitle}{RGB}{145, 55, 12}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=llgblue,
+    urlcolor=llgblue,
+    citecolor=llgblue
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité Mathématiques (1E3)}
+\fancyhead[C]{\small\textbf{DST : Fonction Exponentielle}}
+\fancyhead[R]{\small 8 Mars 2022}
+\fancyfoot[L]{\footnotesize LLG 2021/2022 -- Devoir Sur Table (1E3)}
+\fancyfoot[C]{\footnotesize Énoncé \& Corrigé Intégral Rigoureux}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% ----------------------------------------------------
+% Boîtes tcolorbox personnalisées
+% ----------------------------------------------------
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Corrigé officiel détaillé et barème indicatif #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.4cm,
+  after skip=0.5cm
+}
+
+\newtcolorbox{remarquebox}[1][]{
+  colback=prepaback,
+  colframe=prepaframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=prepatitle,
+  title={Prolongement \& Regard Prépa / MPSI #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{alertebox}[1][]{
+  colback=alertback,
+  colframe=alertframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=alerttitle,
+  title={Point de vigilance méthodologique \& Pièges fréquents #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+% Commandes mathématiques usuelles
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+
+\begin{document}
+
+% ====================================================
+% EN-TÊTE OFFICIEL DU DEVOIR
+% ====================================================
+\begin{center}
+    {\LARGE \bfseries Lycée Louis-le-Grand -- Paris}\\[0.2cm]
+    {\large \textbf{Classe de Première Spécialité Mathématiques -- Classe 1E3}}\\[0.15cm]
+    {\normalsize Année scolaire 2021--2022}\\[0.35cm]
+    \hrule height 1.2pt
+    \vspace{0.25cm}
+    {\LARGE \bfseries DEVOIR SUR TABLE : FONCTION EXPONENTIELLE}\\[0.15cm]
+    {\large \textbf{Algèbre rationnelle, Dérivée seconde, Point d'inflexion, Distance minimale \& Convexité}}\\[0.2cm]
+    \hrule height 0.6pt
+    \vspace{0.25cm}
+    {\small \textbf{Date :} Mardi 8 Mars 2022 \quad $\vert$ \quad \textbf{Durée :} 2 heures \quad $\vert$ \quad \textbf{Calculatrice autorisée (approximations)}}\\[0.1cm]
+    {\small \textbf{Barème total :} 20 points \quad (Ex 1 : 2 pts \quad $\vert$ \quad Ex 2 : 7 pts \quad $\vert$ \quad Ex 3 : 9 pts \quad $\vert$ \quad Ex 4 : 2 pts)}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[colback=llglight,colframe=llgblue,arc=1.5mm,boxrule=0.7pt]
+\textbf{Consignes officielles d'évaluation :}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+    \item La clarté, la précision des justifications et la rigueur de la rédaction constituent des critères fondamentaux de notation.
+    \item Les théorèmes utilisés doivent être explicitement mentionnés (théorèmes généraux de dérivation, dérivation des composées, corollaire du théorème des valeurs intermédiaires pour les fonctions strictement monotones).
+    \item L'usage de la calculatrice est strictement restreint aux calculs d'approximations numériques de l'exercice 3.
+    \item Tous les résultats finaux doivent être encadrés avec soin.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+
+% ####################################################
+% PARTIE I : ÉNONCÉS INTÉGRAUX (SUJET DU DST)
+% ####################################################
+\begin{center}
+    \rule{0.35\textwidth}{0.8pt}\\[0.15cm]
+    {\Large \bfseries PREMIÈRE PARTIE : ÉNONCÉ DU SUJET}\\[0.1cm]
+    \rule{0.35\textwidth}{0.8pt}
+\end{center}
+
+\vspace{0.2cm}
+
+% ----------------------------------------------------
+% EXERCICE 1 (ÉNONCÉ)
+% ----------------------------------------------------
+\subsection*{Exercice 1 \hfill \normalfont\normalsize (2 points)}
+\textbf{Simplification algébrique rationnelle en exponentielles}
+
+\medskip
+Soit $A$ le nombre réel défini pour tout réel $x$ par l'expression :
+\[
+A = 1 - \frac{\e^x}{\e^x + 1} - \frac{\e^x}{(\e^x + 1)^2}.
+\]
+
+Exprimer $A$ sous la forme d'un quotient dont le numérateur est égal à $1$.
+
+\vspace{0.5cm}
+
+% ----------------------------------------------------
+% EXERCICE 2 (ÉNONCÉ)
+% ----------------------------------------------------
+\subsection*{Exercice 2 \hfill \normalfont\normalsize (7 points)}
+\textbf{Tangente, dérivée seconde et point d'inflexion}
+
+\medskip
+On considère la fonction $f$ définie sur $\R$ par :
+\[
+f(x) = \frac{x+2}{\e^x}.
+\]
+On note $\mathcal{C}_f$ sa courbe représentative dans un repère orthogonal du plan.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Déterminer l'équation réduite de la tangente $T$ à la courbe $\mathcal{C}_f$ au point d'abscisse $0$. \hfill \textbf{(2 points)}
+    \item On considère la fonction auxiliaire $g$ définie sur $\R$ par :
+    \[
+    g(x) = x + 2 + (x-2)\e^x.
+    \]
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+        \item Donner l'expression de $g''(x)$ pour tout réel $x$, où $g''$ désigne la fonction dérivée seconde de la fonction $g$. \hfill \textbf{(1{,}5 point)}
+        \item En déduire le tableau de variation de la fonction $g$ sur $\R$. On prendra soin de calculer les valeurs exactes de $g(0)$ et de $g'(0)$. \hfill \textbf{(2 points)}
+    \end{enumerate}
+    \item Étudier la position relative de la tangente $T$ par rapport à la courbe $\mathcal{C}_f$. Interpréter géométriquement la nature du point de contact d'abscisse $0$. \hfill \textbf{(1{,}5 point)}
+\end{enumerate}
+
+\vspace{0.5cm}
+
+% ----------------------------------------------------
+% EXERCICE 3 (ÉNONCÉ)
+% ----------------------------------------------------
+\subsection*{Exercice 3 \hfill \normalfont\normalsize (9 points)}
+\textbf{Distance minimale à la courbe de l'exponentielle et orthogonalité normale}
+
+\medskip
+\textbf{Partie A : Étude d'une fonction auxiliaire}
+
+On considère la fonction $g$ définie sur $\R$ par :
+\[
+g(x) = x + \e^{2x}.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Déterminer les limites de la fonction $g$ en $-\infty$ et en $+\infty$. \hfill \textbf{(1 point)}
+    \item Déterminer l'expression de la fonction dérivée $g'(x)$ pour tout réel $x$. \hfill \textbf{(0{,}5 point)}
+    \item Dresser le tableau de variation complet de la fonction $g$ sur $\R$ en y faisant figurer les limites obtenues. \hfill \textbf{(1 point)}
+    \item On admet que l'équation $g(x) = 0$ admet une unique solution réelle sur $\R$, notée $\alpha$. En déduire le tableau de signe de $g(x)$ sur $\R$ en faisant figurer $\alpha$. \hfill \textbf{(1 point)}
+    \item À l'aide de la calculatrice, donner une valeur approchée de $\alpha$ arrondie à $10^{-1}$ près. \hfill \textbf{(0{,}5 point)}
+\end{enumerate}
+
+\medskip
+\textbf{Partie B : Distance minimale à l'origine et propriété géométrique}
+
+On considère la fonction $f$ définie sur $\R$ par :
+\[
+f(x) = \sqrt{x^2 + \e^{2x}}.
+\]
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Justifier que la fonction $f$ est dérivable sur $\R$ et montrer que pour tout réel $x$ :
+    \[
+    f'(x) = \frac{g(x)}{\sqrt{x^2 + \e^{2x}}}.
+    \] \hfill \textbf{(1{,}5 point)}
+    \item On se place dans le plan muni d'un repère orthonormé d'origine $O$. On note $\mathcal{C}_{\exp}$ la courbe représentative de la fonction exponentielle standard ($y = \e^x$).
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+        \item Déterminer, en fonction du réel $\alpha$ défini dans la Partie A, les coordonnées du point $A$ de la courbe $\mathcal{C}_{\exp}$ situé à distance minimale de l'origine $O$. \hfill \textbf{(2 points)}
+        \item Démontrer qu'au point $A$, la tangente $T_A$ à la courbe de l'exponentielle est rigoureusement perpendiculaire à la droite $(OA)$. \hfill \textbf{(1{,}5 point)}
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{0.5cm}
+
+% ----------------------------------------------------
+% EXERCICE 4 (ÉNONCÉ)
+% ----------------------------------------------------
+\subsection*{Exercice 4 \hfill \normalfont\normalsize (2 points)}
+\textbf{Inégalité de moyennes et convexité de la fonction exponentielle}
+
+\medskip
+Soient $x$ et $y$ deux nombres réels quelconques.
+
+Comparer les deux quantités réelles :
+\[
+\e^{\frac{x+y}{2}} \quad \text{et} \quad \frac{\e^x + \e^y}{2}.
+\]
+Préciser la condition nécessaire et suffisante pour que l'égalité soit réalisée.
+
+\newpage
+
+% ####################################################
+% PARTIE II : CORRIGÉS DÉTAILLÉS ET APPROFONDISSEMENTS
+% ####################################################
+\begin{center}
+    \rule{0.35\textwidth}{0.8pt}\\[0.15cm]
+    {\Large \bfseries SECONDE PARTIE : CORRIGÉ OFFICIEL \& REGARD PRÉPA}\\[0.1cm]
+    \rule{0.35\textwidth}{0.8pt}
+\end{center}
+
+\vspace{0.3cm}
+
+% ====================================================
+% CORRIGÉ EXERCICE 1
+% ====================================================
+\subsection*{Exercice 1 : Simplification algébrique rationnelle \hfill \normalfont\normalsize (2 points)}
+
+\begin{correctionbox}
+\textbf{1. Regroupement et réduction au même dénominateur des deux premiers termes :}
+
+Pour tout nombre réel $x$, $\e^x > 0$, donc $\e^x + 1 > 1 \neq 0$. L'expression $A$ est donc parfaitement définie sur $\R$.
+Effectuons d'abord la soustraction des deux premiers termes en réduisant au dénominateur commun $(\e^x + 1)$ :
+\[
+1 - \frac{\e^x}{\e^x + 1} = \frac{(\e^x + 1) - \e^x}{\e^x + 1} = \frac{1}{\e^x + 1}.
+\] \hfill \textbf{[1 point]}
+
+\medskip
+\textbf{2. Soustraction du troisième terme et factorisation finale :}
+
+En substituant ce résultat dans l'expression complète de $A$, on obtient :
+\[
+A = \frac{1}{\e^x + 1} - \frac{\e^x}{(\e^x + 1)^2}.
+\]
+Le dénominateur commun est désormais $(\e^x + 1)^2$. En multipliant le numérateur et le dénominateur de la première fraction par $(\e^x + 1)$ :
+\[
+A = \frac{\e^x + 1}{(\e^x + 1)^2} - \frac{\e^x}{(\e^x + 1)^2} = \frac{(\e^x + 1) - \e^x}{(\e^x + 1)^2} = \frac{1}{(\e^x + 1)^2}.
+\]
+L'expression de $A$ sous forme d'un quotient dont le numérateur vaut $1$ est donc :
+\[
+\mathbf{A = \frac{1}{(\e^x + 1)^2}}.
+\] \hfill \textbf{[1 point]}
+\end{correctionbox}
+
+\begin{alertebox}[Stratégie de calcul : Pas à pas vs Dénominateur global]
+Une erreur fréquente d'élèves consiste à réduire d'emblée l'ensemble des trois termes au dénominateur commun $(\e^x + 1)^2$ :
+\[
+A = \frac{(\e^x + 1)^2 - \e^x(\e^x + 1) - \e^x}{(\e^x + 1)^2} = \frac{(\e^{2x} + 2\e^x + 1) - (\e^{2x} + \e^x) - \e^x}{(\e^x + 1)^2}.
+\]
+Bien que tout à fait exacte, cette démarche présente un risque accru d'erreur de signe lors de la distribution du signe moins : $-(\e^{2x} + \e^x) = -\e^{2x} - \e^x$. La décomposition en cascade adoptée dans le corrigé est à la fois plus rapide, plus élégante et immunisée contre ces pièges élémentaires.
+\end{alertebox}
+
+\begin{remarquebox}[Lien avec la fonction sigmoïde et dérivation formelle]
+D'un point de vue supérieur, l'expression étudiée est intimement liée à la \textbf{fonction logistique standard} (ou sigmoïde), omniprésente en probabilités, en apprentissage automatique (\textit{machine learning}) et en dynamique des populations :
+\[
+\sigma(x) = \frac{1}{1 + \e^{-x}} = \frac{\e^x}{\e^x + 1}.
+\]
+On observe les propriétés fondamentales suivantes :
+\begin{enumerate}
+    \item $1 - \sigma(x) = 1 - \frac{\e^x}{\e^x + 1} = \frac{1}{\e^x + 1}$.
+    \item La dérivée de la sigmoïde vérifie la relation différentielle remarquable :
+    \[
+    \sigma'(x) = \frac{\e^x(\e^x + 1) - \e^x(\e^x)}{(\e^x + 1)^2} = \frac{\e^x}{(\e^x + 1)^2} = \sigma(x)\bigl(1 - \sigma(x)\bigr).
+    \]
+\end{enumerate}
+L'expression $A$ de l'exercice se réécrit donc sous forme condensée :
+\[
+A = 1 - \sigma(x) - \sigma'(x) = \bigl(1 - \sigma(x)\bigr) - \sigma(x)\bigl(1 - \sigma(x)\bigr) = \bigl(1 - \sigma(x)\bigr)^2 = \left(\frac{1}{\e^x + 1}\right)^2 = \frac{1}{(\e^x + 1)^2}.
+\]
+L'identité algébrique découle ainsi directement de l'identité polynomiale élémentaire $1 - u - u(1 - u) = (1 - u)^2$ posée avec $u = \sigma(x)$.
+\end{remarquebox}
+
+\vspace{0.4cm}
+
+% ====================================================
+% CORRIGÉ EXERCICE 2
+% ====================================================
+\subsection*{Exercice 2 : Tangente, dérivée seconde et point d'inflexion \hfill \normalfont\normalsize (7 points)}
+
+\begin{correctionbox}
+\textbf{1. Équation réduite de la tangente $T$ au point d'abscisse $0$ :}
+
+La fonction $f : x \mapsto \frac{x+2}{\e^x}$ est définie sur $\R$.
+Les fonctions $u : x \mapsto x + 2$ et $v : x \mapsto \e^x$ sont dérivables sur $\R$, avec pour tout $x \in \R$, $v(x) = \e^x \neq 0$.
+Par théorème sur le quotient de fonctions dérivables, $f$ est dérivable sur $\R$. Pour tout réel $x$ :
+\[
+f'(x) = \frac{u'(x)v(x) - u(x)v'(x)}{\bigl(v(x)\bigr)^2} = \frac{1 \cdot \e^x - (x+2)\e^x}{(\e^x)^2} = \frac{\e^x\bigl(1 - (x + 2)\bigr)}{(\e^x)^2} = \frac{-x - 1}{\e^x}.
+\] \hfill \textbf{[1 point]}
+
+Calculons l'image de $0$ par $f$ et par sa dérivée $f'$ :
+\[
+f(0) = \frac{0 + 2}{\e^0} = \frac{2}{1} = 2,
+\]
+\[
+f'(0) = \frac{-0 - 1}{\e^0} = \frac{-1}{1} = -1.
+\]
+L'équation réduite de la tangente $T$ au point d'abscisse $0$ s'écrit classiquement :
+\[
+y = f'(0)(x - 0) + f(0) \iff y = -1 \cdot x + 2 \iff \mathbf{y = -x + 2}.
+\] \hfill \textbf{[1 point]}
+
+\medskip
+\textbf{2. (a) Expression de la dérivée seconde $g''(x)$ :}
+
+La fonction $g$ est définie sur $\R$ par $g(x) = x + 2 + (x-2)\e^x$.
+Elle est indéfiniment dérivable sur $\R$ comme somme et produit de fonctions usuelles.
+Calculons d'abord sa dérivée première $g'$ :
+Pour tout $x \in \R$ :
+\[
+g'(x) = 1 + 0 + \left[ \frac{\dd}{\dd x}(x - 2) \cdot \e^x + (x - 2) \cdot \frac{\dd}{\dd x}(\e^x) \right] = 1 + 1 \cdot \e^x + (x - 2)\e^x = 1 + (1 + x - 2)\e^x,
+\]
+\[
+g'(x) = 1 + (x - 1)\e^x.
+\] \hfill \textbf{[0{,}75 point]}
+
+Dérivons à nouveau pour obtenir la fonction dérivée seconde $g''$ :
+\[
+g''(x) = 0 + \left[ \frac{\dd}{\dd x}(x - 1) \cdot \e^x + (x - 1) \cdot \frac{\dd}{\dd x}(\e^x) \right] = 1 \cdot \e^x + (x - 1)\e^x = (1 + x - 1)\e^x,
+\]
+\[
+\mathbf{g''(x) = x\e^x}.
+\] \hfill \textbf{[0{,}75 point]}
+
+\medskip
+\textbf{2. (b) Tableau de variation de la fonction $g$ :}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Signe de la dérivée seconde $g''(x)$ et variations de $g'$ :}
+    Pour tout réel $x$, la fonction exponentielle vérifie $\e^x > 0$.
+    Par conséquent, le signe de $g''(x) = x\e^x$ est strictement identique à celui de $x$ :
+    \begin{itemize}
+        \item Pour tout $x \in ]-\infty\,;\,0[$, $g''(x) < 0$, donc $g'$ est strictement décroissante sur $]-\infty\,;\,0]$.
+        \item Pour tout $x \in ]0\,;\,+\infty[$, $g''(x) > 0$, donc $g'$ est strictement croissante sur $[0\,;\,+\infty[$.
+        \item En $x = 0$, $g''(0) = 0$.
+    \end{itemize}
+    \item \textbf{Calcul de l'extremum de $g'$ en $x = 0$ :}
+    La fonction $g'$ admet ainsi un minimum global strict en $x = 0$ sur $\R$. La valeur de ce minimum est :
+    \[
+    g'(0) = 1 + (0 - 1)\e^0 = 1 - 1 = \mathbf{0}.
+    \] \hfill \textbf{[0{,}5 point]}
+    \item \textbf{Signe de $g'(x)$ et sens de variation de $g$ :}
+    Puisque le minimum absolu de $g'$ sur $\R$ est nul et qu'il n'est atteint qu'en l'unique point isolé $x = 0$, on a :
+    \[
+    \forall x \in \R \setminus \{0\}, \quad g'(x) > g'(0) = 0 \quad \text{et} \quad g'(0) = 0.
+    \]
+    La dérivée première $g'$ est donc strictement positive sur $\R^*$.
+    On en déduit que la fonction $g$ est \textbf{strictement croissante sur $\R$}. \hfill \textbf{[0{,}75 point]}
+    \item \textbf{Calcul de $g(0)$ et déduction du signe de $g$ :}
+    Calculons l'image de $0$ par la fonction $g$ :
+    \[
+    g(0) = 0 + 2 + (0 - 2)\e^0 = 2 - 2 = \mathbf{0}.
+    \]
+    Puisque $g$ est strictement croissante sur $\R$ et s'annule en $0$, on en déduit immédiatement son tableau de signe :
+    \begin{itemize}
+        \item Pour tout $x \in ]-\infty\,;\,0[$, $\mathbf{g(x) < 0}$ ;
+        \item Pour $x = 0$, $\mathbf{g(0) = 0}$ ;
+        \item Pour tout $x \in ]0\,;\,+\infty[$, $\mathbf{g(x) > 0}$.
+    \end{itemize} \hfill \textbf{[0{,}75 point]}
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    \draw[thick] (0,0) rectangle (12,4.5);
+    \draw[thick] (0,1.5) -- (12,1.5);
+    \draw[thick] (0,3) -- (12,3);
+    \draw[thick] (3,0) -- (3,4.5);
+    
+    \node at (1.5,3.75) {$x$};
+    \node at (3.5,3.75) {$-\infty$};
+    \node at (7.5,3.75) {$0$};
+    \node at (11.5,3.75) {$+\infty$};
+    
+    \node at (1.5,2.25) {$g'(x)$};
+    \node at (5.5,2.5) {};
+    \node at (7.5,2.25) {$0$ (min)};
+    \node at (5.5,1.9) {$+$};
+    \node at (9.5,1.9) {$+$};
+    
+    \node at (1.5,0.75) {$g(x)$};
+    \node at (3.5,0.3) {};
+    \node at (7.5,0.75) {$0$};
+    \draw[->, thick, >=Latex] (4,0.3) -- (11,1.2);
+\end{tikzpicture}
+\end{center}
+
+\medskip
+\textbf{3. Position relative de $T$ et $\mathcal{C}_f$ et interprétation géométrique :}
+
+Pour étudier la position relative de la courbe $\mathcal{C}_f$ par rapport à sa tangente $T$, étudions le signe de la différence $d(x) = f(x) - (-x + 2)$ pour tout réel $x$ :
+\[
+d(x) = \frac{x+2}{\e^x} - (-x + 2) = \frac{x + 2 - (-x + 2)\e^x}{\e^x} = \frac{x + 2 + (x - 2)\e^x}{\e^x}.
+\]
+On reconnaît au numérateur l'expression exacte de la fonction auxiliaire $g(x)$ :
+\[
+d(x) = \frac{g(x)}{\e^x}.
+\] \hfill \textbf{[0{,}5 point]}
+
+Comme la fonction exponentielle est strictement positive sur $\R$ ($\e^x > 0$), le signe de la différence $d(x)$ est strictement identique à celui de $g(x)$ :
+\begin{itemize}[leftmargin=*]
+    \item Sur l'intervalle $]-\infty\,;\,0[$, $g(x) < 0 \implies d(x) < 0$.
+    La courbe $\mathcal{C}_f$ est donc \textbf{strictement située en-dessous de la tangente $T$}.
+    \item Sur l'intervalle $]0\,;\,+\infty[$, $g(x) > 0 \implies d(x) > 0$.
+    La courbe $\mathcal{C}_f$ est donc \textbf{strictement située au-dessus de la tangente $T$}.
+    \item En $x = 0$, $d(0) = 0$. La courbe $\mathcal{C}_f$ et sa tangente $T$ ont un unique point d'intersection commun : le point de coordonnées $I(0\,;\,2)$.
+\end{itemize}
+\textbf{Interprétation géométrique :} La droite $T$, tangente à la courbe au point d'abscisse $0$, traverse la courbe $\mathcal{C}_f$ en ce point en changeant de position relative. Par définition, le point de contact $\mathbf{I(0\,;\,2)}$ est un \textbf{point d'inflexion} de la courbe représentative $\mathcal{C}_f$. \hfill \textbf{[1 point]}
+\end{correctionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, cap=round, >=Latex]
+    % Grille et axes
+    \draw[very thin, gray!30] (-2.5,-1) grid (3.5,4.5);
+    \draw[->, thick] (-2.5,0) -- (3.8,0) node[right] {\small $x$};
+    \draw[->, thick] (0,-1) -- (0,4.8) node[above] {\small $y$};
+    \node[below left] at (0,0) {\small $O$};
+    \draw[thick] (1,0.08) -- (1,-0.08) node[below] {\small $1$};
+    \draw[thick] (0.08,1) -- (-0.08,1) node[left] {\small $1$};
+
+    % Courbe f(x) = (x+2)*exp(-x)
+    \draw[domain=-1.5:3.5, samples=150, very thick, llgblue] 
+        plot (\x, {(\x + 2)*exp(-\x)}) 
+        node[above right] {\small $\mathcal{C}_f : y = \dfrac{x+2}{\e^x}$};
+
+    % Tangente T : y = -x + 2
+    \draw[domain=-1.2:3.2, samples=50, thick, alertframe, dashed] 
+        plot (\x, {-\x + 2}) 
+        node[right] {\small $T : y = -x + 2$};
+
+    % Point d'inflexion I(0, 2)
+    \filldraw[ForestGreen] (0,2) circle (2.5pt) node[right=4pt] {\small $I(0\,;\,2)$ \textbf{(Point d'inflexion)}};
+
+    % Zones de position relative
+    \node[llgblue, fill=white, inner sep=1pt] at (-1.1, 1.8) {\footnotesize $\mathcal{C}_f$ en-dessous de $T$};
+    \node[llgblue, fill=white, inner sep=1pt] at (2.2, 1.2) {\footnotesize $\mathcal{C}_f$ au-dessus de $T$};
+
+    % Maximum local en x = -1 : f(-1) = e approx 2.718
+    \filldraw[gray!70] (-1, 2.718) circle (1.8pt);
+    \draw[<->, dashed, gray!70] (-1.5, 2.718) -- (-0.5, 2.718) node[above right] {\footnotesize Sommet $(-1\,;\,\e)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarquebox}[Lien direct avec la convexité de $f$ et formule de Taylor]
+D'un point de vue supérieur (programme de Terminale / MPSI), la détermination d'un point d'inflexion ne nécessite pas d'introduire artificiellement la fonction $g$. Elle découle directement du calcul de la dérivée seconde $f''$ de la fonction $f$.
+Reprenons $f'(x) = (-x - 1)\e^{-x}$. Par dérivation d'un produit :
+\[
+f''(x) = \frac{\dd}{\dd x}(-x - 1) \cdot \e^{-x} + (-x - 1) \cdot \frac{\dd}{\dd x}(\e^{-x}) = -1 \cdot \e^{-x} + (-x - 1)(-\e^{-x}) = (-\e^{-x}) + (x + 1)\e^{-x} = x\e^{-x} = \frac{x}{\e^x}.
+\]
+Puisque $\e^x > 0$, la dérivée seconde $f''(x)$ s'annule en $x = 0$ en changeant de signe :
+\begin{itemize}
+    \item Pour $x < 0$, $f''(x) < 0$ : la fonction $f$ est \textbf{strictement concave} sur $]-\infty\,;\,0]$, sa courbe se situe donc sous toutes ses tangentes.
+    \item Pour $x > 0$, $f''(x) > 0$ : la fonction $f$ est \textbf{strictement convexe} sur $[0\,;\,+\infty[$, sa courbe se situe donc au-dessus de toutes ses tangentes.
+\end{itemize}
+Le changement de convexité en $x = 0$ démontre instantanément que $(0\,;\,2)$ est un point d'inflexion.
+Par ailleurs, le développement de Taylor au voisinage de $0$ donne :
+\[
+f(x) = (x+2)\left(1 - x + \frac{x^2}{2} - \frac{x^3}{6} + o(x^3)\right) = 2 - x + 0\cdot x^2 + \frac{x^3}{3} + o(x^3).
+\]
+La partie affine $y = 2 - x$ est bien la tangente $T$, et le premier terme d'écart non nul est $\frac{x^3}{3}$, qui est de degré impair (ordre 3), traduisant algébriquement la traversée de la tangente par la courbe.
+\end{remarquebox}
+
+\vspace{0.4cm}
+
+% ====================================================
+% CORRIGÉ EXERCICE 3
+% ====================================================
+\subsection*{Exercice 3 : Distance minimale et orthogonalité normale \hfill \normalfont\normalsize (9 points)}
+
+\begin{correctionbox}
+\textbf{Partie A : Étude d'une fonction auxiliaire}
+
+\textbf{1. Limites de la fonction $g$ aux bornes de $\R$ :}
+
+La fonction $g$ est définie sur $\R$ par $g(x) = x + \e^{2x}$.
+\begin{itemize}[leftmargin=*]
+    \item \textbf{En $-\infty$ :} On a $\lim_{x \to -\infty} x = -\infty$.
+    Posons $X = 2x$. Lorsque $x \to -\infty$, $X \to -\infty$, donc $\lim_{x \to -\infty} \e^{2x} = \lim_{X \to -\infty} \e^X = 0$.
+    Par somme des limites :
+    \[
+    \lim_{x \to -\infty} g(x) = -\infty.
+    \] \hfill \textbf{[0{,}5 point]}
+    \item \textbf{En $+\infty$ :} On a $\lim_{x \to +\infty} x = +\infty$ et $\lim_{x \to +\infty} \e^{2x} = +\infty$.
+    Par somme de limites de termes divergeant vers $+\infty$, il n'y a aucune indétermination :
+    \[
+    \lim_{x \to +\infty} g(x) = +\infty.
+    \] \hfill \textbf{[0{,}5 point]}
+\end{itemize}
+
+\medskip
+\textbf{2. Expression de la fonction dérivée $g'(x)$ :}
+
+La fonction $g$ est dérivable sur $\R$ comme somme de la fonction affine $x \mapsto x$ et de la fonction composée $x \mapsto \e^{2x}$ ($x \mapsto \e^{u(x)}$ avec $u(x) = 2x$).
+Pour tout réel $x$ :
+\[
+g'(x) = 1 + u'(x)\e^{u(x)} = 1 + 2\e^{2x}.
+\] \hfill \textbf{[0{,}5 point]}
+
+\medskip
+\textbf{3. Tableau de variation de $g$ sur $\R$ :}
+
+Pour tout $x \in \R$, on sait que la fonction exponentielle est strictement positive, donc $\e^{2x} > 0$, d'où $2\e^{2x} > 0$.
+On en déduit que pour tout réel $x$ :
+\[
+g'(x) = 1 + 2\e^{2x} > 1 > 0.
+\]
+La dérivée $g'$ étant strictement positive sur $\R$, la fonction $g$ est \textbf{strictement croissante sur $\R$}. \hfill \textbf{[1 point]}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    \draw[thick] (0,0) rectangle (10,3);
+    \draw[thick] (0,1.5) -- (10,1.5);
+    \draw[thick] (2.5,0) -- (2.5,3);
+    
+    \node at (1.25,2.25) {$x$};
+    \node at (3,2.25) {$-\infty$};
+    \node at (6.25,2.25) {$\alpha$};
+    \node at (9.5,2.25) {$+\infty$};
+    
+    \node at (1.25,0.75) {$g(x)$};
+    \node at (3,0.3) {$-\infty$};
+    \node at (6.25,0.75) {$0$};
+    \node at (9.5,1.2) {$+\infty$};
+    \draw[->, thick, >=Latex] (3.4,0.3) -- (9.1,1.2);
+\end{tikzpicture}
+\end{center}
+
+\medskip
+\textbf{4. Déduction du tableau de signe de $g(x)$ :}
+
+La fonction $g$ est continue (car dérivable) et strictement croissante sur $\R$.
+Elle réalise une bijection de $\R$ sur $]\lim_{-\infty} g\,;\, \lim_{+\infty} g[ = ]-\infty\,;\,+\infty[ = \R$.
+Comme $0 \in \R$, il existe un unique antécédent réel de $0$, noté $\alpha$, tel que $g(\alpha) = 0$.
+Par stricte croissance de $g$ sur $\R$ :
+\begin{itemize}[leftmargin=*]
+    \item Pour tout $x \in ]-\infty\,;\,\alpha[$, $g(x) < g(\alpha)$, soit $\mathbf{g(x) < 0}$ ;
+    \item Pour $x = \alpha$, $\mathbf{g(\alpha) = 0}$ ;
+    \item Pour tout $x \in ]\alpha\,;\,+\infty[$, $g(x) > g(\alpha)$, soit $\mathbf{g(x) > 0}$.
+\end{itemize} \hfill \textbf{[1 point]}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    \draw[thick] (0,0) rectangle (10,1.5);
+    \draw[thick] (2.5,0) -- (2.5,1.5);
+    
+    \node at (1.25,0.75) {$x$};
+    \node at (3,0.75) {$-\infty$};
+    \node at (6.25,0.75) {$\alpha$};
+    \node at (9.5,0.75) {$+\infty$};
+    
+    \draw[thick] (0,-1) rectangle (10,0);
+    \draw[thick] (2.5,-1) -- (2.5,0);
+    \node at (1.25,-0.5) {$g(x)$};
+    \node at (4.5,-0.5) {$-$};
+    \node at (6.25,-0.5) {$0$};
+    \node at (8,-0.5) {$+$};
+\end{tikzpicture}
+\end{center}
+
+\medskip
+\textbf{5. Approximation numérique de $\alpha$ :}
+
+À l'aide de la calculatrice, évaluons $g(x)$ au pas de $0{,}1$ :
+\[
+g(-0{,}5) = -0{,}5 + \e^{2(-0{,}5)} = -0{,}5 + \e^{-1} \approx -0{,}5 + 0{,}3679 = -0{,}1321 < 0,
+\]
+\[
+g(-0{,}4) = -0{,}4 + \e^{2(-0{,}4)} = -0{,}4 + \e^{-0{,}8} \approx -0{,}4 + 0{,}4493 = +0{,}0493 > 0.
+\]
+Puisque $g(-0{,}5) < 0 < g(-0{,}4)$, le théorème des valeurs intermédiaires garantit que $-0{,}5 < \alpha < -0{,}4$.
+En affinant la recherche (dichotomie ou balayage au centième) :
+\[
+g(-0{,}43) \approx -0{,}43 + \e^{-0{,}86} \approx -0{,}0068 < 0 \quad \text{et} \quad g(-0{,}42) \approx -0{,}42 + \e^{-0{,}84} \approx +0{,}0117 > 0,
+\]
+ce qui donne $\alpha \approx -0{,}426$. Arrondi à $10^{-1}$ près, on a :
+\[
+\mathbf{\alpha \approx -0{,}4}.
+\] \hfill \textbf{[0{,}5 point]}
+
+\vspace{0.3cm}
+\hrule
+\vspace{0.3cm}
+
+\textbf{Partie B : Distance minimale à l'origine et orthogonalité}
+
+\textbf{1. Dérivabilité et expression de $f'(x)$ :}
+
+Soit la fonction $u : x \mapsto x^2 + \e^{2x}$.
+Pour tout réel $x$, $x^2 \ge 0$ et $\e^{2x} > 0$, donc la quantité sous la racine vérifie :
+\[
+\forall x \in \R, \quad u(x) = x^2 + \e^{2x} \ge \e^{2x} > 0.
+\]
+La fonction $u$ est dérivable sur $\R$ (somme de fonctions dérivables) et prend des valeurs strictement positives sur $\R$.
+Par composition avec la fonction racine carrée $t \mapsto \sqrt{t}$ (strictement dérivable sur $]0\,;\,+\infty[$), la fonction $f = \sqrt{u}$ est \textbf{dérivable sur $\R$}. \hfill \textbf{[0{,}5 point]}
+
+Calculons sa dérivée pour tout réel $x$ :
+\[
+f'(x) = \frac{u'(x)}{2\sqrt{u(x)}} = \frac{2x + 2\e^{2x}}{2\sqrt{x^2 + \e^{2x}}} = \frac{2(x + \e^{2x})}{2\sqrt{x^2 + \e^{2x}}} = \frac{x + \e^{2x}}{\sqrt{x^2 + \e^{2x}}}.
+\]
+On identifie immédiatement $g(x) = x + \e^{2x}$ au numérateur, d'où :
+\[
+\mathbf{f'(x) = \frac{g(x)}{\sqrt{x^2 + \e^{2x}}}}.
+\] \hfill \textbf{[1 point]}
+
+\medskip
+\textbf{2. (a) Coordonnées du point $A$ minimisant la distance à l'origine :}
+
+Soit $M(x\,;\,y)$ un point quelconque de la courbe $\mathcal{C}_{\exp}$. Ses coordonnées sont $(x\,;\,\e^x)$.
+La distance euclidienne du point $M$ à l'origine $O(0\,;\,0)$ dans le repère orthonormé est :
+\[
+OM = \sqrt{(x - 0)^2 + (\e^x - 0)^2} = \sqrt{x^2 + (\e^x)^2} = \sqrt{x^2 + \e^{2x}} = f(x).
+\]
+Pour trouver le point minimisant la distance $OM$, il suffit de déterminer le minimum de la fonction $f$.
+Pour tout $x \in \R$, le dénominateur $\sqrt{x^2 + \e^{2x}}$ est strictement positif.
+Le signe de la fonction dérivée $f'(x)$ est donc \textbf{strictement identique au signe de $g(x)$} :
+\begin{itemize}[leftmargin=*]
+    \item Sur l'intervalle $]-\infty\,;\,\alpha[$, $f'(x) < 0$, donc la fonction distance $f$ est strictement décroissante ;
+    \item En $x = \alpha$, $f'(\alpha) = 0$ ;
+    \item Sur l'intervalle $]\alpha\,;\,+\infty[$, $f'(x) > 0$, donc la fonction distance $f$ est strictement croissante.
+\end{itemize}
+La fonction $f$ atteint donc son \textbf{minimum global absolu et unique} en $x = \alpha$. \hfill \textbf{[1 point]}
+
+Le point $A$ le plus proche de l'origine est donc le point d'abscisse $\alpha$.
+Ses coordonnées sont :
+\[
+\mathbf{A\bigl(\alpha\,;\,\e^\alpha\bigr)}.
+\]
+\textit{Remarque fondamentale de simplification :}
+Par définition de $\alpha$, $g(\alpha) = 0 \iff \alpha + \e^{2\alpha} = 0 \iff \e^{2\alpha} = -\alpha$.
+Puisque $\e^{2\alpha} = (\e^\alpha)^2$ et que $\e^\alpha > 0$ (avec $\alpha < 0$), on en déduit par passage à la racine carrée :
+\[
+\e^\alpha = \sqrt{-\alpha}.
+\]
+Les coordonnées du point $A$ peuvent donc également s'écrire de manière remarquable sous la forme :
+\[
+\mathbf{A\bigl(\alpha\,;\,\sqrt{-\alpha}\bigr)}.
+\] \hfill \textbf{[1 point]}
+
+\medskip
+\textbf{2. (b) Preuve de l'orthogonalité normale entre $(OA)$ et $T_A$ :}
+
+\underline{\textbf{Méthode 1 : Par le produit des pentes (coefficients directeurs)}}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Pente de la droite $(OA)$ :}
+    Puisque $O$ a pour coordonnées $(0\,;\,0)$ et $A$ a pour coordonnées $(\alpha\,;\,\e^\alpha)$ avec $\alpha \neq 0$ :
+    \[
+    m_{(OA)} = \frac{y_A - y_O}{x_A - x_O} = \frac{\e^\alpha - 0}{\alpha - 0} = \frac{\e^\alpha}{\alpha}.
+    \]
+    \item \textbf{Pente de la tangente $T_A$ :}
+    La fonction exponentielle standard $\exp : x \mapsto \e^x$ a pour fonction dérivée elle-même : $(\e^x)' = \e^x$.
+    Le coefficient directeur de la tangente $T_A$ à $\mathcal{C}_{\exp}$ au point d'abscisse $\alpha$ est :
+    \[
+    m_{T_A} = \exp'(\alpha) = \e^\alpha.
+    \]
+    \item \textbf{Produit des pentes dans le repère orthonormé :}
+    Calculons le produit de ces deux coefficients directeurs :
+    \[
+    m_{(OA)} \times m_{T_A} = \frac{\e^\alpha}{\alpha} \times \e^\alpha = \frac{\e^{2\alpha}}{\alpha}.
+    \]
+    Or, d'après la relation caractéristique vérifiée par $\alpha$ issue de $g(\alpha) = 0$ :
+    \[
+    \alpha + \e^{2\alpha} = 0 \iff \e^{2\alpha} = -\alpha.
+    \]
+    En remplaçant $\e^{2\alpha}$ par $-\alpha$ au numérateur, on obtient immédiatement :
+    \[
+    m_{(OA)} \times m_{T_A} = \frac{-\alpha}{\alpha} = \mathbf{-1}.
+    \]
+    Dans un repère orthonormé, le produit des pentes étant égal à $-1$, les droites $(OA)$ et $T_A$ sont \textbf{rigoureusement perpendiculaires}. \hfill \textbf{[1{,}5 point]}
+\end{itemize}
+
+\underline{\textbf{Méthode 2 : Par le produit scalaire (Alternative vectorielle de référence)}}
+\begin{itemize}[leftmargin=*]
+    \item Le vecteur $\vec{OA}$ a pour coordonnées : $\vec{OA}\begin{pmatrix} \alpha \\ \e^\alpha \end{pmatrix}$.
+    \item La tangente $T_A$ ayant pour coefficient directeur $\e^\alpha$, un vecteur directeur de $T_A$ est : $\vec{v}\begin{pmatrix} 1 \\ \e^\alpha \end{pmatrix}$.
+    \item Dans le repère orthonormé, le produit scalaire euclidien vaut :
+    \[
+    \vec{OA} \cdot \vec{v} = \alpha \times 1 + \e^\alpha \times \e^\alpha = \alpha + \e^{2\alpha} = g(\alpha).
+    \]
+    Comme $g(\alpha) = 0$, on a $\vec{OA} \cdot \vec{v} = 0$.
+    Les vecteurs non nuls $\vec{OA}$ et $\vec{v}$ sont orthogonaux, ce qui démontre avec une concision parfaite la perpendicularité de la droite $(OA)$ et de la tangente $T_A$.
+\end{itemize}
+\end{correctionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.4, cap=round, >=Latex]
+    % Grille et axes orthonormés
+    \draw[very thin, gray!30] (-2.5,-1) grid (2.5,3.5);
+    \draw[->, thick] (-2.5,0) -- (2.8,0) node[right] {\small $x$};
+    \draw[->, thick] (0,-1) -- (0,3.8) node[above] {\small $y$};
+    \node[below left] at (0,0) {\small $O$};
+    \draw[thick] (1,0.06) -- (1,-0.06) node[below] {\small $1$};
+    \draw[thick] (0.06,1) -- (-0.06,1) node[left] {\small $1$};
+
+    % Tracé de l'exponentielle
+    \draw[domain=-2.4:1.25, samples=150, very thick, llgblue] 
+        plot (\x, {exp(\x)}) 
+        node[right] {\small $\mathcal{C}_{\exp} : y = \e^x$};
+
+    % Définition des coordonnées de alpha et A
+    % alpha approx -0.4263, e^alpha approx 0.6529
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (-0.4263, 0.6529);
+
+    % Segment [OA] (normale)
+    \draw[very thick, ForestGreen] (O) -- (A) node[midway, left=2pt] {\footnotesize $\mathbf{d_{\min}}$};
+    \filldraw[llgblue] (O) circle (2pt);
+    \filldraw[ForestGreen] (A) circle (2.2pt) node[above left=2pt] {\small $A(\alpha\,;\,\e^\alpha)$};
+
+    % Tangente T_A en A
+    % Pente = e^alpha approx 0.6529
+    % Droite : y - 0.6529 = 0.6529*(x - (-0.4263))
+    % En x = -1.8 : y = 0.6529 - 0.6529*1.3737 approx -0.244
+    % En x = 1.0  : y = 0.6529 + 0.6529*1.4263 approx 1.584
+    \draw[thick, alertframe, domain=-1.8:1.1, samples=50] 
+        plot (\x, {0.6529 + 0.6529*(\x + 0.4263)}) 
+        node[below right] {\small $T_A$ (Tangente)};
+
+    % Codage d'angle droit en A
+    % Vecteur unitaire OA vers O : (0.4263, -0.6529) / 0.7797 = (0.5467, -0.8373)
+    % Vecteur unitaire tangent : (1, 0.6529) / 1.1942 = (0.8374, 0.5467)
+    \draw[thick, black] 
+        ($ (A) + 0.2*(0.5467, -0.8373) $) -- 
+        ($ (A) + 0.2*(0.5467, -0.8373) + 0.2*(0.8374, 0.5467) $) -- 
+        ($ (A) + 0.2*(0.8374, 0.5467) $);
+
+    % Lignes de rappel
+    \draw[dotted, thick, gray] (-0.4263, 0) -- (A) -- (0, 0.6529);
+    \node[below] at (-0.4263, 0) {\footnotesize $\alpha \approx -0{,}43$};
+    \node[right] at (0, 0.6529) {\footnotesize $\e^\alpha \approx 0{,}65$};
+\end{tikzpicture}
+\end{center}
+
+\begin{remarquebox}[Géométrie différentielle supérieure : Principe variationnel de la normale]
+Le résultat démontré dans cet exercice est en réalité l'incarnation d'un \textbf{théorème fondamental de géométrie différentielle} valable pour toute sous-variété régulière de l'espace euclidien $\R^n$.
+
+Soit $\mathcal{C}$ une courbe paramétrée régulière $t \mapsto M(t)$ de classe $\mathcal{C}^1$, et soit $O$ un point extérieur.
+La distance euclidienne de $O$ au point courant $M(t)$ est minimale en un point $A = M(t_0)$ si et seulement si la fonction scalaire « carré de la distance » :
+\[
+\Phi(t) = \|\vec{OM}(t)\|^2 = \vec{OM}(t) \cdot \vec{OM}(t)
+\]
+admet un minimum local en $t_0$. La condition d'annulation de la dérivée (point critique) impose :
+\[
+\Phi'(t_0) = 2 \, \vec{OM}(t_0) \cdot \vec{M}'(t_0) = 0 \iff \vec{OA} \cdot \vec{T} = 0,
+\]
+où $\vec{T} = \vec{M}'(t_0)$ est le vecteur tangent à la courbe au point $A$.
+Ainsi, \textbf{la direction de plus courte distance joignant un point fixe à une courbe est invariablement et nécessairement orthogonale à la tangente de la courbe en ce point de contact} (la droite $(OA)$ est la droite \textbf{normale} à la courbe en $A$). Ce résultat s'applique identiquement aux surfaces dans $\R^3$, aux géodésiques en relativité générale et à la théorie du contrôle optimal.
+\end{remarquebox}
+
+\vspace{0.4cm}
+
+% ====================================================
+% CORRIGÉ EXERCICE 4
+% ====================================================
+\subsection*{Exercice 4 : Inégalité arithmético-géométrique et convexité \hfill \normalfont\normalsize (2 points)}
+
+\begin{correctionbox}
+\underline{\textbf{Méthode 1 : Démonstration algébrique fondamentale (Moyennes Arithmétique et Géométrique)}}
+
+Soient $x$ et $y$ deux nombres réels quelconques.
+Posons les variables strictement positives :
+\[
+u = \e^x > 0 \quad \text{et} \quad v = \e^y > 0.
+\]
+Exprimons les deux quantités de l'énoncé en fonction de $u$ et $v$ :
+\begin{enumerate}
+    \item Par propriétés élémentaires de l'exponentielle et de la racine carrée :
+    \[
+    \e^{\frac{x+y}{2}} = \e^{\frac{x}{2}} \times \e^{\frac{y}{2}} = \sqrt{\e^x} \times \sqrt{\e^y} = \sqrt{\e^x \e^y} = \sqrt{uv}.
+    \]
+    La quantité $\e^{\frac{x+y}{2}}$ représente la \textbf{moyenne géométrique} des réels $u$ et $v$.
+    \item D'autre part :
+    \[
+    \frac{\e^x + \e^y}{2} = \frac{u+v}{2}.
+    \]
+    Cette quantité représente la \textbf{moyenne arithmétique} des réels $u$ et $v$.
+\end{enumerate}
+
+Pour comparer ces deux quantités, formons leur différence :
+\[
+\frac{u + v}{2} - \sqrt{uv} = \frac{u - 2\sqrt{uv} + v}{2} = \frac{(\sqrt{u})^2 - 2\sqrt{u}\sqrt{v} + (\sqrt{v})^2}{2} = \frac{(\sqrt{u} - \sqrt{v})^2}{2}.
+\]
+Or, le carré de tout nombre réel est positif ou nul :
+\[
+\forall (u, v) \in (\R_+^*)^2, \quad (\sqrt{u} - \sqrt{v})^2 \ge 0 \implies \frac{u+v}{2} - \sqrt{uv} \ge 0 \iff \frac{u+v}{2} \ge \sqrt{uv}.
+\]
+En réinjectant $u = \e^x$ et $v = \e^y$, on en déduit l'inégalité fondamentale :
+\[
+\mathbf{\frac{\e^x + \e^y}{2} \ge \e^{\frac{x+y}{2}}}.
+\] \hfill \textbf{[1{,}5 point]}
+
+\medskip
+\textbf{Condition d'égalité :}
+L'égalité a lieu si et seulement si la différence s'annule :
+\[
+\frac{(\sqrt{u} - \sqrt{v})^2}{2} = 0 \iff \sqrt{u} - \sqrt{v} = 0 \iff \sqrt{u} = \sqrt{v} \iff u = v.
+\]
+En revenant aux variables $x$ et $y$ :
+\[
+\e^x = \e^y \iff \mathbf{x = y},
+\]
+en vertu de la stricte injectivité de la fonction exponentielle sur $\R$.
+L'inégalité est donc stricte dès que $x \neq y$. \hfill \textbf{[0{,}5 point]}
+\end{correctionbox}
+
+\begin{remarquebox}[Lien avec la stricte convexité de l'exponentielle et l'inégalité de Jensen]
+D'un point de vue supérieur, cette inégalité est la manifestation directe de la \textbf{stricte convexité} de la fonction exponentielle.
+En effet, la fonction $\exp : t \mapsto \e^t$ est deux fois dérivable sur $\R$ et vérifie :
+\[
+\forall t \in \R, \quad \exp''(t) = \e^t > 0.
+\]
+Sa dérivée seconde étant strictement positive, la fonction exponentielle est \textbf{strictement convexe} sur $\R$.
+Par définition géométrique et analytique de la convexité (ou inégalité de Jensen au milieu avec le barycentre $\lambda = \frac{1}{2}$) :
+\[
+\forall (x, y) \in \R^2, \quad \exp\left(\frac{x+y}{2}\right) \le \frac{\exp(x) + \exp(y)}{2}.
+\]
+Géométriquement, cela signifie que sur tout segment $[x\,;\,y]$, la courbe de l'exponentielle est strictement située sous la corde joignant les points $(x\,;\,\e^x)$ et $(y\,;\,\e^y)$, le milieu de la corde ayant pour ordonnée la moyenne arithmétique $\frac{\e^x+\e^y}{2}$, supérieure à l'ordonnée de la courbe au milieu $\e^{\frac{x+y}{2}}$.
+\end{remarquebox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1, cap=round, >=Latex]
+    % Grille et axes
+    \draw[very thin, gray!25] (-1,-0.5) grid (4,5);
+    \draw[->, thick] (-1,0) -- (4.3,0) node[right] {\small $t$};
+    \draw[->, thick] (0,-0.5) -- (0,5.2) node[above] {\small $y$};
+    \node[below left] at (0,0) {\small $O$};
+
+    % Courbe exponentielle
+    \draw[domain=-0.8:2.1, samples=100, very thick, llgblue] 
+        plot (\x, {0.6*exp(\x)}) 
+        node[above right] {\small $y = \e^t$};
+
+    % Points x et y
+    % Choix : x = 0.2, y = 1.8
+    \coordinate (P) at (0.2, {0.6*exp(0.2)});
+    \coordinate (Q) at (1.8, {0.6*exp(1.8)});
+    \coordinate (Mcorde) at (1.0, {0.5*(0.6*exp(0.2) + 0.6*exp(1.8))});
+    \coordinate (Mcourbe) at (1.0, {0.6*exp(1.0)});
+
+    % Corde joignant P et Q
+    \draw[thick, alertframe] (P) -- (Q) node[midway, above left=2pt] {\footnotesize Corde sécante};
+    \filldraw[alertframe] (P) circle (2pt) node[left] {\footnotesize $(x\,;\,\e^x)$};
+    \filldraw[alertframe] (Q) circle (2pt) node[right] {\footnotesize $(y\,;\,\e^y)$};
+
+    % Points au milieu
+    \filldraw[ForestGreen] (Mcorde) circle (2.2pt) node[above left=1pt] {\footnotesize $\dfrac{\e^x+\e^y}{2}$};
+    \filldraw[llgblue] (Mcourbe) circle (2.2pt) node[below right=1pt] {\footnotesize $\e^{\frac{x+y}{2}}$};
+
+    % Segment vertical montrant l'écart de convexité
+    \draw[dashed, thick, ForestGreen] (1,0) -- (Mcorde);
+    \draw[dotted, thick, gray] (P) -- (0.2, 0) node[below] {\small $x$};
+    \draw[dotted, thick, gray] (Q) -- (1.8, 0) node[below] {\small $y$};
+    \node[below] at (1,0) {\small $\frac{x+y}{2}$};
+\end{tikzpicture}
+\end{center}
+
+\end{document}
