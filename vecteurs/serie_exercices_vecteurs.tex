@@ -1,0 +1,1399 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage[many]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+\usepackage{eurosym}
+
+\tcbuselibrary{skins,breakable}
+
+% ==============================================================================
+% COULEURS ET THÈMES VISUELS
+% ==============================================================================
+\definecolor{primaryblue}{RGB}{20, 50, 115}
+\definecolor{secondaryblue}{RGB}{35, 85, 160}
+\definecolor{accentgreen}{RGB}{18, 105, 55}
+\definecolor{darkred}{RGB}{145, 25, 25}
+\definecolor{golddark}{RGB}{165, 115, 15}
+\definecolor{neutralgray}{RGB}{90, 95, 105}
+\definecolor{lightbg}{RGB}{248, 250, 253}
+
+% ==============================================================================
+% ENVIRONNEMENTS DE BOÎTES TCOLORBOX
+% ==============================================================================
+\newtcolorbox{correctionbox}[1][Correction détaillée]{
+  colback=blue!3!white,
+  colframe=primaryblue,
+  title=\textbf{#1},
+  fonttitle=\bfseries\color{white},
+  arc=2mm,
+  boxrule=1pt,
+  breakable,
+  before skip=10pt,
+  after skip=12pt
+}
+
+\newtcolorbox{methodbox}[1][Point Méthode \& Rigueur LLG / MPSI]{
+  colback=accentgreen!4!white,
+  colframe=accentgreen!80!black,
+  title=\textbf{#1},
+  fonttitle=\bfseries\color{white},
+  arc=1.5mm,
+  boxrule=0.8pt,
+  breakable,
+  before skip=8pt,
+  after skip=10pt
+}
+
+\newtcolorbox{remarkbox}[1][Remarque \& Approfondissement Prépa]{
+  colback=orange!4!white,
+  colframe=golddark,
+  title=\textbf{#1},
+  fonttitle=\bfseries\color{white},
+  arc=1.5mm,
+  boxrule=0.8pt,
+  breakable,
+  before skip=8pt,
+  after skip=10pt
+}
+
+\newtcolorbox{enoncebox}[1][Énoncé]{
+  colback=neutralgray!5!white,
+  colframe=neutralgray!80!black,
+  title=\textbf{#1},
+  fonttitle=\bfseries\color{white},
+  arc=1.5mm,
+  boxrule=0.8pt,
+  breakable,
+  before skip=8pt,
+  after skip=10pt
+}
+
+% ==============================================================================
+% MACROS ET SYMBOLES MATHÉMATIQUES
+% ==============================================================================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\vect}[1]{\overrightarrow{#1}}
+\renewcommand{\det}{\operatorname{det}}
+
+% ==============================================================================
+% CONFIGURATION D'EN-TÊTE ET PIED DE PAGE
+% ==============================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité (1E3)}
+\fancyhead[R]{\small Vecteurs et Équations de droites (Novembre 2021)}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\footnotesize\color{neutralgray}Soutien Scolaire d'Excellence}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    citecolor=primaryblue,
+    urlcolor=secondaryblue,
+    pdfauthor={Louis-le-Grand 1E3 / Prépa MPSI},
+    pdftitle={Vecteurs et Équations de droites -- Exercices et Corrigés}
+}
+
+% ==============================================================================
+% DÉBUT DU DOCUMENT
+% ==============================================================================
+\begin{document}
+
+\begin{center}
+    {\scshape\Large Lycée Louis-le-Grand \quad $\bullet$ \quad Classe de 1\textsuperscript{ère} 1E3}\\[0.3cm]
+    {\huge\bfseries\color{primaryblue} Chapitre 4 : Vecteurs et Équations de Droites}\\[0.2cm]
+    {\Large\bfseries Géométrie Analytique, Déterminants et Faisceaux de Droites}\\[0.3cm]
+    {\large Fiche d'Exercices d'Approfondissement et Corrigés Intégraux Détaillés}\\[0.2cm]
+    \textit{Année scolaire 2021/2022 -- Novembre 2021}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1.2pt
+\vspace{0.5cm}
+
+\tableofcontents
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.8cm}
+
+% ==============================================================================
+% SECTION 1 : RAPPELS DU COURS
+% ==============================================================================
+\section{Rappels de cours et fondements théoriques (Niveau MPSI)}
+
+Dans tout ce document, le plan affine euclidien $\mathscr{P}$ est rapporté à un repère $\mathcal{R} = (O, \vec{i}, \vec{j})$. Sauf mention contraire, ce repère est supposé orthonormé direct lorsque des notions de distance, d'orthogonalité ou de cercle sont en jeu.
+
+\subsection{Vecteurs et déterminant de deux vecteurs}
+Soient $\vec{u}\begin{pmatrix} x \\ y \end{pmatrix}$ et $\vec{v}\begin{pmatrix} x' \\ y' \end{pmatrix}$ deux vecteurs du plan exprimés dans la base $(\vec{i}, \vec{j})$.
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Définition du déterminant :} On appelle \emph{déterminant} de la famille de vecteurs $(\vec{u}, \vec{v})$ dans la base $(\vec{i}, \vec{j})$, et on note $\det(\vec{u}, \vec{v})$, le réel défini par le tableau carré d'ordre 2 :
+    \[
+    \det(\vec{u}, \vec{v}) = \begin{vmatrix} x & x' \\ y & y' \end{vmatrix} = x y' - x' y.
+    \]
+    \item \textbf{Propriétés algébriques :} L'application $(\vec{u}, \vec{v}) \mapsto \det(\vec{u}, \vec{v})$ est une forme bilinéaire antisymétrique (donc alternée). En particulier :
+    \[
+    \det(\vec{v}, \vec{u}) = -\det(\vec{u}, \vec{v}) \quad \text{et} \quad \det(\vec{u}, \vec{u}) = 0.
+    \]
+    \item \textbf{Critère fondamental de colinéarité :} Deux vecteurs $\vec{u}$ et $\vec{v}$ sont colinéaires si et seulement si leur déterminant est nul :
+    \[
+    \vec{u} \text{ et } \vec{v} \text{ sont colinéaires} \iff \det(\vec{u}, \vec{v}) = 0 \iff x y' - x' y = 0.
+    \]
+    \item \textbf{Interprétation géométrique :} Dans un repère orthonormé direct, $|\det(\vec{u}, \vec{v})|$ représente l'aire du parallélogramme construit sur les vecteurs $\vec{u}$ et $\vec{v}$.
+\end{itemize}
+
+\subsection{Équations cartésiennes de droites}
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Théorème fondamental :} Toute droite $\mathscr{D}$ du plan admet une équation cartésienne de la forme :
+    \[
+    a x + b y + c = 0, \quad \text{avec } (a, b) \neq (0, 0).
+    \]
+    Réciproquement, pour tout triplet $(a, b, c) \in \R^3$ avec $(a, b) \neq (0, 0)$, l'ensemble des points $M(x, y)$ vérifiant $ax + by + c = 0$ est une droite.
+    \item \textbf{Vecteur directeur :} Le vecteur $\vec{u}\begin{pmatrix} -b \\ a \end{pmatrix}$ est un vecteur directeur de la droite $\mathscr{D}$.
+    \item \textbf{Vecteur normal :} Dans un repère orthonormé, le vecteur $\vec{n}\begin{pmatrix} a \\ b \end{pmatrix}$ est orthogonal à $\vec{u}$ : c'est un \emph{vecteur normal} à la droite $\mathscr{D}$.
+    \item \textbf{Équation réduite :} Si $b \neq 0$, la droite est non verticale et son équation peut s'écrire sous forme réduite $y = m x + p$, où $m = -\frac{a}{b}$ est le \emph{coefficient directeur} (la pente) et $p = -\frac{c}{b}$ est \emph{l'ordonnée à l'origine}. Si $b = 0$, la droite est verticale et s'écrit $x = k$ avec $k = -\frac{c}{a}$.
+\end{itemize}
+
+\subsection{Positions relatives de deux droites}
+Soient deux droites $\mathscr{D} : ax + by + c = 0$ et $\mathscr{D}' : a'x + b'y + c' = 0$, de vecteurs directeurs respectifs $\vec{u}\begin{pmatrix} -b \\ a \end{pmatrix}$ et $\vec{u}'\begin{pmatrix} -b' \\ a' \end{pmatrix}$.
+Leur déterminant directeur est :
+\[
+\Delta = \det(\vec{u}, \vec{u}') = \begin{vmatrix} -b & -b' \\ a & a' \end{vmatrix} = a b' - a' b.
+\]
+\begin{enumerate}[leftmargin=1.5cm]
+    \item \textbf{Cas sécant ($\Delta \neq 0$) :} Les droites $\mathscr{D}$ et $\mathscr{D}'$ ont des directions distinctes. Elles se coupent en un unique point $M_0(x_0, y_0)$, solution unique du système linéaire de Cramer.
+    \item \textbf{Cas parallèle ($\Delta = 0$) :} Les vecteurs directeurs sont colinéaires ($ab' - a'b = 0$). Les droites ont la même direction.
+    \begin{itemize}
+        \item Si les équations sont proportionnelles ($a' = \lambda a$, $b' = \lambda b$, $c' = \lambda c$ avec $\lambda \neq 0$), alors $\mathscr{D} = \mathscr{D}'$ : les droites sont \textbf{confondues}.
+        \item Sinon, $\mathscr{D} \cap \mathscr{D}' = \emptyset$ : les droites sont \textbf{strictement parallèles}.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Configuration du triangle et droite d'Euler}
+Pour tout triangle non aplati $ABC$ du plan euclidien :
+\begin{itemize}[leftmargin=1.5cm]
+    \item \textbf{Centre de gravité $G$ :} Point de concours des trois médianes. Il est caractérisé par la relation vectorielle :
+    \[
+    \vect{GA} + \vect{GB} + \vect{GC} = \vec{0} \iff \vect{OG} = \frac{1}{3}\left(\vect{OA} + \vect{OB} + \vect{OC}\right).
+    \]
+    Pour tout sommet, par exemple $A$, si $A'$ est le milieu de $[BC]$, on a $\vect{AG} = \frac{2}{3}\vect{AA'}$.
+    \item \textbf{Centre du cercle circonscrit $\Omega$ :} Point de concours des trois médiatrices des côtés, équidistant des sommets : $\Omega A = \Omega B = \Omega C$.
+    \item \textbf{Orthocentre $H$ :} Point de concours des trois hauteurs du triangle.
+    \item \textbf{Théorème de la droite d'Euler (Leonhard Euler, 1765) :} Dans tout triangle non aplati, les points $\Omega$, $G$ et $H$ sont alignés. De plus, ils vérifient la relation métrique vectorielle :
+    \[
+    \vect{\Omega H} = 3\,\vect{\Omega G} \quad \Longleftrightarrow \quad \vect{GH} = -2\,\vect{G\Omega}.
+    \]
+    La droite portant ces trois points est appelée la \textbf{droite d'Euler} du triangle. Lorsque le triangle est équilatéral, ces trois points sont confondus ($\Omega = G = H$) et la droite n'est pas définie.
+\end{itemize}
+
+\newpage
+% ==============================================================================
+% SECTION 2 : LES EXERCICES DE LA FICHE OFFICIELLE LLG
+% ==============================================================================
+\section{Fiche d'Exercices Officielle (Louis-le-Grand 1E3)}
+
+% ----------------------------------------------------
+% EXERCICE 1
+% ----------------------------------------------------
+\subsection*{Exercice 1 : Radicaux doubles et parallélisme}
+
+\begin{enoncebox}[Énoncé (Exercice 1)]
+On se place dans le plan muni d'un repère $(O, \vec{i}, \vec{j})$.
+On considère les points suivants :
+\[
+A(2\,;\,1), \quad B(\sqrt{12}\,;\,3), \quad C\left(0\,;\,\frac{1}{2}\right) \quad \text{et} \quad D\left(\sqrt{4 - 2\sqrt{3}}\,;\,\frac{3}{2}\right).
+\]
+Montrer que les droites $(AB)$ et $(CD)$ sont parallèles. Préciser si elles sont confondues ou strictement parallèles.
+\end{enoncebox}
+
+\begin{correctionbox}
+\textbf{Étape 1 : Simplification préalable des coordonnées}
+\begin{itemize}[leftmargin=1cm]
+    \item Pour le point $B$ :
+    \[
+    x_B = \sqrt{12} = \sqrt{4 \times 3} = 2\sqrt{3}.
+    \]
+    Ainsi, $B(2\sqrt{3}\,;\,3)$.
+    \item Pour le point $D$ : Le radical double $\sqrt{4 - 2\sqrt{3}}$ incite à rechercher une identité remarquable sous le radical de la forme $(u - v)^2 = u^2 - 2uv + v^2$.
+    Calculons le carré du réel $(\sqrt{3} - 1)$ :
+    \[
+    (\sqrt{3} - 1)^2 = (\sqrt{3})^2 - 2\sqrt{3} \times 1 + 1^2 = 3 - 2\sqrt{3} + 1 = 4 - 2\sqrt{3}.
+    \]
+    Or, pour tout réel $X$, $\sqrt{X^2} = |X|$. Puisque $\sqrt{3} \approx 1{,}732 > 1$, on a $\sqrt{3} - 1 > 0$, donc :
+    \[
+    x_D = \sqrt{4 - 2\sqrt{3}} = \sqrt{(\sqrt{3} - 1)^2} = |\sqrt{3} - 1| = \sqrt{3} - 1.
+    \]
+    Ainsi, $D\left(\sqrt{3} - 1\,;\,\frac{3}{2}\right)$.
+\end{itemize}
+
+\textbf{Étape 2 : Coordonnées des vecteurs $\vect{AB}$ et $\vect{CD}$}
+\begin{itemize}[leftmargin=1cm]
+    \item Pour le vecteur $\vect{AB}$ :
+    \[
+    \vect{AB} = \begin{pmatrix} x_B - x_A \\ y_B - y_A \end{pmatrix} = \begin{pmatrix} 2\sqrt{3} - 2 \\ 3 - 1 \end{pmatrix} = \begin{pmatrix} 2(\sqrt{3} - 1) \\ 2 \end{pmatrix}.
+    \]
+    \item Pour le vecteur $\vect{CD}$ :
+    \[
+    \vect{CD} = \begin{pmatrix} x_D - x_C \\ y_D - y_C \end{pmatrix} = \begin{pmatrix} (\sqrt{3} - 1) - 0 \\ \frac{3}{2} - \frac{1}{2} \end{pmatrix} = \begin{pmatrix} \sqrt{3} - 1 \\ 1 \end{pmatrix}.
+    \]
+\end{itemize}
+
+\textbf{Étape 3 : Déterminant et colinéarité}
+Calculons le déterminant des deux vecteurs :
+\[
+\det(\vect{AB}, \vect{CD}) = \begin{vmatrix} 2(\sqrt{3} - 1) & \sqrt{3} - 1 \\ 2 & 1 \end{vmatrix} = 2(\sqrt{3} - 1) \times 1 - 2 \times (\sqrt{3} - 1) = 0.
+\]
+On observe d'ailleurs directement la relation vectorielle :
+\[
+\vect{AB} = 2\,\vect{CD}.
+\]
+Puisque $\sqrt{3} - 1 \neq 0$, ces vecteurs sont non nuls et colinéaires. Par conséquent, les droites $(AB)$ et $(CD)$ ont la même direction : elles sont \textbf{parallèles}.
+
+\textbf{Étape 4 : Nature du parallélisme (confondues ou strictement parallèles)}
+Pour déterminer si les droites sont confondues, testons si le point $C$ appartient à la droite $(AB)$.
+Calculons les coordonnées du vecteur $\vect{AC}$ :
+\[
+\vect{AC} = \begin{pmatrix} 0 - 2 \\ \frac{1}{2} - 1 \end{pmatrix} = \begin{pmatrix} -2 \\ -\frac{1}{2} \end{pmatrix}.
+\]
+Calculons le déterminant de $(\vect{AB}, \vect{AC})$ :
+\[
+\det(\vect{AB}, \vect{AC}) = \begin{vmatrix} 2(\sqrt{3} - 1) & -2 \\ 2 & -\frac{1}{2} \end{vmatrix} = 2(\sqrt{3} - 1)\left(-\frac{1}{2}\right) - 2 \times (-2) = -(\sqrt{3} - 1) + 4 = 5 - \sqrt{3}.
+\]
+Comme $5 - \sqrt{3} \neq 0$ (car $\sqrt{3} \approx 1{,}732 \neq 5$), les points $A$, $B$ et $C$ ne sont pas alignés, donc $C \notin (AB)$.
+
+\textbf{Conclusion :} Les droites $(AB)$ et $(CD)$ sont \textbf{strictement parallèles} :
+\[
+(AB) \parallel (CD) \quad \text{et} \quad (AB) \cap (CD) = \emptyset.
+\]
+\end{correctionbox}
+
+\begin{methodbox}[La formule générale de décomposition des radicaux doubles]
+Pour simplifier une expression de la forme $\sqrt{A \pm \sqrt{B}}$ où $A > 0$ et $B > 0$, la condition nécessaire et suffisante pour que le résultat s'exprime sous la forme $\sqrt{u} \pm \sqrt{v}$ avec $u, v \in \Q$ est que le discriminant radiciel $\Delta = A^2 - B$ soit le \textbf{carré parfait} d'un rationnel $C \in \Q^+$ ($C^2 = A^2 - B$). On a alors l'identité remarquable classique :
+\[
+\sqrt{A \pm \sqrt{B}} = \sqrt{\frac{A + C}{2}} \pm \sqrt{\frac{A - C}{2}}, \quad \text{avec } C = \sqrt{A^2 - B}.
+\]
+\textbf{Application à notre exercice :} Ici $4 - 2\sqrt{3} = 4 - \sqrt{12}$. On a $A = 4$ et $B = 12$.
+Le discriminant vaut $C = \sqrt{4^2 - 12} = \sqrt{16 - 12} = \sqrt{4} = 2 \in \N$.
+La formule donne immédiatement :
+\[
+\sqrt{4 - \sqrt{12}} = \sqrt{\frac{4 + 2}{2}} - \sqrt{\frac{4 - 2}{2}} = \sqrt{3} - \sqrt{1} = \sqrt{3} - 1.
+\]
+Cette technique est un grand classique des concours d'entrée et de la filière MPSI.
+\end{methodbox}
+
+\vspace{0.6cm}
+% ----------------------------------------------------
+% EXERCICE 2
+% ----------------------------------------------------
+\subsection*{Exercice 2 : Colinéarité avec paramètre réel $m$}
+
+\begin{enoncebox}[Énoncé (Exercice 2)]
+Soit $m$ un nombre réel. Déterminer les valeurs de $m$ pour lesquelles le vecteur $\vec{u}$ est colinéaire au vecteur $\vec{v} = \begin{pmatrix} 2 \\ 1 \end{pmatrix}$ dans chacun des cas suivants :
+\begin{enumerate}
+    \item $\vec{u} = \begin{pmatrix} m^3 - 1 \\ m - 1 \end{pmatrix}$
+    \item $\vec{u} = \begin{pmatrix} \sqrt{m^2} \\ 2 \end{pmatrix}$
+    \item $\vec{u} = \begin{pmatrix} m - 3 \\ \sqrt{m} \end{pmatrix}$
+\end{enumerate}
+\end{enoncebox}
+
+\begin{correctionbox}
+Le vecteur $\vec{v}\begin{pmatrix} 2 \\ 1 \end{pmatrix}$ est non nul. Par théorème fondamental, $\vec{u}$ est colinéaire à $\vec{v}$ si et seulement si :
+\[
+\det(\vec{u}, \vec{v}) = 0 \iff x_u \cdot y_v - x_v \cdot y_u = 0 \iff x_u \times 1 - 2 \times y_u = 0 \iff x_u - 2 y_u = 0.
+\]
+
+\textbf{1. Premier cas : $\vec{u} = \begin{pmatrix} m^3 - 1 \\ m - 1 \end{pmatrix}$}
+
+Le vecteur $\vec{u}$ est défini pour tout $m \in \R$. La condition de colinéarité s'écrit :
+\[
+(m^3 - 1) - 2(m - 1) = 0.
+\]
+On factorise l'identité remarquable $m^3 - 1 = (m - 1)(m^2 + m + 1)$ :
+\[
+(m - 1)(m^2 + m + 1) - 2(m - 1) = 0 \iff (m - 1)\bigl(m^2 + m + 1 - 2\bigr) = 0 \iff (m - 1)(m^2 + m - 1) = 0.
+\]
+Un produit de facteurs est nul si et seulement si au moins un des facteurs est nul :
+\begin{itemize}[leftmargin=1cm]
+    \item Soit $m - 1 = 0 \iff m = 1$.
+    \textit{Vérification :} Pour $m = 1$, $\vec{u} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} = \vec{0}$. Or le vecteur nul est colinéaire à tout vecteur du plan ($\vec{0} = 0 \cdot \vec{v}$). Donc $m = 1$ convient parfaitement.
+    \item Soit $m^2 + m - 1 = 0$. Il s'agit d'une équation du second degré. Le discriminant vaut :
+    \[
+    \Delta = b^2 - 4ac = 1^2 - 4(1)(-1) = 1 + 4 = 5 > 0.
+    \]
+    L'équation admet deux racines réelles distinctes :
+    \[
+    m_1 = \frac{-1 - \sqrt{5}}{2} \quad \text{et} \quad m_2 = \frac{-1 + \sqrt{5}}{2}.
+    \]
+\end{itemize}
+\textbf{Conclusion pour la question 1 :}
+\[
+\mathcal{S}_1 = \left\{ \frac{-1 - \sqrt{5}}{2} \,;\, \frac{-1 + \sqrt{5}}{2} \,;\, 1 \right\}.
+\]
+
+\textbf{2. Deuxième cas : $\vec{u} = \begin{pmatrix} \sqrt{m^2} \\ 2 \end{pmatrix}$}
+
+Pour tout réel $m$, $m^2 \ge 0$, donc $\sqrt{m^2}$ est toujours défini. Par définition de la valeur absolue :
+\[
+\sqrt{m^2} = |m|.
+\]
+La condition de colinéarité devient :
+\[
+\det(\vec{u}, \vec{v}) = |m| \times 1 - 2 \times 2 = |m| - 4 = 0.
+\]
+D'où $|m| = 4 \iff (m = 4 \quad \text{ou} \quad m = -4)$.\\
+\textbf{Conclusion pour la question 2 :}
+\[
+\mathcal{S}_2 = \{-4 \,;\, 4\}.
+\]
+
+\textbf{3. Troisième cas : $\vec{u} = \begin{pmatrix} m - 3 \\ \sqrt{m} \end{pmatrix}$}
+
+\textbf{Domaine de validité :} Le terme $\sqrt{m}$ n'a de sens dans $\R$ que si et seulement si $m \ge 0$. On travaille donc sous la contrainte $m \in [0, +\infty[$.
+La condition de colinéarité s'écrit :
+\[
+(m - 3) \times 1 - 2\sqrt{m} = 0 \iff m - 2\sqrt{m} - 3 = 0.
+\]
+Effectuons le changement d'inconnue : posons $X = \sqrt{m}$. La contrainte de positivité impose $X \ge 0$. Comme $m = X^2$, l'équation devient :
+\[
+X^2 - 2X - 3 = 0.
+\]
+Le discriminant est $\Delta = (-2)^2 - 4(1)(-3) = 4 + 12 = 16 = 4^2$. Les racines en $X$ sont :
+\[
+X_1 = \frac{2 - 4}{2} = -1 \quad \text{et} \quad X_2 = \frac{2 + 4}{2} = 3.
+\]
+\textbf{Discussion des racines :}
+\begin{itemize}[leftmargin=1cm]
+    \item La solution $X_1 = -1$ est strictement négative. Elle est incompatible avec la condition $X = \sqrt{m} \ge 0$. Elle est donc éliminée (racine étrangère).
+    \item La solution $X_2 = 3$ est strictement positive. Elle est recevable et donne :
+    \[
+    \sqrt{m} = 3 \iff m = 3^2 = 9.
+    \]
+\end{itemize}
+\textit{Vérification :} Pour $m = 9$, $\vec{u} = \begin{pmatrix} 9 - 3 \\ \sqrt{9} \end{pmatrix} = \begin{pmatrix} 6 \\ 3 \end{pmatrix} = 3 \begin{pmatrix} 2 \\ 1 \end{pmatrix} = 3\,\vec{v}$, colinéaire !\\
+\textbf{Conclusion pour la question 3 :}
+\[
+\mathcal{S}_3 = \{9\}.
+\]
+\end{correctionbox}
+
+\begin{remarkbox}[Lien avec le nombre d'or $\Phi$]
+À la question 1, la racine $m_2 = \frac{-1+\sqrt{5}}{2}$ vérifie $m_2 = \frac{1}{\Phi} = \Phi - 1$, où $\Phi = \frac{1+\sqrt{5}}{2} \approx 1{,}618$ est le nombre d'or. De plus, $m_1 = -\Phi$. L'équation $m^2 + m - 1 = 0$ est l'équation caractéristique associée aux propriétés d'invariance d'échelle de la suite de Fibonacci.
+\end{remarkbox}
+
+\vspace{0.6cm}
+% ----------------------------------------------------
+% EXERCICE 3
+% ----------------------------------------------------
+\subsection*{Exercice 3 : Équations cartésiennes, faisceaux et intersections}
+
+\begin{enoncebox}[Énoncé (Exercice 3)]
+On se place dans un repère du plan.
+On considère les points $A(1\,;\,-2)$, $B(-3\,;\,2)$, $C(3\,;\,5)$ et les vecteurs $\vec{u} = \begin{pmatrix} 1 \\ 2 \end{pmatrix}$ et $\vec{v} = \begin{pmatrix} 2 \\ 3 \end{pmatrix}$.
+\begin{enumerate}
+    \item Déterminer une équation cartésienne de la droite $(AB)$.
+    \item Déterminer une équation cartésienne de la droite $d_1$ parallèle à $(AB)$ et passant par $C$.
+    \item Déterminer un vecteur directeur puis l'équation de la droite $d_2$ de coefficient directeur $-5$ et passant par $B$.
+    \item Déterminer les coordonnées du point d'intersection des droites $d_1$ et $d_2$.
+    \item Déterminer une équation de la droite $d_3$ passant par $A$ et de vecteur directeur $\vec{u}$.
+    \item Déterminer une équation de la droite $d_4$ passant par $B$ et parallèle à la droite d'équation $x = 3$.
+    \item Déterminer une équation de la droite $d_5$ passant par $B$ et parallèle à la droite d'équation $y = 3$.
+\end{enumerate}
+\end{enoncebox}
+
+\begin{correctionbox}
+\textbf{1. Équation de la droite $(AB)$ :}
+Le vecteur $\vect{AB}$ a pour coordonnées :
+\[
+\vect{AB} = \begin{pmatrix} x_B - x_A \\ y_B - y_A \end{pmatrix} = \begin{pmatrix} -3 - 1 \\ 2 - (-2) \end{pmatrix} = \begin{pmatrix} -4 \\ 4 \end{pmatrix} = 4 \begin{pmatrix} -1 \\ 1 \end{pmatrix}.
+\]
+Un point $M(x, y)$ appartient à $(AB)$ si et seulement si les vecteurs $\vect{AM}$ et $\vect{AB}$ sont colinéaires :
+\[
+\vect{AM} = \begin{pmatrix} x - 1 \\ y + 2 \end{pmatrix}, \quad \det(\vect{AM}, \vect{AB}) = 0 \iff (x - 1) \times 4 - (y + 2) \times (-4) = 0.
+\]
+En développant :
+\[
+4(x - 1) + 4(y + 2) = 0 \iff 4x - 4 + 4y + 8 = 0 \iff 4x + 4y + 4 = 0 \iff x + y + 1 = 0.
+\]
+\textbf{Conclusion :} $(AB) : x + y + 1 = 0$.
+
+\textbf{2. Équation de la droite $d_1$ parallèle à $(AB)$ passant par $C(3\,;\,5)$ :}
+Puisque $d_1 \parallel (AB)$, elle admet le même vecteur normal $\vec{n}\begin{pmatrix} 1 \\ 1 \end{pmatrix}$. Une équation cartésienne de $d_1$ est donc de la forme :
+\[
+x + y + c = 0, \quad \text{avec } c \in \R.
+\]
+Le point $C(3\,;\,5) \in d_1$, d'où :
+\[
+3 + 5 + c = 0 \iff 8 + c = 0 \iff c = -8.
+\]
+\textbf{Conclusion :} $d_1 : x + y - 8 = 0$.
+
+\textbf{3. Vecteur directeur et équation de $d_2$ de coefficient directeur $-5$ passant par $B(-3\,;\,2)$ :}
+\begin{itemize}[leftmargin=1cm]
+    \item \textbf{Vecteur directeur :} Par définition du coefficient directeur $m = \frac{\Delta y}{\Delta x} = -5 = \frac{-5}{1}$, un vecteur directeur canonique de la droite $d_2$ est :
+    \[
+    \vec{w}_2 = \begin{pmatrix} 1 \\ -5 \end{pmatrix}.
+    \]
+    \item \textbf{Équation cartésienne :} L'équation réduite s'écrit $y = -5x + p$.
+    Comme $B(-3\,;\,2) \in d_2$, on a :
+    \[
+    2 = -5(-3) + p \iff 2 = 15 + p \iff p = -13.
+    \]
+    L'équation réduite est $y = -5x - 13$, soit sous forme cartésienne standard :
+    \[
+    5x + y + 13 = 0.
+    \]
+\end{itemize}
+
+\textbf{4. Coordonnées de l'intersection $M = d_1 \cap d_2$ :}
+Les coordonnées de $M(x, y)$ vérifient le système linéaire :
+\[
+\begin{cases}
+x + y - 8 = 0 \\
+5x + y + 13 = 0
+\end{cases}
+\iff
+\begin{cases}
+x + y = 8 & (L_1) \\
+5x + y = -13 & (L_2)
+\end{cases}
+\]
+Effectuons la combinaison $(L_2) - (L_1)$ pour éliminer $y$ :
+\[
+(5x - x) + (y - y) = -13 - 8 \iff 4x = -21 \iff x = -\frac{21}{4}.
+\]
+En substituant dans $(L_1)$ :
+\[
+y = 8 - x = 8 - \left(-\frac{21}{4}\right) = \frac{32 + 21}{4} = \frac{53}{4}.
+\]
+\textbf{Conclusion :} Les droites $d_1$ et $d_2$ se coupent en $M\left(-\frac{21}{4} \,;\, \frac{53}{4}\right)$.
+
+\textbf{5. Équation de $d_3$ passant par $A(1\,;\,-2)$ et de vecteur directeur $\vec{u}\begin{pmatrix} 1 \\ 2 \end{pmatrix}$ :}
+Un point $M(x, y) \in d_3 \iff \det(\vect{AM}, \vec{u}) = 0$.
+\[
+\begin{vmatrix} x - 1 & 1 \\ y + 2 & 2 \end{vmatrix} = 0 \iff 2(x - 1) - 1(y + 2) = 0 \iff 2x - 2 - y - 2 = 0 \iff 2x - y - 4 = 0.
+\]
+\textbf{Conclusion :} $d_3 : 2x - y - 4 = 0$.
+
+\textbf{6. Équation de $d_4$ passant par $B(-3\,;\,2)$ et parallèle à la droite $x = 3$ :}
+La droite $x = 3$ est une droite verticale (parallèle à l'axe des ordonnées). Toute droite qui lui est parallèle admet une équation de la forme $x = k$ avec $k \in \R$.
+Puisque $B(-3\,;\,2) \in d_4$, son abscisse impose $k = -3$.\\
+\textbf{Conclusion :} $d_4 : x = -3$ \quad (ou $x + 3 = 0$).
+
+\textbf{7. Équation de $d_5$ passant par $B(-3\,;\,2)$ et parallèle à la droite $y = 3$ :}
+La droite $y = 3$ est une droite horizontale (parallèle à l'axe des abscisses). Toute droite qui lui est parallèle admet une équation de la forme $y = k'$ avec $k' \in \R$.
+Puisque $B(-3\,;\,2) \in d_5$, son ordonnée impose $k' = 2$.\\
+\textbf{Conclusion :} $d_5 : y = 2$ \quad (ou $y - 2 = 0$).
+\end{correctionbox}
+
+\vspace{0.6cm}
+% ----------------------------------------------------
+% EXERCICE 4
+% ----------------------------------------------------
+\subsection*{Exercice 4 : Position relative, grandes puissances et radicaux}
+
+\begin{enoncebox}[Énoncé (Exercice 4)]
+Déterminer la position relative des droites d'équations cartésiennes :
+\[
+d_1 : \sqrt{2}\,x - \frac{1}{\sqrt{3}-1}\,y + 2^{2021} = 0
+\]
+\[
+d_2 : \sqrt{8}\,x - (\sqrt{3}+1)\,y + 2^{2023} - 2^{2022} = 0.
+\]
+\end{enoncebox}
+
+\begin{correctionbox}
+Procédons à la simplification rigoureuse de chacun des coefficients des deux équations.
+
+\textbf{Étape 1 : Simplification des coefficients de $d_1$}
+Le coefficient devant $y$ présente une fraction avec un radical au dénominateur. Multiplions le numérateur et le dénominateur par l'expression conjuguée $(\sqrt{3} + 1)$ :
+\[
+\frac{1}{\sqrt{3} - 1} = \frac{1 \times (\sqrt{3} + 1)}{(\sqrt{3} - 1)(\sqrt{3} + 1)} = \frac{\sqrt{3} + 1}{(\sqrt{3})^2 - 1^2} = \frac{\sqrt{3} + 1}{3 - 1} = \frac{\sqrt{3} + 1}{2}.
+\]
+L'équation de $d_1$ s'écrit donc de façon équivalente :
+\[
+\sqrt{2}\,x - \frac{\sqrt{3} + 1}{2}\,y + 2^{2021} = 0.
+\]
+Multiplions les deux membres de cette équation par la constante non nulle $2$ afin de chasser le dénominateur :
+\[
+2 \times \left(\sqrt{2}\,x - \frac{\sqrt{3} + 1}{2}\,y + 2^{2021}\right) = 0 \iff 2\sqrt{2}\,x - (\sqrt{3} + 1)\,y + 2 \times 2^{2021} = 0.
+\]
+Or, par les propriétés des puissances de 2 :
+\[
+2 \times 2^{2021} = 2^1 \times 2^{2021} = 2^{2021 + 1} = 2^{2022}.
+\]
+De plus, $2\sqrt{2} = \sqrt{2^2 \times 2} = \sqrt{8}$. L'équation de $d_1$ devient :
+\[
+\sqrt{8}\,x - (\sqrt{3} + 1)\,y + 2^{2022} = 0.
+\]
+
+\textbf{Étape 2 : Simplification des termes de $d_2$}
+Dans l'équation de $d_2$, simplifions le terme constant en factorisant par la plus petite puissance de $2$, c'est-à-dire $2^{2022}$ :
+\[
+2^{2023} - 2^{2022} = 2^{2022 + 1} - 2^{2022} = 2^{2022} \times 2^1 - 2^{2022} \times 1 = 2^{2022}(2 - 1) = 2^{2022} \times 1 = 2^{2022}.
+\]
+L'équation cartésienne de $d_2$ s'écrit donc :
+\[
+\sqrt{8}\,x - (\sqrt{3} + 1)\,y + 2^{2022} = 0.
+\]
+
+\textbf{Étape 3 : Comparaison des équations}
+En comparant terme à terme les équations simplifiées :
+\[
+\text{Équation de } d_1 : \quad \sqrt{8}\,x - (\sqrt{3} + 1)\,y + 2^{2022} = 0
+\]
+\[
+\text{Équation de } d_2 : \quad \sqrt{8}\,x - (\sqrt{3} + 1)\,y + 2^{2022} = 0
+\]
+Ces deux équations sont strictement identiques ! Leurs coefficients sont proportionnels de rapport 1 (ou de rapport 2 par rapport à la forme initiale de $d_1$).
+
+\textbf{Conclusion :} Les droites $d_1$ et $d_2$ sont \textbf{confondues} :
+\[
+d_1 = d_2.
+\]
+\end{correctionbox}
+
+\newpage
+% ----------------------------------------------------
+% EXERCICE 5
+% ----------------------------------------------------
+\subsection*{Exercice 5 : Droite d'Euler -- Cas particulier numérique}
+
+\begin{enoncebox}[Énoncé (Exercice 5)]
+On se place dans un repère orthonormé (RON) $(O, \vec{i}, \vec{j})$.\\
+On considère les points $A(-4\,;\,-2)$, $B(6\,;\,-2)$ et $C(2\,;\,4)$, et les milieux $A'$, $B'$ et $C'$ des côtés respectifs $[BC]$, $[AC]$ et $[AB]$.
+\begin{enumerate}
+    \item Soit le point $G\left(\frac{4}{3}\,;\,0\right)$.
+    Montrer que :
+    \[
+    \frac{y_G - y_A}{x_G - x_A} = \frac{y_A - y_{A'}}{x_A - x_{A'}} \quad \text{et que} \quad \frac{y_G - y_C}{x_G - x_C} = \frac{y_C - y_{C'}}{x_C - x_{C'}}.
+    \]
+    En déduire que $G$ est le centre de gravité du triangle $ABC$.
+    \item 
+    \begin{enumerate}
+        \item Déterminer l'équation cartésienne de $\delta_{[AB]}$, médiatrice du segment $[AB]$.
+        \item Déterminer l'équation cartésienne de $\delta_{[BC]}$, médiatrice du segment $[BC]$.
+        \item Calculer les coordonnées de $\Omega$, centre du cercle circonscrit au triangle $ABC$.
+    \end{enumerate}
+    \item 
+    \begin{enumerate}
+        \item Déterminer l'équation de la hauteur $h_C$ issue de $C$.
+        \item Déterminer l'équation de la hauteur $h_A$ issue de $A$.
+        \item Calculer les coordonnées de l'orthocentre $H$ du triangle $ABC$.
+    \end{enumerate}
+    \item Montrer que les points $G$, $\Omega$ et $H$ sont alignés.
+\end{enumerate}
+\end{enoncebox}
+
+\begin{correctionbox}
+\textbf{Calcul préalable des coordonnées des milieux :}
+\begin{itemize}[leftmargin=1cm]
+    \item $A'$ milieu de $[BC]$ : $\left(\frac{x_B + x_C}{2} \,;\, \frac{y_B + y_C}{2}\right) = \left(\frac{6 + 2}{2} \,;\, \frac{-2 + 4}{2}\right) = (4\,;\,1)$.
+    \item $B'$ milieu de $[AC]$ : $\left(\frac{x_A + x_C}{2} \,;\, \frac{y_A + y_C}{2}\right) = \left(\frac{-4 + 2}{2} \,;\, \frac{-2 + 4}{2}\right) = (-1\,;\,1)$.
+    \item $C'$ milieu de $[AB]$ : $\left(\frac{x_A + x_B}{2} \,;\, \frac{y_A + y_B}{2}\right) = \left(\frac{-4 + 6}{2} \,;\, \frac{-2 + (-2)}{2}\right) = (1\,;\,-2)$.
+\end{itemize}
+
+\textbf{1. Alignement de $G$ avec les médianes et centre de gravité :}
+Calculons les coefficients directeurs (pentes) :
+\begin{itemize}[leftmargin=1cm]
+    \item Pour la droite $(AG)$ :
+    \[
+    \frac{y_G - y_A}{x_G - x_A} = \frac{0 - (-2)}{\frac{4}{3} - (-4)} = \frac{2}{\frac{4 + 12}{3}} = \frac{2}{\frac{16}{3}} = 2 \times \frac{3}{16} = \frac{6}{16} = \frac{3}{8}.
+    \]
+    \item Pour la médiane $(AA')$ :
+    \[
+    \frac{y_A - y_{A'}}{x_A - x_{A'}} = \frac{-2 - 1}{-4 - 4} = \frac{-3}{-8} = \frac{3}{8}.
+    \]
+    Puisque $\frac{y_G - y_A}{x_G - x_A} = \frac{y_A - y_{A'}}{x_A - x_{A'}}$, les droites $(AG)$ et $(AA')$ ont même pente et un point commun $A$ : elles sont confondues, donc $G \in (AA')$.
+    \item De même pour le sommet $C$ et le milieu $C'$ :
+    \[
+    \frac{y_G - y_C}{x_G - x_C} = \frac{0 - 4}{\frac{4}{3} - 2} = \frac{-4}{-\frac{2}{3}} = -4 \times \left(-\frac{3}{2}\right) = 6.
+    \]
+    \[
+    \frac{y_C - y_{C'}}{x_C - x_{C'}} = \frac{4 - (-2)}{2 - 1} = \frac{6}{1} = 6.
+    \]
+    De même, les droites $(CG)$ et $(CC')$ ont même pente et passent par $C$ : elles sont confondues, donc $G \in (CC')$.
+\end{itemize}
+Le point $G$ appartient à la fois à la médiane issue de $A$ et à la médiane issue de $C$. Les médianes n'étant pas parallèles, $G$ est leur unique point d'intersection : c'est le \textbf{centre de gravité} du triangle $ABC$.
+\textit{Remarque :} On vérifie par la formule barycentrique :
+\[
+x_G = \frac{x_A + x_B + x_C}{3} = \frac{-4 + 6 + 2}{3} = \frac{4}{3}, \quad y_G = \frac{-2 + (-2) + 4}{3} = 0.
+\]
+
+\textbf{2. Médiatrices et centre du cercle circonscrit $\Omega$ :}
+\begin{enumerate}[leftmargin=1cm]
+    \item[(a)] \textbf{Médiatrice $\delta_{[AB]}$ :} Les points $A(-4\,;\,-2)$ et $B(6\,;\,-2)$ ont la même ordonnée $y = -2$. Le segment $[AB]$ est horizontal. Sa médiatrice est donc la droite verticale passant par le milieu $C'(1\,;\,-2)$ :
+    \[
+    \delta_{[AB]} : x = 1.
+    \]
+    \item[(b)] \textbf{Médiatrice $\delta_{[BC]}$ :} Le milieu de $[BC]$ est $A'(4\,;\,1)$. Le vecteur $\vect{BC}$ a pour coordonnées :
+    \[
+    \vect{BC} = \begin{pmatrix} 2 - 6 \\ 4 - (-2) \end{pmatrix} = \begin{pmatrix} -4 \\ 6 \end{pmatrix}.
+    \]
+    Dans le repère orthonormé, un point $M(x, y) \in \delta_{[BC]} \iff BM^2 = CM^2$ :
+    \[
+    (x - 6)^2 + (y + 2)^2 = (x - 2)^2 + (y - 4)^2
+    \]
+    \[
+    x^2 - 12x + 36 + y^2 + 4y + 4 = x^2 - 4x + 4 + y^2 - 8y + 16
+    \]
+    \[
+    -12x + 4y + 40 = -4x - 8y + 20 \iff -8x + 12y + 20 = 0.
+    \]
+    En divisant par $-4$ :
+    \[
+    \delta_{[BC]} : 2x - 3y - 5 = 0.
+    \]
+    \item[(c)] \textbf{Centre $\Omega$ du cercle circonscrit :} $\Omega$ est l'intersection de $\delta_{[AB]}$ et $\delta_{[BC]}$ :
+    \[
+    \begin{cases}
+    x = 1 \\
+    2x - 3y - 5 = 0
+    \end{cases}
+    \implies 2(1) - 3y - 5 = 0 \implies -3y = 3 \implies y = -1.
+    \]
+    D'où $\Omega(1\,;\,-1)$.
+\end{enumerate}
+
+\textbf{3. Hauteurs et orthocentre $H$ :}
+\begin{enumerate}[leftmargin=1cm]
+    \item[(a)] \textbf{Hauteur $h_C$ issue de $C$ :} Elle est perpendiculaire à la droite horizontale $(AB)$, donc $h_C$ est une droite verticale. Comme elle passe par $C(2\,;\,4)$, son équation est :
+    \[
+    h_C : x = 2.
+    \]
+    \item[(b)] \textbf{Hauteur $h_A$ issue de $A$ :} Par définition, $h_A \perp (BC)$. Elle est donc parallèle à la médiatrice $\delta_{[BC]}$ calculée plus haut ! Son équation cartésienne est donc de la forme :
+    \[
+    2x - 3y + c = 0.
+    \]
+    Comme $A(-4\,;\,-2) \in h_A$ :
+    \[
+    2(-4) - 3(-2) + c = 0 \iff -8 + 6 + c = 0 \iff c = 2.
+    \]
+    D'où :
+    \[
+    h_A : 2x - 3y + 2 = 0.
+    \]
+    \item[(c)] \textbf{Orthocentre $H$ :} $H$ est l'intersection de $h_C$ et $h_A$ :
+    \[
+    \begin{cases}
+    x = 2 \\
+    2x - 3y + 2 = 0
+    \end{cases}
+    \implies 2(2) - 3y + 2 = 0 \implies 6 - 3y = 0 \implies y = 2.
+    \]
+    D'où $H(2\,;\,2)$.
+\end{enumerate}
+
+\textbf{4. Alignement de $G$, $\Omega$ et $H$ (Droite d'Euler) :}
+Calculons les coordonnées des vecteurs $\vect{\Omega G}$ et $\vect{\Omega H}$ :
+\[
+\vect{\Omega G} = \begin{pmatrix} x_G - x_\Omega \\ y_G - y_\Omega \end{pmatrix} = \begin{pmatrix} \frac{4}{3} - 1 \\ 0 - (-1) \end{pmatrix} = \begin{pmatrix} \frac{1}{3} \\ 1 \end{pmatrix}.
+\]
+\[
+\vect{\Omega H} = \begin{pmatrix} x_H - x_\Omega \\ y_H - y_\Omega \end{pmatrix} = \begin{pmatrix} 2 - 1 \\ 2 - (-1) \end{pmatrix} = \begin{pmatrix} 1 \\ 3 \end{pmatrix}.
+\]
+On observe immédiatement la relation fondamentale :
+\[
+\vect{\Omega H} = 3\,\vect{\Omega G}.
+\]
+Les vecteurs $\vect{\Omega H}$ et $\vect{\Omega G}$ étant colinéaires, les points $\Omega$, $G$ et $H$ sont \textbf{alignés}. La droite qui les contient est la droite d'Euler du triangle $ABC$.
+\end{correctionbox}
+
+\newpage
+% ----------------------------------------------------
+% EXERCICE 6
+% ----------------------------------------------------
+\subsection*{Exercice 6 : Droite d'Euler -- Démonstration générale analytique (Euler revisité)}
+
+\begin{enoncebox}[Énoncé (Exercice 6 -- Euler revisité)]
+Soit un triangle $ABC$ non aplati. On se place dans un repère orthonormé $(A, \vect{AB}, \vec{j})$.\\
+Dans ce repère, on a $A(0\,;\,0)$ et $B(1\,;\,0)$. On note $(a, b)$ les coordonnées du point $C$, avec $b \neq 0$ (le triangle étant non aplati).
+\begin{enumerate}
+    \item Établir les équations cartésiennes des trois médianes, puis montrer qu'elles sont concourantes en un point $G$ dont on déterminera les coordonnées en fonction de $a$ et $b$.
+    \item Établir les équations cartésiennes des trois médiatrices, puis montrer qu'elles sont concourantes en un point $\Omega$ dont on déterminera les coordonnées en fonction de $a$ et $b$.
+    \item Établir les équations cartésiennes des trois hauteurs, puis montrer qu'elles sont concourantes en un point $H$ dont on déterminera les coordonnées en fonction de $a$ et $b$.
+    \item Démontrer que le centre de gravité $G$, le centre du cercle circonscrit $\Omega$ et l'orthocentre $H$ sont alignés et vérifient universellement la relation vectorielle $\vect{\Omega H} = 3\,\vect{\Omega G}$.
+\end{enumerate}
+\end{enoncebox}
+
+\begin{correctionbox}
+\textbf{1. Les Médianes et le centre de gravité $G$}
+Soient les milieux des côtés :
+\[
+I \text{ milieu de } [BC] : I\left(\frac{a + 1}{2} \,;\, \frac{b}{2}\right), \quad
+J \text{ milieu de } [AC] : J\left(\frac{a}{2} \,;\, \frac{b}{2}\right), \quad
+K \text{ milieu de } [AB] : K\left(\frac{1}{2} \,;\, 0\right).
+\]
+\begin{itemize}[leftmargin=1cm]
+    \item \textbf{Médiane $(AI)$ :} Elle passe par l'origine $A(0\,;\,0)$ et a pour vecteur directeur $\vect{AI}\begin{pmatrix} \frac{a+1}{2} \\ \frac{b}{2} \end{pmatrix}$.
+    \[
+    M(x, y) \in (AI) \iff \det(\vect{AM}, \vect{AI}) = 0 \iff x \frac{b}{2} - y \frac{a+1}{2} = 0 \iff bx - (a + 1)y = 0.
+    \]
+    \item \textbf{Médiane $(BJ)$ :} Elle passe par $B(1\,;\,0)$ et admet pour vecteur directeur $\vect{BJ}\begin{pmatrix} \frac{a}{2} - 1 \\ \frac{b}{2} \end{pmatrix} = \begin{pmatrix} \frac{a-2}{2} \\ \frac{b}{2} \end{pmatrix}$.
+    \[
+    \det(\vect{BM}, \vect{BJ}) = 0 \iff (x - 1)\frac{b}{2} - y \frac{a - 2}{2} = 0 \iff bx - b - (a - 2)y = 0 \iff bx + (2 - a)y - b = 0.
+    \]
+    \item \textbf{Médiane $(CK)$ :} Elle passe par $C(a\,;\,b)$ et admet pour vecteur directeur $\vect{CK}\begin{pmatrix} \frac{1}{2} - a \\ -b \end{pmatrix}$.
+    \[
+    \det(\vect{CM}, \vect{CK}) = 0 \iff (x - a)(-b) - (y - b)\left(\frac{1 - 2a}{2}\right) = 0.
+    \]
+    En multipliant par $-2$ :
+    \[
+    2b(x - a) + (1 - 2a)(y - b) = 0 \iff 2bx - 2ab + (1 - 2a)y - b + 2ab = 0 \iff 2bx + (1 - 2a)y - b = 0.
+    \]
+\end{itemize}
+\textbf{Concours en $G$ :} Déterminons l'intersection $(AI) \cap (BJ)$ :
+De l'équation de $(AI)$, on tire $bx = (a + 1)y$. Remplaçons dans l'équation de $(BJ)$ :
+\[
+(a + 1)y + (2 - a)y - b = 0 \iff 3y = b \iff y = \frac{b}{3}.
+\]
+Puisque $b \neq 0$, $x = \frac{a + 1}{b} y = \frac{a + 1}{b} \times \frac{b}{3} = \frac{a + 1}{3}$.
+Le point d'intersection est $G\left(\frac{a + 1}{3} \,;\, \frac{b}{3}\right)$.
+Vérifions si $G \in (CK)$ :
+\[
+2b\left(\frac{a + 1}{3}\right) + (1 - 2a)\left(\frac{b}{3}\right) - b = \frac{b}{3}\bigl[ 2a + 2 + 1 - 2a - 3 \bigr] = \frac{b}{3} \times 0 = 0.
+\]
+L'équation est satisfaite. Les trois médianes sont donc \textbf{concourantes} en :
+\[
+G\left(\frac{a + 1}{3} \,;\, \frac{b}{3}\right).
+\]
+
+\textbf{2. Les Médiatrices et le centre du cercle circonscrit $\Omega$}
+\begin{itemize}[leftmargin=1cm]
+    \item \textbf{Médiatrice $\delta_{[AB]}$ :} Les points $A(0,0)$ et $B(1,0)$ sont sur l'axe des abscisses. Le milieu est $K(1/2, 0)$. La médiatrice est verticale :
+    \[
+    \delta_{[AB]} : x = \frac{1}{2}.
+    \]
+    \item \textbf{Médiatrice $\delta_{[AC]}$ :} Ensemble des points $M(x, y)$ tels que $AM^2 = CM^2$ :
+    \[
+    x^2 + y^2 = (x - a)^2 + (y - b)^2 \iff x^2 + y^2 = x^2 - 2ax + a^2 + y^2 - 2by + b^2.
+    \]
+    D'où :
+    \[
+    \delta_{[AC]} : 2ax + 2by - (a^2 + b^2) = 0.
+    \]
+    \item \textbf{Médiatrice $\delta_{[BC]}$ :} Ensemble des points $M(x, y)$ tels que $BM^2 = CM^2$ :
+    \[
+    (x - 1)^2 + y^2 = (x - a)^2 + (y - b)^2 \iff x^2 - 2x + 1 + y^2 = x^2 - 2ax + a^2 + y^2 - 2by + b^2.
+    \]
+    D'où :
+    \[
+    \delta_{[BC]} : 2(a - 1)x + 2by + 1 - a^2 - b^2 = 0.
+    \]
+\end{itemize}
+\textbf{Concours en $\Omega$ :} Cherchons l'intersection $\delta_{[AB]} \cap \delta_{[AC]}$ :
+On injecte $x = \frac{1}{2}$ dans l'équation de $\delta_{[AC]}$ :
+\[
+2a\left(\frac{1}{2}\right) + 2by - (a^2 + b^2) = 0 \iff a + 2by - a^2 - b^2 = 0 \iff 2by = a^2 + b^2 - a.
+\]
+Comme $b \neq 0$, on obtient :
+\[
+y = \frac{a^2 + b^2 - a}{2b}.
+\]
+Le point d'intersection est $\Omega\left(\frac{1}{2} \,;\, \frac{a^2 + b^2 - a}{2b}\right)$.
+Vérifions si $\Omega \in \delta_{[BC]}$ :
+\[
+2(a - 1)\left(\frac{1}{2}\right) + 2b\left(\frac{a^2 + b^2 - a}{2b}\right) + 1 - a^2 - b^2 = (a - 1) + (a^2 + b^2 - a) + 1 - a^2 - b^2 = 0.
+\]
+L'égalité est vérifiée. Les trois médiatrices sont donc \textbf{concourantes} en :
+\[
+\Omega\left(\frac{1}{2} \,;\, \frac{a^2 + b^2 - a}{2b}\right).
+\]
+
+\textbf{3. Les Hauteurs et l'orthocentre $H$}
+\begin{itemize}[leftmargin=1cm]
+    \item \textbf{Hauteur $h_C$ issue de $C$ :} Elle est perpendiculaire à l'axe des abscisses $(AB)$, donc verticale. Comme elle passe par $C(a, b)$ :
+    \[
+    h_C : x = a.
+    \]
+    \item \textbf{Hauteur $h_A$ issue de $A(0,0)$ :} Elle est perpendiculaire à $(BC)$. Elle est donc parallèle à la médiatrice $\delta_{[BC]}$. Son équation est de la forme $2(a-1)x + 2by + k = 0$. Comme elle passe par $A(0,0)$, $k = 0$. En simplifiant par 2 :
+    \[
+    h_A : (a - 1)x + by = 0.
+    \]
+    \item \textbf{Hauteur $h_B$ issue de $B(1,0)$ :} Elle est perpendiculaire à $(AC)$, donc parallèle à $\delta_{[AC]}$. Son équation est de la forme $2ax + 2by + k' = 0 \iff ax + by + c = 0$.
+    Comme $B(1,0) \in h_B$, on a $a(1) + b(0) + c = 0 \implies c = -a$. D'où :
+    \[
+    h_B : ax + by - a = 0.
+    \]
+\end{itemize}
+\textbf{Concours en $H$ :} Cherchons l'intersection $h_C \cap h_A$ :
+On injecte $x = a$ dans l'équation de $h_A$ :
+\[
+(a - 1)a + by = 0 \iff by = -a(a - 1) = a - a^2 \implies y = \frac{a - a^2}{b} \quad (\text{car } b \neq 0).
+\]
+Le point d'intersection est $H\left(a \,;\, \frac{a - a^2}{b}\right)$.
+Vérifions si $H \in h_B$ :
+\[
+ax_H + by_H - a = a(a) + b\left(\frac{a - a^2}{b}\right) - a = a^2 + a - a^2 - a = 0.
+\]
+L'équation est satisfaite. Les trois hauteurs sont donc \textbf{concourantes} en :
+\[
+H\left(a \,;\, \frac{a - a^2}{b}\right).
+\]
+
+\textbf{4. Alignement et Théorème de la droite d'Euler}
+Calculons les composantes des vecteurs $\vect{\Omega G}$ et $\vect{\Omega H}$ :
+\begin{align*}
+x_{\vect{\Omega G}} &= x_G - x_\Omega = \frac{a + 1}{3} - \frac{1}{2} = \frac{2(a+1) - 3}{6} = \frac{2a - 1}{6},\\
+y_{\vect{\Omega G}} &= y_G - y_\Omega = \frac{b}{3} - \frac{a^2 + b^2 - a}{2b} = \frac{2b^2 - 3(a^2 + b^2 - a)}{6b} = \frac{3a - 3a^2 - b^2}{6b}.
+\end{align*}
+Calculons à présent pour le vecteur $\vect{\Omega H}$ :
+\begin{align*}
+x_{\vect{\Omega H}} &= x_H - x_\Omega = a - \frac{1}{2} = \frac{2a - 1}{2} = 3 \times \frac{2a - 1}{6} = 3\,x_{\vect{\Omega G}},\\
+y_{\vect{\Omega H}} &= y_H - y_\Omega = \frac{a - a^2}{b} - \frac{a^2 + b^2 - a}{2b} = \frac{2(a - a^2) - (a^2 + b^2 - a)}{2b} \\
+&= \frac{2a - 2a^2 - a^2 - b^2 + a}{2b} = \frac{3a - 3a^2 - b^2}{2b} = 3 \times \frac{3a - 3a^2 - b^2}{6b} = 3\,y_{\vect{\Omega G}}.
+\end{align*}
+Les composantes vérifient exactement :
+\[
+\vect{\Omega H} = 3\,\vect{\Omega G}.
+\]
+\textbf{Conclusion magistrale :} Les points $\Omega$, $G$ et $H$ sont alignés dans tout triangle non aplati. Ce résultat prouve de manière purement analytique et universelle le \textbf{Théorème de la droite d'Euler}.
+\end{correctionbox}
+
+\begin{remarkbox}[Cas particulier du triangle équilatéral]
+Si le triangle $ABC$ est équilatéral avec $A(0,0)$ et $B(1,0)$, le sommet $C$ a pour coordonnées $a = \frac{1}{2}$ et $b = \frac{\sqrt{3}}{2}$.
+Alors :
+\[
+2a - 1 = 2\left(\frac{1}{2}\right) - 1 = 0 \quad \text{et} \quad 3a - 3a^2 - b^2 = \frac{3}{2} - \frac{3}{4} - \frac{3}{4} = 0.
+\]
+On constate que $\vect{\Omega G} = \vec{0}$ et $\vect{\Omega H} = \vec{0}$, c'est-à-dire $\Omega = G = H$. Dans ce cas singulier, les trois points sont confondus au centre de symétrie du triangle et la droite d'Euler n'est pas définie (ou toute droite passant par ce point peut être considérée comme telle).
+\end{remarkbox}
+
+\newpage
+% ----------------------------------------------------
+% EXERCICE 7
+% ----------------------------------------------------
+\subsection*{Exercice 7 : Famille de droites paramétrées et concourance}
+
+\begin{enoncebox}[Énoncé (Exercice 7)]
+Soit $m$ un nombre réel non nul ($m \neq 0$). Soient les droites $d_1$, $d_2$ et $d_3$ d'équations cartésiennes :
+\[
+d_1 : 2x + 3y - 8 = 0, \quad d_2 : 3x - 5y + 7 = 0, \quad d_3 : m^2 x - m y - 3 = 0.
+\]
+\begin{enumerate}
+    \item Pour quelles valeurs de $m$, les droites $d_1$ et $d_3$ sont-elles parallèles ?
+    \item Pour quelle(s) valeur(s) de $m$, les trois droites $d_1$, $d_2$ et $d_3$ sont-elles concourantes ?
+\end{enumerate}
+\end{enoncebox}
+
+\begin{correctionbox}
+\textbf{1. Parallélisme des droites $d_1$ et $d_3$ :}
+Les équations sont :
+\[
+d_1 : 2x + 3y - 8 = 0 \quad \text{et} \quad d_3 : m^2 x - m y - 3 = 0.
+\]
+Les vecteurs directeurs sont respectivement $\vec{u}_1\begin{pmatrix} -3 \\ 2 \end{pmatrix}$ et $\vec{u}_3\begin{pmatrix} m \\ m^2 \end{pmatrix}$.
+Le critère de parallélisme équivaut à la nullité du déterminant des coefficients directeurs :
+\[
+\det(\vec{u}_1, \vec{u}_3) = \begin{vmatrix} -3 & m \\ 2 & m^2 \end{vmatrix} = -3m^2 - 2m = -m(3m + 2).
+\]
+Ainsi :
+\[
+d_1 \parallel d_3 \iff -m(3m + 2) = 0 \iff m = 0 \quad \text{ou} \quad 3m + 2 = 0 \iff m = -\frac{2}{3}.
+\]
+L'énoncé stipulant expressément que $m \in \R^*$, la valeur $m = 0$ est exclue.\\
+\textbf{Conclusion pour la question 1 :} Les droites $d_1$ et $d_3$ sont parallèles si et seulement si :
+\[
+m = -\frac{2}{3}.
+\]
+\textit{Précision :} Pour $m = -\frac{2}{3}$, $d_3 : \frac{4}{9}x + \frac{2}{3}y - 3 = 0 \iff 4x + 6y - 27 = 0 \iff 2x + 3y - \frac{27}{2} = 0$. Comme $-\frac{27}{2} \neq -8$, les droites sont strictement parallèles.
+
+\textbf{2. Concourance des trois droites $d_1$, $d_2$ et $d_3$ :}
+Trois droites sont concourantes si et seulement si elles passent par un même point. Commençons par déterminer le point d'intersection $I = d_1 \cap d_2$ :
+\[
+\begin{cases}
+2x + 3y = 8 & (L_1) \\
+3x - 5y = -7 & (L_2)
+\end{cases}
+\]
+Utilisons la méthode des combinaisons linéaires pour éliminer $x$ :
+\[
+3(L_1) - 2(L_2) \implies 3(2x + 3y) - 2(3x - 5y) = 3(8) - 2(-7)
+\]
+\[
+9y + 10y = 24 + 14 \iff 19y = 38 \iff y = \frac{38}{19} = 2.
+\]
+Substituons $y = 2$ dans l'équation $(L_1)$ :
+\[
+2x + 3(2) = 8 \iff 2x + 6 = 8 \iff 2x = 2 \iff x = 1.
+\]
+Le point d'intersection des deux premières droites est donc $I(1\,;\,2)$.
+
+Les trois droites sont concourantes si et seulement si le point $I(1\,;\,2)$ appartient également à la droite $d_3$ :
+\[
+I \in d_3 \iff m^2(1) - m(2) - 3 = 0 \iff m^2 - 2m - 3 = 0.
+\]
+Il s'agit d'une équation du second degré en $m$. Le discriminant vaut :
+\[
+\Delta = (-2)^2 - 4(1)(-3) = 4 + 12 = 16 = 4^2 > 0.
+\]
+Les deux racines sont :
+\[
+m_1 = \frac{2 - 4}{2} = -1 \quad \text{et} \quad m_2 = \frac{2 + 4}{2} = 3.
+\]
+Ces deux valeurs sont bien non nulles ($m \neq 0$).\\
+\textbf{Conclusion pour la question 2 :} Les droites $d_1$, $d_2$ et $d_3$ sont concourantes en $I(1\,;\,2)$ si et seulement si :
+\[
+m \in \{-1 \,;\, 3\}.
+\]
+\end{correctionbox}
+
+\vspace{0.6cm}
+% ----------------------------------------------------
+% EXERCICE 8
+% ----------------------------------------------------
+\subsection*{Exercice 8 : Positions relatives de deux droites paramétrées}
+
+\begin{enoncebox}[Énoncé (Exercice 8)]
+Soit $m$ un nombre réel. On considère les droites $d_m$ et $d'_m$ définies par les équations cartésiennes :
+\[
+d_m : mx - (m + 2)y + m - 2 = 0
+\]
+\[
+d'_m : (3m - 2)x - (5m - 2)y - (7m - 6) = 0.
+\]
+Étudier les positions relatives de ces deux droites en fonction des valeurs du paramètre réel $m$.
+\end{enoncebox}
+
+\begin{correctionbox}
+Les équations cartésiennes sont de la forme $ax + by + c = 0$ et $a'x + b'y + c' = 0$ avec :
+\[
+\begin{cases}
+a(m) = m \\
+b(m) = -(m + 2) \\
+c(m) = m - 2
+\end{cases}
+\quad \text{et} \quad
+\begin{cases}
+a'(m) = 3m - 2 \\
+b'(m) = -(5m - 2) \\
+c'(m) = -(7m - 6).
+\end{cases}
+\]
+
+\textbf{Étape 1 : Calcul du déterminant directeur}
+Les droites ont pour vecteurs directeurs respectifs $\vec{u}_m\begin{pmatrix} m+2 \\ m \end{pmatrix}$ et $\vec{u}'_m\begin{pmatrix} 5m-2 \\ 3m-2 \end{pmatrix}$.
+Le déterminant associé vaut :
+\[
+D(m) = a(m)b'(m) - a'(m)b(m) = m\bigl(-(5m - 2)\bigr) - (3m - 2)\bigl(-(m + 2)\bigr).
+\]
+Développons soigneusement chaque terme :
+\begin{align*}
+D(m) &= -5m^2 + 2m + (3m - 2)(m + 2) \\
+&= -5m^2 + 2m + (3m^2 + 6m - 2m - 4) \\
+&= -5m^2 + 2m + 3m^2 + 4m - 4 \\
+&= -2m^2 + 6m - 4.
+\end{align*}
+Factorisons ce trinôme du second degré en mettant $-2$ en facteur :
+\[
+D(m) = -2(m^2 - 3m + 2).
+\]
+Les racines évidentes de $m^2 - 3m + 2$ sont 1 et 2 (car $1 + 2 = 3$ et $1 \times 2 = 2$). Par conséquent :
+\[
+D(m) = -2(m - 1)(m - 2).
+\]
+
+\textbf{Étape 2 : Discussion méthodique selon les valeurs de $m$}
+
+\begin{itemize}[leftmargin=1cm]
+    \item \textbf{Premier cas : $m \in \R \setminus \{1 \,;\, 2\}$ ($m \neq 1$ et $m \neq 2$)}
+    
+    Dans ce cas, $D(m) \neq 0$. Les vecteurs directeurs $\vec{u}_m$ et $\vec{u}'_m$ ne sont pas colinéaires.
+    Par conséquent, les droites $d_m$ et $d'_m$ sont \textbf{sécantes} en un unique point $M_m(x, y)$.
+
+    \item \textbf{Deuxième cas : $m = 1$}
+    
+    Substituons $m = 1$ dans les équations cartésiennes initiales :
+    \begin{align*}
+    \text{Pour } d_1 &: 1x - (1 + 2)y + 1 - 2 = 0 \iff x - 3y - 1 = 0. \\
+    \text{Pour } d'_1 &: (3(1) - 2)x - (5(1) - 2)y - (7(1) - 6) = 0 \iff 1x - 3y - 1 = 0 \iff x - 3y - 1 = 0.
+    \end{align*}
+    Les deux droites admettent exactement la même équation cartésienne.
+    Par conséquent, pour $m = 1$, les droites $d_1$ et $d'_1$ sont \textbf{confondues} :
+    \[
+    d_1 = d'_1.
+    \]
+
+    \item \textbf{Troisième cas : $m = 2$}
+    
+    Substituons $m = 2$ dans les équations cartésiennes initiales :
+    \begin{align*}
+    \text{Pour } d_2 &: 2x - (2 + 2)y + 2 - 2 = 0 \iff 2x - 4y = 0 \iff x - 2y = 0. \\
+    \text{Pour } d'_2 &: (3(2) - 2)x - (5(2) - 2)y - (7(2) - 6) = 0 \iff 4x - 8y - 8 = 0.
+    \end{align*}
+    En simplifiant l'équation de $d'_2$ par 4 :
+    \[
+    x - 2y - 2 = 0.
+    \]
+    Les coefficients de $x$ et $y$ sont identiques (même direction, coefficient directeur égal à $\frac{1}{2}$), mais les termes constants sont distincts ($0 \neq -2$).
+    Par conséquent, pour $m = 2$, les droites $d_2$ et $d'_2$ sont \textbf{strictement parallèles} :
+    \[
+    d_2 \parallel d'_2 \quad \text{et} \quad d_2 \cap d'_2 = \emptyset.
+    \]
+\end{itemize}
+
+\textbf{Synthèse finale :}
+\[
+\begin{cases}
+\text{Si } m \notin \{1 \,;\, 2\}, & d_m \text{ et } d'_m \text{ sont sécantes en un unique point.} \\
+\text{Si } m = 1, & d_1 \text{ et } d'_1 \text{ sont confondues.} \\
+\text{Si } m = 2, & d_2 \text{ et } d'_2 \text{ sont strictement parallèles.}
+\end{cases}
+\]
+\end{correctionbox}
+
+\newpage
+% ----------------------------------------------------
+% EXERCICE 9
+% ----------------------------------------------------
+\subsection*{Exercice 9 : Configuration remarquable du parallélogramme}
+
+\begin{enoncebox}[Énoncé (Exercice 9)]
+Soit $ABCD$ un parallélogramme du plan affine. On considère le repère cartésien $(A, \vect{AB}, \vect{AD})$ et un point $P(a, b)$ non confondu avec $B$ ou $D$.\\
+La parallèle à $(AB)$ passant par $P$ coupe $(AD)$ en $E$ et $(BC)$ en $F$.\\
+La parallèle à $(AD)$ passant par $P$ coupe $(AB)$ en $G$ et $(CD)$ en $H$.
+\begin{enumerate}
+    \item Montrer que si $a + b \neq 1$, alors les droites $(EH)$, $(FG)$ et $(AC)$ sont concourantes.
+    \item Montrer que si $a + b = 1$, alors les droites $(EH)$, $(FG)$ et $(AC)$ sont parallèles.
+\end{enumerate}
+\end{enoncebox}
+
+\begin{correctionbox}
+\textbf{Étape 1 : Coordonnées des points dans le repère $(A, \vect{AB}, \vect{AD})$}
+Dans ce repère affine :
+\[
+A(0\,;\,0), \quad B(1\,;\,0), \quad D(0\,;\,1).
+\]
+Puisque $ABCD$ est un parallélogramme, on a $\vect{AC} = \vect{AB} + \vect{AD}$, d'où $C(1\,;\,1)$.
+Les côtés du parallélogramme ont pour équations :
+\begin{itemize}[leftmargin=1cm]
+    \item La droite $(AB)$ est l'axe des abscisses : $y = 0$.
+    \item La droite $(AD)$ est l'axe des ordonnées : $x = 0$.
+    \item La droite $(BC)$ est la droite d'équation $x = 1$.
+    \item La droite $(CD)$ est la droite d'équation $y = 1$.
+\end{itemize}
+
+\textbf{Étape 2 : Coordonnées des points $E$, $F$, $G$, $H$}
+Soit $P(a, b)$ un point du plan.
+\begin{itemize}[leftmargin=1cm]
+    \item La parallèle à $(AB)$ passant par $P$ est la droite horizontale d'équation $y = b$.
+    Elle coupe $(AD)$ ($x = 0$) en $E(0\,;\,b)$ et $(BC)$ ($x = 1$) en $F(1\,;\,b)$.
+    \item La parallèle à $(AD)$ passant par $P$ est la droite verticale d'équation $x = a$.
+    Elle coupe $(AB)$ ($y = 0$) en $G(a\,;\,0)$ et $(CD)$ ($y = 1$) en $H(a\,;\,1)$.
+\end{itemize}
+
+\textbf{Étape 3 : Équations cartésiennes des trois droites $(AC)$, $(EH)$ et $(FG)$}
+\begin{enumerate}[leftmargin=1cm]
+    \item \textbf{Droite $(AC)$ :} Elle passe par $A(0,0)$ et $C(1,1)$. Son équation est :
+    \[
+    (AC) : x - y = 0 \iff y = x.
+    \]
+    \item \textbf{Droite $(EH)$ :} Elle passe par $E(0, b)$ et $H(a, 1)$. Un vecteur directeur est :
+    \[
+    \vect{EH} = \begin{pmatrix} a - 0 \\ 1 - b \end{pmatrix} = \begin{pmatrix} a \\ 1 - b \end{pmatrix}.
+    \]
+    Un point $M(x, y)$ appartient à $(EH)$ si et seulement si :
+    \[
+    \det(\vect{EM}, \vect{EH}) = 0 \iff \begin{vmatrix} x & a \\ y - b & 1 - b \end{vmatrix} = 0 \iff (1 - b)x - a(y - b) = 0.
+    \]
+    D'où :
+    \[
+    (EH) : (1 - b)x - ay + ab = 0.
+    \]
+    \item \textbf{Droite $(FG)$ :} Elle passe par $F(1, b)$ et $G(a, 0)$. Un vecteur directeur est :
+    \[
+    \vect{GF} = \begin{pmatrix} 1 - a \\ b - 0 \end{pmatrix} = \begin{pmatrix} 1 - a \\ b \end{pmatrix}.
+    \]
+    Un point $M(x, y)$ appartient à $(FG)$ si et seulement si :
+    \[
+    \det(\vect{GM}, \vect{GF}) = 0 \iff \begin{vmatrix} x - a & 1 - a \\ y & b \end{vmatrix} = 0 \iff b(x - a) - (1 - a)y = 0.
+    \]
+    D'où :
+    \[
+    (FG) : bx - (1 - a)y - ab = 0.
+    \]
+\end{enumerate}
+
+\textbf{Étape 4 : Démonstration de la concourance si $a + b \neq 1$}
+Supposons que $a + b \neq 1$, ce qui équivaut à $a + b - 1 \neq 0$.
+Cherchons l'intersection des droites $(AC)$ et $(EH)$ :
+Puisque $(AC)$ a pour équation $y = x$, substituons $y = x$ dans l'équation de $(EH)$ :
+\[
+(1 - b)x - ax + ab = 0 \iff (1 - a - b)x + ab = 0 \iff (a + b - 1)x = ab.
+\]
+Comme $a + b - 1 \neq 0$, on peut diviser :
+\[
+x = \frac{ab}{a + b - 1}, \quad \text{et par suite} \quad y = x = \frac{ab}{a + b - 1}.
+\]
+Notons $K$ ce point d'intersection :
+\[
+K\left(\frac{ab}{a + b - 1} \,;\, \frac{ab}{a + b - 1}\right).
+\]
+Vérifions si ce point $K$ appartient à la troisième droite $(FG)$. Injectons ses coordonnées dans l'équation de $(FG)$ :
+\begin{align*}
+b x_K - (1 - a) y_K - ab &= b\left(\frac{ab}{a + b - 1}\right) - (1 - a)\left(\frac{ab}{a + b - 1}\right) - ab \\
+&= \frac{ab^2 - (1 - a)ab - ab(a + b - 1)}{a + b - 1} \\
+&= \frac{ab \bigl[ b - (1 - a) - (a + b - 1) \bigr]}{a + b - 1} \\
+&= \frac{ab \bigl[ b - 1 + a - a - b + 1 \bigr]}{a + b - 1} \\
+&= \frac{ab \times 0}{a + b - 1} = 0.
+\end{align*}
+L'égalité est identiquement nulle !
+Par conséquent, le point $K$ appartient également à $(FG)$.
+\textbf{Conclusion 1 :} Si $a + b \neq 1$, les trois droites $(EH)$, $(FG)$ et $(AC)$ sont \textbf{concourantes} au point $K\left(\frac{ab}{a + b - 1} \,;\, \frac{ab}{a + b - 1}\right)$.
+
+\textbf{Étape 5 : Démonstration du parallélisme si $a + b = 1$}
+Supposons désormais que $a + b = 1$, soit $1 - b = a$ et $1 - a = b$.
+Examinons les vecteurs directeurs des trois droites :
+\begin{itemize}[leftmargin=1cm]
+    \item Pour la droite $(AC)$ : $\vec{u}_{AC} = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.
+    \item Pour la droite $(EH)$ : $\vect{EH} = \begin{pmatrix} a \\ 1 - b \end{pmatrix} = \begin{pmatrix} a \\ a \end{pmatrix} = a \begin{pmatrix} 1 \\ 1 \end{pmatrix} = a\,\vec{u}_{AC}$.
+    \item Pour la droite $(FG)$ : $\vect{GF} = \begin{pmatrix} 1 - a \\ b \end{pmatrix} = \begin{pmatrix} b \\ b \end{pmatrix} = b \begin{pmatrix} 1 \\ 1 \end{pmatrix} = b\,\vec{u}_{AC}$.
+\end{itemize}
+Puisque $P(a, b)$ n'est confondu ni avec $B(1, 0)$ ni avec $D(0, 1)$, on a $a \neq 0$ et $b \neq 0$.
+Les vecteurs directeurs $\vect{EH}$ et $\vect{GF}$ sont donc tous deux colinéaires au vecteur $\vec{u}_{AC}$.
+Par conséquent, les trois droites ont la même direction.
+De plus, $(AC)$ passe par $A(0,0)$, tandis que pour $(EH)$ : $(1-b)(0) - a(0) + ab = ab \neq 0$. Les droites ne sont donc pas confondues.
+\textbf{Conclusion 2 :} Si $a + b = 1$, les droites $(EH)$, $(FG)$ et $(AC)$ sont \textbf{strictement parallèles}.
+\end{correctionbox}
+
+\begin{remarkbox}[Perspective géométrique projective : Théorème de Desargues]
+La condition $a + b = 1$ signifie que le point $P(a, b)$ est situé sur la seconde diagonale $(BD)$ du parallélogramme (dont l'équation cartésienne est $x + y = 1$).
+Cette propriété illustre magnifiquement le passage de la géométrie affine à la géométrie projective : lorsque $P \in (BD)$, le point de concours $K$ est « rejeté à l'infini » dans la direction de la première diagonale $(AC)$. C'est une conséquence directe du théorème de Desargues appliqué aux triangles $E B P$ et $D G P$.
+\end{remarkbox}
+
+\newpage
+% ==============================================================================
+% SECTION 3 : EXERCICES COMPLÉMENTAIRES D'APPROFONDISSEMENT
+% ==============================================================================
+\section{Exercices Complémentaires d'Approfondissement}
+
+% ----------------------------------------------------
+% EXERCICE 10 (COMPLÉMENTAIRE 1)
+% ----------------------------------------------------
+\subsection*{Exercice 10 (Complémentaire 1) : Modélisation en Optique Géométrique -- Formule de Descartes}
+
+\begin{enoncebox}[Énoncé (Exercice 10 -- Optique géométrique)]
+En physique, la formation d'une image réelle par une lentille mince convergente est régie par la célèbre relation de conjugaison de Descartes. Le but de cet exercice est de démontrer analytiquement cette formule par l'intersection et la colinéarité de rayons lumineux dans un repère du plan.
+
+On se place dans un repère orthonormé d'origine $O$ correspondant au centre optique de la lentille :
+\begin{itemize}
+    \item L'axe des abscisses $(Ox)$ est l'axe optique orienté de gauche à droite dans le sens de propagation de la lumière.
+    \item L'axe des ordonnées $(Oy)$ matérialise le plan de la lentille mince.
+    \item Le foyer objet $F$ a pour coordonnées $(-f'\,;\,0)$ et le foyer image $F'$ a pour coordonnées $(f'\,;\,0)$, où $f' > 0$ est la distance focale de la lentille.
+    \item Un objet lumineux réel $AB$ est placé perpendiculairement à l'axe optique, avec $A(x_A\,;\,0)$ ($x_A < 0$) et $B(x_A\,;\,y_B)$ ($y_B > 0$).
+    \item L'image $A'B'$ est formée à l'intersection des rayons émergents : $A'(x_{A'}\,;\,0)$ et $B'(x_{A'}\,;\,y_{B'})$.
+\end{itemize}
+En utilisant les propriétés des rayons fondamentaux (rayon passant par le centre optique $O$ et rayon passant par le foyer objet $F$), démontrer la formule de conjugaison de Descartes :
+\[
+\frac{1}{x_{A'}} - \frac{1}{x_A} = \frac{1}{f'}.
+\]
+\end{enoncebox}
+
+\begin{correctionbox}
+\textbf{Étape 1 : Modélisation du premier rayon (Centre optique $O$)}
+D'après les lois de l'optique de Gauss, un rayon incident passant par le centre optique $O(0, 0)$ traverse la lentille sans être dévié.
+La droite portant ce rayon est donc la droite $(OB)$.
+Le vecteur $\vect{OB} = \begin{pmatrix} x_A \\ y_B \end{pmatrix}$ est un vecteur directeur de cette droite.
+Puisque le point image $B'(x_{A'}, y_{B'})$ est situé sur ce rayon émergent, les points $O$, $B$ et $B'$ sont alignés :
+\[
+\det(\vect{OB'}, \vect{OB}) = 0 \iff \begin{vmatrix} x_{A'} & x_A \\ y_{B'} & y_B \end{vmatrix} = 0 \iff x_{A'} y_B - x_A y_{B'} = 0.
+\]
+Comme $x_A \neq 0$ (l'objet n'est pas collé au centre optique), on obtient la relation de grandissement transverse :
+\[
+y_{B'} = \frac{x_{A'}}{x_A} y_B \quad \text{ou de façon équivalente} \quad \frac{y_{B'}}{y_B} = \frac{x_{A'}}{x_A} = \gamma. \quad (1)
+\]
+
+\textbf{Étape 2 : Modélisation du second rayon (Foyer objet $F$)}
+Tout rayon incident passant par le foyer objet $F(-f', 0)$ émerge de la lentille parallèlement à l'axe optique.
+Considérons le rayon issu de $B(x_A, y_B)$ et passant par $F(-f', 0)$.
+Le vecteur directeur de la droite $(FB)$ est :
+\[
+\vect{FB} = \begin{pmatrix} x_A - (-f') \\ y_B - 0 \end{pmatrix} = \begin{pmatrix} x_A + f' \\ y_B \end{pmatrix}.
+\]
+Ce rayon incident frappe le plan de la lentille (axe des ordonnées $x = 0$) en un point $P(0\,;\,y_P)$.
+Les points $F$, $P$ et $B$ étant alignés, avec $\vect{FP} = \begin{pmatrix} 0 - (-f') \\ y_P - 0 \end{pmatrix} = \begin{pmatrix} f' \\ y_P \end{pmatrix}$, on a :
+\[
+\det(\vect{FB}, \vect{FP}) = 0 \iff (x_A + f') y_P - f' y_B = 0 \iff y_P = \frac{f' y_B}{x_A + f'}.
+\]
+À la sortie de la lentille, le rayon émerge parallèlement à l'axe optique : il suit la droite horizontale d'équation $y = y_P$.
+Ce rayon émergent passe nécessairement par le point image $B'(x_{A'}, y_{B'})$, ce qui impose immédiatement :
+\[
+y_{B'} = y_P = \frac{f' y_B}{x_A + f'}. \quad (2)
+\]
+
+\textbf{Étape 3 : Établissement de la relation de Descartes}
+Égalisons les deux expressions de l'ordonnée $y_{B'}$ données par les équations (1) et (2) :
+\[
+\frac{x_{A'}}{x_A} y_B = \frac{f' y_B}{x_A + f'}.
+\]
+Puisque la taille de l'objet est non nulle ($y_B \neq 0$), nous pouvons diviser les deux membres par $y_B$ :
+\[
+\frac{x_{A'}}{x_A} = \frac{f'}{x_A + f'}.
+\]
+Par produit en croix :
+\[
+x_{A'}(x_A + f') = x_A f' \iff x_A x_{A'} + x_{A'} f' = x_A f'.
+\]
+Divisons chaque terme de cette égalité par la quantité non nulle $x_A \cdot x_{A'} \cdot f'$ :
+\[
+\frac{x_A x_{A'}}{x_A x_{A'} f'} + \frac{x_{A'} f'}{x_A x_{A'} f'} = \frac{x_A f'}{x_A x_{A'} f'} \iff \frac{1}{f'} + \frac{1}{x_A} = \frac{1}{x_{A'}}.
+\]
+En isolant le terme $\frac{1}{f'}$, nous parvenons à la formule universelle :
+\[
+\frac{1}{x_{A'}} - \frac{1}{x_A} = \frac{1}{f'}.
+\]
+\textbf{Conclusion :} La relation de conjugaison de Descartes est rigoureusement démontrée par les seuls outils de la colinéarité et des déterminants dans le plan euclidien.
+\end{correctionbox}
+
+\vspace{0.6cm}
+% ----------------------------------------------------
+% EXERCICE 11 (COMPLÉMENTAIRE 2)
+% ----------------------------------------------------
+\subsection*{Exercice 11 (Complémentaire 2) : Distance d'un point à une droite par le trinôme du second degré}
+
+\begin{enoncebox}[Énoncé (Exercice 11 -- Distance par le second degré)]
+\textbf{Partie A : Application numérique} (Extrait des notes du cours)\\
+Dans un repère orthonormé, on considère la droite $d$ d'équation cartésienne :
+\[
+d : 2x - 4y + 1 = 0,
+\]
+et le point $A\left(2\sqrt{5} \,;\, \frac{1}{4}\right)$.\\
+Déterminer la distance minimale du point $A$ à la droite $d$, notée $d(A, d) = \min_{M \in d} AM$, en exprimant le carré de la distance $AM^2$ comme un trinôme du second degré en l'abscisse de $M$.
+
+\vspace{0.2cm}
+\textbf{Partie B : Généralisation théorique}\\
+Soit $d$ une droite quelconque d'équation cartésienne $ax + by + c = 0$ avec $(a, b) \neq (0, 0)$, et soit $A(x_0, y_0)$ un point quelconque du plan.\\
+Démontrer que la distance euclidienne de $A$ à la droite $d$ est donnée par la formule générale :
+\[
+d(A, d) = \frac{|a x_0 + b y_0 + c|}{\sqrt{a^2 + b^2}}.
+\]
+Retrouver la valeur numérique obtenue en Partie A.
+\end{enoncebox}
+
+\begin{correctionbox}
+\textbf{Partie A : Résolution du cas numérique}
+
+Soit $M(x, y)$ un point quelconque appartenant à la droite $d$.
+Ses coordonnées vérifient l'équation :
+\[
+2x - 4y + 1 = 0 \iff 4y = 2x + 1 \iff y = \frac{1}{2}x + \frac{1}{4}.
+\]
+Calculons le carré de la distance euclidienne $AM^2$ en fonction de l'abscisse $x$ :
+\[
+AM^2(x) = (x - x_A)^2 + (y - y_A)^2 = (x - 2\sqrt{5})^2 + \left[\left(\frac{1}{2}x + \frac{1}{4}\right) - \frac{1}{4}\right]^2.
+\]
+Remarquons la simplification remarquable dans le second terme : $\frac{1}{4} - \frac{1}{4} = 0$. Il vient :
+\[
+AM^2(x) = (x - 2\sqrt{5})^2 + \left(\frac{1}{2}x\right)^2.
+\]
+Développons cette expression :
+\[
+AM^2(x) = x^2 - 4\sqrt{5}x + (2\sqrt{5})^2 + \frac{1}{4}x^2 = x^2 - 4\sqrt{5}x + 20 + \frac{1}{4}x^2 = \frac{5}{4}x^2 - 4\sqrt{5}x + 20.
+\]
+L'expression $f(x) = \frac{5}{4}x^2 - 4\sqrt{5}x + 20$ est un polynôme du second degré de la forme $\alpha x^2 + \beta x + \gamma$ avec :
+\[
+\alpha = \frac{5}{4} > 0, \quad \beta = -4\sqrt{5}, \quad \gamma = 20.
+\]
+Puisque le coefficient dominant $\alpha > 0$, la parabole est tournée vers le haut et admet un minimum absolu au sommet d'abscisse :
+\[
+x_S = -\frac{\beta}{2\alpha} = -\frac{-4\sqrt{5}}{2 \times \frac{5}{4}} = \frac{4\sqrt{5}}{\frac{5}{2}} = 4\sqrt{5} \times \frac{2}{5} = \frac{8\sqrt{5}}{5}.
+\]
+Calculons la valeur minimale de ce carré de distance, $AM^2(x_S)$ :
+\begin{align*}
+AM^2(x_S) &= \frac{5}{4}\left(\frac{8\sqrt{5}}{5}\right)^2 - 4\sqrt{5}\left(\frac{8\sqrt{5}}{5}\right) + 20 \\
+&= \frac{5}{4} \times \frac{64 \times 5}{25} - \frac{32 \times 5}{5} + 20 \\
+&= \frac{5}{4} \times \frac{64}{5} - 32 + 20 \\
+&= 16 - 32 + 20 = 4.
+\end{align*}
+La fonction racine carrée étant strictement croissante sur $\R^+$, la distance $AM$ est minimale au même point que son carré :
+\[
+d(A, d) = \min_{M \in d} AM = \sqrt{AM^2(x_S)} = \sqrt{4} = 2.
+\]
+\textbf{Conclusion Partie A :} La distance minimale du point $A$ à la droite $d$ est égale à $2$.
+
+\vspace{0.3cm}
+\textbf{Partie B : Démonstration générale de la formule de distance}
+
+Soit $d : ax + by + c = 0$ et $A(x_0, y_0)$.
+\begin{itemize}[leftmargin=1cm]
+    \item \textbf{Si $b \neq 0$ :} Tout point $M(x, y) \in d$ vérifie $y = -\frac{a}{b}x - \frac{c}{b}$.
+    La distance au carré vaut :
+    \[
+    AM^2(x) = (x - x_0)^2 + \left(-\frac{a}{b}x - \frac{c}{b} - y_0\right)^2 = (x - x_0)^2 + \frac{1}{b^2}(ax + by_0 + c)^2.
+    \]
+    Posons le changement de variable $u = x - x_0$, d'où $x = x_0 + u$. Alors :
+    \[
+    ax + by_0 + c = a(x_0 + u) + by_0 + c = a u + (a x_0 + b y_0 + c).
+    \]
+    Notons pour abréger $\delta = a x_0 + b y_0 + c$. L'expression devient :
+    \[
+    AM^2(u) = u^2 + \frac{1}{b^2}(au + \delta)^2 = u^2 + \frac{a^2}{b^2}u^2 + \frac{2a\delta}{b^2}u + \frac{\delta^2}{b^2} = \left(\frac{a^2+b^2}{b^2}\right)u^2 + \frac{2a\delta}{b^2}u + \frac{\delta^2}{b^2}.
+    \]
+    Il s'agit d'un trinôme en $u$ de coefficient dominant $A = \frac{a^2+b^2}{b^2} > 0$. Son minimum est atteint pour :
+    \[
+    u_S = -\frac{B}{2A} = -\frac{\frac{2a\delta}{b^2}}{2\frac{a^2+b^2}{b^2}} = -\frac{a\delta}{a^2+b^2}.
+    \]
+    La valeur minimale vaut alors :
+    \begin{align*}
+    \min AM^2 &= AM^2(u_S) = \frac{a^2+b^2}{b^2}\left(-\frac{a\delta}{a^2+b^2}\right)^2 + \frac{2a\delta}{b^2}\left(-\frac{a\delta}{a^2+b^2}\right) + \frac{\delta^2}{b^2} \\
+    &= \frac{a^2\delta^2}{b^2(a^2+b^2)} - \frac{2a^2\delta^2}{b^2(a^2+b^2)} + \frac{\delta^2(a^2+b^2)}{b^2(a^2+b^2)} \\
+    &= \frac{\delta^2[-a^2 + a^2 + b^2]}{b^2(a^2+b^2)} = \frac{\delta^2 b^2}{b^2(a^2+b^2)} = \frac{\delta^2}{a^2 + b^2} = \frac{(ax_0 + by_0 + c)^2}{a^2 + b^2}.
+    \end{align*}
+    En prenant la racine carrée :
+    \[
+    d(A, d) = \sqrt{\frac{(ax_0 + by_0 + c)^2}{a^2 + b^2}} = \frac{|ax_0 + by_0 + c|}{\sqrt{a^2 + b^2}}.
+    \]
+    \item \textbf{Si $b = 0$ :} La droite est verticale : $ax + c = 0 \iff x = -\frac{c}{a}$ ($a \neq 0$).
+    La distance horizontale est immédiate :
+    \[
+    d(A, d) = \left|x_0 - \left(-\frac{c}{a}\right)\right| = \frac{|ax_0 + c|}{|a|} = \frac{|ax_0 + 0 \cdot y_0 + c|}{\sqrt{a^2 + 0^2}}.
+    \]
+    La formule reste donc rigoureusement exacte pour toute droite du plan.
+\end{itemize}
+
+\textbf{Application directe à la Partie A :}
+Avec $a = 2$, $b = -4$, $c = 1$ et $A\left(2\sqrt{5} \,;\, \frac{1}{4}\right)$ :
+\[
+|a x_0 + b y_0 + c| = \left| 2(2\sqrt{5}) - 4\left(\frac{1}{4}\right) + 1 \right| = |4\sqrt{5} - 1 + 1| = 4\sqrt{5}.
+\]
+\[
+\sqrt{a^2 + b^2} = \sqrt{2^2 + (-4)^2} = \sqrt{4 + 16} = \sqrt{20} = 2\sqrt{5}.
+\]
+D'où :
+\[
+d(A, d) = \frac{4\sqrt{5}}{2\sqrt{5}} = 2.
+\]
+La concordance est totale et immédiate.
+\end{correctionbox}
+
+\begin{remarkbox}[Interprétation géométrique : Projection orthogonale]
+En géométrie vectorielle prépa, la distance $d(A, d)$ s'obtient instantanément en considérant le projeté orthogonal $H$ de $A$ sur la droite $d$.
+En effet, le vecteur normal unitaire à la droite est $\vec{n}_0 = \frac{1}{\sqrt{a^2+b^2}}\begin{pmatrix} a \\ b \end{pmatrix}$.
+Pour tout point $M \in d$, le vecteur $\vect{AH}$ est colinéaire à $\vec{n}_0$, et :
+\[
+d(A, d) = \|\vect{AH}\| = |\vect{AM} \cdot \vec{n}_0| = \frac{|a(x_0 - x) + b(y_0 - y)|}{\sqrt{a^2+b^2}} = \frac{|ax_0 + by_0 - (ax + by)|}{\sqrt{a^2+b^2}}.
+\]
+Comme $M \in d$, on a $ax + by = -c$, d'où directement $d(A, d) = \frac{|ax_0 + by_0 + c|}{\sqrt{a^2+b^2}}$.
+\end{remarkbox}
+
+\vspace{1cm}
+\begin{center}
+    \rule{6cm}{0.5pt}\\[0.2cm]
+    \small\textit{Fin de la fiche d'exercices et corrigés d'approfondissement -- Lycée Louis-le-Grand 1E3}
+\end{center}
+
+\end{document}

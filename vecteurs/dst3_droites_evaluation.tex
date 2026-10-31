@@ -1,0 +1,819 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+
+% Couleurs personnalisées sécurisées
+\definecolor{emeraldframe}{RGB}{20, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{15, 85, 55}
+\definecolor{prepaframe}{RGB}{30, 70, 130}
+\definecolor{prepaback}{RGB}{245, 248, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 100}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!70!black,
+    citecolor=blue!70!black
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité (1E3)}
+\fancyhead[C]{\small\textbf{DST 3 : Équations de droites}}
+\fancyhead[R]{\small 25 Novembre 2021}
+\fancyfoot[L]{\footnotesize LLG 2021/2022}
+\fancyfoot[C]{\footnotesize Énoncés \& Corrigés ultra-détaillés}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% Boîtes tcolorbox
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Correction détaillée et méthodologie #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.4cm,
+  after skip=0.5cm
+}
+
+\newtcolorbox{remarquebox}[1][]{
+  colback=prepaback,
+  colframe=prepaframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=prepatitle,
+  title={Prolongement \& Regard Prépa / MPSI #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.2cm,
+  after skip=0.3cm
+}
+
+% Commandes utiles
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\vect}[1]{\overrightarrow{#1}}
+\newcommand{\dd}{\mathrm{d}}
+
+\begin{document}
+
+% Titre principal
+\begin{center}
+    {\LARGE \bfseries Devoir Sur Table n°3 : Équations de droites}\\[0.25cm]
+    {\large \textbf{Classe de Première Spécialité Mathématiques -- Classe 1E3}}\\[0.15cm]
+    {\small Lycée Louis-le-Grand -- Jeudi 25 Novembre 2021 -- Durée : 2 heures}\\[0.3cm]
+    \hrule height 1pt
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!60!black,arc=1.5mm,boxrule=0.6pt]
+\textbf{Consignes de rédaction :}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item La clarté, la rigueur des justifications et le soin apporté à la rédaction constituent une part essentielle de l'évaluation.
+    \item Tout résultat numérique ou géométrique doit être rigoureusement démontré en s'appuyant sur les théorèmes du cours (colinéarité, caractérisation par déterminant, système d'équations).
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+% ====================================================
+% EXERCICE 1
+% ====================================================
+\subsection*{Exercice 1 \hfill \normalfont\normalsize (4 points)}
+
+On se place dans un repère du plan.
+
+On considère les points $A(-7\,;\,3)$, $B(8\,;\,-3)$, $C(3\,;\,-1)$ et $D(-2\,;\,1)$.
+
+\begin{enumerate}
+    \item Établir une équation cartésienne de la droite $(AB)$ sans calcul de coefficient directeur.
+    \item 
+    \begin{enumerate}
+        \item Calculer le coefficient directeur de la droite $(CD)$.
+        \item En déduire l'ordonnée à l'origine de la droite $(CD)$ puis donner son équation réduite.
+    \end{enumerate}
+    \item Montrer que les droites $(AB)$ et $(CD)$ sont confondues.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Équation cartésienne de la droite $(AB)$ par le déterminant :}
+    
+    Soit $M(x\,;\,y)$ un point quelconque du plan.
+    
+    Les coordonnées du vecteur $\vect{AB}$ sont :
+    \[
+    \vect{AB} = \begin{pmatrix} x_B - x_A \\ y_B - y_A \end{pmatrix} = \begin{pmatrix} 8 - (-7) \\ -3 - 3 \end{pmatrix} = \begin{pmatrix} 15 \\ -6 \end{pmatrix}.
+    \]
+    Le vecteur $\vect{AB}$ n'est pas le vecteur nul (car $15 \neq 0$), donc la droite $(AB)$ est bien définie et admet $\vect{AB}$ comme vecteur directeur.
+    
+    Les coordonnées du vecteur $\vect{AM}$ sont :
+    \[
+    \vect{AM} = \begin{pmatrix} x - x_A \\ y - y_A \end{pmatrix} = \begin{pmatrix} x - (-7) \\ y - 3 \end{pmatrix} = \begin{pmatrix} x + 7 \\ y - 3 \end{pmatrix}.
+    \]
+    Par définition, $M(x\,;\,y) \in (AB)$ si et seulement si les vecteurs $\vect{AM}$ et $\vect{AB}$ sont colinéaires, ce qui équivaut à la nullité de leur déterminant :
+    \[
+    M(x\,;\,y) \in (AB) \iff \det(\vect{AM}, \vect{AB}) = 0.
+    \]
+    Or :
+    \[
+    \det(\vect{AM}, \vect{AB}) = \begin{vmatrix} x + 7 & 15 \\ y - 3 & -6 \end{vmatrix} = -6(x + 7) - 15(y - 3).
+    \]
+    Développons et réduisons cette expression :
+    \[
+    -6(x + 7) - 15(y - 3) = -6x - 42 - 15y + 45 = -6x - 15y + 3.
+    \]
+    Ainsi :
+    \[
+    M(x\,;\,y) \in (AB) \iff -6x - 15y + 3 = 0.
+    \]
+    En divisant cette équation par $-3$, on obtient une forme irréductible équivalente :
+    \[
+    \mathbf{2x + 5y - 1 = 0}.
+    \]
+    Une équation cartésienne de la droite $(AB)$ est donc :
+    \[
+    (AB) : 2x + 5y - 1 = 0 \quad (\text{ou } -6x - 15y + 3 = 0).
+    \]
+
+    \item 
+    \begin{enumerate}
+        \item \textbf{Coefficient directeur de $(CD)$ :}
+        
+        Les points $C(3\,;\,-1)$ et $D(-2\,;\,1)$ vérifient $x_C \neq x_D$ ($3 \neq -2$). La droite $(CD)$ n'est donc pas parallèle à l'axe des ordonnées.
+        
+        Son coefficient directeur $m$ est donné par :
+        \[
+        m = \frac{y_D - y_C}{x_D - x_C} = \frac{1 - (-1)}{-2 - 3} = \frac{2}{-5} = -\frac{2}{5}.
+        \]
+
+        \item \textbf{Ordonnée à l'origine et équation réduite de $(CD)$ :}
+        
+        L'équation réduite de $(CD)$ est de la forme $y = mx + p$, c'est-à-dire :
+        \[
+        y = -\frac{2}{5}x + p, \quad \text{avec } p \in \R.
+        \]
+        Puisque $C(3\,;\,-1) \in (CD)$, ses coordonnées vérifient cette relation :
+        \[
+        -1 = -\frac{2}{5} \times 3 + p \iff -1 = -\frac{6}{5} + p \iff p = -1 + \frac{6}{5} = \frac{1}{5}.
+        \]
+        \textit{Vérification avec le point $D(-2\,;\,1)$ :}
+        \[
+        -\frac{2}{5} \times (-2) + \frac{1}{5} = \frac{4}{5} + \frac{1}{5} = \frac{5}{5} = 1 = y_D. \quad \text{(Vérifié)}
+        \]
+        L'ordonnée à l'origine de $(CD)$ est donc $p = \dfrac{1}{5}$, et son équation réduite est :
+        \[
+        (CD) : y = -\frac{2}{5}x + \frac{1}{5}.
+        \]
+    \end{enumerate}
+
+    \item \textbf{Droites confondues :}
+    
+    Déterminons l'équation réduite de la droite $(AB)$ à partir de son équation cartésienne :
+    \[
+    2x + 5y - 1 = 0 \iff 5y = -2x + 1 \iff y = -\frac{2}{5}x + \frac{1}{5}.
+    \]
+    Les droites $(AB)$ et $(CD)$ possèdent exactement la même équation réduite $y = -\dfrac{2}{5}x + \dfrac{1}{5}$.
+    
+    Par conséquent, l'ensemble des points de $(AB)$ coïncide avec l'ensemble des points de $(CD)$ :
+    \[
+    \mathbf{(AB) \text{ et } (CD) \text{ sont confondues}}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ====================================================
+% EXERCICE 2
+% ====================================================
+\subsection*{Exercice 2 \hfill \normalfont\normalsize (4{,}5 points)}
+
+\begin{enumerate}
+    \item Donner la hauteur d'un triangle équilatéral de côté 1.
+    \item On considère la configuration géométrique suivante :
+    
+    \begin{center}
+    \begin{tikzpicture}[scale=3.2, cap=round, >=Latex]
+        % Sommets du carré
+        \coordinate (A) at (0,0);
+        \coordinate (B) at (1,0);
+        \coordinate (C) at (1,1);
+        \coordinate (D) at (0,1);
+        
+        % Sommet E (intérieur) : hauteur h = sqrt(3)/2
+        \coordinate (E) at (0.5, {sqrt(3)/2});
+        
+        % Sommet F (extérieur) : x = 1 + sqrt(3)/2, y = 0.5
+        \coordinate (F) at ({1 + sqrt(3)/2}, 0.5);
+        
+        % Tracé du carré ABCD
+        \draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;
+        
+        % Tracé triangle équilatéral AEB
+        \draw[thick] (A) -- (E) -- (B);
+        
+        % Tracé triangle équilatéral BCF
+        \draw[thick] (B) -- (F) -- (C);
+        
+        % Droite passant par D, E, F (en pointillés rouge pour illustrer l'alignement)
+        \draw[dashed, red!80!black, thick] ($(D)!-0.1!(F)$) -- ($(D)!1.1!(F)$);
+        
+        % Repère : vecteurs AB et AD
+        \draw[->, very thick, blue!80!black] (A) -- (0.5, 0) node[below] {\small $\vect{AB}$};
+        \draw[->, very thick, blue!80!black] (A) -- (0, 0.5) node[left] {\small $\vect{AD}$};
+        
+        % Points et labels
+        \fill (A) circle (0.6pt) node[below left] {$A$};
+        \fill (B) circle (0.6pt) node[below right] {$B$};
+        \fill (C) circle (0.6pt) node[above right] {$C$};
+        \fill (D) circle (0.6pt) node[above left] {$D$};
+        \fill (E) circle (0.6pt) node[below] {$E$};
+        \fill (F) circle (0.6pt) node[right] {$F$};
+    \end{tikzpicture}
+    \end{center}
+    
+    $ABCD$ est un carré. $AEB$ et $BCF$ sont des triangles équilatéraux.
+    \begin{enumerate}
+        \item Donner les coordonnées de $D$, $E$ et $F$ dans un repère bien choisi.
+        \item En déduire que les points $D$, $E$ et $F$ sont alignés.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Hauteur d'un triangle équilatéral de côté 1 :}
+    
+    Soit un triangle équilatéral de côté $a = 1$. La hauteur issue d'un sommet est également médiatrice du côté opposé, donc elle coupe ce côté en son milieu.
+    
+    Cette hauteur découpe ainsi le triangle en deux triangles rectangles dont l'hypoténuse mesure 1 et le côté adjacent mesure $\dfrac{1}{2}$.
+    
+    D'après le théorème de Pythagore, la hauteur $h$ vérifie :
+    \[
+    h^2 + \left(\frac{1}{2}\right)^2 = 1^2 \iff h^2 = 1 - \frac{1}{4} = \frac{3}{4}.
+    \]
+    Comme $h > 0$, on a :
+    \[
+    \mathbf{h = \frac{\sqrt{3}}{2}}.
+    \]
+
+    \item 
+    \begin{enumerate}
+        \item \textbf{Choix du repère et détermination des coordonnées :}
+        
+        Puisque $ABCD$ est un carré, on a $(AB) \perp (AD)$ et $AB = AD = 1$. Le repère $\mathcal{R} = (A\,;\, \vect{AB}, \vect{AD})$ est donc un \textbf{repère orthonormé}.
+        
+        Dans ce repère :
+        \begin{itemize}[leftmargin=*,itemsep=2pt]
+            \item $A$ est l'origine du repère : $A(0\,;\,0)$.
+            \item $\vect{AB} = 1\vect{AB} + 0\vect{AD}$, donc $B(1\,;\,0)$.
+            \item $\vect{AD} = 0\vect{AB} + 1\vect{AD}$, donc $\mathbf{D(0\,;\,1)}$.
+            \item $\vect{AC} = \vect{AB} + \vect{AD}$, donc $C(1\,;\,1)$.
+            \item \textbf{Point $E$ :} Le triangle $AEB$ est équilatéral de base $[AB]$.
+            Le projeté orthogonal de $E$ sur l'axe des abscisses $(AB)$ est le milieu de $[AB]$, donc $x_E = \dfrac{1}{2}$.
+            L'ordonnée de $E$ correspond à la hauteur du triangle $AEB$, dirigée vers le haut, donc $y_E = h = \dfrac{\sqrt{3}}{2}$.
+            D'où :
+            \[
+            \mathbf{E\left(\frac{1}{2}\,;\, \frac{\sqrt{3}}{2}\right)}.
+            \]
+            \item \textbf{Point $F$ :} Le triangle $BCF$ est équilatéral de base $[BC]$.
+            Le projeté orthogonal de $F$ sur $(BC)$ est le milieu de $[BC]$, donc son ordonnée est $y_F = \dfrac{1}{2}$.
+            Son abscisse est égale à l'abscisse de la droite $(BC)$ (qui vaut 1) augmentée de la hauteur $h$ du triangle $BCF$ :
+            $x_F = 1 + h = 1 + \dfrac{\sqrt{3}}{2}$.
+            D'où :
+            \[
+            \mathbf{F\left(1 + \frac{\sqrt{3}}{2}\,;\, \frac{1}{2}\right)}.
+            \]
+        \end{itemize}
+
+        \item \textbf{Alignement des points $D$, $E$ et $F$ :}
+        
+        Calculons les coordonnées des vecteurs $\vect{DE}$ et $\vect{DF}$ :
+        \[
+        \vect{DE} = \begin{pmatrix} x_E - x_D \\ y_E - y_D \end{pmatrix} = \begin{pmatrix} \dfrac{1}{2} - 0 \\ \dfrac{\sqrt{3}}{2} - 1 \end{pmatrix} = \begin{pmatrix} \dfrac{1}{2} \\ \dfrac{\sqrt{3}}{2} - 1 \end{pmatrix},
+        \]
+        \[
+        \vect{DF} = \begin{pmatrix} x_F - x_D \\ y_F - y_D \end{pmatrix} = \begin{pmatrix} 1 + \dfrac{\sqrt{3}}{2} - 0 \\ \dfrac{1}{2} - 1 \end{pmatrix} = \begin{pmatrix} 1 + \dfrac{\sqrt{3}}{2} \\ -\dfrac{1}{2} \end{pmatrix}.
+        \]
+        Calculons le déterminant $\det(\vect{DE}, \vect{DF})$ :
+        \[
+        \det(\vect{DE}, \vect{DF}) = \begin{vmatrix} \dfrac{1}{2} & 1 + \dfrac{\sqrt{3}}{2} \\ \dfrac{\sqrt{3}}{2} - 1 & -\dfrac{1}{2} \end{vmatrix} = \frac{1}{2} \times \left(-\frac{1}{2}\right) - \left(\frac{\sqrt{3}}{2} - 1\right)\left(1 + \frac{\sqrt{3}}{2}\right).
+        \]
+        Or, en reconnaissant l'identité remarquable $(a - b)(a + b) = a^2 - b^2$ avec $a = \dfrac{\sqrt{3}}{2}$ et $b = 1$ :
+        \[
+        \left(\frac{\sqrt{3}}{2} - 1\right)\left(\frac{\sqrt{3}}{2} + 1\right) = \left(\frac{\sqrt{3}}{2}\right)^2 - 1^2 = \frac{3}{4} - 1 = -\frac{1}{4}.
+        \]
+        Par conséquent :
+        \[
+        \det(\vect{DE}, \vect{DF}) = -\frac{1}{4} - \left(-\frac{1}{4}\right) = -\frac{1}{4} + \frac{1}{4} = 0.
+        \]
+        Puisque $\det(\vect{DE}, \vect{DF}) = 0$, les vecteurs $\vect{DE}$ et $\vect{DF}$ sont colinéaires.
+        
+        Ayant le point $D$ en commun, on conclut que :
+        \[
+        \mathbf{\text{Les points } D, E \text{ et } F \text{ sont alignés}}.
+        \]
+    \end{enumerate}
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquebox}[Démonstration géométrique synthétique classique]
+En géométrie euclidienne pure sans coordonnées, ce résultat se démontre par le calcul des angles :
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item Dans le triangle isocèle $ADE$ en $A$ : $\widehat{DAE} = \widehat{DAB} - \widehat{EAB} = 90^\circ - 60^\circ = 30^\circ$.
+    Comme $AD = AE = 1$, le triangle $ADE$ est isocèle en $A$, d'où $\widehat{ADE} = \dfrac{180^\circ - 30^\circ}{2} = 75^\circ$.
+    \item Dans le triangle équilatéral $BCF$ et le carré $ABCD$ : $\widehat{DCF} = \widehat{DCB} + \widehat{BCF} = 90^\circ + 60^\circ = 150^\circ$.
+    Comme $CD = CF = 1$, le triangle $DCF$ est isocèle en $C$, d'où $\widehat{CDF} = \dfrac{180^\circ - 150^\circ}{2} = 15^\circ$.
+    \item Par conséquent, $\widehat{EDF} = \widehat{ADE} + \widehat{EDC} \dots$ ou plus simplement :
+    $\widehat{ADE} + \widehat{CDF} = 75^\circ + 15^\circ = 90^\circ = \widehat{ADC}$.
+    Les demi-droites $[DE)$ et $[DF)$ forment donc le même angle avec $(DC)$, ce qui prouve immédiatement l'alignement des points $D$, $E$ et $F$.
+\end{itemize}
+\end{remarquebox}
+
+\vspace{0.3cm}
+
+% ====================================================
+% EXERCICE 3
+% ====================================================
+\subsection*{Exercice 3 \hfill \normalfont\normalsize (4{,}5 points)}
+
+Soit un parallélogramme $ABCD$. On définit les points $E, F$ et $G$ par :
+\[
+\vect{DE} = 2\vect{AD}, \quad 3\vect{FD} + \vect{FC} = \vect{0} \quad \text{et} \quad \vect{AG} = m\vect{AF} \quad (m \in \R).
+\]
+On se place dans le repère $(A\,;\, \vect{AB}, \vect{AD})$.
+
+\begin{enumerate}
+    \item Déterminer les coordonnées de $A, B, C$ et $D$ sans justification.
+    \item Calculer les coordonnées des points $E$ et $F$.
+    \item Exprimer les coordonnées du point $G$ en fonction de $m$.
+    \item Déterminer la valeur de $m$ pour que les points $E, G$ et $B$ soient alignés.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Coordonnées directes des sommets du parallélogramme :}
+    
+    Dans le repère $(A\,;\, \vect{AB}, \vect{AD})$ :
+    \[
+    \mathbf{A(0\,;\,0)}, \quad \mathbf{B(1\,;\,0)}, \quad \mathbf{C(1\,;\,1)}, \quad \mathbf{D(0\,;\,1)}.
+    \]
+    \textit{(En effet, par définition d'un parallélogramme, $\vect{AC} = \vect{AB} + \vect{AD} = 1\vect{AB} + 1\vect{AD}$)}.
+
+    \item \textbf{Coordonnées des points $E$ et $F$ :}
+    
+    \begin{itemize}[leftmargin=*,itemsep=3pt]
+        \item \textbf{Pour le point $E$ :}
+        On a la relation vectorielle $\vect{DE} = 2\vect{AD}$.
+        
+        En passant aux coordonnées :
+        \[
+        \begin{cases}
+        x_E - x_D = 2(x_D - x_A) \\
+        y_E - y_D = 2(y_D - y_A)
+        \end{cases}
+        \iff
+        \begin{cases}
+        x_E - 0 = 2(0 - 0) = 0 \\
+        y_E - 1 = 2(1 - 0) = 2
+        \end{cases}
+        \iff
+        \begin{cases}
+        x_E = 0 \\
+        y_E = 3
+        \end{cases}
+        \]
+        D'où :
+        \[
+        \mathbf{E(0\,;\,3)}.
+        \]
+        \textit{(Remarque vectorielle directe : $\vect{AE} = \vect{AD} + \vect{DE} = \vect{AD} + 2\vect{AD} = 3\vect{AD}$, ce qui donne immédiatement $(0\,;\,3)$)}.
+
+        \item \textbf{Pour le point $F$ :}
+        On a la relation vectorielle $3\vect{FD} + \vect{FC} = \vect{0}$.
+        
+        En coordonnées :
+        \[
+        \begin{cases}
+        3(x_D - x_F) + (x_C - x_F) = 0 \\
+        3(y_D - y_F) + (y_C - y_F) = 0
+        \end{cases}
+        \iff
+        \begin{cases}
+        3(0 - x_F) + (1 - x_F) = 0 \\
+        3(1 - y_F) + (1 - y_F) = 0
+        \end{cases}
+        \]
+        Résolvons chacune des deux équations scalaires :
+        \[
+        -3x_F + 1 - x_F = 0 \iff -4x_F + 1 = 0 \iff 4x_F = 1 \iff x_F = \frac{1}{4}.
+        \]
+        \[
+        3 - 3y_F + 1 - y_F = 0 \iff 4 - 4y_F = 0 \iff 4y_F = 4 \iff y_F = 1.
+        \]
+        D'où :
+        \[
+        \mathbf{F\left(\frac{1}{4}\,;\,1\right)}.
+        \]
+        \textit{(Remarque barycentrique : $F$ est le barycentre de $\{(D, 3), (C, 1)\}$, donc $\vect{DF} = \dfrac{1}{4}\vect{DC} = \dfrac{1}{4}\vect{AB}$)}.
+    \end{itemize}
+
+    \item \textbf{Coordonnées du point $G$ en fonction de $m$ :}
+    
+    On a la relation vectorielle $\vect{AG} = m\vect{AF}$.
+    
+    Comme $A(0\,;\,0)$ est l'origine du repère, les coordonnées du point $G$ sont données par les composantes du vecteur $\vect{AG}$ :
+    \[
+    \begin{cases}
+    x_G = m\, x_F = m \times \dfrac{1}{4} = \dfrac{m}{4} \\[6pt]
+    y_G = m\, y_F = m \times 1 = m
+    \end{cases}
+    \]
+    Ainsi :
+    \[
+    \mathbf{G\left(\frac{m}{4}\,;\, m\right)}.
+    \]
+
+    \item \textbf{Valeur de $m$ pour l'alignement des points $E$, $G$ et $B$ :}
+    
+    Les points $E(0\,;\,3)$, $B(1\,;\,0)$ et $G\left(\dfrac{m}{4}\,;\, m\right)$ sont alignés si et seulement si les vecteurs $\vect{EB}$ et $\vect{EG}$ sont colinéaires :
+    \[
+    E, G, B \text{ alignés} \iff \det(\vect{EG}, \vect{EB}) = 0.
+    \]
+    Déterminons les coordonnées de ces deux vecteurs :
+    \[
+    \vect{EB} = \begin{pmatrix} x_B - x_E \\ y_B - y_E \end{pmatrix} = \begin{pmatrix} 1 - 0 \\ 0 - 3 \end{pmatrix} = \begin{pmatrix} 1 \\ -3 \end{pmatrix},
+    \]
+    \[
+    \vect{EG} = \begin{pmatrix} x_G - x_E \\ y_G - y_E \end{pmatrix} = \begin{pmatrix} \dfrac{m}{4} - 0 \\ m - 3 \end{pmatrix} = \begin{pmatrix} \dfrac{m}{4} \\ m - 3 \end{pmatrix}.
+    \]
+    Calculons le déterminant :
+    \[
+    \det(\vect{EG}, \vect{EB}) = \begin{vmatrix} \dfrac{m}{4} & 1 \\ m - 3 & -3 \end{vmatrix} = \frac{m}{4} \times (-3) - 1 \times (m - 3) = -\frac{3m}{4} - m + 3.
+    \]
+    Réduisons au même dénominateur :
+    \[
+    -\frac{3m}{4} - \frac{4m}{4} + 3 = -\frac{7m}{4} + 3.
+    \]
+    L'alignement équivaut donc à :
+    \[
+    -\frac{7m}{4} + 3 = 0 \iff \frac{7m}{4} = 3 \iff 7m = 12 \iff \mathbf{m = \frac{12}{7}}.
+    \]
+    \textbf{Conclusion :} Les points $E$, $G$ et $B$ sont alignés si et seulement si $\mathbf{m = \dfrac{12}{7}}$.
+    
+    \begin{center}
+    \begin{tikzpicture}[scale=1.4, cap=round, >=Latex]
+        % Sommets du parallélogramme
+        \coordinate (A) at (0,0);
+        \coordinate (B) at (2.5,0);
+        \coordinate (D) at (0.8,1.4);
+        \coordinate (C) at ($(B)+(D)-(A)$);
+        
+        % E tel que DE = 2 AD => AE = 3 AD
+        \coordinate (E) at ($(A)!3!(D)$);
+        
+        % F tel que 3 FD + FC = 0 => F = D + 1/4 DC
+        \coordinate (F) at ($(D)!0.25!(C)$);
+        
+        % Pour m = 12/7 : G = 12/7 F
+        \coordinate (G) at ($(A)!{12/7}!(F)$);
+        
+        % Tracé du parallélogramme
+        \draw[thick, fill=gray!8] (A) -- (B) -- (C) -- (D) -- cycle;
+        
+        % Repère (A; AB, AD)
+        \draw[->, very thick, blue!80!black] (A) -- (B) node[midway, below] {\small $\vect{AB}$};
+        \draw[->, very thick, blue!80!black] (A) -- (D) node[midway, left] {\small $\vect{AD}$};
+        
+        % Prolongement (AD) vers E
+        \draw[dashed, gray!70] (D) -- (E);
+        
+        % Droite (AF) prolongée
+        \draw[thick, blue!60!black] (A) -- ($(A)!2.1!(F)$) node[right] {\small $(AF)$};
+        
+        % Droite d'alignement (EB)
+        \draw[very thick, dashed, red!80!black] ($(E)!-0.1!(B)$) -- ($(E)!1.1!(B)$) node[right] {\small $(EB)$};
+        
+        % Points et labels
+        \fill (A) circle (1.5pt) node[below left] {$A$};
+        \fill (B) circle (1.5pt) node[below right] {$B$};
+        \fill (C) circle (1.5pt) node[above right] {$C$};
+        \fill (D) circle (1.5pt) node[left] {$D$};
+        \fill (E) circle (1.5pt) node[above left] {$E(0\,;\,3)$};
+        \fill (F) circle (1.5pt) node[above] {$F\left(\frac{1}{4}\,;\,1\right)$};
+        \fill (G) circle (1.5pt) node[below right] {$G\left(\frac{3}{7}\,;\,\frac{12}{7}\right)$};
+    \end{tikzpicture}
+    \end{center}
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ====================================================
+% EXERCICE 4
+% ====================================================
+\subsection*{Exercice 4 \hfill \normalfont\normalsize (4 points)}
+
+Pour $m \in \R$, on considère la droite $d_m$ d'équation cartésienne :
+\[
+d_m : (m+2)x + (2m-1)y - m + 3 = 0.
+\]
+\textit{Les questions 1) et 2) sont à traiter de façon indépendante.}
+
+\begin{enumerate}
+    \item 
+    \begin{enumerate}
+        \item Montrer que $d_0$ et $d_1$ sont sécantes en un point $A$ dont on précisera les coordonnées.
+        \item Montrer que $A$ est l'unique point appartenant à toutes les droites $d_m$ ($m \in \R$).
+    \end{enumerate}
+    \item 
+    \begin{enumerate}
+        \item Résoudre le système $\mathscr{S} : \begin{cases} x + 2y - 1 = 0 \\ 2x - y + 3 = 0 \end{cases}$
+        \item Montrer que :
+        \[
+        (M(x\,;\,y) \in d_m \quad \forall m \in \R) \iff (x\,;\,y) \text{ est solution de } \mathscr{S}.
+        \]
+        \item Conclure.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Première approche : par analyse-synthèse}
+    \begin{enumerate}
+        \item \textbf{Intersection de $d_0$ et $d_1$ :}
+        
+        Pour $m = 0$ :
+        \[
+        d_0 : (0 + 2)x + (2 \times 0 - 1)y - 0 + 3 = 0 \iff 2x - y + 3 = 0.
+        \]
+        Pour $m = 1$ :
+        \[
+        d_1 : (1 + 2)x + (2 \times 1 - 1)y - 1 + 3 = 0 \iff 3x + y + 2 = 0.
+        \]
+        Un vecteur normal de $d_0$ est $\vect{n}_0(2\,;\,-1)$ et un vecteur normal de $d_1$ est $\vect{n}_1(3\,;\,1)$.
+        Le déterminant de leurs coefficients directeurs vaut :
+        \[
+        \det(\vect{n}_0, \vect{n}_1) = \begin{vmatrix} 2 & 3 \\ -1 & 1 \end{vmatrix} = 2 \times 1 - (-1) \times 3 = 2 + 3 = 5 \neq 0.
+        \]
+        Les droites $d_0$ et $d_1$ ne sont donc pas parallèles : elles sont strictement sécantes en un unique point $A$.
+        
+        Déterminons les coordonnées de $A$ en résolvant le système :
+        \[
+        \begin{cases}
+        2x - y + 3 = 0 \quad (L_1) \\
+        3x + y + 2 = 0 \quad (L_2)
+        \end{cases}
+        \]
+        En effectuant l'addition membre à membre $(L_1) + (L_2)$, les termes en $y$ s'annulent :
+        \[
+        (2x + 3x) + (-y + y) + (3 + 2) = 0 \iff 5x + 5 = 0 \iff 5x = -5 \iff x = -1.
+        \]
+        En remplaçant $x = -1$ dans $(L_1)$ :
+        \[
+        2(-1) - y + 3 = 0 \iff -2 - y + 3 = 0 \iff 1 - y = 0 \iff y = 1.
+        \]
+        Les droites $d_0$ et $d_1$ sont donc sécantes au point $\mathbf{A(-1\,;\,1)}$.
+
+        \item \textbf{Unicité du point commun :}
+        
+        \begin{itemize}[leftmargin=*]
+            \item \textbf{Condition nécessaire (Unicité) :}
+            Si un point $M$ appartient à toutes les droites $d_m$ pour tout $m \in \R$, il appartient en particulier à $d_0$ et à $d_1$.
+            Par suite, $M \in d_0 \cap d_1$. Or, d'après la question 1.(a), l'intersection $d_0 \cap d_1$ est réduite au seul point $A(-1\,;\,1)$.
+            Par conséquent, $A$ est le \textbf{seul point candidat possible}.
+            
+            \item \textbf{Condition suffisante (Existence) :}
+            Vérifions si les coordonnées de $A(-1\,;\,1)$ satisfont l'équation de $d_m$ quel que soit le paramètre réel $m$ :
+            Pour tout $m \in \R$ :
+            \begin{align*}
+            (m+2)x_A + (2m-1)y_A - m + 3 &= (m+2)(-1) + (2m-1)(1) - m + 3 \\
+            &= -m - 2 + 2m - 1 - m + 3 \\
+            &= (-m + 2m - m) + (-2 - 1 + 3) \\
+            &= 0m + 0 = 0.
+            \end{align*}
+            Cette égalité étant vraie pour tout $m \in \R$, le point $A(-1\,;\,1)$ appartient bien à $d_m$ pour tout réel $m$.
+        \end{itemize}
+        \textbf{Conclusion :} $A(-1\,;\,1)$ est l'\textbf{unique} point appartenant à toutes les droites $d_m$ pour tout $m \in \R$.
+    \end{enumerate}
+
+    \item \textbf{Deuxième approche : par identification polynomiale (méthode générale)}
+    \begin{enumerate}
+        \item \textbf{Résolution du système $\mathscr{S}$ :}
+        \[
+        \mathscr{S} : \begin{cases}
+        x + 2y - 1 = 0 \quad (L_1) \\
+        2x - y + 3 = 0 \quad (L_2)
+        \end{cases}
+        \]
+        De l'équation $(L_1)$, on isole $x$ : $x = 1 - 2y$.
+        
+        En substituant dans $(L_2)$ :
+        \[
+        2(1 - 2y) - y + 3 = 0 \iff 2 - 4y - y + 3 = 0 \iff 5 - 5y = 0 \iff 5y = 5 \iff y = 1.
+        \]
+        On en déduit :
+        \[
+        x = 1 - 2(1) = 1 - 2 = -1.
+        \]
+        Le système $\mathscr{S}$ admet un unique couple solution :
+        \[
+        \mathbf{\mathcal{S} = \{(-1\,;\,1)\}}.
+        \]
+
+        \item \textbf{Équivalence logique :}
+        
+        Soit $M(x\,;\,y)$ un point du plan. Réorganisons l'expression de l'équation de $d_m$ en regroupant les termes selon les puissances de la variable $m$ :
+        \begin{align*}
+        (m+2)x + (2m-1)y - m + 3 &= mx + 2x + 2my - y - m + 3 \\
+        &= m(x + 2y - 1) + (2x - y + 3).
+        \end{align*}
+        Ainsi :
+        \[
+        M(x\,;\,y) \in d_m \iff m(x + 2y - 1) + (2x - y + 3) = 0.
+        \]
+        Par suite, $M(x\,;\,y) \in d_m$ pour tout $m \in \R$ si et seulement si la fonction affine en $m$, définie par $P(m) = (x + 2y - 1)m + (2x - y + 3)$, est identiquement nulle sur $\R$.
+        
+        Or, un polynôme à coefficients réels de degré au plus 1 est nul pour tout $m \in \R$ si et seulement si tous ses coefficients sont nuls :
+        \[
+        \forall m \in \R, \quad m(x + 2y - 1) + (2x - y + 3) = 0 \iff \begin{cases} x + 2y - 1 = 0 \\ 2x - y + 3 = 0 \end{cases}
+        \]
+        ce qui signifie précisément que $(x\,;\,y)$ est solution du système $\mathscr{S}$.
+        
+        L'équivalence est ainsi rigoureusement démontrée :
+        \[
+        \mathbf{(M(x\,;\,y) \in d_m \quad \forall m \in \R) \iff (x\,;\,y) \text{ est solution de } \mathscr{S}}.
+        \]
+
+        \item \textbf{Conclusion :}
+        
+        Puisque le système $\mathscr{S}$ admet pour unique solution le couple $(-1\,;\,1)$, on retrouve le résultat :
+        \[
+        \mathbf{\text{Toutes les droites } d_m \text{ sont concourantes en l'unique point } A(-1\,;\,1)}.
+        \]
+    \end{enumerate}
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquebox}[Faisceau de droites et géométrie projective]
+L'équation $m(x + 2y - 1) + (2x - y + 3) = 0$ s'interprète comme la combinaison linéaire des équations de deux droites fondamentales :
+\[
+\Delta_1 : x + 2y - 1 = 0 \quad \text{et} \quad \Delta_2 : 2x - y + 3 = 0.
+\]
+L'ensemble des droites $(d_m)_{m \in \R}$ forme ce que l'on appelle en mathématiques un \textbf{faisceau de droites de sommet $A$}.
+Toutes les droites passant par $A$ appartiennent à ce faisceau, à l'exception de la droite limite obtenue lorsque $m \to \infty$, qui est précisément la droite $\Delta_1 : x + 2y - 1 = 0$.
+\end{remarquebox}
+
+\vspace{0.3cm}
+
+% ====================================================
+% EXERCICE 5
+% ====================================================
+\subsection*{Exercice 5 \hfill \normalfont\normalsize (3 points)}
+
+On se place dans un repère orthonormé du plan.
+
+On considère le point $A\left(\dfrac{1}{2}\,;\, \dfrac{9}{2}\right)$ et la droite $d$ d'équation :
+\[
+d : 3x - 4y + 4 = 0.
+\]
+
+\begin{enumerate}
+    \item Soit $M(x\,;\,y)$ un point de la droite $d$. Exprimer $AM^2$ en fonction de $x$.
+    \item En déduire la distance minimale entre $A$ et un point de la droite $d$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Expression de $AM^2$ en fonction de $x$ :}
+    
+    Soit $M(x\,;\,y) \in d$. L'équation cartésienne de $d$ permet d'exprimer $y$ en fonction de $x$ :
+    \[
+    3x - 4y + 4 = 0 \iff 4y = 3x + 4 \iff y = \frac{3}{4}x + 1.
+    \]
+    Le repère étant orthonormé, le carré de la distance euclidienne $AM$ s'écrit :
+    \[
+    AM^2 = (x - x_A)^2 + (y - y_A)^2 = \left(x - \frac{1}{2}\right)^2 + \left(y - \frac{9}{2}\right)^2.
+    \]
+    En remplaçant $y$ par son expression $\dfrac{3}{4}x + 1$ :
+    \[
+    y - \frac{9}{2} = \left(\frac{3}{4}x + 1\right) - \frac{9}{2} = \frac{3}{4}x - \frac{7}{2}.
+    \]
+    Développons les deux carrés à l'aide des identités remarquables :
+    \[
+    \left(x - \frac{1}{2}\right)^2 = x^2 - 2 \times x \times \frac{1}{2} + \left(\frac{1}{2}\right)^2 = x^2 - x + \frac{1}{4},
+    \]
+    \[
+    \left(\frac{3}{4}x - \frac{7}{2}\right)^2 = \left(\frac{3}{4}x\right)^2 - 2 \times \left(\frac{3}{4}x\right) \times \frac{7}{2} + \left(\frac{7}{2}\right)^2 = \frac{9}{16}x^2 - \frac{21}{4}x + \frac{49}{4}.
+    \]
+    Additionnons les deux expressions en regroupant les termes de même degré :
+    \begin{align*}
+    AM^2 &= \left(1 + \frac{9}{16}\right)x^2 + \left(-1 - \frac{21}{4}\right)x + \left(\frac{1}{4} + \frac{49}{4}\right) \\
+    &= \left(\frac{16 + 9}{16}\right)x^2 + \left(-\frac{4 + 21}{4}\right)x + \frac{50}{4} \\
+    &= \frac{25}{16}x^2 - \frac{25}{4}x + \frac{50}{4}.
+    \end{align*}
+    En simplifiant la constante $\dfrac{50}{4} = \dfrac{25}{2}$, on obtient l'expression demandée :
+    \[
+    \mathbf{AM^2 = \frac{25}{16}x^2 - \frac{25}{4}x + \frac{25}{2}} \quad \left(\text{ou } \frac{25}{16}x^2 - \frac{25}{4}x + \frac{50}{4}\right).
+    \]
+
+    \item \textbf{Distance minimale entre $A$ et la droite $d$ :}
+    
+    Posons $f(x) = \dfrac{25}{16}x^2 - \dfrac{25}{4}x + \dfrac{25}{2}$ pour $x \in \R$.
+    
+    $f$ est une fonction trinôme du second degré de la forme $f(x) = ax^2 + bx + c$, avec :
+    \[
+    a = \frac{25}{16}, \quad b = -\frac{25}{4}, \quad c = \frac{25}{2}.
+    \]
+    Puisque le coefficient dominant est strictement positif ($a = \dfrac{25}{16} > 0$), la fonction $f$ admet un minimum absolu sur $\R$, atteint en :
+    \[
+    x_0 = -\frac{b}{2a} = -\frac{-\dfrac{25}{4}}{2 \times \dfrac{25}{16}} = \frac{\dfrac{25}{4}}{\dfrac{25}{8}} = \frac{25}{4} \times \frac{8}{25} = \frac{8}{4} = \mathbf{2}.
+    \]
+    Calculons la valeur de ce minimum :
+    \begin{align*}
+    f(2) &= \frac{25}{16} \times 2^2 - \frac{25}{4} \times 2 + \frac{25}{2} \\
+    &= \frac{25 \times 4}{16} - \frac{50}{4} + \frac{25}{2} \\
+    &= \frac{25}{4} - \frac{25}{2} + \frac{25}{2} = \mathbf{\frac{25}{4}}.
+    \end{align*}
+    \textit{(Remarque par la forme canonique : $f(x) = \dfrac{25}{16}(x^2 - 4x) + \dfrac{25}{2} = \dfrac{25}{16}(x - 2)^2 - \dfrac{25}{4} + \dfrac{25}{2} = \dfrac{25}{16}(x - 2)^2 + \dfrac{25}{4} \ge \dfrac{25}{4}$, ce qui confirme sans calcul de dérivée le résultat)}.
+    
+    La fonction racine carrée $t \mapsto \sqrt{t}$ étant strictement croissante sur $[0\,;\, +\infty[$, la distance $AM = \sqrt{f(x)}$ atteint son minimum au même point $x_0 = 2$, et ce minimum vaut :
+    \[
+    d(A, d) = \min_{M \in d} AM = \sqrt{f(2)} = \sqrt{\frac{25}{4}} = \mathbf{\frac{5}{2} = 2{,}5}.
+    \]
+    \textbf{Conclusion :} La distance minimale entre le point $A$ et un point de la droite $d$ est égale à $\mathbf{\dfrac{5}{2}}$ (soit $2{,}5$).
+\end{enumerate}
+\end{correctionbox}
+
+\begin{remarquebox}[Interprétation géométrique : Projeté orthogonal et formule de distance]
+Le point $H$ de la droite $d$ réalisant la distance minimale est le \textbf{projeté orthogonal} de $A$ sur $d$.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item Ses coordonnées sont : $x_H = 2$ et $y_H = \dfrac{3}{4}(2) + 1 = \dfrac{5}{2}$, soit $H\left(2\,;\, \dfrac{5}{2}\right)$.
+    \item Le vecteur $\vect{AH}$ est :
+    \[
+    \vect{AH} = \begin{pmatrix} 2 - \dfrac{1}{2} \\ \dfrac{5}{2} - \dfrac{9}{2} \end{pmatrix} = \begin{pmatrix} \dfrac{3}{2} \\ -2 \end{pmatrix} = \frac{1}{2} \begin{pmatrix} 3 \\ -4 \end{pmatrix}.
+    \]
+    Le vecteur $\vect{n}\begin{pmatrix} 3 \\ -4 \end{pmatrix}$ est le vecteur normal canonique de la droite $d : 3x - 4y + 4 = 0$.
+    On a donc $\vect{AH} = \dfrac{1}{2}\vect{n}$, ce qui prouve directement que $\vect{AH} \perp d$.
+    \item La formule générale de la distance d'un point $A(x_A\,;\,y_A)$ à une droite d'équation $ax + by + c = 0$ donne immédiatement :
+    \[
+    d(A, d) = \frac{|ax_A + by_A + c|}{\sqrt{a^2 + b^2}} = \frac{\left|3 \times \dfrac{1}{2} - 4 \times \dfrac{9}{2} + 4\right|}{\sqrt{3^2 + (-4)^2}} = \frac{\left|\dfrac{3}{2} - 18 + 4\right|}{\sqrt{25}} = \frac{\left|-\dfrac{25}{2}\right|}{5} = \frac{\dfrac{25}{2}}{5} = \mathbf{\frac{5}{2}}.
+    \]
+    Ce résultat confirme avec une rigueur absolue la validité de nos calculs.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1, cap=round, >=Latex]
+    % Grille et repère
+    \draw[step=1cm, gray!20, very thin] (-1,-0.5) grid (4.5,5.5);
+    \draw[->, gray!70] (-1,0) -- (4.8,0) node[right] {\small $x$};
+    \draw[->, gray!70] (0,-0.5) -- (0,5.8) node[above] {\small $y$};
+    
+    % Droite d : 3x - 4y + 4 = 0 <=> y = 0.75 x + 1
+    \draw[thick, blue!80!black] (-1, 0.25) -- (4.5, 4.375) node[above left] {\small $d : 3x - 4y + 4 = 0$};
+    
+    % Point A(0.5, 4.5)
+    \coordinate (A) at (0.5, 4.5);
+    % Point H(2, 2.5)
+    \coordinate (H) at (2, 2.5);
+    
+    % Segment [AH] (distance minimale)
+    \draw[very thick, red!80!black] (A) -- (H) node[midway, right] {\small $d(A,d) = \frac{5}{2}$};
+    
+    % Marqueur d'angle droit en H
+    % Vecteur u unitaire le long de d : (0.8, 0.6)
+    % Vecteur n unitaire vers A : (-0.6, 0.8)
+    \draw[thick, gray!80] ($(H) + 0.3*(0.8, 0.6)$) -- ($(H) + 0.3*(0.8, 0.6) + 0.3*(-0.6, 0.8)$) -- ($(H) + 0.3*(-0.6, 0.8)$);
+    
+    \fill (A) circle (1.8pt) node[above] {$A\left(\frac{1}{2}\,;\,\frac{9}{2}\right)$};
+    \fill (H) circle (1.8pt) node[below right] {$H\left(2\,;\,\frac{5}{2}\right)$};
+\end{tikzpicture}
+\end{center}
+\end{remarquebox}
+
+\end{document}
