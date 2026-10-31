@@ -1,0 +1,1026 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+
+% ----------------------------------------------------
+% Couleurs officielles du projet (Charte LLG / MPSI)
+% ----------------------------------------------------
+\definecolor{llgblue}{RGB}{20, 50, 115}
+\definecolor{llglight}{RGB}{246, 249, 255}
+
+\definecolor{emeraldframe}{RGB}{18, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{12, 80, 52}
+
+\definecolor{prepaframe}{RGB}{30, 70, 135}
+\definecolor{prepaback}{RGB}{246, 249, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 105}
+
+\definecolor{alertframe}{RGB}{185, 75, 20}
+\definecolor{alertback}{RGB}{255, 249, 245}
+\definecolor{alerttitle}{RGB}{145, 55, 12}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=llgblue,
+    urlcolor=llgblue,
+    citecolor=llgblue
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité Mathématiques (1E3)}
+\fancyhead[C]{\small\textbf{Feuille de TD : Dénombrement \& Combinatoire}}
+\fancyhead[R]{\small Juin 2022}
+\fancyfoot[L]{\footnotesize LLG 1E3 -- Fiche de Travaux Dirigés}
+\fancyfoot[C]{\footnotesize Énoncés Exhaustifs \& Corrigés Détaillés d'Excellence}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% ----------------------------------------------------
+% Boîtes tcolorbox personnalisées
+% ----------------------------------------------------
+\newtcolorbox{coursbox}[1][]{
+  colback=llglight,
+  colframe=llgblue,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=llgblue,
+  title={Cadre Théorique \& Formules Fondamentales de Dénombrement #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.35cm,
+  after skip=0.45cm
+}
+
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Corrigé rédigé pas à pas #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.35cm,
+  after skip=0.45cm
+}
+
+\newtcolorbox{remarquebox}[1][]{
+  colback=prepaback,
+  colframe=prepaframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=prepatitle,
+  title={Prolongement \& Regard Prépa / MPSI #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{alertebox}[1][]{
+  colback=alertback,
+  colframe=alertframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=alerttitle,
+  title={Vigilance méthodologique \& Pièges classiques #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+% Commandes mathématiques
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\un}{\mathbf{1}}
+
+\begin{document}
+
+% ====================================================
+% TITRE DU RECUEIL
+% ====================================================
+\begin{center}
+    {\LARGE \bfseries Lycée Louis-le-Grand -- Paris}\\[0.2cm]
+    {\large Classe de Première 3 (1E3) -- Année scolaire 2021/2022}\\[0.3cm]
+    \begin{tcolorbox}[colback=llglight,colframe=llgblue,arc=3mm,boxrule=1.2pt,center]
+        \begin{center}
+            {\Large \bfseries \color{llgblue} TRAVAUX DIRIGÉS D'APPROFONDISSEMENT}\\[0.15cm]
+            {\large \bfseries Dénombrement, Combinatoire Ensembliste, Identités de Vandermonde \& Loi Binomiale}\\[0.2cm]
+            \small Recueil intégral des exercices de la feuille officielle -- Juin 2022\\[0.1cm]
+            \footnotesize Avec cours axiomatique de référence, corrigés d'excellence pas à pas et prolongements Classes Préparatoires MPSI
+        \end{center}
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.3cm}
+
+% ====================================================
+% SYNTHÈSE DU COURS AXIOMATIQUE DE COMBINATOIRE
+% ====================================================
+\section*{Synthèse Théorique \& Principes Fondamentaux de Combinatoire}
+
+\begin{coursbox}[-- Principes fondamentaux, Produits cartésiens \& Injections]
+Soit $E$ un ensemble fini. On note $\operatorname{Card}(E)$ ou $|E|$ son nombre d'éléments.
+\begin{enumerate}
+    \item \textbf{Principe additif (Réunions disjointes) :} Si $A_1, \dots, A_k$ sont des ensembles finis deux à deux disjoints ($A_i \cap A_j = \emptyset$ pour $i \neq j$), alors :
+    \[
+    \operatorname{Card}\left(\bigcup_{i=1}^k A_i\right) = \sum_{i=1}^k \operatorname{Card}(A_i)
+    \]
+    \item \textbf{Principe multiplicatif (Produit cartésien) :} Pour tous ensembles finis $E_1, \dots, E_p$ :
+    \[
+    \operatorname{Card}(E_1 \times E_2 \times \dots \times E_p) = \prod_{i=1}^p \operatorname{Card}(E_i)
+    \]
+    En particulier, le nombre de \textbf{$p$-uplets (avec remise et ordonnés)} d'éléments d'un ensemble à $n$ éléments est $\operatorname{Card}(E^p) = n^p$.
+
+    \item \textbf{Arrangements (sans répétition, ordonnés) :} Soit $0 \le p \le n$. Un arrangement de $p$ éléments parmi $n$ est une injection de $[\![1, p]\!]$ dans $E$. Leur nombre est :
+    \[
+    A_n^p = n(n-1)(n-2)\dots(n-p+1) = \frac{n!}{(n-p)!}
+    \]
+
+    \item \textbf{Permutations :} Une permutation d'un ensemble à $n$ éléments est une bijection de $E$ sur lui-même (arrangement pour $p = n$). Leur nombre est :
+    \[
+    n! = \prod_{k=1}^n k = n \times (n-1) \times \dots \times 2 \times 1 \quad (\text{avec convention } 0! = 1)
+    \]
+    Si parmi $n$ objets, il y a $k_1$ objets identiques d'un type, $k_2$ d'un autre type, \dots, $k_r$ d'un type $r$ (avec $\sum k_i = n$), le nombre d'anagrammes ou de permutations distinctes est le \textbf{coefficient multinomial} :
+    \[
+    \binom{n}{k_1, k_2, \dots, k_r} = \frac{n!}{k_1! \times k_2! \times \dots \times k_r!}
+    \]
+\end{enumerate}
+\end{coursbox}
+
+\begin{coursbox}[-- Combinaisons, Formule du binôme \& Identités remarquables]
+\begin{enumerate}
+    \item \textbf{Combinaisons (sans ordre, sans remise) :} Une combinaison de $p$ éléments parmi $n$ est une partie (un sous-ensemble) à $p$ éléments de $E$. Leur nombre est :
+    \[
+    \binom{n}{p} = \frac{A_n^p}{p!} = \frac{n!}{p!(n-p)!} \quad (0 \le p \le n)
+    \]
+    \item \textbf{Propriétés de symétrie et récurrence de Pascal :}
+    \[
+    \binom{n}{p} = \binom{n}{n-p}, \qquad \binom{n}{p} = \binom{n-1}{p-1} + \binom{n-1}{p} \quad (1 \le p \le n-1)
+    \]
+    \item \textbf{Formule du binôme de Newton :} Pour tous réels ou complexes $a$ et $b$, et tout $n \in \N$ :
+    \[
+    (a + b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k} = \sum_{k=0}^n \binom{n}{k} a^{n-k} b^k
+    \]
+    Pour $a = b = 1$, on retrouve le cardinal de l'ensemble des parties $\mathscr{P}(E)$ :
+    \[
+    \operatorname{Card}(\mathscr{P}(E)) = \sum_{k=0}^n \binom{n}{k} = 2^n
+    \]
+    \item \textbf{Formule du sous-comité / formule du pion :} Pour $0 \le i \le k \le n$ :
+    \[
+    \binom{n}{k} \binom{k}{i} = \binom{n}{i} \binom{n-i}{k-i} \quad \text{et pour } i = 1 : \quad k \binom{n}{k} = n \binom{n-1}{k-1}
+    \]
+    \item \textbf{Identité de convolution de Vandermonde :} Pour $q \le p \le n$ :
+    \[
+    \binom{n}{p} = \sum_{k=0}^q \binom{q}{k} \binom{n-q}{p-k} \implies \sum_{k=0}^n \binom{n}{k}^2 = \binom{2n}{n}
+    \]
+\end{enumerate}
+\end{coursbox}
+
+\vspace{0.4cm}
+
+\section{Dénombrements Élémentaires, Partitions \& Arrangements}
+
+% ----------------------------------------------------
+% Exercice 1
+% ----------------------------------------------------
+\subsection*{Exercice 1 -- Répartition d'étudiants en L1 \& Table de contingence}
+
+À leur entrée en L1, les étudiants choisissent une langue (anglais ou allemand) et une option (informatique, chimie ou astronomie). Dans un groupe d'étudiants, 12 étudiants sont inscrits en astronomie, 15 en chimie, 16 étudient l'allemand. Par ailleurs, 8 inscrits en astronomie et 3 inscrits en informatique étudient l'anglais, 6 inscrits en chimie étudient l'allemand.
+
+Indiquer la répartition des étudiants par discipline, ainsi que le nombre total d'étudiants dans le groupe.
+
+\begin{correctionbox}[-- Résolution par tableau croisé à double entrée]
+Notons les deux langues : $A$ (Anglais) et $D$ (Allemand / \emph{Deutsch}).
+Notons les trois options : $S$ (Astronomie), $C$ (Chimie), $I$ (Informatique).
+L'ensemble des étudiants est partitionné selon la grille $2 \times 3$.
+Exploitons méthodiquement chaque donnée du texte :
+\begin{enumerate}
+    \item \textbf{Discipline Astronomie :}
+    Le total des étudiants en astronomie est $12$. Parmi eux, $8$ étudient l'anglais ($A \cap S$).
+    Le nombre d'étudiants en astronomie étudiant l'allemand ($D \cap S$) est donc :
+    \[
+    \operatorname{Card}(D \cap S) = 12 - 8 = \mathbf{4}
+    \]
+
+    \item \textbf{Discipline Chimie :}
+    Le total des étudiants en chimie est $15$. Parmi eux, $6$ étudient l'allemand ($D \cap C$).
+    Le nombre d'étudiants en chimie étudiant l'anglais ($A \cap C$) est donc :
+    \[
+    \operatorname{Card}(A \cap C) = 15 - 6 = \mathbf{9}
+    \]
+
+    \item \textbf{Discipline Informatique \& Totaux par langue :}
+    Le total des étudiants apprenant l'allemand est $16$.
+    Or, nous savons déjà que $4$ étudiants en astronomie et $6$ étudiants en chimie font allemand.
+    Le nombre d'étudiants en informatique étudiant l'allemand ($D \cap I$) est donc :
+    \[
+    \operatorname{Card}(D \cap I) = 16 - (4 + 6) = 16 - 10 = \mathbf{6}
+    \]
+    D'autre part, l'énoncé indique que $3$ étudiants inscrits en informatique étudient l'anglais :
+    \[
+    \operatorname{Card}(A \cap I) = \mathbf{3}
+    \]
+    Le nombre total d'étudiants inscrits en informatique est donc :
+    \[
+    \operatorname{Card}(I) = 3 + 6 = \mathbf{9}
+    \]
+\end{enumerate}
+
+Dressons le tableau complet de répartition :
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|c|c|c|c||c|}
+    \hline
+    \textbf{Discipline} & \textbf{Astronomie ($S$)} & \textbf{Chimie ($C$)} & \textbf{Informatique ($I$)} & \textbf{Total Langue} \\
+    \hline
+    \textbf{Anglais ($A$)} & 8 & 9 & 3 & \textbf{20} \\
+    \hline
+    \textbf{Allemand ($D$)} & 4 & 6 & 6 & \textbf{16} \\
+    \hline\hline
+    \textbf{Total Option} & \textbf{12} & \textbf{15} & \textbf{9} & \textbf{36} \\
+    \hline
+\end{tabular}
+\end{center}
+Le groupe compte au total \textbf{36 étudiants} (dont 20 anglophones et 16 germanophones).
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 2
+% ----------------------------------------------------
+\subsection*{Exercice 2 -- Tiercés : Arrangements vs Combinaisons}
+
+Pour 15 chevaux partants :
+\begin{enumerate}[label=\arabic*.]
+    \item Combien y a-t-il de tiercés dans l'ordre ?
+    \item Combien y a-t-il de tiercés dans le désordre ?
+\end{enumerate}
+
+\begin{correctionbox}[-- Ordre et non-ordre]
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Tiercés dans l'ordre :}
+    L'ordre d'arrivée (premier, deuxième, troisième) est déterminant et il n'y a pas d'ex-æquo.
+    Il s'agit du nombre d'arrangements de 3 chevaux distincts parmi 15 :
+    \[
+    A_{15}^3 = 15 \times 14 \times 13 = \mathbf{2\,730\text{ tiercés dans l'ordre}}
+    \]
+
+    \item \textbf{Tiercés dans le désordre :}
+    L'ordre d'arrivée n'importe plus : seul le sous-ensemble des 3 chevaux gagnants compte.
+    Il s'agit du nombre de combinaisons de 3 chevaux parmi 15 :
+    \[
+    \binom{15}{3} = \frac{A_{15}^3}{3!} = \frac{2\,730}{6} = \frac{15 \times 14 \times 13}{3 \times 2 \times 1} = 5 \times 7 \times 13 = \mathbf{455\text{ tiercés dans le désordre}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 3
+% ----------------------------------------------------
+\subsection*{Exercice 3 -- Équipage de vol transatlantique}
+
+Pour accompagner un vol transatlantique, $20$ hôtesses de l'air se présentent. $7$ d'entre elles sont blondes, les autres sont brunes. Le sort en choisit $3$ au hasard.
+\begin{enumerate}[label=\arabic*.]
+    \item Déterminer le nombre de groupes possibles.
+    \item Déterminer le nombre de groupes de 3 blondes possibles.
+    \item Calculer de deux façons la probabilité que les 3 hôtesses soient blondes.
+    \item Quelle est la probabilité de trouver parmi les 3 hôtesses au moins une brune et au moins une blonde ?
+\end{enumerate}
+
+\begin{correctionbox}[-- Dénombrement hypergéométrique \& Événement contraire]
+Parmi les $20$ hôtesses, il y a $7$ blondes et $20 - 7 = 13$ brunes.
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Nombre total de groupes de 3 hôtesses :}
+    \[
+    \binom{20}{3} = \frac{20 \times 19 \times 18}{3 \times 2 \times 1} = 20 \times 19 \times 3 = \mathbf{1\,140\text{ groupes}}
+    \]
+
+    \item \textbf{Nombre de groupes formés uniquement de 3 blondes :}
+    On choisit 3 blondes parmi les 7 blondes :
+    \[
+    \binom{7}{3} = \frac{7 \times 6 \times 5}{3 \times 2 \times 1} = \mathbf{35\text{ groupes}}
+    \]
+
+    \item \textbf{Probabilité que les 3 hôtesses soient blondes :}
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Méthode 1 (Combinatoire - équiprobabilité) :}
+        \[
+        P = \frac{\binom{7}{3}}{\binom{20}{3}} = \frac{35}{1\,140} = \mathbf{\frac{7}{228}} \approx 0{,}0307 \quad (3{,}07\,\%)
+        \]
+        \item \emph{Méthode 2 (Probabilités composées / séquentielle) :}
+        \[
+        P = \frac{7}{20} \times \frac{6}{19} \times \frac{5}{18} = \frac{7 \times 1 \times 1}{4 \times 19 \times 3} = \mathbf{\frac{7}{228}}
+        \]
+    \end{itemize}
+
+    \item \textbf{Probabilité d'avoir au moins une brune et au moins une blonde :}
+    L'événement contraire $E^c$ est : \og les 3 hôtesses sont de même couleur de cheveux \fg{}, c'est-à-dire \og les 3 sont blondes \fg{} OU \og les 3 sont brunes \fg{}.
+    Ces deux cas étant incompatibles :
+    \begin{itemize}[label=$\bullet$]
+        \item Nombre de groupes de 3 blondes : $\binom{7}{3} = 35$.
+        \item Nombre de groupes de 3 brunes : $\binom{13}{3} = \frac{13 \times 12 \times 11}{6} = 13 \times 2 \times 11 = 286$.
+    \end{itemize}
+    Le nombre d'équipages non mixtes est $35 + 286 = 321$. Par passage au contraire :
+    \[
+    P(\text{mixité}) = 1 - \frac{321}{1\,140} = \frac{1\,140 - 321}{1\,140} = \frac{819}{1\,140} = \mathbf{\frac{273}{380}} \approx \mathbf{0{,}7184} \quad (71{,}84\,\%)
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 4
+% ----------------------------------------------------
+\subsection*{Exercice 4 -- Droites en position générale \& Triangles}
+
+On trace dans un plan $n \ge 3$ droites en \emph{position générale} (c'est-à-dire que deux droites ne sont jamais parallèles, et trois droites ne sont jamais concourantes).
+Combien de triangles a-t-on ainsi tracé ?
+
+\begin{correctionbox}[-- Caractérisation bijective d'un triangle]
+Dans le plan, trois droites deux à deux sécantes et non concourantes se coupent en exactement trois points d'intersection distincts non alignés, qui définissent de manière unique les trois sommets d'un triangle.
+Réciproquement, tout triangle formé par le réseau de droites a ses trois côtés portés par trois droites distinctes du réseau.
+
+Il y a donc une bijection entre l'ensemble des triangles tracés et l'ensemble des sous-ensembles de 3 droites choisies parmi les $n$ droites disponibles.
+Le nombre de triangles ainsi tracés est :
+\[
+\mathbf{\binom{n}{3} = \frac{n(n-1)(n-2)}{6}}
+\]
+\emph{Exemples :} Pour $n = 3$, $\binom{3}{3} = 1$ triangle ; pour $n = 4$, $\binom{4}{3} = 4$ triangles ; pour $n = 5$, $\binom{5}{3} = 10$ triangles.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 5
+% ----------------------------------------------------
+\subsection*{Exercice 5 -- Mains de 5 cartes au jeu de 32 \& Disjonctions fines}
+
+On tire simultanément 5 cartes d'un jeu de 32 cartes. Combien de mains différents peut-on obtenir :
+\begin{enumerate}[label=\arabic*.]
+    \item sans imposer de contraintes sur les cartes.
+    \item contenant 5 carreaux ou 5 piques.
+    \item 2 carreaux et 3 piques.
+    \item au moins un roi.
+    \item au plus un roi.
+    \item 2 rois et 3 piques. (On montrera qu'il y a $1\,428$ mains possibles).
+\end{enumerate}
+
+\begin{correctionbox}[-- Dénombrement exhaustif de combinaisons de cartes]
+Le jeu comprend 32 cartes : 4 couleurs (Cœur, Carreau, Pique, Trèfle) de 8 cartes chacune, dont 4 rois (un par couleur).
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Sans contraintes :} $\binom{32}{5} = \mathbf{201\,376\text{ mains}}$.
+    \item \textbf{5 carreaux ou 5 piques :} $\binom{8}{5} + \binom{8}{5} = 56 + 56 = \mathbf{112\text{ mains}}$.
+    \item \textbf{2 carreaux et 3 piques :} $\binom{8}{2} \times \binom{8}{3} = 28 \times 56 = \mathbf{1\,568\text{ mains}}$.
+    \item \textbf{Au moins un roi :} Événement contraire de \og 0 roi \fg{} :
+    \[
+    \binom{32}{5} - \binom{28}{5} = 201\,376 - 98\,280 = \mathbf{103\,096\text{ mains}}
+    \]
+    \item \textbf{Au plus un roi :} Réunion disjointe de \og 0 roi \fg{} et \og exactement 1 roi \fg{} :
+    \[
+    \binom{28}{5} + \binom{4}{1} \binom{28}{4} = 98\,280 + 4 \times 20\,475 = 98\,280 + 81\,900 = \mathbf{180\,180\text{ mains}}
+    \]
+    \item \textbf{2 rois et 3 piques :}
+    La carte clé est le \textbf{Roi de pique ($R_\spadesuit$)}. Partitionnons l'univers des mains selon la présence de $R_\spadesuit$ :
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Cas A : La main ne contient pas $R_\spadesuit$ :}
+        Pour avoir 2 rois et 3 piques, il faut choisir 2 rois parmi les 3 autres rois ($\binom{3}{2} = 3$ choix) et 3 piques parmi les 7 autres piques ($\binom{7}{3} = 35$ choix).
+        La main compte alors exactement $2 + 3 = 5$ cartes :
+        \[
+        N_A = \binom{3}{2} \times \binom{7}{3} = 3 \times 35 = \mathbf{105\text{ mains}}
+        \]
+        \item \emph{Cas B : La main contient $R_\spadesuit$ :}
+        $R_\spadesuit$ comptant à la fois comme 1 roi et 1 pique, il faut compléter la main par :
+        \begin{itemize}
+            \item $1$ roi supplémentaire parmi les 3 rois restants ($\binom{3}{1} = 3$ choix) ;
+            \item $2$ piques supplémentaires parmi les 7 piques restants ($\binom{7}{2} = 21$ choix) ;
+            \item $1$ carte neutre qui n'est \textbf{ni un roi ni un pique} pour atteindre un total de 5 cartes. Le réservoir de cartes neutres contient $32 - 4 \text{ (rois)} - 7 \text{ (piques restants)} = 21$ cartes ordinaires ($\binom{21}{1} = 21$ choix).
+        \end{itemize}
+        \[
+        N_B = \binom{3}{1} \times \binom{7}{2} \times \binom{21}{1} = 3 \times 21 \times 21 = \mathbf{1\,323\text{ mains}}
+        \]
+    \end{itemize}
+    Par disjonction :
+    \[
+    N_{\text{total}} = 105 + 1\,323 = \mathbf{1\,428\text{ mains}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 6
+% ----------------------------------------------------
+\subsection*{Exercice 6 -- Rangement de livres par blocs thématiques}
+
+On souhaite ranger sur une étagère 13 livres distincts : 4 livres de mathématiques, 6 livres de physique, et 3 de chimie. De combien de façons peut-on effectuer ce rangement :
+\begin{enumerate}[label=\arabic*.]
+    \item S'il n'y a pas de contraintes.
+    \item Si les livres doivent être groupés par matières.
+    \item Si seuls les livres de mathématiques doivent être groupés.
+\end{enumerate}
+
+\begin{correctionbox}[-- Principe des blocs \& Permutations produit]
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Sans contraintes :}
+    Il s'agit du nombre de permutations des 13 livres distincts :
+    \[
+    13! = \mathbf{6\,227\,020\,800\text{ dispositions}}
+    \]
+
+    \item \textbf{Livres groupés par matières :}
+    On procède en deux étapes :
+    \begin{itemize}[label=$\bullet$]
+        \item On ordonne les 3 blocs thématiques (Maths, Physique, Chimie) sur l'étagère : $3! = 6$ ordres.
+        \item À l'intérieur de chaque bloc, on permute les livres de la matière : $4! = 24$ pour les maths, $6! = 720$ pour la physique, $3! = 6$ pour la chimie.
+    \end{itemize}
+    Par le principe multiplicatif :
+    \[
+    3! \times (4! \times 6! \times 3!) = 6 \times (24 \times 720 \times 6) = 6 \times 103\,680 = \mathbf{622\,080\text{ dispositions}}
+    \]
+
+    \item \textbf{Seuls les livres de mathématiques groupés :}
+    Considérons le bloc formé par les 4 livres de mathématiques comme \textbf{un seul super-objet}.
+    Avec les 6 livres de physique et les 3 livres de chimie, nous avons à ranger $1 + 6 + 3 = 10$ objets distincts : $10! = 3\,628\,800$ arrangements.
+    Pour chacun de ces arrangements, les 4 livres de mathématiques peuvent être permutés entre eux de $4! = 24$ façons au sein du bloc :
+    \[
+    10! \times 4! = 3\,628\,800 \times 24 = \mathbf{87\,091\,200\text{ dispositions}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 7
+% ----------------------------------------------------
+\subsection*{Exercice 7 -- Anagrammes \& Coefficients multinomiaux}
+
+Dénombrer les anagrammes (sans signification obligatoire) des mots suivants :
+\begin{enumerate}[label=\arabic*.]
+    \item $\mathrm{MATHS}$
+    \item $\mathrm{RIRE}$
+    \item $\mathrm{ANANAS}$
+\end{enumerate}
+
+\begin{correctionbox}[-- Permutations avec répétition]
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Mot $\mathrm{MATHS}$ :}
+    Le mot compte 5 lettres toutes distinctes (M, A, T, H, S).
+    Le nombre d'anagrammes est :
+    \[
+    5! = 5 \times 4 \times 3 \times 2 \times 1 = \mathbf{120\text{ anagrammes}}
+    \]
+
+    \item \textbf{Mot $\mathrm{RIRE}$ :}
+    Le mot compte 4 lettres avec des répétitions : $2$ lettres R, $1$ lettre I, $1$ lettre E.
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Méthode des quotients de permutations :} Si les deux R étaient discernables ($R_1, R_2$), il y aurait $4! = 24$ mots. Puisque l'échange de $R_1$ et $R_2$ ne modifie pas le mot, on divise par $2!$ :
+        \[
+        \frac{4!}{2!} = \frac{24}{2} = \mathbf{12\text{ anagrammes}}
+        \]
+        \item \emph{Méthode des choix de positions :} On choisit les 2 positions des R parmi les 4 places ($\binom{4}{2} = 6$), puis la position du I parmi les 2 restantes ($\binom{2}{1} = 2$), et le E va à la dernière place ($\binom{1}{1} = 1$) : $6 \times 2 \times 1 = 12$.
+    \end{itemize}
+
+    \item \textbf{Mot $\mathrm{ANANAS}$ :}
+    Le mot compte 6 lettres : $3$ lettres A, $2$ lettres N, $1$ lettre S.
+    D'après la formule du coefficient multinomial :
+    \[
+    \frac{6!}{3! \times 2! \times 1!} = \frac{720}{6 \times 2 \times 1} = \frac{720}{12} = \mathbf{60\text{ anagrammes}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Identités Combinatoires, Vandermonde \& Inversion de Pascal}
+
+% ----------------------------------------------------
+% Exercice 8
+% ----------------------------------------------------
+\subsection*{Exercice 8 -- Identité de convolution de Vandermonde}
+
+Soient $p, q, n$ des entiers naturels avec $q \le p \le n$. Démontrer par un dénombrement (sans factorielle) que :
+\[
+\binom{n}{p} = \sum_{k=0}^q \binom{q}{k} \times \binom{n-q}{p-k}
+\]
+
+\begin{correctionbox}[-- Démonstration combinatoire par partition d'un ensemble]
+Soit $E$ un ensemble à $n$ éléments.
+Scindons $E$ en deux sous-ensembles disjoints : un ensemble $A$ de cardinal $q$ et un ensemble $B = E \setminus A$ de cardinal $n - q$.
+On souhaite dénombrer le nombre de manières de choisir une partie $X \subset E$ de cardinal $p$.
+Ce nombre est, par définition des combinaisons, égal à $\binom{n}{p}$.
+
+Pour former une telle partie $X$, on peut choisir un certain nombre $k$ d'éléments dans $A$ ($0 \le k \le q$) et les $p - k$ éléments restants dans $B$.
+Pour chaque valeur fixée de $k \in [\![0, q]\!]$ :
+\begin{itemize}[label=$\bullet$]
+    \item Le choix de la partie $X \cap A$ (de taille $k$) se fait de $\binom{q}{k}$ façons parmi les $q$ éléments de $A$.
+    \item Le choix de la partie $X \cap B$ (de taille $p - k$) se fait de $\binom{n-q}{p-k}$ façons parmi les $n - q$ éléments de $B$.
+\end{itemize}
+Par le principe multiplicatif, il y a $\binom{q}{k} \times \binom{n-q}{p-k}$ parties $X$ contenant exactement $k$ éléments de $A$.
+Puisque les cas correspondant à des valeurs distinctes de $k$ sont deux à deux disjoints, et que la réunion de ces cas recouvre l'ensemble des parties à $p$ éléments :
+\[
+\mathbf{\binom{n}{p} = \sum_{k=0}^q \binom{q}{k} \binom{n-q}{p-k}}
+\]
+Cette identité remarquable porte le nom d'\emph{identité de Vandermonde}.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 9
+% ----------------------------------------------------
+\subsection*{Exercice 9 -- Somme des carrés des coefficients binomiaux}
+
+Démontrer par un dénombrement que, pour tout $n \ge 1$ :
+\[
+\sum_{k=0}^n \binom{n}{k}^2 = \binom{2n}{n}
+\]
+
+\begin{correctionbox}[-- Application de Vandermonde \& Symétrie des combinaisons]
+Considérons un ensemble de $2n$ personnes divisé en deux groupes égaux de $n$ personnes : un groupe de $n$ femmes et un groupe de $n$ hommes.
+On souhaite constituer un comité de $n$ personnes choisies parmi les $2n$.
+Le nombre total de comités possibles est le membre de droite :
+\[
+\binom{2n}{n}
+\]
+D'autre part, on peut classifier ces comités selon le nombre $k$ de femmes qu'ils comportent ($0 \le k \le n$).
+Pour former un comité comprenant $k$ femmes et donc $n - k$ hommes :
+\begin{itemize}[label=$\bullet$]
+    \item On choisit les $k$ femmes parmi les $n$ femmes : $\binom{n}{k}$ choix.
+    \item On choisit les $n - k$ hommes parmi les $n$ hommes : $\binom{n}{n-k}$ choix.
+\end{itemize}
+Le nombre total de comités s'écrit donc :
+\[
+\binom{2n}{n} = \sum_{k=0}^n \binom{n}{k} \binom{n}{n-k}
+\]
+Or, par la propriété de symétrie fondamentale des coefficients binomiaux :
+\[
+\binom{n}{n-k} = \binom{n}{k}
+\]
+On en déduit immédiatement :
+\[
+\mathbf{\binom{2n}{n} = \sum_{k=0}^n \binom{n}{k} \times \binom{n}{k} = \sum_{k=0}^n \binom{n}{k}^2}
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 10
+% ----------------------------------------------------
+\subsection*{Exercice 10 -- Formule de la crosse de hockey}
+
+Soient $n$ et $p$ des entiers naturels avec $n \ge p$. Démontrer par un dénombrement que :
+\[
+\sum_{k=p}^n \binom{k}{p} = \binom{n+1}{p+1}
+\]
+\emph{Indication :} Dénombrer les ensembles à $p+1$ éléments choisis parmi $n+1$ éléments en considérant le plus grand élément de chaque sous-ensemble.
+
+\begin{correctionbox}[-- Partition selon l'élément maximal]
+Soit l'ensemble des entiers $E = [\![0, n]\!] = \{0, 1, 2, \dots, n\}$, qui contient exactement $n + 1$ éléments.
+Le nombre de sous-ensembles $S \subset E$ de cardinal $p + 1$ est donné par $\binom{n+1}{p+1}$.
+
+Pour tout sous-ensemble $S \subset E$ à $p + 1$ éléments, notons $k = \max(S)$ le plus grand élément de $S$.
+\begin{itemize}[label=$\bullet$]
+    \item Puisque $S$ contient $p + 1$ éléments distincts dans $\N$, le plus grand élément $k$ est au moins égal à $p$ ($k \ge p$).
+    \item Comme $S \subset [\![0, n]\!]$, on a $k \le n$.
+    \item Une fois que le plus grand élément $k$ est fixé, les $p$ autres éléments de $S$ doivent être choisis strictement inférieurs à $k$, c'est-à-dire dans le sous-ensemble $[\![0, k-1]\!]$ qui contient exactement $k$ éléments.
+\end{itemize}
+Le nombre de parties $S$ ayant pour élément maximal $k$ est donc :
+\[
+\binom{k}{p}
+\]
+Puisque deux parties ayant des éléments maximaux différents sont disjointes, et que le maximum $k$ parcourt l'ensemble des valeurs entières de $p$ à $n$, on obtient par additivité :
+\[
+\mathbf{\binom{n+1}{p+1} = \sum_{k=p}^n \binom{k}{p}}
+\]
+Cette relation est appelée la \emph{formule de la crosse de hockey} en raison de la disposition des coefficients binomiaux correspondants le long d'une diagonale suivie d'un coude dans le triangle de Pascal.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 11
+% ----------------------------------------------------
+\subsection*{Exercice 11 -- Formule du sous-comité \& Inversion de Pascal}
+
+Soient $i, k, n$ des entiers naturels tels que $i \le k \le n$. Par convention, on pose $0^0 = 1$.
+\begin{enumerate}[label=\arabic*.]
+    \item Dénombrer le nombre de couples d'ensembles $(A, B)$ tels que $B \subset A \subset E$, avec $\operatorname{Card}(A) = k$, $\operatorname{Card}(B) = i$ et $\operatorname{Card}(E) = n$.
+    \item Montrer par dénombrement que :
+    \[
+    \binom{n}{k} \binom{k}{i} = \binom{n}{i} \binom{n-i}{k-i}
+    \]
+    \item Montrer que :
+    \[
+    \forall i \in [\![0, n]\!], \quad \sum_{k=i}^n (-1)^{n-k} \binom{n}{k} \binom{k}{i} = \binom{n}{i} 0^{n-i}
+    \]
+    \item Soient deux suites réelles $(u_n)_{n \in \N}$ et $(v_n)_{n \in \N}$. Démontrer que :
+    \[
+    u_n = \sum_{k=0}^n \binom{n}{k} v_k \iff v_n = \sum_{k=0}^n (-1)^{n-k} \binom{n}{k} u_k
+    \]
+\end{enumerate}
+
+\begin{correctionbox}[-- Double comptage, binôme \& Dualité triangulaire]
+\textbf{1. et 2. Dénombrement des couples emboîtés $(A, B)$ :}
+On cherche le nombre de paires $(A, B)$ de sous-ensembles de $E$ ($\operatorname{Card}(E) = n$) vérifiant $B \subset A$ avec $|A| = k$ et $|B| = i$.
+\begin{itemize}[label=$\bullet$]
+    \item \emph{Méthode A (Choisir $A$ puis $B$) :} On choisit d'abord la partie $A$ de taille $k$ parmi les $n$ éléments de $E$ ($\binom{n}{k}$ façons). Puis on choisit la sous-partie $B$ de taille $i$ parmi les $k$ éléments de $A$ ($\binom{k}{i}$ façons).
+    Le nombre de couples est $\binom{n}{k} \binom{k}{i}$.
+    \item \emph{Méthode B (Choisir $B$ puis $A$) :} On choisit directement la petite partie $B$ de taille $i$ parmi les $n$ éléments de $E$ ($\binom{n}{i}$ façons). Pour former $A$ contenant $B$, il reste à sélectionner $k - i$ éléments supplémentaires dans le complémentaire $E \setminus B$, qui compte $n - i$ éléments ($\binom{n-i}{k-i}$ façons).
+    Le nombre de couples est $\binom{n}{i} \binom{n-i}{k-i}$.
+\end{itemize}
+Par identification des deux dénombrements du même ensemble de configurations :
+\[
+\mathbf{\binom{n}{k} \binom{k}{i} = \binom{n}{i} \binom{n-i}{k-i}}
+\]
+
+\textbf{3. Calcul de la somme alternée :}
+Injectons l'identité précédente dans la somme :
+\[
+S_n(i) = \sum_{k=i}^n (-1)^{n-k} \binom{n}{k} \binom{k}{i} = \sum_{k=i}^n (-1)^{n-k} \binom{n}{i} \binom{n-i}{k-i}
+\]
+Factorisons par le terme $\binom{n}{i}$ qui ne dépend pas de $k$ :
+\[
+S_n(i) = \binom{n}{i} \sum_{k=i}^n (-1)^{n-k} \binom{n-i}{k-i}
+\]
+Posons $m = k - i$. Lorsque $k$ varie de $i$ à $n$, $m$ varie de $0$ à $n - i$, et $n - k = (n - i) - m$ :
+\[
+S_n(i) = \binom{n}{i} \sum_{m=0}^{n-i} (-1)^{(n-i) - m} \binom{n-i}{m} 1^m
+\]
+D'après la formule du binôme de Newton pour $(1 - 1)^{n-i}$ :
+\[
+(1 - 1)^{n-i} = \sum_{m=0}^{n-i} \binom{n-i}{m} (-1)^{(n-i) - m} 1^m = 0^{n-i}
+\]
+D'où l'identité :
+\[
+\mathbf{S_n(i) = \binom{n}{i} 0^{n-i} = \begin{cases} 1 & \text{si } i = n \\ 0 & \text{si } i < n \end{cases}}
+\]
+
+\textbf{4. Formule d'inversion de Pascal :}
+Supposons que pour tout $n \in \N$, $u_n = \sum_{k=0}^n \binom{n}{k} v_k$.
+Calculons le membre de droite :
+\[
+\sum_{k=0}^n (-1)^{n-k} \binom{n}{k} u_k = \sum_{k=0}^n (-1)^{n-k} \binom{n}{k} \left( \sum_{j=0}^k \binom{k}{j} v_j \right)
+\]
+Intervertissons les deux sommes (l'ensemble des indices est le triangle $0 \le j \le k \le n$) :
+\[
+\sum_{j=0}^n v_j \left( \sum_{k=j}^n (-1)^{n-k} \binom{n}{k} \binom{k}{j} \right)
+\]
+D'après la question 3, la somme intérieure entre parenthèses vaut $\binom{n}{j} 0^{n-j} = \delta_{nj}$ (symbole de Kronecker).
+Elle s'annule pour tout $j < n$ et vaut $1$ pour $j = n$.
+Le seul terme non nul est donc $j = n$ :
+\[
+v_n \times 1 = \mathbf{v_n}
+\]
+La réciproque s'obtient de façon strictement symétrique.
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Familles de Sous-Ensembles, Recouvrements \& Temps d'Attente}
+
+% ----------------------------------------------------
+% Exercice 12
+% ----------------------------------------------------
+\subsection*{Exercice 12 -- Dénombrement de couples \& triplets de parties}
+
+Soit $n \in \N^*$ et $E$ un ensemble possédant $n$ éléments. On désigne par $\mathscr{P}(E)$ l'ensemble des parties de $E$.
+\begin{enumerate}[label=\arabic*.]
+    \item Montrer que $\operatorname{Card}(\mathscr{P}(E)) = 2^n$ de deux façons.
+    \item Montrer que le nombre de couples $(A, B) \in (\mathscr{P}(E))^2$ tels que $B \subset A$ est égal à $3^n$.
+    \item Montrer que le nombre de couples $(A, B) \in (\mathscr{P}(E))^2$ tels que $A \cap B = \emptyset$ est égal à $3^n$.
+    \item Montrer que le nombre de couples $(A, B) \in (\mathscr{P}(E))^2$ tels que $A \cup B = E$ est égal à $3^n$.
+    \item Montrer que le nombre de triplets $(A, B, C) \in (\mathscr{P}(E))^3$ tels que $A \cup B \cup C = E$ est égal à $7^n$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Dénombrement élément par élément \& Sommes binomiales]
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Cardinal de l'ensemble des parties $\mathscr{P}(E)$ :}
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Méthode 1 (Fonction indicatrice) :} Toute partie $A \subset E$ est entièrement déterminée par son application indicatrice $\un_A : E \to \{0, 1\}$.
+        Il y a donc une bijection entre $\mathscr{P}(E)$ et l'ensemble $\{0, 1\}^E$ des applications de $E$ dans $\{0, 1\}$.
+        Le nombre de telles applications est $2^{\operatorname{Card}(E)} = \mathbf{2^n}$.
+        \item \emph{Méthode 2 (Développement du binôme) :} En classant les parties selon leur cardinal $k \in [\![0, n]\!]$ :
+        \[
+        \operatorname{Card}(\mathscr{P}(E)) = \sum_{k=0}^n \binom{n}{k} = \sum_{k=0}^n \binom{n}{k} 1^k 1^{n-k} = (1 + 1)^n = \mathbf{2^n}
+        \]
+    \end{itemize}
+
+    \item \textbf{Couples $(A, B)$ vérifiant $B \subset A$ :}
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Méthode 1 (Affectation des éléments) :} Pour chaque élément $x \in E$, exactement trois statuts mutuellement exclusifs sont possibles :
+        \begin{enumerate}[label=(\roman*)]
+            \item $x \in B$ (ce qui implique obligatoirement $x \in A$) ;
+            \item $x \in A \setminus B$ ($x$ est dans $A$ mais pas dans $B$) ;
+            \item $x \notin A$ (donc $x \notin B$).
+        \end{enumerate}
+        Le couple $(A, B)$ est entièrement caractérisé par l'affectation de chacun des $n$ éléments de $E$ à l'un de ces 3 états.
+        Par le principe multiplicatif, il y a :
+        \[
+        3 \times 3 \times \dots \times 3 = \mathbf{3^n\text{ couples}}
+        \]
+        \item \emph{Méthode 2 (Sommation binomiale) :} On choisit la taille $k$ de la partie $A$ ($\binom{n}{k}$ choix), puis la sous-partie $B \subset A$, qui possède $2^k$ choix possibles :
+        \[
+        \sum_{k=0}^n \binom{n}{k} 2^k = \sum_{k=0}^n \binom{n}{k} 2^k 1^{n-k} = (2 + 1)^n = \mathbf{3^n}
+        \]
+    \end{itemize}
+
+    \item \textbf{Couples $(A, B)$ disjoints ($A \cap B = \emptyset$) :}
+    Pour chaque élément $x \in E$, il y a 3 issues disjointes : $x \in A$ ; $x \in B$ ; $x \notin A \cup B$.
+    Le nombre de couples est de même :
+    \[
+    \mathbf{3^n}
+    \]
+    \emph{Remarque bijective :} $A \cap B = \emptyset \iff B \subset \overline{A}$. L'application $(A, B) \mapsto (\overline{A}, B)$ établit une bijection entre les couples disjoints et les couples emboîtés.
+
+    \item \textbf{Couples $(A, B)$ recouvrant $E$ ($A \cup B = E$) :}
+    D'après les lois de De Morgan :
+    \[
+    A \cup B = E \iff \overline{A \cup B} = \emptyset \iff \overline{A} \cap \overline{B} = \emptyset
+    \]
+    Par le passage au complémentaire $(A, B) \mapsto (\overline{A}, \overline{B})$, il y a une bijection directe avec l'ensemble des couples disjoints de la question 3. Le nombre de couples recouvrant $E$ est donc :
+    \[
+    \mathbf{3^n}
+    \]
+
+    \item \textbf{Triplets $(A, B, C)$ recouvrant $E$ ($A \cup B \cup C = E$) :}
+    La condition $A \cup B \cup C = E$ signifie que chaque élément $x \in E$ doit appartenir à au moins l'un des trois ensembles $A$, $B$ ou $C$.
+    Autrement dit, pour tout $x \in E$, le sous-ensemble de $\{A, B, C\}$ contenant $x$ ne peut pas être l'ensemble vide.
+    Puisqu'il existe $2^3 = 8$ sous-ensembles possibles d'appartenance pour chaque élément, le nombre de choix licites pour chaque élément $x$ est :
+    \[
+    2^3 - 1 = 8 - 1 = 7\text{ choix}
+    \]
+    Comme les choix pour les $n$ éléments de $E$ sont totalement indépendants :
+    \[
+    7 \times 7 \times \dots \times 7 = \mathbf{7^n\text{ triplets}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 13
+% ----------------------------------------------------
+\subsection*{Exercice 13 -- Temps d'attente du premier succès sans remise}
+
+Soit $n \in \N^*$. Une urne contient $n$ boules blanches et deux boules noires. On effectue les tirages sans remise de toutes les boules de l'urne.
+On note $X$ la variable aléatoire égale au rang d'apparition de la première boule blanche.
+
+\begin{enumerate}[label=\arabic*.]
+    \item Déterminer le nombre de tirages ordonnés équiprobables.
+    \item Justifier l'univers image de $X$, puis déterminer la loi de probabilité de $X$.
+    \item Démontrer que l'espérance mathématique de $X$ s'écrit :
+    \[
+    \E(X) = \frac{n + 3}{n + 1}
+    \]
+    \item Que devient $\E(X)$ lorsque $n$ tend vers $+\infty$ ?
+\end{enumerate}
+
+\begin{correctionbox}[-- Tirages sans remise \& Simplification télescopique de l'espérance]
+\textbf{1. Nombre de tirages ordonnés équiprobables :}
+L'urne contient $n + 2$ boules au total. Un tirage complet ordonné de toutes les boules correspond à une permutation des $n + 2$ boules :
+\[
+\operatorname{Card}(\Omega) = \mathbf{(n + 2)!}
+\]
+Si l'on s'intéresse uniquement aux positions des 2 boules noires dans la séquence des $n + 2$ tirages, il y a $\binom{n+2}{2} = \frac{(n+2)(n+1)}{2}$ configurations équiprobables.
+
+\textbf{2. Univers image \& Loi de probabilité de $X$ :}
+Puisqu'il n'y a que 2 boules noires dans toute l'urne, on ne peut pas tirer plus de deux noires consécutives.
+La première boule blanche apparaît obligatoirement au premier tirage ($B$), au deuxième tirage ($NB$) ou au troisième tirage ($NNB$).
+L'univers image est donc :
+\[
+X(\Omega) = \{1, 2, 3\}
+\]
+Calculons les probabilités par les probabilités composées :
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{$X = 1$ :} La première boule est blanche (parmi les $n$ blanches sur $n+2$ boules) :
+    \[
+    P(X = 1) = \mathbf{\frac{n}{n + 2}}
+    \]
+    \item \textbf{$X = 2$ :} La première est noire et la deuxième est blanche :
+    \[
+    P(X = 2) = \frac{2}{n + 2} \times \frac{n}{n + 1} = \mathbf{\frac{2n}{(n + 1)(n + 2)}}
+    \]
+    \item \textbf{$X = 3$ :} Les deux premières sont noires et la troisième est blanche :
+    \[
+    P(X = 3) = \frac{2}{n + 2} \times \frac{1}{n + 1} \times \frac{n}{n} = \mathbf{\frac{2}{(n + 1)(n + 2)}}
+    \]
+\end{itemize}
+\emph{Vérification de la somme :}
+\[
+\sum_{k=1}^3 P(X = k) = \frac{n(n + 1) + 2n + 2}{(n + 1)(n + 2)} = \frac{n^2 + 3n + 2}{(n + 1)(n + 2)} = \frac{(n + 1)(n + 2)}{(n + 1)(n + 2)} = 1
+\]
+
+\textbf{3. Calcul de l'espérance mathématique $\E(X)$ :}
+\[
+\E(X) = 1 \cdot P(X = 1) + 2 \cdot P(X = 2) + 3 \cdot P(X = 3)
+\]
+\[
+\E(X) = \frac{n}{n + 2} + \frac{4n}{(n + 1)(n + 2)} + \frac{6}{(n + 1)(n + 2)} = \frac{n(n + 1) + 4n + 6}{(n + 1)(n + 2)}
+\]
+Développons le numérateur :
+\[
+n^2 + n + 4n + 6 = n^2 + 5n + 6 = (n + 2)(n + 3)
+\]
+Le facteur $(n + 2)$ se simplifie avec le dénominateur :
+\[
+\E(X) = \frac{(n + 2)(n + 3)}{(n + 1)(n + 2)} = \mathbf{\frac{n + 3}{n + 1} = 1 + \frac{2}{n + 1}}
+\]
+
+\textbf{4. Limite quand $n \to +\infty$ :}
+\[
+\lim_{n \to +\infty} \E(X) = \lim_{n \to +\infty} \left( 1 + \frac{2}{n + 1} \right) = \mathbf{1}
+\]
+Lorsque le nombre de boules blanches domine écrasant les 2 noires, le premier tirage fournit presque sûrement une blanche.
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Approfondissements Prépa MPSI, Crible de Poincaré \& Loi Binomiale}
+
+% ----------------------------------------------------
+% Exercice 14
+% ----------------------------------------------------
+\subsection*{Exercice 14 -- Principe d'inclusion-exclusion \& Problème des dérangements}
+
+Soit $n \ge 1$ personnes laissant leur manteau au vestiaire d'un théâtre. À la sortie, le vestiaire distribue au hasard un manteau à chaque personne (chaque permutation des $n$ manteaux étant équiprobable).
+Une permutation sans point fixe est appelée un \emph{dérangement} de l'ensemble $[\![1, n]\!]$. On note $D_n$ le nombre de dérangements de $[\![1, n]\!]$.
+\begin{enumerate}[label=\arabic*.]
+    \item Énoncer la formule générale du crible de Poincaré (principe d'inclusion-exclusion) pour $n$ parties finies $(A_i)_{1 \le i \le n}$.
+    \item Pour chaque $i \in [\![1, n]\!]$, on note $A_i$ l'ensemble des permutations de $[\![1, n]\!]$ qui laissent l'élément $i$ invariant ($\sigma(i) = i$).
+    \begin{enumerate}
+        \item Déterminer $\operatorname{Card}(A_i)$ pour tout $i \in [\![1, n]\!]$.
+        \item Pour $1 \le k \le n$ et $1 \le i_1 < i_2 < \dots < i_k \le n$, déterminer $\operatorname{Card}(A_{i_1} \cap A_{i_2} \cap \dots \cap A_{i_k})$.
+        \item En déduire le nombre de permutations ayant au moins un point fixe.
+    \end{enumerate}
+    \item En déduire que le nombre de dérangements $D_n$ est donné par la formule exacte :
+    \[
+    D_n = n! \sum_{k=0}^n \frac{(-1)^k}{k!}
+    \]
+    \item Déterminer la probabilité $p_n$ qu'aucun spectateur ne retrouve son propre manteau, et calculer sa limite quand $n \to +\infty$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Crible de Poincaré \& Développement en série de l'exponentielle]
+\textbf{1. Formule du crible de Poincaré :}
+Pour toute famille finie d'ensembles finis $(A_i)_{1 \le i \le n}$ :
+\[
+\operatorname{Card}\left(\bigcup_{i=1}^n A_i\right) = \sum_{k=1}^n (-1)^{k-1} \sum_{1 \le i_1 < i_2 < \dots < i_k \le n} \operatorname{Card}(A_{i_1} \cap A_{i_2} \cap \dots \cap A_{i_k})
+\]
+
+\textbf{2. Dénombrement des points fixes :}
+L'ensemble de toutes les permutations de $[\![1, n]\!]$ est le groupe symétrique $\mathfrak{S}_n$, avec $\operatorname{Card}(\mathfrak{S}_n) = n!$.
+\begin{enumerate}[label=(\alph*)]
+    \item Pour $i$ fixé, une permutation $\sigma \in A_i$ fixe $i$ ($\sigma(i) = i$) et permute arbitrairement les $n - 1$ autres éléments :
+    \[
+    \operatorname{Card}(A_i) = (n - 1)!
+    \]
+    \item De même, une permutation qui fixe $k$ éléments distincts prescrits $i_1, \dots, i_k$ permute arbitrairement les $n - k$ éléments restants :
+    \[
+    \operatorname{Card}(A_{i_1} \cap \dots \cap A_{i_k}) = (n - k)!
+    \]
+    \item Le nombre d'intersections de $k$ ensembles parmi $n$ est égal au nombre de choix des indices $\binom{n}{k}$.
+    D'après le crible de Poincaré, le nombre de permutations ayant au moins un point fixe est :
+    \[
+    \operatorname{Card}\left(\bigcup_{i=1}^n A_i\right) = \sum_{k=1}^n (-1)^{k-1} \binom{n}{k} (n - k)! = \sum_{k=1}^n (-1)^{k-1} \frac{n!}{k!(n-k)!} (n - k)! = n! \sum_{k=1}^n \frac{(-1)^{k-1}}{k!}
+    \]
+\end{enumerate}
+
+\textbf{3. Formule exacte du nombre de dérangements $D_n$ :}
+Le nombre de dérangements $D_n$ est le nombre de permutations n'ayant \textbf{aucun} point fixe, c'est-à-dire le complémentaire :
+\[
+D_n = n! - \operatorname{Card}\left(\bigcup_{i=1}^n A_i\right) = n! - n! \sum_{k=1}^n \frac{(-1)^{k-1}}{k!} = n! \left[ 1 + \sum_{k=1}^n \frac{(-1)^k}{k!} \right] = \mathbf{n! \sum_{k=0}^n \frac{(-1)^k}{k!}}
+\]
+
+\textbf{4. Probabilité et limite asymptotique :}
+Puisque toutes les permutations sont équiprobables, la probabilité $p_n$ qu'aucun spectateur ne récupère son manteau est :
+\[
+p_n = \frac{D_n}{n!} = \sum_{k=0}^n \frac{(-1)^k}{k!}
+\]
+Reconnaissons la somme partielle de la série entière de l'exponentielle $\e^x = \sum_{k=0}^{+\infty} \frac{x^k}{k!}$ évaluée en $x = -1$ :
+\[
+\mathbf{\lim_{n \to +\infty} p_n = \e^{-1} = \frac{1}{\e} \approx 0{,}367879\dots \quad (36{,}8\,\%)}
+\]
+Dès que $n \ge 4$, la probabilité est déjà stabilisée à plus de 3 décimales près autour de $1/\e$.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 15
+% ----------------------------------------------------
+\subsection*{Exercice 15 -- Fondements analytiques de la Loi Binomiale $\mathcal{B}(n, p)$}
+
+Soit $n \in \N^*$ et $p \in \,]0, 1[$. On pose $q = 1 - p$.
+Une variable aléatoire $X$ suit la loi binomiale de paramètres $(n, p)$ ($X \sim \mathcal{B}(n, p)$) si $X(\Omega) = [\![0, n]\!]$ et :
+\[
+\forall k \in [\![0, n]\!], \quad P(X = k) = \binom{n}{k} p^k q^{n-k}
+\]
+\begin{enumerate}[label=\arabic*.]
+    \item Démontrer que $\sum_{k=0}^n P(X = k) = 1$.
+    \item \textbf{Calcul de l'espérance mathématique :}
+    \begin{enumerate}
+        \item Méthode analytique : En considérant la fonction polynomiale $g(x) = (px + q)^n$, démontrer par dérivation que $\E(X) = np$.
+        \item Méthode algébrique : Retrouver ce résultat en utilisant la formule du pion $k \binom{n}{k} = n \binom{n-1}{k-1}$.
+    \end{enumerate}
+    \item \textbf{Calcul de la variance :}
+    \begin{enumerate}
+        \item Calculer le moment d'ordre 2 factoriel $\E(X(X-1))$ à l'aide de $g''(1)$ ou de l'identité $k(k-1)\binom{n}{k} = n(n-1)\binom{n-2}{k-2}$.
+        \item En déduire que $\V(X) = np(1-p)$.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}[-- Fonction génératrice \& Moments d'ordre 1 et 2]
+\textbf{1. Normalisation de la loi :}
+Par la formule du binôme de Newton :
+\[
+\sum_{k=0}^n P(X = k) = \sum_{k=0}^n \binom{n}{k} p^k q^{n-k} = (p + q)^n = (p + (1 - p))^n = 1^n = \mathbf{1}
+\]
+
+\textbf{2. Calcul de l'espérance $\E(X) = np$ :}
+\begin{enumerate}[label=(\alph*)]
+    \item \emph{Méthode analytique :} Développons la fonction $g(x) = (px + q)^n$ par la formule du binôme :
+    \[
+    g(x) = \sum_{k=0}^n \binom{n}{k} (px)^k q^{n-k} = \sum_{k=0}^n \binom{n}{k} p^k q^{n-k} x^k
+    \]
+    Dérivons $g$ sur $\R$ :
+    \[
+    g'(x) = \sum_{k=1}^n k \binom{n}{k} p^k q^{n-k} x^{k-1}
+    \]
+    En évaluant en $x = 1$ :
+    \[
+    g'(1) = \sum_{k=1}^n k \binom{n}{k} p^k q^{n-k} = \E(X)
+    \]
+    D'autre part, en dérivant directement la forme factorisée $g(x) = (px + q)^n$ :
+    \[
+    g'(x) = n p (px + q)^{n-1} \implies g'(1) = n p (p + q)^{n-1} = n p (1)^{n-1} = \mathbf{np}
+    \]
+    D'où $\mathbf{\E(X) = np}$.
+    \item \emph{Méthode par la formule du sous-comité :}
+    \[
+    \E(X) = \sum_{k=1}^n k \binom{n}{k} p^k q^{n-k} = \sum_{k=1}^n n \binom{n-1}{k-1} p^k q^{n-k} = n p \sum_{k=1}^n \binom{n-1}{k-1} p^{k-1} q^{(n-1)-(k-1)}
+    \]
+    En posant $j = k - 1$ :
+    \[
+    \E(X) = n p \sum_{j=0}^{n-1} \binom{n-1}{j} p^j q^{n-1-j} = n p (p + q)^{n-1} = \mathbf{np}
+    \]
+\end{enumerate}
+
+\textbf{3. Calcul de la variance $\V(X) = np(1-p)$ :}
+\begin{enumerate}[label=(\alph*)]
+    \item Calculons la dérivée seconde de $g$ :
+    \[
+    g''(x) = \sum_{k=2}^n k(k-1) \binom{n}{k} p^k q^{n-k} x^{k-2} \implies g''(1) = \E(X(X-1))
+    \]
+    Or $g''(x) = n(n-1)p^2 (px + q)^{n-2}$, d'où $g''(1) = \mathbf{n(n-1)p^2}$.
+    \item D'après la formule de décomposition du moment d'ordre 2 :
+    \[
+    \E(X^2) = \E(X(X-1)) + \E(X) = n(n-1)p^2 + np = n^2 p^2 - np^2 + np
+    \]
+    Appliquons la formule de König-Huygens :
+    \[
+    \V(X) = \E(X^2) - (\E(X))^2 = (n^2 p^2 - np^2 + np) - (np)^2 = np - np^2 = \mathbf{np(1-p)}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\end{document}

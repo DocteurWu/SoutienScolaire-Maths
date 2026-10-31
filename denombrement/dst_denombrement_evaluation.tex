@@ -1,0 +1,495 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+
+% ----------------------------------------------------
+% Couleurs officielles du projet (Charte LLG / MPSI)
+% ----------------------------------------------------
+\definecolor{llgblue}{RGB}{20, 50, 115}
+\definecolor{llglight}{RGB}{246, 249, 255}
+
+\definecolor{emeraldframe}{RGB}{18, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{12, 80, 52}
+
+\definecolor{prepaframe}{RGB}{30, 70, 135}
+\definecolor{prepaback}{RGB}{246, 249, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 105}
+
+\definecolor{alertframe}{RGB}{185, 75, 20}
+\definecolor{alertback}{RGB}{255, 249, 245}
+\definecolor{alerttitle}{RGB}{145, 55, 12}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=llgblue,
+    urlcolor=llgblue,
+    citecolor=llgblue
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité Mathématiques (1E3)}
+\fancyhead[C]{\small\textbf{DST : Dénombrement, Combinatoire \& Loi Binomiale}}
+\fancyhead[R]{\small Juin 2022}
+\fancyfoot[L]{\footnotesize LLG 2021/2022 -- Devoir Sur Table (1E3)}
+\fancyfoot[C]{\footnotesize Énoncé \& Corrigé Intégral Rigoureux}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% ----------------------------------------------------
+% Boîtes tcolorbox personnalisées
+% ----------------------------------------------------
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Corrigé officiel détaillé et barème indicatif #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.4cm,
+  after skip=0.5cm
+}
+
+\newtcolorbox{remarquebox}[1][]{
+  colback=prepaback,
+  colframe=prepaframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=prepatitle,
+  title={Prolongement \& Regard Prépa / MPSI #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{alertebox}[1][]{
+  colback=alertback,
+  colframe=alertframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=alerttitle,
+  title={Point de vigilance méthodologique \& Pièges fréquents #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+% Commandes mathématiques
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\un}{\mathbf{1}}
+
+\begin{document}
+
+% ====================================================
+% EN-TÊTE DU DEVOIR
+% ====================================================
+\begin{center}
+    {\LARGE \bfseries Lycée Louis-le-Grand -- Paris}\\[0.2cm]
+    {\large Classe de Première 3 (1E3) -- Année scolaire 2021/2022}\\[0.3cm]
+    \begin{tcolorbox}[colback=llglight,colframe=llgblue,arc=3mm,boxrule=1.2pt,center]
+        \begin{center}
+            {\Large \bfseries \color{llgblue} DEVOIR SUR TABLE DE MATHÉMATIQUES}\\[0.15cm]
+            {\large \bfseries Dénombrement, Combinatoire Ensembliste, Identités Binomiales \& Tirages Sans Remise}\\[0.2cm]
+            \small Date : Juin 2022 \quad $\vert$ \quad Durée : 2 heures \quad $\vert$ \quad Calculatrice autorisée selon la réglementation
+        \end{center}
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[colback=white,colframe=llgblue!60,arc=1.5mm,boxrule=0.6pt]
+\small\textbf{Consignes générales d'évaluation :}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item La modélisation ensembliste (combinaisons, arrangements, p-uplets, permutations) doit être explicitée et justifiée pour chaque situation.
+    \item Les démonstrations combinatoires par double comptage sont privilégiées par rapport aux calculs bruts de factorielles.
+    \item Tout résultat numérique volumineux doit être donné sous forme exacte de coefficients binomiaux puis calculé.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+
+% ====================================================
+% SUJET DU DEVOIR SURVEILLÉ (BARÈME /20)
+% ====================================================
+\begin{center}
+    {\Large \bfseries \color{llgblue} \underline{Sujet du Devoir Surveillé (Barème sur 20 points)}}
+\end{center}
+
+\vspace{0.2cm}
+
+% ----------------------------------------------------
+% Exercice 1 (5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 1 -- Mains de cartes \& Disjonctions d'intersection \hfill (5 points)}
+
+On tire simultanément 5 cartes d'un jeu de 32 cartes (les valeurs vont du 7 à l'As dans les 4 enseignes : cœur, carreau, pique, trèfle).
+Combien de mains différentes peut-on obtenir :
+\begin{enumerate}
+    \item Sans imposer de contraintes sur les cartes ?
+    \item Contenant 5 carreaux ou 5 piques ?
+    \item Contenant exactement 2 carreaux et 3 piques ?
+    \item Contenant au moins un roi ?
+    \item Contenant exactement 2 rois et 3 piques ? (\emph{Indication :} Dénombrer les mains sans le roi de pique et les mains avec le roi de pique, et montrer qu'il y a $1\,428$ mains possibles).
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 2 (5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 2 -- Dénombrement de parties \& Recouvrements \hfill (5 points)}
+
+Soit $n \in \N^*$ et $E$ un ensemble fini possédant $n$ éléments. On désigne par $\mathscr{P}(E)$ l'ensemble des parties de $E$.
+\begin{enumerate}
+    \item Démontrer que $\operatorname{Card}(\mathscr{P}(E)) = 2^n$ par deux méthodes indépendantes (codage binaire et formule du binôme).
+    \item Déterminer le nombre de couples $(A, B) \in (\mathscr{P}(E))^2$ tels que $B \subset A$.
+    \item Déterminer le nombre de couples $(A, B) \in (\mathscr{P}(E))^2$ tels que $A \cap B = \emptyset$.
+    \item Déterminer le nombre de couples $(A, B) \in (\mathscr{P}(E))^2$ tels que $A \cup B = E$.
+    \item Déterminer le nombre de triplets $(A, B, C) \in (\mathscr{P}(E))^3$ tels que $A \cup B \cup C = E$.
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 3 (5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 3 -- Formule du pion, Identité de Vandermonde \& Inversion de Pascal \hfill (5 points)}
+
+Soient $i, k, n$ des entiers naturels tels que $i \le k \le n$. Par convention, $0^0 = 1$.
+\begin{enumerate}
+    \item Démontrer par un dénombrement combinatoire (en considérant le choix d'un comité puis d'un sous-comité) la formule du pion :
+    \[
+    \binom{n}{k} \binom{k}{i} = \binom{n}{i} \binom{n - i}{k - i}
+    \]
+    \item Soit $q \in \N$ avec $q \le p \le n$. Démontrer par un dénombrement que :
+    \[
+    \binom{n}{p} = \sum_{k=0}^q \binom{q}{k} \binom{n - q}{p - k}
+    \]
+    En déduire la somme remarquable : $\displaystyle\sum_{k=0}^n \binom{n}{k}^2 = \binom{2n}{n}$.
+    \item Montrer que :
+    \[
+    \sum_{k=i}^n (-1)^{n - k} \binom{n}{k} \binom{k}{i} = \binom{n}{i} 0^{n - i} = \begin{cases} 1 & \text{si } i = n \\ 0 & \text{si } i < n \end{cases}
+    \]
+    \item Soient $(u_n)_{n \in \N}$ et $(v_n)_{n \in \N}$ deux suites réelles liées par :
+    \[
+    \forall n \in \N, \quad u_n = \sum_{k=0}^n \binom{n}{k} v_k
+    \]
+    Démontrer la formule d'\emph{inversion de Pascal} :
+    \[
+    \forall n \in \N, \quad v_n = \sum_{k=0}^n (-1)^{n - k} \binom{n}{k} u_k
+    \]
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 4 (5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 4 -- Temps d'attente sans remise dans une urne bicolore \hfill (5 points)}
+
+Soit $n \in \N^*$. Une urne contient $n$ boules blanches et $2$ boules noires indiscernables au toucher (soit $n+2$ boules au total).
+On effectue des tirages successifs sans remise de toutes les boules de l'urne.
+On note $X$ la variable aléatoire égale au rang d'apparition de la première boule blanche.
+
+\begin{enumerate}
+    \item Justifier que les valeurs possibles prises par $X$ sont $X(\Omega) = \{1, 2, 3\}$.
+    \item Déterminer la loi de probabilité de la variable aléatoire $X$.
+    \item Démontrer que l'espérance mathématique de $X$ est donnée par :
+    \[
+    \E(X) = \frac{n + 3}{n + 1} = 1 + \frac{2}{n + 1}
+    \]
+    \item Étudier la limite de $\E(X)$ quand $n \to +\infty$ et interpréter ce résultat.
+\end{enumerate}
+
+\newpage
+
+% ====================================================
+% CORRIGÉ OFFICIEL DU DEVOIR SURVEILLÉ
+% ====================================================
+\begin{center}
+    {\Large \bfseries \color{emeraldtitle} \underline{Corrigé Intégral Officiel \& Approfondissements Prépa}}
+\end{center}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Correction Exercice 1
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 1 \hfill (5 points)}
+
+\begin{correctionbox}[-- Analyse combinatoire des mains de cartes]
+Une main de cartes est un sous-ensemble (sans ordre et sans répétition) de 5 cartes choisies parmi 32.
+\begin{enumerate}
+    \item \textbf{Nombre de mains sans contraintes :}
+    Il s'agit du nombre de combinaisons de 5 cartes parmi 32 :
+    \[
+    \operatorname{Card}(\Omega) = \binom{32}{5} = \frac{32 \times 31 \times 30 \times 29 \times 28}{5 \times 4 \times 3 \times 2 \times 1} = \mathbf{201\,376\text{ mains}}
+    \]
+
+    \item \textbf{Mains contenant 5 carreaux ou 5 piques :}
+    Les événements \og 5 carreaux \fg{} et \og 5 piques \fg{} sont incompatibles.
+    Chaque couleur compte 8 cartes. Le nombre de mains est donc :
+    \[
+    \binom{8}{5} + \binom{8}{5} = 2 \times \frac{8 \times 7 \times 6}{3 \times 2 \times 1} = 2 \times 56 = \mathbf{112\text{ mains}}
+    \]
+
+    \item \textbf{Mains contenant 2 carreaux et 3 piques :}
+    On choisit indépendamment 2 carreaux parmi les 8 carreaux et 3 piques parmi les 8 piques :
+    \[
+    \binom{8}{2} \times \binom{8}{3} = \frac{8 \times 7}{2} \times 56 = 28 \times 56 = \mathbf{1\,568\text{ mains}}
+    \]
+
+    \item \textbf{Mains contenant au moins un roi :}
+    Considérons l'événement contraire : \og la main ne contient aucun roi \fg{}.
+    Il y a 4 rois et $32 - 4 = 28$ cartes non-rois.
+    Le nombre de mains sans aucun roi est $\binom{28}{5} = \frac{28 \times 27 \times 26 \times 25 \times 24}{120} = 98\,280$.
+    Par soustraction :
+    \[
+    N(\text{au moins un roi}) = \binom{32}{5} - \binom{28}{5} = 201\,376 - 98\,280 = \mathbf{103\,096\text{ mains}}
+    \]
+
+    \item \textbf{Mains contenant 2 rois et 3 piques :}
+    Le roi de pique ($R_\spadesuit$) jouant un double rôle (à la fois roi et pique), partitionnons selon son appartenance à la main :
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Cas 1 : La main ne contient PAS le roi de pique ($R_\spadesuit \notin \text{main}$) :}
+        La main doit contenir 2 rois parmi les 3 autres rois ($\binom{3}{2} = 3$ choix) et 3 piques parmi les 7 autres piques ($\binom{7}{3} = 35$ choix). La main est alors complète (5 cartes) :
+        \[
+        N_1 = \binom{3}{2} \times \binom{7}{3} = 3 \times 35 = \mathbf{105\text{ mains}}
+        \]
+        \item \emph{Cas 2 : La main CONTIENT le roi de pique ($R_\spadesuit \in \text{main}$) :}
+        $R_\spadesuit$ fournit déjà 1 roi et 1 pique. Il faut donc adjoindre à la main :
+        \begin{itemize}
+            \item $1$ autre roi parmi les 3 rois restants non-piques ($\binom{3}{1} = 3$ choix) ;
+            \item $2$ autres piques parmi les 7 piques restants non-rois ($\binom{7}{2} = 21$ choix) ;
+            \item $1$ carte restante qui n'est NI un roi NI un pique. Le nombre de cartes disponibles pour ce choix est $32 - 4 \text{ (rois)} - 7 \text{ (piques restants)} = 21$ cartes ordinaires ($\binom{21}{1} = 21$ choix).
+        \end{itemize}
+        \[
+        N_2 = \binom{3}{1} \times \binom{7}{2} \times \binom{21}{1} = 3 \times 21 \times 21 = \mathbf{1\,323\text{ mains}}
+        \]
+    \end{itemize}
+    Par disjonction des cas, le nombre total de mains est :
+    \[
+    N_{\text{total}} = N_1 + N_2 = 105 + 1\,323 = \mathbf{1\,428\text{ mains}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 2
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 2 \hfill (5 points)}
+
+\begin{correctionbox}[-- Dénombrement de parties \& Recouvrements]
+Soit $E$ un ensemble de cardinal $n$.
+\begin{enumerate}
+    \item \textbf{Démonstrations de $\operatorname{Card}(\mathscr{P}(E)) = 2^n$ :}
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Méthode 1 (Fonctions caractéristiques) :} Une partie $A \subset E$ est entièrement caractérisée par son indicatrice $\un_A : E \to \{0, 1\}$. Il y a donc une bijection entre $\mathscr{P}(E)$ et $\{0, 1\}^E$.
+        Or $\operatorname{Card}(\{0, 1\}^E) = 2^{\operatorname{Card}(E)} = 2^n$.
+        \item \emph{Méthode 2 (Somme des combinaisons \& Binôme) :} $\mathscr{P}(E) = \bigcup_{k=0}^n \{ A \subset E \mid \operatorname{Card}(A) = k \}$.
+        Puisque cette union est disjointe :
+        \[
+        \operatorname{Card}(\mathscr{P}(E)) = \sum_{k=0}^n \binom{n}{k} = \sum_{k=0}^n \binom{n}{k} 1^k 1^{n-k} = (1 + 1)^n = 2^n
+        \]
+    \end{itemize}
+
+    \item \textbf{Couples $(A, B)$ tels que $B \subset A$ :}
+    Pour chaque élément $x \in E$, trois situations mutuellement exclusives sont possibles :
+    $x \in B$ (ce qui implique $x \in A$) ; $x \in A \setminus B$ ; $x \notin A$ (donc $x \notin B$).
+    Il y a donc 3 choix indépendants pour chacun des $n$ éléments de $E$.
+    Le nombre de couples est donc :
+    \[
+    \mathbf{3^n}
+    \]
+    \emph{Vérification par sommation :} $\sum_{k=0}^n \binom{n}{k} 2^k = (1 + 2)^n = 3^n$.
+
+    \item \textbf{Couples $(A, B)$ disjoints ($A \cap B = \emptyset$) :}
+    Pour chaque élément $x \in E$, il y a 3 choix : $x \in A$ (donc $x \notin B$) ; $x \in B$ (donc $x \notin A$) ; $x \notin A \cup B$.
+    Le nombre de couples est de même :
+    \[
+    \mathbf{3^n}
+    \]
+
+    \item \textbf{Couples $(A, B)$ recouvrant $E$ ($A \cup B = E$) :}
+    Par passage aux complémentaires, $A \cup B = E \iff \overline{A} \cap \overline{B} = \emptyset$.
+    L'application $(A, B) \mapsto (\overline{A}, \overline{B})$ étant une bijection de $(\mathscr{P}(E))^2$ dans lui-même, il y a autant de couples recouvrant $E$ que de couples disjoints :
+    \[
+    \mathbf{3^n}
+    \]
+
+    \item \textbf{Triplets $(A, B, C)$ tels que $A \cup B \cup C = E$ :}
+    Pour que l'union soit $E$, aucun élément de $E$ ne doit appartenir au complémentaire commun $\overline{A} \cap \overline{B} \cap \overline{C}$.
+    Pour chaque élément $x \in E$, le sous-ensemble de $\{A, B, C\}$ contenant $x$ est un sous-ensemble \textbf{non vide} de $\{A, B, C\}$.
+    Il y a $2^3 - 1 = 8 - 1 = 7$ choix possibles d'appartenance pour chaque élément $x \in E$.
+    Puisque les choix sont indépendants pour les $n$ éléments :
+    \[
+    \mathbf{7^n\text{ triplets}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 3
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 3 \hfill (5 points)}
+
+\begin{correctionbox}[-- Formule du pion, Vandermonde \& Inversion de Pascal]
+\begin{enumerate}
+    \item \textbf{Formule du pion par double comptage :}
+    Considérons la formation d'un comité $A$ de $k$ personnes parmi $n$, puis d'un sous-comité directeur $B$ de $i$ personnes au sein de $A$ ($i \le k \le n$).
+    \begin{itemize}[label=$\bullet$]
+        \item Méthode 1 : On choisit d'abord les $k$ membres du comité parmi $n$ ($\binom{n}{k}$ choix), puis les $i$ dirigeants parmi les $k$ ($\binom{k}{i}$ choix) : $\binom{n}{k} \binom{k}{i}$ manières.
+        \item Méthode 2 : On choisit directement les $i$ dirigeants parmi $n$ ($\binom{n}{i}$ choix), puis on complète le comité en choisissant les $k - i$ membres restants parmi les $n - i$ personnes disponibles ($\binom{n-i}{k-i}$ choix) : $\binom{n}{i} \binom{n-i}{k-i}$ manières.
+    \end{itemize}
+    Les deux dénombrements comptabilisant les mêmes configurations $(B \subset A)$ :
+    \[
+    \mathbf{\binom{n}{k} \binom{k}{i} = \binom{n}{i} \binom{n - i}{k - i}}
+    \]
+
+    \item \textbf{Identité de Vandermonde :}
+    Soit un ensemble de $n$ personnes composé de $q$ femmes et de $n - q$ hommes.
+    On souhaite former une délégation de $p$ personnes. Le nombre total de délégations est $\binom{n}{p}$.
+    En partitionnant selon le nombre $k$ de femmes dans la délégation ($0 \le k \le q$), on choisit $k$ femmes parmi $q$ ($\binom{q}{k}$) et les $p - k$ hommes restants parmi $n - q$ ($\binom{n-q}{p-k}$).
+    Par additivité sur les cas disjoints :
+    \[
+    \mathbf{\binom{n}{p} = \sum_{k=0}^q \binom{q}{k} \binom{n - q}{p - k}}
+    \]
+    Pour $p = q = n$ dans un ensemble de $2n$ éléments divisé en deux groupes de taille $n$ :
+    \[
+    \binom{2n}{n} = \sum_{k=0}^n \binom{n}{k} \binom{n}{n - k} = \sum_{k=0}^n \binom{n}{k} \binom{n}{k} = \mathbf{\sum_{k=0}^n \binom{n}{k}^2}
+    \]
+
+    \item \textbf{Calcul de la somme alternée :}
+    En substituant la formule du pion établie en 1 :
+    \[
+    S = \sum_{k=i}^n (-1)^{n - k} \binom{n}{k} \binom{k}{i} = \sum_{k=i}^n (-1)^{n - k} \binom{n}{i} \binom{n - i}{k - i}
+    \]
+    Le facteur $\binom{n}{i}$ ne dépend pas de $k$, on peut le factoriser :
+    \[
+    S = \binom{n}{i} \sum_{k=i}^n (-1)^{n - k} \binom{n - i}{k - i}
+    \]
+    Effectuons le changement d'indice $m = k - i$ (alors $n - k = (n - i) - m$) :
+    \[
+    S = \binom{n}{i} \sum_{m=0}^{n - i} (-1)^{(n - i) - m} \binom{n - i}{m}
+    \]
+    Reconnaissons le développement du binôme de Newton pour $(1 - 1)^{n - i}$ :
+    \[
+    S = \binom{n}{i} (1 - 1)^{n - i} = \mathbf{\binom{n}{i} 0^{n - i} = \begin{cases} 1 & \text{si } i = n \\ 0 & \text{si } i < n \end{cases}}
+    \]
+
+    \item \textbf{Formule d'inversion de Pascal :}
+    Injectons $u_k = \sum_{j=0}^k \binom{k}{j} v_j$ dans la somme proposée :
+    \[
+    \sum_{k=0}^n (-1)^{n - k} \binom{n}{k} u_k = \sum_{k=0}^n (-1)^{n - k} \binom{n}{k} \left( \sum_{j=0}^k \binom{k}{j} v_j \right)
+    \]
+    Intervertissons les deux sommations (domaine $0 \le j \le k \le n$) :
+    \[
+    \sum_{j=0}^n v_j \left( \sum_{k=j}^n (-1)^{n - k} \binom{n}{k} \binom{k}{j} \right)
+    \]
+    D'après la question 3, la somme intérieure vaut $\delta_{nj}$ (elle s'annule pour tout $j < n$ et vaut 1 pour $j = n$).
+    Il ne reste donc que le terme $j = n$ :
+    \[
+    v_n \times 1 = \mathbf{v_n}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 4
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 4 \hfill (5 points)}
+
+\begin{correctionbox}[-- Rang d'apparition du premier succès sans remise]
+\textbf{1. Univers image $X(\Omega) = \{1, 2, 3\}$ :}
+L'urne contient $n$ boules blanches ($B$) et exactement $2$ boules noires ($N$).
+Le pire des scénarios pour tirer une boule blanche est d'extraire successivement les deux seules boules noires aux deux premiers tirages ($N_1 \cap N_2$). La troisième boule extraite sera alors obligatoirement blanche ($B_3$).
+Par conséquent, la première boule blanche apparaît nécessairement au premier, au deuxième ou au troisième tirage :
+\[
+\mathbf{X(\Omega) = \{1, 2, 3\}}
+\]
+
+\textbf{2. Loi de probabilité de $X$ :}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{$X = 1$ :} La première boule tirée est blanche :
+    \[
+    P(X = 1) = \mathbf{\frac{n}{n + 2}}
+    \]
+    \item \textbf{$X = 2$ :} La première est noire et la deuxième est blanche :
+    \[
+    P(X = 2) = P(N_1) \times P_{N_1}(B_2) = \frac{2}{n + 2} \times \frac{n}{n + 1} = \mathbf{\frac{2n}{(n + 1)(n + 2)}}
+    \]
+    \item \textbf{$X = 3$ :} Les deux premières sont noires et la troisième est blanche :
+    \[
+    P(X = 3) = \frac{2}{n + 2} \times \frac{1}{n + 1} \times \frac{n}{n} = \mathbf{\frac{2}{(n + 1)(n + 2)}}
+    \]
+\end{itemize}
+\emph{Vérification de la somme :}
+\[
+\frac{n(n + 1) + 2n + 2}{(n + 1)(n + 2)} = \frac{n^2 + 3n + 2}{(n + 1)(n + 2)} = \frac{(n + 1)(n + 2)}{(n + 1)(n + 2)} = 1
+\]
+
+\textbf{3. Calcul de l'espérance mathématique $\E(X)$ :}
+Par définition de l'espérance :
+\[
+\E(X) = 1 \times P(X = 1) + 2 \times P(X = 2) + 3 \times P(X = 3)
+\]
+\[
+\E(X) = 1 \times \frac{n}{n + 2} + 2 \times \frac{2n}{(n + 1)(n + 2)} + 3 \times \frac{2}{(n + 1)(n + 2)}
+\]
+Réduisons au même dénominateur $(n + 1)(n + 2)$ :
+\[
+\E(X) = \frac{n(n + 1) + 4n + 6}{(n + 1)(n + 2)} = \frac{n^2 + n + 4n + 6}{(n + 1)(n + 2)} = \frac{n^2 + 5n + 6}{(n + 1)(n + 2)}
+\]
+Factorisons le numérateur $n^2 + 5n + 6 = (n + 2)(n + 3)$ :
+\[
+\E(X) = \frac{(n + 2)(n + 3)}{(n + 1)(n + 2)} = \mathbf{\frac{n + 3}{n + 1}} = \mathbf{1 + \frac{2}{n + 1}}
+\]
+
+\textbf{4. Limite et interprétation probabiliste :}
+Quand le nombre de boules blanches $n$ devient très grand ($n \to +\infty$) :
+\[
+\lim_{n \to +\infty} \E(X) = \lim_{n \to +\infty} \left( 1 + \frac{2}{n + 1} \right) = \mathbf{1}
+\]
+\textbf{Interprétation :} Lorsque l'urne est massivement dominée par les boules blanches, la probabilité d'obtenir une boule blanche dès le tout premier tirage tend vers 1 ($P(X=1) = \frac{n}{n+2} \to 1$). Le temps d'attente moyen pour observer la première blanche converge donc naturellement vers 1 tirage.
+\end{correctionbox}
+
+\end{document}

@@ -1,0 +1,553 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+
+% ----------------------------------------------------
+% Couleurs officielles du projet (Charte LLG / MPSI)
+% ----------------------------------------------------
+\definecolor{llgblue}{RGB}{20, 50, 115}
+\definecolor{llglight}{RGB}{246, 249, 255}
+
+\definecolor{emeraldframe}{RGB}{18, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{12, 80, 52}
+
+\definecolor{prepaframe}{RGB}{30, 70, 135}
+\definecolor{prepaback}{RGB}{246, 249, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 105}
+
+\definecolor{alertframe}{RGB}{185, 75, 20}
+\definecolor{alertback}{RGB}{255, 249, 245}
+\definecolor{alerttitle}{RGB}{145, 55, 12}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=llgblue,
+    urlcolor=llgblue,
+    citecolor=llgblue
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité Mathématiques (1E3)}
+\fancyhead[C]{\small\textbf{DST : Trigonométrie \& Géométrie Polaire}}
+\fancyhead[R]{\small Février 2022}
+\fancyfoot[L]{\footnotesize LLG 2021/2022 -- Devoir Sur Table (1E3)}
+\fancyfoot[C]{\footnotesize Énoncé \& Corrigé Intégral Rigoureux}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% ----------------------------------------------------
+% Boîtes tcolorbox personnalisées
+% ----------------------------------------------------
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Corrigé officiel détaillé et barème indicatif #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.4cm,
+  after skip=0.5cm
+}
+
+\newtcolorbox{remarquebox}[1][]{
+  colback=prepaback,
+  colframe=prepaframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=prepatitle,
+  title={Prolongement \& Regard Prépa / MPSI #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{alertebox}[1][]{
+  colback=alertback,
+  colframe=alertframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=alerttitle,
+  title={Point de vigilance méthodologique \& Pièges fréquents #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+% Commandes mathématiques
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+
+\begin{document}
+
+% ====================================================
+% EN-TÊTE DU DEVOIR
+% ====================================================
+\begin{center}
+    {\LARGE \bfseries Lycée Louis-le-Grand -- Paris}\\[0.2cm]
+    {\large Classe de Première 3 (1E3) -- Année scolaire 2021/2022}\\[0.3cm]
+    \begin{tcolorbox}[colback=llglight,colframe=llgblue,arc=3mm,boxrule=1.2pt,center]
+        \begin{center}
+            {\Large \bfseries \color{llgblue} DEVOIR SUR TABLE DE MATHÉMATIQUES}\\[0.15cm]
+            {\large \bfseries Trigonométrie Circulaire, Formules de Duplication, Triangle d'Or \& Repérage Polaire}\\[0.2cm]
+            \small Durée : 2 heures \quad $\vert$ \quad Calculatrice interdite \quad $\vert$ \quad Rigueur des justifications exigée
+        \end{center}
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[colback=white,colframe=llgblue!60,arc=1.5mm,boxrule=0.6pt]
+\small\textbf{Consignes générales d'évaluation :}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item La précision des figures géométriques et la rigueur dans la manipulation des mesures d'angles modulo $2\pi$ sont fondamentales.
+    \item Tout résultat trigonométrique remarquable ($\cos(\pi/5)$, $\cos(\pi/12)$) doit être établi par une démarche géométrique ou analytique déductive complète.
+    \item Les équations trigonométriques doivent impérativement mentionner leur domaine de validité et l'ensemble de leurs solutions réelles.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+
+% ====================================================
+% SUJET DU DEVOIR SURVEILLÉ (BARÈME /20)
+% ====================================================
+\begin{center}
+    {\Large \bfseries \color{llgblue} \underline{Sujet du Devoir Surveillé (Barème sur 20 points)}}
+\end{center}
+
+\vspace{0.2cm}
+
+% ----------------------------------------------------
+% Exercice 1 (5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 1 -- Démonstration géométrique de la duplication \& Valeur de $\pi/12$ \hfill (5 points)}
+
+Soit $ABC$ un triangle isocèle en $A$ tel que $AB = AC = 1$ et dont l'angle au sommet vérifie $\widehat{BAC} = 2x$, avec $0 < x < \frac{\pi}{4}$.
+On note $H$ le pied de la hauteur issue de $B$ relative au côté $(AC)$, et $I$ le milieu du segment $[BC]$.
+
+\begin{enumerate}
+    \item 
+    \begin{enumerate}
+        \item Dans le triangle $ABH$ rectangle en $H$, exprimer la longueur $BH$ en fonction de $\sin(2x)$.
+        \item Dans le triangle $ABI$ rectangle en $I$, exprimer la longueur $BC$ en fonction de $\sin x$.
+        \item Déterminer la mesure de l'angle $\widehat{HBC}$ en fonction de $x$.
+        \item En déduire, en considérant le triangle $BHC$ rectangle en $H$, la formule universelle de duplication :
+        \[
+        \sin(2x) = 2 \sin x \cos x
+        \]
+    \end{enumerate}
+    \item On pose dans cette question $x = \dfrac{\pi}{12}$, de sorte que $2x = \dfrac{\pi}{6}$.
+    \begin{enumerate}
+        \item Calculer les valeurs exactes des longueurs $BH$ et $AH$, puis en déduire la longueur $CH$.
+        \item Démontrer que $BC^2 = 2 - \sqrt{3}$.
+        \item En déduire les valeurs exactes de $\cos\left(\dfrac{\pi}{12}\right)$ et de $\sin\left(\dfrac{\pi}{12}\right)$.
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 2 (6 points)
+% ----------------------------------------------------
+\subsection*{Exercice 2 -- Le Triangle d'Or \& Valeur exacte de $\cos(\pi/5)$ \hfill (6 points)}
+
+On considère un triangle $ABC$ isocèle en $A$ tel que $AB = AC = 1$ et d'angle au sommet $\widehat{BAC} = \dfrac{\pi}{5}$ ($36^\circ$).
+On note $I$ le milieu de $[BC]$, et $D$ le point de la demi-droite $[AI)$ tel que $AD = 1$.
+
+\begin{enumerate}
+    \item Démontrer que $IC = \sin\left(\dfrac{\pi}{5}\right)$ et que $ID = 1 - \cos\left(\dfrac{\pi}{5}\right)$.
+    \item En déduire dans le triangle rectangle $IDC$ que :
+    \[
+    DC = \sqrt{2 - 2\cos\left(\dfrac{\pi}{5}\right)}
+    \]
+    \item Démontrer que le triangle $ADC$ est isocèle en $A$, puis déterminer la mesure de l'angle $\widehat{ADC}$.
+    \item En exprimant $\sin(\widehat{IDC})$ dans le triangle rectangle $IDC$ de deux façons différentes, démontrer que le réel $X = \cos\left(\dfrac{\pi}{5}\right)$ est solution de l'équation polynomiale du troisième degré :
+    \[
+    8X^3 - 8X^2 + 1 = 0
+    \]
+    \item Résoudre l'équation $8X^3 - 8X^2 + 1 = 0$ dans $\R$.
+    \item En déduire la valeur exacte de $\cos\left(\dfrac{\pi}{5}\right)$ exprimée à l'aide du nombre d'or $\Phi = \dfrac{1+\sqrt{5}}{2}$.
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 3 (5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 3 -- Équations polynomiales trigonométriques \& Factorisation \hfill (5 points)}
+
+\begin{enumerate}
+    \item On considère l'équation $(E)$ d'inconnue $x \in \R$ :
+    \[
+    2\cos^3 x - 7\cos^2 x + 2\cos x + 3 = 0
+    \]
+    \begin{enumerate}
+        \item En effectuant le changement d'inconnue $X = \cos x$, factoriser le polynôme $P(X) = 2X^3 - 7X^2 + 2X + 3$ en produit de trois facteurs du premier degré.
+        \item Résoudre l'équation $(E)$ sur l'intervalle $[-\pi, \pi]$, puis donner l'ensemble de ses solutions sur $\R$.
+    \end{enumerate}
+    \item Résoudre dans $\R$ l'équation :
+    \[
+    \cos(3x) = \sin(2x)
+    \]
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 4 (4 points)
+% ----------------------------------------------------
+\subsection*{Exercice 4 -- Repérage polaire, Droites \& Paramétrage d'Ellipse \hfill (4 points)}
+
+Le plan est rapporté à un repère orthonormé direct $(O; \vec{i}, \vec{j})$. Tout point $M$ distinct de $O$ peut être repéré par ses coordonnées polaires $[r; \theta]$ avec $r = OM > 0$ et $\theta = (\vec{i}, \overrightarrow{OM}) \pmod{2\pi}$.
+
+\begin{enumerate}
+    \item 
+    \begin{enumerate}
+        \item Déterminer les coordonnées cartésiennes du point $M_1$ de coordonnées polaires $\left[3; \dfrac{5\pi}{6}\right]$.
+        \item Déterminer les coordonnées polaires du point $M_2$ de coordonnées cartésiennes $(5, -5)$.
+    \end{enumerate}
+    \item On considère l'ensemble $(\mathcal{D})$ des points $M$ dont les coordonnées polaires $[r; \theta]$ vérifient la relation :
+    \[
+    r = \frac{1}{\cos\theta + \sin\theta} \quad \text{pour } \theta \in \left]-\frac{\pi}{4}, \frac{3\pi}{4}\right[
+    \]
+    Déterminer une équation cartésienne de $(\mathcal{D})$ et préciser la nature géométrique de cette courbe.
+    \item Soient $a > 0$ et $b > 0$. Démontrer que la courbe paramétrée par :
+    \[
+    \begin{cases} x(\theta) = a \cos\theta \\ y(\theta) = b \sin\theta \end{cases} \quad (\theta \in [0, 2\pi[)
+    \]
+    est l'ellipse d'équation cartésienne $\dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1$.
+\end{enumerate}
+
+\newpage
+
+% ====================================================
+% CORRIGÉ DÉTAILLÉ & PROLONGEMENTS MPSI
+% ====================================================
+\begin{center}
+    {\Large \bfseries \color{emeraldtitle} \underline{Corrigé Intégral Officiel \& Approfondissements Prépa}}
+\end{center}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Correction Exercice 1
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 1 \hfill (5 points)}
+
+\begin{correctionbox}[-- Duplication géométrique \& Calcul des lignes de $\pi/12$]
+\textbf{1. (a) Expression de $BH$ :}
+Dans le triangle $ABH$ rectangle en $H$, l'hypoténuse est $AB = 1$ et l'angle au sommet est $\widehat{BAH} = 2x$.
+Par définition du sinus :
+\[
+\sin(\widehat{BAH}) = \frac{BH}{AB} \iff \sin(2x) = \frac{BH}{1} \implies \mathbf{BH = \sin(2x)}
+\]
+
+\textbf{1. (b) Expression de $BC$ :}
+Le triangle $ABC$ est isocèle en $A$, donc la médiane issue de $A$ est également médiatrice de $[BC]$ et bissectrice de l'angle $\widehat{BAC}$.
+Le triangle $ABI$ est donc rectangle en $I$ avec $\widehat{BAI} = \frac{2x}{2} = x$.
+Par définition du sinus dans $ABI$ :
+\[
+\sin x = \frac{BI}{AB} = \frac{BI}{1} = BI
+\]
+Comme $I$ est le milieu de $[BC]$, $BC = 2 BI = \mathbf{2\sin x}$.
+
+\textbf{1. (c) Mesure de l'angle $\widehat{HBC}$ :}
+Dans le triangle isocèle $ABC$, la somme des angles vaut $\pi$. Les deux angles à la base sont égaux :
+\[
+\widehat{ABC} = \widehat{ACB} = \frac{\pi - \widehat{BAC}}{2} = \frac{\pi - 2x}{2} = \frac{\pi}{2} - x
+\]
+Dans le triangle $BHC$ rectangle en $H$, les angles aigus sont complémentaires :
+\[
+\widehat{HBC} = \frac{\pi}{2} - \widehat{HCB} = \frac{\pi}{2} - \left(\frac{\pi}{2} - x\right) = \mathbf{x}
+\]
+
+\textbf{1. (d) Démonstration de la formule de duplication :}
+Considérons le cosinus de l'angle $\widehat{HBC}$ dans le triangle $BHC$ rectangle en $H$ :
+\[
+\cos(\widehat{HBC}) = \frac{BH}{BC}
+\]
+En remplaçant par les résultats établis :
+\[
+\cos x = \frac{\sin(2x)}{2\sin x} \iff \mathbf{\sin(2x) = 2\sin x \cos x}
+\]
+Cette relation géométrique constitue la démonstration synthétique classique de la duplication du sinus.
+
+\vspace{0.2cm}
+\textbf{2. Application numérique pour $x = \pi/12$ ($2x = \pi/6$) :}
+
+\textbf{(a) Longueurs $BH$, $AH$ et $CH$ :}
+Dans le triangle rectangle $ABH$, avec $AB = 1$ et $\widehat{BAH} = \frac{\pi}{6}$ :
+\[
+BH = \sin\left(\frac{\pi}{6}\right) = \mathbf{\frac{1}{2}} \quad \text{et} \quad AH = \cos\left(\frac{\pi}{6}\right) = \mathbf{\frac{\sqrt{3}}{2}}
+\]
+Puisque $H$ appartient au segment $[AC]$ de longueur $AC = 1$ :
+\[
+CH = AC - AH = 1 - \frac{\sqrt{3}}{2} = \mathbf{\frac{2 - \sqrt{3}}{2}}
+\]
+
+\textbf{(b) Calcul de $BC^2$ :}
+Appliquons le théorème de Pythagore dans le triangle $BHC$ rectangle en $H$ :
+\[
+BC^2 = BH^2 + CH^2 = \left(\frac{1}{2}\right)^2 + \left(1 - \frac{\sqrt{3}}{2}\right)^2 = \frac{1}{4} + \left(1 - \sqrt{3} + \frac{3}{4}\right)
+\]
+\[
+BC^2 = \frac{1}{4} + \frac{3}{4} + 1 - \sqrt{3} = 1 + 1 - \sqrt{3} = \mathbf{2 - \sqrt{3}}
+\]
+
+\textbf{(c) Lignes trigonométriques exactes de $\pi/12$ :}
+D'après la question 1.(c), dans le triangle $BHC$, $\cos\left(\frac{\pi}{12}\right) = \frac{BH}{BC}$ et $\sin\left(\frac{\pi}{12}\right) = \frac{CH}{BC}$.
+Or $BC = \sqrt{2 - \sqrt{3}}$. Remarquons que :
+\[
+(\sqrt{6} - \sqrt{2})^2 = 6 - 2\sqrt{12} + 2 = 8 - 4\sqrt{3} = 4(2 - \sqrt{3}) \implies \sqrt{2 - \sqrt{3}} = \frac{\sqrt{6} - \sqrt{2}}{2}
+\]
+Par conséquent :
+\[
+\cos\left(\frac{\pi}{12}\right) = \frac{BH}{BC} = \frac{\frac{1}{2}}{\frac{\sqrt{6}-\sqrt{2}}{2}} = \frac{1}{\sqrt{6} - \sqrt{2}} = \frac{\sqrt{6} + \sqrt{2}}{(\sqrt{6}-\sqrt{2})(\sqrt{6}+\sqrt{2})} = \mathbf{\frac{\sqrt{6} + \sqrt{2}}{4}}
+\]
+\[
+\sin\left(\frac{\pi}{12}\right) = \frac{CH}{BC} = \frac{2 - \sqrt{3}}{2 \times \frac{\sqrt{6}-\sqrt{2}}{2}} = \frac{(\sqrt{6}-\sqrt{2})^2 / 4}{\frac{\sqrt{6}-\sqrt{2}}{2}} = \mathbf{\frac{\sqrt{6} - \sqrt{2}}{4}}
+\]
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 2
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 2 \hfill (6 points)}
+
+\begin{correctionbox}[-- Le Triangle d'Or \& La valeur de $\cos(\pi/5)$]
+\textbf{1. Longueurs $IC$ et $ID$ :}
+Dans le triangle $AIC$ rectangle en $I$, l'hypoténuse est $AC = 1$ et l'angle en $A$ est $\widehat{IAC} = \frac{\pi/5}{2}$ ? Non : $I$ est le milieu de $[BC]$, donc $(AI)$ est la bissectrice de $\widehat{BAC} = \frac{\pi}{5}$ : non, le schéma indique que $A$ a pour angle au sommet $\pi/5$, mais ici $I$ est le milieu de $[BC]$ et $(AI)$ est l'axe de symétrie.
+Dans $AIC$ rectangle en $I$ :
+\[
+IC = AC \sin\left(\frac{\pi}{5}\right) = \mathbf{\sin\left(\frac{\pi}{5}\right)} \quad \text{et} \quad AI = AC \cos\left(\frac{\pi}{5}\right) = \cos\left(\frac{\pi}{5}\right)
+\]
+Puisque $AD = 1$ et $I \in [AD]$ :
+\[
+ID = AD - AI = \mathbf{1 - \cos\left(\frac{\pi}{5}\right)}
+\]
+
+\textbf{2. Calcul de $DC$ :}
+Dans le triangle $IDC$ rectangle en $I$, d'après le théorème de Pythagore :
+\[
+DC^2 = ID^2 + IC^2 = \left(1 - \cos\left(\frac{\pi}{5}\right)\right)^2 + \sin^2\left(\frac{\pi}{5}\right)
+\]
+\[
+DC^2 = 1 - 2\cos\left(\frac{\pi}{5}\right) + \cos^2\left(\frac{\pi}{5}\right) + \sin^2\left(\frac{\pi}{5}\right) = 2 - 2\cos\left(\frac{\pi}{5}\right)
+\]
+D'où $DC = \mathbf{\sqrt{2 - 2\cos\left(\frac{\pi}{5}\right)}}$.
+
+\textbf{3. Nature du triangle $ADC$ et angle $\widehat{ADC}$ :}
+Par construction, $AD = 1$ et $AC = 1$, donc le triangle $ADC$ est isocèle en $A$.
+L'angle au sommet est $\widehat{DAC} = \frac{\pi}{5}$.
+Les angles à la base sont égaux :
+\[
+\widehat{ADC} = \frac{\pi - \widehat{DAC}}{2} = \frac{\pi - \frac{\pi}{5}}{2} = \mathbf{\frac{2\pi}{5}} \quad (72^\circ)
+\]
+Puisque $(AI)$ est la droite $(AD)$, l'angle $\widehat{IDC}$ coïncide avec $\widehat{ADC}$, d'où $\widehat{IDC} = \frac{2\pi}{5}$.
+
+\textbf{4. Établissement de l'équation polynomiale :}
+Dans le triangle rectangle $IDC$ en $I$ :
+\[
+\sin(\widehat{IDC}) = \frac{IC}{DC} \iff \sin\left(\frac{2\pi}{5}\right) = \frac{\sin\left(\frac{\pi}{5}\right)}{\sqrt{2 - 2\cos\left(\frac{\pi}{5}\right)}}
+\]
+Or, par la formule de duplication $\sin(2\theta) = 2\sin\theta\cos\theta$ avec $\theta = \frac{\pi}{5}$ :
+\[
+\sin\left(\frac{2\pi}{5}\right) = 2\sin\left(\frac{\pi}{5}\right)\cos\left(\frac{\pi}{5}\right)
+\]
+Comme $\sin(\pi/5) \neq 0$, simplifions par $\sin(\pi/5)$ :
+\[
+2\cos\left(\frac{\pi}{5}\right) = \frac{1}{\sqrt{2 - 2\cos\left(\frac{\pi}{5}\right)}}
+\]
+Élevons au carré les deux membres (tous deux strictement positifs) :
+\[
+4\cos^2\left(\frac{\pi}{5}\right) = \frac{1}{2 - 2\cos\left(\frac{\pi}{5}\right)} \iff 4\cos^2\left(\frac{\pi}{5}\right) \left[2 - 2\cos\left(\frac{\pi}{5}\right)\right] = 1
+\]
+\[
+8\cos^2\left(\frac{\pi}{5}\right) - 8\cos^3\left(\frac{\pi}{5}\right) = 1 \iff \mathbf{8\cos^3\left(\frac{\pi}{5}\right) - 8\cos^2\left(\frac{\pi}{5}\right) + 1 = 0}
+\]
+Le réel $X = \cos\left(\frac{\pi}{5}\right)$ est donc racine de $8X^3 - 8X^2 + 1 = 0$.
+
+\textbf{5. Résolution de l'équation $8X^3 - 8X^2 + 1 = 0$ :}
+Testons les racines rationnelles simples :
+Pour $X = \frac{1}{2}$ :
+\[
+8\left(\frac{1}{2}\right)^3 - 8\left(\frac{1}{2}\right)^2 + 1 = 8\left(\frac{1}{8}\right) - 8\left(\frac{1}{4}\right) + 1 = 1 - 2 + 1 = 0
+\]
+Le polynôme est donc divisible par $\left(X - \frac{1}{2}\right)$ (ou $2X - 1$) :
+\[
+8X^3 - 8X^2 + 1 = (2X - 1)(4X^2 - 2X - 1)
+\]
+Résolvons $4X^2 - 2X - 1 = 0$ :
+\[
+\Delta = (-2)^2 - 4(4)(-1) = 4 + 16 = 20 = (2\sqrt{5})^2
+\]
+Les deux racines de ce trinôme sont :
+\[
+X_1 = \frac{2 - 2\sqrt{5}}{8} = \frac{1 - \sqrt{5}}{4} \quad \text{et} \quad X_2 = \frac{2 + 2\sqrt{5}}{8} = \frac{1 + \sqrt{5}}{4}
+\]
+L'ensemble des solutions réelles de l'équation est :
+\[
+\mathcal{S} = \left\{ \frac{1}{2}, \; \frac{1 - \sqrt{5}}{4}, \; \frac{1 + \sqrt{5}}{4} \right\}
+\]
+
+\textbf{6. Détermination de la valeur exacte de $\cos(\pi/5)$ :}
+Puisque $0 < \frac{\pi}{5} < \frac{\pi}{4} < \frac{\pi}{3}$, la stricte décroissance de la fonction cosinus sur $[0, \pi]$ donne :
+\[
+\cos\left(\frac{\pi}{5}\right) > \cos\left(\frac{\pi}{3}\right) = \frac{1}{2}
+\]
+Or :
+\begin{itemize}[label=$\bullet$]
+    \item $X_1 = \frac{1 - \sqrt{5}}{4} < 0$, donc $X_1$ est éliminé.
+    \item $X_0 = \frac{1}{2}$, or $\cos(\pi/5) > 1/2$, donc $X_0$ est éliminé.
+    \item Comme $\sqrt{5} \approx 2{,}236$, $X_2 = \frac{1 + \sqrt{5}}{4} \approx 0{,}809 > 0{,}5$.
+\end{itemize}
+Par conséquent, la seule valeur admissible est $X_2$. En introduisant le nombre d'or $\Phi = \frac{1+\sqrt{5}}{2}$ :
+\[
+\mathbf{\cos\left(\frac{\pi}{5}\right) = \frac{1 + \sqrt{5}}{4} = \frac{\Phi}{2}}
+\]
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 3
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 3 \hfill (5 points)}
+
+\begin{correctionbox}[-- Résolution d'équations trigonométriques polynomiales]
+\textbf{1. (a) Factorisation de $P(X) = 2X^3 - 7X^2 + 2X + 3$ :}
+Remarquons immédiatement que $X = 1$ est racine évidente :
+\[
+P(1) = 2(1)^3 - 7(1)^2 + 2(1) + 3 = 2 - 7 + 2 + 3 = 0
+\]
+Factorisons par $(X - 1)$ par division euclidienne ou identification :
+\[
+2X^3 - 7X^2 + 2X + 3 = (X - 1)(2X^2 - 5X - 3)
+\]
+Factorisons le trinôme $2X^2 - 5X - 3$ : son discriminant est $\Delta = 25 - 4(2)(-3) = 25 + 24 = 49 = 7^2$.
+\[
+X_1 = \frac{5 - 7}{4} = -\frac{1}{2} \quad \text{et} \quad X_2 = \frac{5 + 7}{4} = 3
+\]
+D'où la factorisation complète :
+\[
+P(X) = (X - 1)(X - 3)(2X + 1)
+\]
+
+\textbf{1. (b) Résolution de $(E)$ :}
+L'équation $P(\cos x) = 0$ équivaut à :
+\[
+(\cos x - 1)(\cos x - 3)(2\cos x + 1) = 0
+\]
+\begin{itemize}[label=$\bullet$]
+    \item $\cos x - 3 = 0 \iff \cos x = 3$ : impossible car $\forall x \in \R, \; -1 \le \cos x \le 1$.
+    \item $\cos x - 1 = 0 \iff \cos x = 1 \iff x \equiv 0 \pmod{2\pi}$.
+    \item $2\cos x + 1 = 0 \iff \cos x = -\frac{1}{2} \iff x \equiv \frac{2\pi}{3} \pmod{2\pi}$ ou $x \equiv -\frac{2\pi}{3} \pmod{2\pi}$.
+\end{itemize}
+Sur l'intervalle $[-\pi, \pi]$, l'ensemble des solutions est :
+\[
+\mathcal{S}_{[-\pi, \pi]} = \left\{ -\frac{2\pi}{3}, \; 0, \; \frac{2\pi}{3} \right\}
+\]
+Sur $\R$, l'ensemble complet des solutions est :
+\[
+\mathcal{S}_{\R} = \{ 2k\pi \mid k \in \Z \} \cup \left\{ \frac{2\pi}{3} + 2k\pi \mid k \in \Z \right\} \cup \left\{ -\frac{2\pi}{3} + 2k\pi \mid k \in \Z \right\}
+\]
+
+\textbf{2. Résolution de $\cos(3x) = \sin(2x)$ :}
+Utilisons la relation de passage du cosinus au sinus : $\sin(2x) = \cos\left(\frac{\pi}{2} - 2x\right)$.
+L'équation devient :
+\[
+\cos(3x) = \cos\left(\frac{\pi}{2} - 2x\right) \iff 3x \equiv \frac{\pi}{2} - 2x \pmod{2\pi} \quad \text{ou} \quad 3x \equiv -\left(\frac{\pi}{2} - 2x\right) \pmod{2\pi}
+\]
+\begin{itemize}[label=$\bullet$]
+    \item \emph{Premier cas :} $3x = \frac{\pi}{2} - 2x + 2k\pi \iff 5x = \frac{\pi}{2} + 2k\pi \iff \mathbf{x = \frac{\pi}{10} + \frac{2k\pi}{5}} \quad (k \in \Z)$.
+    \item \emph{Second cas :} $3x = -\frac{\pi}{2} + 2x + 2k'\pi \iff \mathbf{x = -\frac{\pi}{2} + 2k'\pi} \quad (k' \in \Z)$.
+\end{itemize}
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 4
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 4 \hfill (4 points)}
+
+\begin{correctionbox}[-- Coordonnées polaires, droite polaire \& paramétrage d'ellipse]
+\textbf{1. (a) Coordonnées cartésiennes de $M_1[3; 5\pi/6]$ :}
+\[
+x_1 = r_1 \cos\theta_1 = 3 \cos\left(\frac{5\pi}{6}\right) = 3 \left(-\frac{\sqrt{3}}{2}\right) = \mathbf{-\frac{3\sqrt{3}}{2}}
+\]
+\[
+y_1 = r_1 \sin\theta_1 = 3 \sin\left(\frac{5\pi}{6}\right) = 3 \left(\frac{1}{2}\right) = \mathbf{\frac{3}{2}}
+\]
+Le point a pour coordonnées cartésiennes $M_1\left(-\frac{3\sqrt{3}}{2}, \frac{3}{2}\right)$.
+
+\textbf{1. (b) Coordonnées polaires de $M_2(5, -5)$ :}
+Le module est le rayon :
+\[
+r_2 = \sqrt{x_2^2 + y_2^2} = \sqrt{5^2 + (-5)^2} = \sqrt{25 + 25} = \sqrt{50} = \mathbf{5\sqrt{2}}
+\]
+L'argument $\theta_2$ vérifie :
+\[
+\cos\theta_2 = \frac{x_2}{r_2} = \frac{5}{5\sqrt{2}} = \frac{\sqrt{2}}{2} \quad \text{et} \quad \sin\theta_2 = \frac{y_2}{r_2} = \frac{-5}{5\sqrt{2}} = -\frac{\sqrt{2}}{2}
+\]
+On en déduit que $\theta_2 \equiv -\frac{\pi}{4} \pmod{2\pi}$. Les coordonnées polaires sont $\mathbf{\left[5\sqrt{2}; -\frac{\pi}{4}\right]}$.
+
+\textbf{2. Équation cartésienne de la droite $(\mathcal{D})$ :}
+La relation polaire s'écrit :
+\[
+r = \frac{1}{\cos\theta + \sin\theta} \iff r(\cos\theta + \sin\theta) = 1 \iff r\cos\theta + r\sin\theta = 1
+\]
+Or, par passage aux coordonnées cartésiennes, $x = r\cos\theta$ et $y = r\sin\theta$.
+L'équation devient donc :
+\[
+\mathbf{x + y = 1}
+\]
+Il s'agit de la \textbf{droite affine} passant par les points $(1, 0)$ et $(0, 1)$ de vecteur normal $\vec{n}(1, 1)$. La condition $\cos\theta + \sin\theta > 0 \iff \sqrt{2}\cos(\theta - \pi/4) > 0$ garantit que $r > 0$ pour $\theta \in \,]-\pi/4, 3\pi/4[$.
+
+\textbf{3. Paramétrage de l'ellipse :}
+Soit $M(x, y)$ un point de la courbe paramétrée. Pour tout $\theta \in [0, 2\pi[$ :
+\[
+\frac{x}{a} = \cos\theta \quad \text{et} \quad \frac{y}{b} = \sin\theta
+\]
+En élevant au carré et en sommant :
+\[
+\left(\frac{x}{a}\right)^2 + \left(\frac{y}{b}\right)^2 = \cos^2\theta + \sin^2\theta = 1
+\]
+Réciproquement, tout point $(x, y) \in \R^2$ vérifiant $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$ définit un couple $\left(\frac{x}{a}, \frac{y}{b}\right)$ appartenant au cercle unité de $\R^2$, et admet donc un unique angle $\theta \in [0, 2\pi[$ tel que $\frac{x}{a} = \cos\theta$ et $\frac{y}{b} = \sin\theta$.
+La courbe paramétrée est donc exactement \textbf{l'ellipse de demi-axes $a$ et $b$}.
+\end{correctionbox}
+
+\end{document}

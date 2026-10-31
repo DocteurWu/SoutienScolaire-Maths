@@ -1,0 +1,1044 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+
+% ----------------------------------------------------
+% Couleurs officielles du projet (Charte LLG / MPSI)
+% ----------------------------------------------------
+\definecolor{llgblue}{RGB}{20, 50, 115}
+\definecolor{llglight}{RGB}{246, 249, 255}
+
+\definecolor{emeraldframe}{RGB}{18, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{12, 80, 52}
+
+\definecolor{prepaframe}{RGB}{30, 70, 135}
+\definecolor{prepaback}{RGB}{246, 249, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 105}
+
+\definecolor{alertframe}{RGB}{185, 75, 20}
+\definecolor{alertback}{RGB}{255, 249, 245}
+\definecolor{alerttitle}{RGB}{145, 55, 12}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=llgblue,
+    urlcolor=llgblue,
+    citecolor=llgblue
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité Mathématiques (1E3)}
+\fancyhead[C]{\small\textbf{Feuille de TD : Trigonométrie \& Géométrie Polaire}}
+\fancyhead[R]{\small Année 2021/2022}
+\fancyfoot[L]{\footnotesize LLG 1E3 -- Fiche de Travaux Dirigés}
+\fancyfoot[C]{\footnotesize Énoncés Exhaustifs \& Corrigés Détaillés d'Excellence}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% ----------------------------------------------------
+% Boîtes tcolorbox personnalisées
+% ----------------------------------------------------
+\newtcolorbox{coursbox}[1][]{
+  colback=llglight,
+  colframe=llgblue,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=llgblue,
+  title={Cadre Théorique \& Formulaire Fondamental #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.35cm,
+  after skip=0.45cm
+}
+
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Corrigé rédigé pas à pas #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.35cm,
+  after skip=0.45cm
+}
+
+\newtcolorbox{remarquebox}[1][]{
+  colback=prepaback,
+  colframe=prepaframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=prepatitle,
+  title={Prolongement \& Regard Prépa / MPSI #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{alertebox}[1][]{
+  colback=alertback,
+  colframe=alertframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=alerttitle,
+  title={Vigilance méthodologique \& Pièges classiques #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+% Commandes mathématiques
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+
+\begin{document}
+
+% ====================================================
+% TITRE OFFICIEL DU RECUEIL
+% ====================================================
+\begin{center}
+    {\LARGE \bfseries Lycée Louis-le-Grand -- Paris}\\[0.2cm]
+    {\large Classe de Première 3 (1E3) -- Année scolaire 2021/2022}\\[0.3cm]
+    \begin{tcolorbox}[colback=llglight,colframe=llgblue,arc=3mm,boxrule=1.2pt,center]
+        \begin{center}
+            {\Large \bfseries \color{llgblue} TRAVAUX DIRIGÉS D'APPROFONDISSEMENT}\\[0.15cm]
+            {\large \bfseries Trigonométrie Circulaire, Formules de Duplication, Géométrie Polaire \& Sommes de Dirichlet}\\[0.2cm]
+            \small Recueil intégral des exercices d'entraînement et d'approfondissement -- Niveau 1E3 / MPSI\\[0.1cm]
+            \footnotesize Formulaire complet, démonstrations géométriques synthétiques, corrigés exhaustifs et prolongements d'analyse
+        \end{center}
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.3cm}
+
+% ====================================================
+% COURS THÉORIQUE & FORMULAIRE AXIOMATIQUE
+% ====================================================
+\section*{Synthèse Théorique \& Formulaire Fondamental}
+
+\begin{coursbox}[-- Cercle trigonométrique, Angles associés \& Définitions]
+Soit $\mathcal{C}$ le cercle trigonométrique de centre $O$ et de rayon 1, orienté dans le sens direct.
+\begin{enumerate}
+    \item \textbf{Cosinus et Sinus :} Pour tout réel $x \in \R$, le point image $M$ de $x$ par l'enroulement de la droite numérique a pour coordonnées cartésiennes $(\cos x, \sin x)$.
+    On en déduit l'identité pythagoricienne fondamentale :
+    \[
+    \forall x \in \R, \quad \cos^2 x + \sin^2 x = 1, \quad |\cos x| \le 1, \quad |\sin x| \le 1
+    \]
+    \item \textbf{Tangente :} Pour tout $x \in \R \setminus \left\{ \frac{\pi}{2} + k\pi \mid k \in \Z \right\}$,
+    \[
+    \tan x = \frac{\sin x}{\cos x} \quad \text{et} \quad 1 + \tan^2 x = \frac{1}{\cos^2 x}
+    \]
+    \item \textbf{Angles associés et symétries :}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $-x$ & $\pi - x$ & $\pi + x$ & $\frac{\pi}{2} - x$ & $\frac{\pi}{2} + x$ \\
+        \hline
+        $\cos(-x) = \cos x$ & $\cos(\pi - x) = -\cos x$ & $\cos(\pi + x) = -\cos x$ & $\cos\left(\frac{\pi}{2} - x\right) = \sin x$ & $\cos\left(\frac{\pi}{2} + x\right) = -\sin x$ \\
+        \hline
+        $\sin(-x) = -\sin x$ & $\sin(\pi - x) = \sin x$ & $\sin(\pi + x) = -\sin x$ & $\sin\left(\frac{\pi}{2} - x\right) = \cos x$ & $\sin\left(\frac{\pi}{2} + x\right) = \cos x$ \\
+        \hline
+    \end{tabular}
+    \end{center}
+\end{enumerate}
+\end{coursbox}
+
+\begin{coursbox}[-- Formules d'Addition, de Duplication, de Carnot \& Factorisation]
+\begin{enumerate}
+    \item \textbf{Formules d'addition :}
+    \[
+    \cos(a + b) = \cos a \cos b - \sin a \sin b, \qquad \cos(a - b) = \cos a \cos b + \sin a \sin b
+    \]
+    \[
+    \sin(a + b) = \sin a \cos b + \cos a \sin b, \qquad \sin(a - b) = \sin a \cos b - \cos a \sin b
+    \]
+    \[
+    \tan(a + b) = \frac{\tan a + \tan b}{1 - \tan a \tan b}, \qquad \tan(a - b) = \frac{\tan a - \tan b}{1 + \tan a \tan b}
+    \]
+    \item \textbf{Formules de duplication :}
+    \[
+    \cos(2x) = \cos^2 x - \sin^2 x = 2\cos^2 x - 1 = 1 - 2\sin^2 x
+    \]
+    \[
+    \sin(2x) = 2\sin x \cos x, \qquad \tan(2x) = \frac{2\tan x}{1 - \tan^2 x}
+    \]
+    \item \textbf{Formules de Carnot (Linéarisation) :}
+    \[
+    \cos^2 x = \frac{1 + \cos(2x)}{2}, \qquad \sin^2 x = \frac{1 - \cos(2x)}{2}
+    \]
+    \item \textbf{Paramétrage rationnel unilatéral (Formules en $t = \tan(x/2)$) :}
+    Pour $x \not\equiv \pi \pmod{2\pi}$, en posant $t = \tan\left(\frac{x}{2}\right)$ :
+    \[
+    \cos x = \frac{1 - t^2}{1 + t^2}, \qquad \sin x = \frac{2t}{1 + t^2}, \qquad \tan x = \frac{2t}{1 - t^2}
+    \]
+    \item \textbf{Formules de factorisation (Formules de Simpson / Prosthaphérèse) :}
+    \[
+    \cos p + \cos q = 2 \cos\left(\frac{p+q}{2}\right) \cos\left(\frac{p-q}{2}\right), \quad \cos p - \cos q = -2 \sin\left(\frac{p+q}{2}\right) \sin\left(\frac{p-q}{2}\right)
+    \]
+    \[
+    \sin p + \sin q = 2 \sin\left(\frac{p+q}{2}\right) \cos\left(\frac{p-q}{2}\right), \quad \sin p - \sin q = 2 \sin\left(\frac{p-q}{2}\right) \cos\left(\frac{p+q}{2}\right)
+    \]
+    \item \textbf{Transformation d'amplitude-phase :} Pour tous réels $(a, b) \neq (0, 0)$ :
+    \[
+    a \cos x + b \sin x = \sqrt{a^2 + b^2} \cos(x - \varphi) \quad \text{avec} \quad \cos\varphi = \frac{a}{\sqrt{a^2+b^2}}, \; \sin\varphi = \frac{b}{\sqrt{a^2+b^2}}
+    \]
+\end{enumerate}
+\end{coursbox}
+
+\vspace{0.4cm}
+
+\section{Calculs Algébriques, Angles Remarquables \& Linéarisation}
+
+% ----------------------------------------------------
+% Exercice 1
+% ----------------------------------------------------
+\subsection*{Exercice 1 -- Lignes trigonométriques exactes de $\pi/12$ et $5\pi/12$}
+
+\begin{enumerate}[label=\arabic*.]
+    \item En écrivant $\dfrac{\pi}{12} = \dfrac{\pi}{3} - \dfrac{\pi}{4}$, calculer les valeurs exactes de $\cos\left(\dfrac{\pi}{12}\right)$, $\sin\left(\dfrac{\pi}{12}\right)$ et $\tan\left(\dfrac{\pi}{12}\right)$.
+    \item Retrouver les valeurs de $\cos\left(\dfrac{\pi}{12}\right)$ et $\sin\left(\dfrac{\pi}{12}\right)$ en utilisant les formules de Carnot appliquées à l'angle double $2 \times \dfrac{\pi}{12} = \dfrac{\pi}{6}$.
+    \item En déduire les valeurs exactes de $\cos\left(\dfrac{5\pi}{12}\right)$ et $\sin\left(\dfrac{5\pi}{12}\right)$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Formules d'addition \& Radicaux imbriqués]
+\textbf{1. Méthode par les formules d'addition :}
+Puisque $\frac{\pi}{12} = \frac{\pi}{3} - \frac{\pi}{4}$ :
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Cosinus :}
+    \[
+    \cos\left(\frac{\pi}{12}\right) = \cos\left(\frac{\pi}{3} - \frac{\pi}{4}\right) = \cos\left(\frac{\pi}{3}\right)\cos\left(\frac{\pi}{4}\right) + \sin\left(\frac{\pi}{3}\right)\sin\left(\frac{\pi}{4}\right)
+    \]
+    \[
+    \cos\left(\frac{\pi}{12}\right) = \frac{1}{2} \times \frac{\sqrt{2}}{2} + \frac{\sqrt{3}}{2} \times \frac{\sqrt{2}}{2} = \mathbf{\frac{\sqrt{6} + \sqrt{2}}{4}}
+    \]
+    \item \textbf{Sinus :}
+    \[
+    \sin\left(\frac{\pi}{12}\right) = \sin\left(\frac{\pi}{3} - \frac{\pi}{4}\right) = \sin\left(\frac{\pi}{3}\right)\cos\left(\frac{\pi}{4}\right) - \cos\left(\frac{\pi}{3}\right)\sin\left(\frac{\pi}{4}\right)
+    \]
+    \[
+    \sin\left(\frac{\pi}{12}\right) = \frac{\sqrt{3}}{2} \times \frac{\sqrt{2}}{2} - \frac{1}{2} \times \frac{\sqrt{2}}{2} = \mathbf{\frac{\sqrt{6} - \sqrt{2}}{4}}
+    \]
+    \item \textbf{Tangente :}
+    \[
+    \tan\left(\frac{\pi}{12}\right) = \frac{\sin(\pi/12)}{\cos(\pi/12)} = \frac{\sqrt{6} - \sqrt{2}}{\sqrt{6} + \sqrt{2}} = \frac{(\sqrt{6} - \sqrt{2})^2}{6 - 2} = \frac{6 - 2\sqrt{12} + 2}{4} = \frac{8 - 4\sqrt{3}}{4} = \mathbf{2 - \sqrt{3}}
+    \]
+\end{itemize}
+
+\textbf{2. Méthode par les formules de Carnot :}
+D'après les formules de Carnot :
+\[
+\cos^2\left(\frac{\pi}{12}\right) = \frac{1 + \cos(\pi/6)}{2} = \frac{1 + \frac{\sqrt{3}}{2}}{2} = \frac{2 + \sqrt{3}}{4}
+\]
+Puisque $0 < \frac{\pi}{12} < \frac{\pi}{2}$, $\cos\left(\frac{\pi}{12}\right) > 0$. D'où :
+\[
+\cos\left(\frac{\pi}{12}\right) = \frac{\sqrt{2 + \sqrt{3}}}{2}
+\]
+Vérifions la concordance avec la forme sous radicaux simples :
+\[
+\left(\frac{\sqrt{6} + \sqrt{2}}{4}\right)^2 = \frac{6 + 2\sqrt{12} + 2}{16} = \frac{8 + 4\sqrt{3}}{16} = \frac{2 + \sqrt{3}}{4}
+\]
+Les deux écritures sont parfaitement identiques. De même :
+\[
+\sin^2\left(\frac{\pi}{12}\right) = \frac{1 - \cos(\pi/6)}{2} = \frac{2 - \sqrt{3}}{4} \implies \sin\left(\frac{\pi}{12}\right) = \frac{\sqrt{2 - \sqrt{3}}}{2} = \mathbf{\frac{\sqrt{6} - \sqrt{2}}{4}}
+\]
+
+\textbf{3. Lignes de $5\pi/12$ :}
+Puisque $\frac{5\pi}{12} = \frac{\pi}{2} - \frac{\pi}{12}$, les angles sont complémentaires :
+\[
+\cos\left(\frac{5\pi}{12}\right) = \sin\left(\frac{\pi}{12}\right) = \mathbf{\frac{\sqrt{6} - \sqrt{2}}{4}} \quad \text{et} \quad \sin\left(\frac{5\pi}{12}\right) = \cos\left(\frac{\pi}{12}\right) = \mathbf{\frac{\sqrt{6} + \sqrt{2}}{4}}
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 2
+% ----------------------------------------------------
+\subsection*{Exercice 2 -- Lignes trigonométriques exactes de $\pi/8$ et $3\pi/8$}
+
+\begin{enumerate}[label=\arabic*.]
+    \item En utilisant la formule de duplication du cosinus, calculer les valeurs exactes de $\cos\left(\dfrac{\pi}{8}\right)$ et $\sin\left(\dfrac{\pi}{8}\right)$.
+    \item En déduire la valeur exacte de $\tan\left(\dfrac{\pi}{8}\right)$.
+    \item Déterminer les valeurs exactes de $\cos\left(\dfrac{3\pi}{8}\right)$ et $\sin\left(\dfrac{3\pi}{8}\right)$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Bisection d'angles \& Radicaux emboîtés de Ramanujan]
+\textbf{1. Calcul de $\cos(\pi/8)$ et $\sin(\pi/8)$ :}
+Appliquons les formules de Carnot avec $2 \times \frac{\pi}{8} = \frac{\pi}{4}$ :
+\[
+\cos^2\left(\frac{\pi}{8}\right) = \frac{1 + \cos(\pi/4)}{2} = \frac{1 + \frac{\sqrt{2}}{2}}{2} = \frac{2 + \sqrt{2}}{4}
+\]
+Comme $0 < \frac{\pi}{8} < \frac{\pi}{2}$, son cosinus est strictement positif :
+\[
+\mathbf{\cos\left(\frac{\pi}{8}\right) = \frac{\sqrt{2 + \sqrt{2}}}{2}}
+\]
+De même pour le sinus :
+\[
+\sin^2\left(\frac{\pi}{8}\right) = \frac{1 - \cos(\pi/4)}{2} = \frac{2 - \sqrt{2}}{4} \implies \mathbf{\sin\left(\frac{\pi}{8}\right) = \frac{\sqrt{2 - \sqrt{2}}}{2}}
+\]
+
+\textbf{2. Calcul de $\tan(\pi/8)$ :}
+\[
+\tan\left(\frac{\pi}{8}\right) = \frac{\sin(\pi/8)}{\cos(\pi/8)} = \frac{\sqrt{2 - \sqrt{2}}}{\sqrt{2 + \sqrt{2}}} = \sqrt{\frac{2 - \sqrt{2}}{2 + \sqrt{2}}} = \sqrt{\frac{(2 - \sqrt{2})^2}{4 - 2}} = \frac{2 - \sqrt{2}}{\sqrt{2}} = \mathbf{\sqrt{2} - 1}
+\]
+
+\textbf{3. Lignes de $3\pi/8$ :}
+Puisque $\frac{3\pi}{8} = \frac{\pi}{2} - \frac{\pi}{8}$ :
+\[
+\cos\left(\frac{3\pi}{8}\right) = \sin\left(\frac{\pi}{8}\right) = \mathbf{\frac{\sqrt{2 - \sqrt{2}}}{2}} \quad \text{et} \quad \sin\left(\frac{3\pi}{8}\right) = \cos\left(\frac{\pi}{8}\right) = \mathbf{\frac{\sqrt{2 + \sqrt{2}}}{2}}
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 3
+% ----------------------------------------------------
+\subsection*{Exercice 3 -- Linéarisation \& Formules d'Euler}
+
+\begin{enumerate}[label=\arabic*.]
+    \item Démontrer que pour tout $x \in \R$ :
+    \[
+    \cos^3 x = \frac{\cos(3x) + 3\cos x}{4} \quad \text{et} \quad \sin^3 x = \frac{-\sin(3x) + 3\sin x}{4}
+    \]
+    \item Linéariser l'expression $\cos^4 x$, c'est-à-dire l'exprimer sous la forme d'une combinaison linéaire de $\cos(4x)$, $\cos(2x)$ et d'une constante.
+    \item Déterminer une primitive sur $\R$ de la fonction $f : x \mapsto \cos^4 x$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Linéarisation polynomiale \& Intégration]
+\textbf{1. Linéarisation de $\cos^3 x$ et $\sin^3 x$ :}
+\begin{itemize}[label=$\bullet$]
+    \item Exprimons $\cos(3x)$ :
+    \[
+    \cos(3x) = \cos(2x + x) = \cos(2x)\cos x - \sin(2x)\sin x
+    \]
+    En remplaçant $\cos(2x) = 2\cos^2 x - 1$ et $\sin(2x) = 2\sin x \cos x$ :
+    \[
+    \cos(3x) = (2\cos^2 x - 1)\cos x - 2\sin^2 x \cos x = 2\cos^3 x - \cos x - 2(1 - \cos^2 x)\cos x
+    \]
+    \[
+    \cos(3x) = 2\cos^3 x - \cos x - 2\cos x + 2\cos^3 x = 4\cos^3 x - 3\cos x
+    \]
+    On isole $\cos^3 x$ :
+    \[
+    4\cos^3 x = \cos(3x) + 3\cos x \iff \mathbf{\cos^3 x = \frac{\cos(3x) + 3\cos x}{4}}
+    \]
+    \item De même, pour $\sin(3x)$ :
+    \[
+    \sin(3x) = \sin(2x)\cos x + \cos(2x)\sin x = (2\sin x \cos x)\cos x + (1 - 2\sin^2 x)\sin x
+    \]
+    \[
+    \sin(3x) = 2\sin x (1 - \sin^2 x) + \sin x - 2\sin^3 x = 3\sin x - 4\sin^3 x
+    \]
+    On en déduit :
+    \[
+    \mathbf{\sin^3 x = \frac{-\sin(3x) + 3\sin x}{4}}
+    \]
+\end{itemize}
+
+\textbf{2. Linéarisation de $\cos^4 x$ :}
+Écrivons $\cos^4 x = (\cos^2 x)^2$. En utilisant la formule de Carnot $\cos^2 x = \frac{1 + \cos(2x)}{2}$ :
+\[
+\cos^4 x = \left(\frac{1 + \cos(2x)}{2}\right)^2 = \frac{1 + 2\cos(2x) + \cos^2(2x)}{4}
+\]
+Appliquons à nouveau la formule de Carnot à $\cos^2(2x) = \frac{1 + \cos(4x)}{2}$ :
+\[
+\cos^4 x = \frac{1}{4} \left[ 1 + 2\cos(2x) + \frac{1 + \cos(4x)}{2} \right] = \frac{2 + 4\cos(2x) + 1 + \cos(4x)}{8}
+\]
+\[
+\mathbf{\cos^4 x = \frac{\cos(4x) + 4\cos(2x) + 3}{8}}
+\]
+
+\textbf{3. Primitive de $f(x) = \cos^4 x$ :}
+Grâce à la forme linéarisée, l'intégration est immédiate :
+\[
+\int \cos^4 x \, \dd x = \frac{1}{8} \int \left(\cos(4x) + 4\cos(2x) + 3\right) \dd x
+\]
+Une primitive sur $\R$ est donc :
+\[
+\mathbf{F(x) = \frac{\sin(4x)}{32} + \frac{\sin(2x)}{4} + \frac{3}{8}x}
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 4
+% ----------------------------------------------------
+\subsection*{Exercice 4 -- Identité pythagoricienne d'ordre 6}
+
+Démontrer que pour tout réel $x \in \R$ :
+\[
+\cos^6 x + \sin^6 x = 1 - 3\sin^2 x \cos^2 x = \frac{5 + 3\cos(4x)}{8}
+\]
+
+\begin{correctionbox}[-- Identités remarquables \& Duplication]
+Posons $u = \cos^2 x$ et $v = \sin^2 x$. On sait que $u + v = 1$.
+Utilisons l'identité algébrique $a^3 + b^3 = (a + b)(a^2 - ab + b^2) = (a + b)((a + b)^2 - 3ab)$ avec $a = u$ et $b = v$ :
+\[
+\cos^6 x + \sin^6 x = u^3 + v^3 = (u + v) \left[ (u + v)^2 - 3uv \right]
+\]
+Comme $u + v = 1$, il vient immédiatement :
+\[
+\mathbf{\cos^6 x + \sin^6 x = 1 - 3uv = 1 - 3\cos^2 x \sin^2 x}
+\]
+Pour exprimer cette quantité en fonction de $\cos(4x)$, utilisons la duplication $\sin(2x) = 2\sin x \cos x$ :
+\[
+\cos^2 x \sin^2 x = (\sin x \cos x)^2 = \left(\frac{\sin(2x)}{2}\right)^2 = \frac{\sin^2(2x)}{4}
+\]
+Puis la formule de Carnot $\sin^2(2x) = \frac{1 - \cos(4x)}{2}$ :
+\[
+\cos^2 x \sin^2 x = \frac{1 - \cos(4x)}{8}
+\]
+En injectant dans l'identité :
+\[
+\cos^6 x + \sin^6 x = 1 - 3 \left(\frac{1 - \cos(4x)}{8}\right) = \frac{8 - 3 + 3\cos(4x)}{8} = \mathbf{\frac{5 + 3\cos(4x)}{8}}
+\]
+Cette écriture prouve que pour tout $x \in \R$, $\frac{1}{4} \le \cos^6 x + \sin^6 x \le 1$.
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Démonstrations Géométriques Synthétiques \& Triangle d'Or}
+
+% ----------------------------------------------------
+% Exercice 5
+% ----------------------------------------------------
+\subsection*{Exercice 5 -- Démonstration géométrique des formules de duplication}
+
+Soit $ABC$ un triangle isocèle en $A$ de côtés $AB = AC = 1$ et d'angle au sommet $\widehat{BAC} = 2x$, avec $0 < x < \dfrac{\pi}{4}$.
+On note $H$ le projeté orthogonal de $B$ sur la droite $(AC)$, et $I$ le milieu du segment $[BC]$.
+
+\begin{center}
+\begin{tikzpicture}[scale=3.5, thick]
+    % Points
+    \coordinate (A) at (0, 1.2);
+    \coordinate (B) at (-0.5, 0);
+    \coordinate (C) at (0.5, 0);
+    \coordinate (I) at (0, 0);
+    
+    % Hauteur BH
+    % Droite AC: vecteur AC = C - A = (0.5, -1.2)
+    % Projection de B sur AC
+    \path let \p1 = ($(C)-(A)$), \p2 = ($(B)-(A)$), \n1 = {(\x2*\x1 + \y2*\y1)/(\x1*\x1 + \y1*\y1)} in
+          coordinate (H) at ($(A)!\n1!(C)$);
+          
+    % Tracé du triangle
+    \draw[llgblue, very thick] (A) -- (B) -- (C) -- cycle;
+    \draw[dashed, prepaframe] (A) -- (I) node[midway, left] {};
+    \draw[emeraldframe, thick] (B) -- (H);
+    
+    % Angles droits
+    \draw[black] ($(I)+(-0.06,0)$) -- ($(I)+(-0.06,0.06)$) -- ($(I)+(0,0.06)$);
+    \draw[black] ($(H)+(-0.04,-0.04)$) -- ($(H)+(-0.08,0.01)$) -- ($(H)+(-0.04,0.05)$);
+    
+    % Labels
+    \node[above] at (A) {$A$};
+    \node[below left] at (B) {$B$};
+    \node[below right] at (C) {$C$};
+    \node[below] at (I) {$I$};
+    \node[above right] at (H) {$H$};
+    
+    % Côtés
+    \node[left, llgblue] at ($ (A)!0.5!(B) $) {$1$};
+    \node[right, llgblue] at ($ (A)!0.5!(C) $) {$1$};
+    
+    % Arc angle BAC
+    \node at (0, 0.95) {$2x$};
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[label=\arabic*.]
+    \item Exprimer les longueurs $BH$ et $AH$ en fonction de $2x$. En déduire $CH = 1 - \cos(2x)$.
+    \item Exprimer la longueur $BC$ en fonction de $x$.
+    \item Démontrer que $\widehat{HBC} = x$.
+    \item En exprimant $\cos x$ et $\sin x$ dans le triangle rectangle $BHC$, démontrer les deux identités :
+    \[
+    \sin(2x) = 2 \sin x \cos x \quad \text{et} \quad \cos(2x) = 1 - 2\sin^2 x = 2\cos^2 x - 1
+    \]
+\end{enumerate}
+
+\begin{correctionbox}[-- Analyse trigonométrique dans le triangle isocèle]
+\textbf{1. Expressions de $BH$, $AH$ et $CH$ :}
+Dans le triangle rectangle $ABH$ en $H$, avec $AB = 1$ et $\widehat{BAH} = 2x$ :
+\[
+BH = AB \sin(2x) = \mathbf{\sin(2x)} \quad \text{et} \quad AH = AB \cos(2x) = \mathbf{\cos(2x)}
+\]
+Puisque $H$ est sur le segment $[AC]$ de longueur 1 :
+\[
+CH = AC - AH = \mathbf{1 - \cos(2x)}
+\]
+
+\textbf{2. Expression de $BC$ :}
+$(AI)$ étant la médiatrice de $[BC]$ et la bissectrice de $\widehat{BAC}$ :
+$\widehat{BAI} = x$, d'où $BI = AB \sin x = \sin x$. Par suite :
+\[
+BC = 2 BI = \mathbf{2\sin x}
+\]
+
+\textbf{3. Mesure de $\widehat{HBC}$ :}
+Les angles à la base du triangle isocèle $ABC$ valent $\frac{\pi - 2x}{2} = \frac{\pi}{2} - x$.
+Dans le triangle $BHC$ rectangle en $H$, les angles aigus étant complémentaires :
+\[
+\widehat{HBC} = \frac{\pi}{2} - \widehat{HCB} = \frac{\pi}{2} - \left(\frac{\pi}{2} - x\right) = \mathbf{x}
+\]
+
+\textbf{4. Démonstration des formules de duplication :}
+Dans le triangle rectangle $BHC$ d'hypoténuse $BC = 2\sin x$ :
+\begin{itemize}[label=$\bullet$]
+    \item $\cos x = \frac{BH}{BC} = \frac{\sin(2x)}{2\sin x} \implies \mathbf{\sin(2x) = 2\sin x \cos x}$.
+    \item $\sin x = \frac{CH}{BC} = \frac{1 - \cos(2x)}{2\sin x} \implies 2\sin^2 x = 1 - \cos(2x) \implies \mathbf{\cos(2x) = 1 - 2\sin^2 x}$.
+\end{itemize}
+En utilisant $\sin^2 x = 1 - \cos^2 x$, on obtient également $\cos(2x) = 1 - 2(1 - \cos^2 x) = \mathbf{2\cos^2 x - 1}$.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 6
+% ----------------------------------------------------
+\subsection*{Exercice 6 -- Le Triangle d'Or, Pentagone Régulier \& Nombre d'Or $\Phi$}
+
+Un triangle d'or est un triangle isocèle dont les angles à la base valent le double de l'angle au sommet ($72^\circ, 72^\circ, 36^\circ$, soit $\frac{2\pi}{5}, \frac{2\pi}{5}, \frac{\pi}{5}$).
+Soit $ABC$ un triangle d'or de côtés $AB = AC = 1$ et $\widehat{BAC} = \frac{\pi}{5}$.
+
+\begin{enumerate}[label=\arabic*.]
+    \item En utilisant la construction géométrique avec le point $D \in [AI)$ tel que $AD = 1$, retrouver l'équation cubique :
+    \[
+    8X^3 - 8X^2 + 1 = 0 \quad \text{où } X = \cos\left(\frac{\pi}{5}\right)
+    \]
+    \item Démontrer que :
+    \[
+    \cos\left(\frac{\pi}{5}\right) = \frac{1 + \sqrt{5}}{4} = \frac{\Phi}{2} \quad \text{où} \quad \Phi = \frac{1+\sqrt{5}}{2}
+    \]
+    \item En déduire les valeurs exactes de :
+    \begin{enumerate}
+        \item $\sin\left(\dfrac{\pi}{5}\right)$
+        \item $\cos\left(\dfrac{2\pi}{5}\right)$ (en utilisant la formule de duplication)
+        \item $\sin\left(\dfrac{2\pi}{5}\right)$
+    \end{enumerate}
+    \item Application géométrique : Exprimer la longueur du côté $c_5$ d'un pentagone régulier inscrit dans un cercle de rayon $R = 1$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Propriétés du nombre d'or \& Lignes remarquables d'ordre 5]
+\textbf{1. Équation cubique :}
+D'après l'étude menée au DST, la hauteur issue de $I$ dans le triangle rectangle $IDC$ donne $\sin(2\pi/5) = \frac{\sin(\pi/5)}{\sqrt{2 - 2\cos(\pi/5)}}$.
+Avec $\sin(2\pi/5) = 2\sin(\pi/5)\cos(\pi/5)$, on obtient en simplifiant par $\sin(\pi/5) \neq 0$ :
+\[
+2\cos(\pi/5) = \frac{1}{\sqrt{2 - 2\cos(\pi/5)}} \implies 4\cos^2(\pi/5)(2 - 2\cos(\pi/5)) = 1 \implies \mathbf{8X^3 - 8X^2 + 1 = 0}
+\]
+
+\textbf{2. Valeur de $\cos(\pi/5)$ :}
+Le polynôme se factorise sous la forme $(2X - 1)(4X^2 - 2X - 1) = 0$.
+La seule racine supérieure à $\cos(\pi/3) = 1/2$ est la racine positive du trinôme :
+\[
+\mathbf{\cos\left(\frac{\pi}{5}\right) = \frac{1 + \sqrt{5}}{4} = \frac{\Phi}{2}}
+\]
+
+\textbf{3. Calcul des autres lignes trigonométriques :}
+\begin{enumerate}
+    \item $\sin\left(\frac{\pi}{5}\right) = \sqrt{1 - \cos^2(\pi/5)} = \sqrt{1 - \frac{6 + 2\sqrt{5}}{16}} = \sqrt{\frac{10 - 2\sqrt{5}}{16}} = \mathbf{\frac{\sqrt{10 - 2\sqrt{5}}}{4}}$.
+    \item Par duplication :
+    \[
+    \cos\left(\frac{2\pi}{5}\right) = 2\cos^2\left(\frac{\pi}{5}\right) - 1 = 2 \left(\frac{6 + 2\sqrt{5}}{16}\right) - 1 = \frac{3 + \sqrt{5}}{4} - 1 = \mathbf{\frac{\sqrt{5} - 1}{4} = \frac{1}{2\Phi}}
+    \]
+    \item $\sin\left(\frac{2\pi}{5}\right) = \sqrt{1 - \cos^2(2\pi/5)} = \sqrt{1 - \frac{6 - 2\sqrt{5}}{16}} = \mathbf{\frac{\sqrt{10 + 2\sqrt{5}}}{4}}$.
+\end{enumerate}
+
+\textbf{4. Côté du pentagone régulier :}
+Dans un cercle de rayon $R = 1$, l'angle au centre interceptant un côté d'un pentagone régulier vaut $\frac{2\pi}{5}$.
+Le triangle formé par le centre $O$ et deux sommets consécutifs $A$ et $B$ est isocèle en $O$ d'angle $\frac{2\pi}{5}$.
+D'après la formule établie à l'exercice 5, $AB = 2 R \sin\left(\frac{2\pi/5}{2}\right) = 2 \sin\left(\frac{\pi}{5}\right)$ :
+\[
+c_5 = 2 \times \frac{\sqrt{10 - 2\sqrt{5}}}{4} = \mathbf{\frac{\sqrt{10 - 2\sqrt{5}}}{2} \approx 1{,}1756}
+\]
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Équations \& Inéquations Trigonométriques}
+
+% ----------------------------------------------------
+% Exercice 8
+% ----------------------------------------------------
+\subsection*{Exercice 8 -- Équations polynomiales trigonométriques}
+
+\begin{enumerate}[label=\arabic*.]
+    \item Résoudre sur l'intervalle $[-\pi, \pi]$ puis dans $\R$ l'équation :
+    \[
+    2\cos^3 x - 7\cos^2 x + 2\cos x + 3 = 0
+    \]
+    \item Résoudre dans $\R$ l'équation :
+    \[
+    4\sin^3 x - 2(1+\sqrt{3})\sin^2 x + \sqrt{3}\sin x = 0
+    \]
+    \item Résoudre dans $[0, 2\pi[$ l'équation :
+    \[
+    2\cos(2x) + 4\cos x - 1 = 0
+    \]
+\end{enumerate}
+
+\begin{correctionbox}[-- Méthode du changement de variable algébrique]
+\textbf{1. Équation $2\cos^3 x - 7\cos^2 x + 2\cos x + 3 = 0$ :}
+Posons $X = \cos x$ avec $X \in [-1, 1]$. L'équation algébrique associée est :
+\[
+P(X) = 2X^3 - 7X^2 + 2X + 3 = 0
+\]
+$X = 1$ est racine évidente. Par factorisation :
+\[
+P(X) = (X - 1)(2X^2 - 5X - 3) = (X - 1)(X - 3)(2X + 1)
+\]
+Puisque pour tout $x \in \R$, $-1 \le \cos x \le 1$, l'équation $\cos x = 3$ n'admet aucune solution réelle.
+Il reste deux équations élémentaires :
+\begin{itemize}[label=$\bullet$]
+    \item $\cos x = 1 \iff x \equiv 0 \pmod{2\pi}$.
+    \item $\cos x = -\frac{1}{2} \iff x \equiv \frac{2\pi}{3} \pmod{2\pi} \quad \text{ou} \quad x \equiv -\frac{2\pi}{3} \pmod{2\pi}$.
+\end{itemize}
+Sur $[-\pi, \pi]$ : $\mathcal{S}_{[-\pi, \pi]} = \left\{ -\frac{2\pi}{3}, \; 0, \; \frac{2\pi}{3} \right\}$.
+Sur $\R$ : $\mathcal{S}_{\R} = \{ 2k\pi \mid k \in \Z \} \cup \left\{ \pm \frac{2\pi}{3} + 2k\pi \mid k \in \Z \right\}$.
+
+\textbf{2. Équation $4\sin^3 x - 2(1+\sqrt{3})\sin^2 x + \sqrt{3}\sin x = 0$ :}
+Factorisons immédiatement par $\sin x$ :
+\[
+\sin x \left[ 4\sin^2 x - 2(1+\sqrt{3})\sin x + \sqrt{3} \right] = 0
+\]
+Posons $Y = \sin x$. Le discriminant du trinôme $4Y^2 - 2(1+\sqrt{3})Y + \sqrt{3}$ vaut :
+\[
+\Delta' = (1+\sqrt{3})^2 - 4\sqrt{3} = 1 + 2\sqrt{3} + 3 - 4\sqrt{3} = 1 - 2\sqrt{3} + 3 = (\sqrt{3} - 1)^2
+\]
+Les deux racines sont donc :
+\[
+Y_1 = \frac{(1+\sqrt{3}) - (\sqrt{3}-1)}{4} = \frac{2}{4} = \frac{1}{2} \quad \text{et} \quad Y_2 = \frac{(1+\sqrt{3}) + (\sqrt{3}-1)}{4} = \frac{2\sqrt{3}}{4} = \frac{\sqrt{3}}{2}
+\]
+L'équation initiale équivaut donc à $\sin x = 0$ ou $\sin x = \frac{1}{2}$ ou $\sin x = \frac{\sqrt{3}}{2}$ :
+\begin{itemize}[label=$\bullet$]
+    \item $\sin x = 0 \iff x \equiv 0 \pmod{\pi} \iff \mathbf{x = k\pi} \; (k \in \Z)$.
+    \item $\sin x = \frac{1}{2} \iff \mathbf{x = \frac{\pi}{6} + 2k\pi} \quad \text{ou} \quad \mathbf{x = \frac{5\pi}{6} + 2k\pi} \; (k \in \Z)$.
+    \item $\sin x = \frac{\sqrt{3}}{2} \iff \mathbf{x = \frac{\pi}{3} + 2k\pi} \quad \text{ou} \quad \mathbf{x = \frac{2\pi}{3} + 2k\pi} \; (k \in \Z)$.
+\end{itemize}
+
+\textbf{3. Équation $2\cos(2x) + 4\cos x - 1 = 0$ sur $[0, 2\pi[$ :}
+Remplaçons $\cos(2x) = 2\cos^2 x - 1$ :
+\[
+2(2\cos^2 x - 1) + 4\cos x - 1 = 0 \iff 4\cos^2 x + 4\cos x - 3 = 0
+\]
+Posons $X = \cos x$. Le trinôme $4X^2 + 4X - 3$ a pour discriminant $\Delta = 16 - 4(4)(-3) = 16 + 48 = 64 = 8^2$.
+\[
+X_1 = \frac{-4 - 8}{8} = -\frac{3}{2} < -1 \quad (\text{impossible}) \quad \text{et} \quad X_2 = \frac{-4 + 8}{8} = \frac{4}{8} = \frac{1}{2}
+\]
+L'équation se réduit donc à $\cos x = \frac{1}{2}$.
+Sur $[0, 2\pi[$, les solutions sont :
+\[
+\mathcal{S}_{[0, 2\pi[} = \left\{ \frac{\pi}{3}, \; \frac{5\pi}{3} \right\}
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 9
+% ----------------------------------------------------
+\subsection*{Exercice 9 -- Équations linéaires $a\cos x + b\sin x = c$ (Amplitude-Phase)}
+
+Résoudre dans $\R$ les équations suivantes :
+\begin{enumerate}[label=\arabic*.]
+    \item $\cos x + \sqrt{3}\sin x = \sqrt{2}$
+    \item $\cos(3x) - \sin(3x) = 1$
+\end{enumerate}
+
+\begin{correctionbox}[-- Méthode de la factorisation par l'amplitude $\sqrt{a^2+b^2}$]
+\textbf{1. Équation $\cos x + \sqrt{3}\sin x = \sqrt{2}$ :}
+Ici $a = 1$ et $b = \sqrt{3}$, donc l'amplitude vaut $R = \sqrt{1^2 + (\sqrt{3})^2} = \sqrt{1 + 3} = 2$.
+Divisons les deux membres de l'équation par $2$ :
+\[
+\frac{1}{2} \cos x + \frac{\sqrt{3}}{2} \sin x = \frac{\sqrt{2}}{2}
+\]
+Reconnaissons $\cos\left(\frac{\pi}{3}\right) = \frac{1}{2}$ et $\sin\left(\frac{\pi}{3}\right) = \frac{\sqrt{3}}{2}$ :
+\[
+\cos x \cos\left(\frac{\pi}{3}\right) + \sin x \sin\left(\frac{\pi}{3}\right) = \frac{\sqrt{2}}{2} \iff \cos\left(x - \frac{\pi}{3}\right) = \cos\left(\frac{\pi}{4}\right)
+\]
+Par conséquent :
+\[
+x - \frac{\pi}{3} \equiv \frac{\pi}{4} \pmod{2\pi} \quad \text{ou} \quad x - \frac{\pi}{3} \equiv -\frac{\pi}{4} \pmod{2\pi}
+\]
+\begin{itemize}[label=$\bullet$]
+    \item $x = \frac{\pi}{3} + \frac{\pi}{4} + 2k\pi = \mathbf{\frac{7\pi}{12} + 2k\pi} \; (k \in \Z)$.
+    \item $x = \frac{\pi}{3} - \frac{\pi}{4} + 2k\pi = \mathbf{\frac{\pi}{12} + 2k\pi} \; (k \in \Z)$.
+\end{itemize}
+
+\textbf{2. Équation $\cos(3x) - \sin(3x) = 1$ :}
+L'amplitude est $R = \sqrt{1^2 + (-1)^2} = \sqrt{2}$. Divisons par $\sqrt{2}$ :
+\[
+\frac{1}{\sqrt{2}} \cos(3x) - \frac{1}{\sqrt{2}} \sin(3x) = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2}
+\]
+\[
+\cos(3x)\cos\left(\frac{\pi}{4}\right) - \sin(3x)\sin\left(\frac{\pi}{4}\right) = \cos\left(3x + \frac{\pi}{4}\right) = \cos\left(\frac{\pi}{4}\right)
+\]
+D'où :
+\[
+3x + \frac{\pi}{4} \equiv \frac{\pi}{4} \pmod{2\pi} \quad \text{ou} \quad 3x + \frac{\pi}{4} \equiv -\frac{\pi}{4} \pmod{2\pi}
+\]
+\begin{itemize}[label=$\bullet$]
+    \item $3x \equiv 0 \pmod{2\pi} \iff \mathbf{x = \frac{2k\pi}{3}} \; (k \in \Z)$.
+    \item $3x \equiv -\frac{\pi}{2} \pmod{2\pi} \iff \mathbf{x = -\frac{\pi}{6} + \frac{2k\pi}{3}} \; (k \in \Z)$.
+\end{itemize}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 10
+% ----------------------------------------------------
+\subsection*{Exercice 10 -- Inéquations trigonométriques sur le cercle unité}
+
+Résoudre sur l'intervalle $[-\pi, \pi]$ :
+\begin{enumerate}[label=\arabic*.]
+    \item $2\cos x - \sqrt{3} \ge 0$
+    \item $2\sin^2 x - 3\sin x + 1 \le 0$
+    \item $\cos(2x) > \sin x$
+\end{enumerate}
+
+\begin{correctionbox}[-- Lecture angulaire sur le cercle trigonométrique]
+\textbf{1. $2\cos x - \sqrt{3} \ge 0 \iff \cos x \ge \frac{\sqrt{3}}{2}$ :}
+Sur $[-\pi, \pi]$, $\cos x = \frac{\sqrt{3}}{2}$ pour $x = \frac{\pi}{6}$ et $x = -\frac{\pi}{6}$.
+L'arc de cercle situé à droite de la droite verticale d'abscisse $\frac{\sqrt{3}}{2}$ donne immédiatement :
+\[
+\mathcal{S}_1 = \mathbf{\left[ -\frac{\pi}{6}, \; \frac{\pi}{6} \right]}
+\]
+
+\textbf{2. $2\sin^2 x - 3\sin x + 1 \le 0$ :}
+Posons $Y = \sin x$. Le trinôme $2Y^2 - 3Y + 1$ admet pour racines $Y_1 = \frac{1}{2}$ et $Y_2 = 1$.
+Il est négatif ou nul entre ses racines :
+\[
+\frac{1}{2} \le \sin x \le 1
+\]
+Sur $[-\pi, \pi]$, les réels vérifiant $\sin x \ge \frac{1}{2}$ forment l'intervalle angulaire :
+\[
+\mathcal{S}_2 = \mathbf{\left[ \frac{\pi}{6}, \; \frac{5\pi}{6} \right]}
+\]
+
+\textbf{3. $\cos(2x) > \sin x$ :}
+Remplaçons $\cos(2x) = 1 - 2\sin^2 x$ :
+\[
+1 - 2\sin^2 x > \sin x \iff 2\sin^2 x + \sin x - 1 < 0
+\]
+Le trinôme $2Y^2 + Y - 1$ admet pour racines $Y_1 = -1$ et $Y_2 = \frac{1}{2}$.
+Il est strictement négatif à l'intérieur de ses racines :
+\[
+-1 < \sin x < \frac{1}{2}
+\]
+Sur $[-\pi, \pi]$, étudions le complémentaire :
+\begin{itemize}[label=$\bullet$]
+    \item $\sin x \ge \frac{1}{2} \iff x \in \left[ \frac{\pi}{6}, \frac{5\pi}{6} \right]$.
+    \item $\sin x = -1 \iff x = -\frac{\pi}{2}$.
+\end{itemize}
+En retirant ces valeurs de $[-\pi, \pi]$, on obtient la réunion d'intervalles ouverts :
+\[
+\mathcal{S}_3 = \mathbf{\left[ -\pi, \; -\frac{\pi}{2} \right[ \cup \left] -\frac{\pi}{2}, \; \frac{\pi}{6} \right[ \cup \left] \frac{5\pi}{6}, \; \pi \right]}
+\]
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Repérage Polaire, Droites, Cercles \& Coniques}
+
+% ----------------------------------------------------
+% Exercice 11
+% ----------------------------------------------------
+\subsection*{Exercice 11 -- Conversion Polaire-Cartésien \& Configurations}
+
+\begin{enumerate}[label=\arabic*.]
+    \item Déterminer les coordonnées cartésiennes des points définis par leurs coordonnées polaires $[r; \theta]$ :
+    \[
+    A\left[3; \; \frac{5\pi}{6}\right], \qquad B\left[4; \; -\frac{2\pi}{3}\right], \qquad C\left[\sqrt{2}; \; -\frac{\pi}{4}\right]
+    \]
+    \item Déterminer les coordonnées polaires $[r; \theta]$ avec $r > 0$ et $\theta \in \,]-\pi, \pi]$ des points donnés en coordonnées cartésiennes :
+    \[
+    D(5, -5), \qquad E(-\sqrt{3}, 1), \qquad F(-2, -2\sqrt{3})
+    \]
+    \item Calculer la distance $DE$ en utilisant directement la formule polaire de la distance :
+    \[
+    d(M_1, M_2) = \sqrt{r_1^2 + r_2^2 - 2r_1 r_2 \cos(\theta_2 - \theta_1)}
+    \]
+\end{enumerate}
+
+\begin{correctionbox}[-- Formules de passage \& Loi des cosinus polaire]
+\textbf{1. Coordonnées cartésiennes $(x = r\cos\theta, y = r\sin\theta)$ :}
+\begin{itemize}[label=$\bullet$]
+    \item Pour $A\left[3; \frac{5\pi}{6}\right]$ :
+    $x_A = 3\cos(5\pi/6) = 3\left(-\frac{\sqrt{3}}{2}\right) = -\frac{3\sqrt{3}}{2}$ et $y_A = 3\sin(5\pi/6) = 3\left(\frac{1}{2}\right) = \frac{3}{2}$.
+    Donc $\mathbf{A\left(-\frac{3\sqrt{3}}{2}, \frac{3}{2}\right)}$.
+    \item Pour $B\left[4; -\frac{2\pi}{3}\right]$ :
+    $x_B = 4\cos(-2\pi/3) = 4\left(-\frac{1}{2}\right) = -2$ et $y_B = 4\sin(-2\pi/3) = 4\left(-\frac{\sqrt{3}}{2}\right) = -2\sqrt{3}$.
+    Donc $\mathbf{B(-2, -2\sqrt{3})}$.
+    \item Pour $C\left[\sqrt{2}; -\frac{\pi}{4}\right]$ :
+    $x_C = \sqrt{2}\left(\frac{\sqrt{2}}{2}\right) = 1$ et $y_C = \sqrt{2}\left(-\frac{\sqrt{2}}{2}\right) = -1$.
+    Donc $\mathbf{C(1, -1)}$.
+\end{itemize}
+
+\textbf{2. Coordonnées polaires $[r = \sqrt{x^2+y^2}; \theta]$ :}
+\begin{itemize}[label=$\bullet$]
+    \item Pour $D(5, -5)$ : $r_D = \sqrt{25 + 25} = 5\sqrt{2}$. $\cos\theta = \frac{\sqrt{2}}{2}$ et $\sin\theta = -\frac{\sqrt{2}}{2} \implies \theta_D = -\frac{\pi}{4}$.
+    Donc $\mathbf{D\left[5\sqrt{2}; -\frac{\pi}{4}\right]}$.
+    \item Pour $E(-\sqrt{3}, 1)$ : $r_E = \sqrt{3 + 1} = 2$. $\cos\theta = -\frac{\sqrt{3}}{2}$ et $\sin\theta = \frac{1}{2} \implies \theta_E = \frac{5\pi}{6}$.
+    Donc $\mathbf{E\left[2; \frac{5\pi}{6}\right]}$.
+    \item Pour $F(-2, -2\sqrt{3})$ : $r_F = \sqrt{4 + 12} = 4$. $\cos\theta = -\frac{1}{2}$ et $\sin\theta = -\frac{\sqrt{3}}{2} \implies \theta_F = -\frac{2\pi}{3}$.
+    Donc $\mathbf{F\left[4; -\frac{2\pi}{3}\right]}$. (On remarque qu'il s'agit du point $B$).
+\end{itemize}
+
+\textbf{3. Calcul de la distance $DE$ :}
+L'écart angulaire est $\Delta\theta = \theta_E - \theta_D = \frac{5\pi}{6} - \left(-\frac{\pi}{4}\right) = \frac{10\pi + 3\pi}{12} = \frac{13\pi}{12} \equiv -\frac{11\pi}{12} \pmod{2\pi}$.
+Or $\cos\left(\frac{13\pi}{12}\right) = -\cos\left(\frac{\pi}{12}\right) = -\frac{\sqrt{6}+\sqrt{2}}{4}$.
+D'après la loi des cosinus dans le triangle $ODE$ :
+\[
+DE^2 = r_D^2 + r_E^2 - 2 r_D r_E \cos(\Delta\theta) = 50 + 4 - 2(5\sqrt{2})(2)\left(-\frac{\sqrt{6}+\sqrt{2}}{4}\right)
+\]
+\[
+DE^2 = 54 + 5\sqrt{2}(\sqrt{6}+\sqrt{2}) = 54 + 5\sqrt{12} + 10 = 64 + 10\sqrt{3}
+\]
+D'où $DE = \mathbf{\sqrt{64 + 10\sqrt{3}}}$.
+\emph{Vérification cartésienne :}
+$DE^2 = (x_E - x_D)^2 + (y_E - y_D)^2 = (-\sqrt{3} - 5)^2 + (1 - (-5))^2 = (3 + 10\sqrt{3} + 25) + 36 = 64 + 10\sqrt{3}$. Cohérence parfaite.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 12
+% ----------------------------------------------------
+\subsection*{Exercice 12 -- Équations polaires de droites \& Faisceaux}
+
+\begin{enumerate}[label=\arabic*.]
+    \item On considère la courbe d'équation polaire :
+    \[
+    r = \frac{1}{\cos\theta + \sin\theta} \quad \text{sur } \left]-\frac{\pi}{4}, \frac{3\pi}{4}\right[
+    \]
+    Montrer qu'il s'agit d'une droite affine dont on précisera l'équation cartésienne.
+    \item Plus généralement, soit $p > 0$ et $\alpha \in \R$. Identifier la courbe d'équation polaire :
+    \[
+    r = \frac{p}{\cos(\theta - \alpha)} \quad \text{pour } \theta \in \left]\alpha - \frac{\pi}{2}, \alpha + \frac{\pi}{2}\right[
+    \]
+\end{enumerate}
+
+\begin{correctionbox}[-- Équation normale de Hesse en coordonnées polaires]
+\textbf{1. Droite $x + y = 1$ :}
+Multiplions par le dénominateur :
+\[
+r(\cos\theta + \sin\theta) = 1 \iff r\cos\theta + r\sin\theta = 1
+\]
+En utilisant les relations fondamentales $x = r\cos\theta$ et $y = r\sin\theta$, on obtient :
+\[
+\mathbf{x + y = 1}
+\]
+Il s'agit de la droite affine passant par $(1, 0)$ et $(0, 1)$, orthogonale au vecteur $\vec{u}(1, 1)$.
+
+\textbf{2. Forme générale de Hesse :}
+L'équation $r = \frac{p}{\cos(\theta - \alpha)}$ équivaut à :
+\[
+r \cos(\theta - \alpha) = p \iff r (\cos\theta \cos\alpha + \sin\theta \sin\sin\alpha) = p
+\]
+\[
+\mathbf{x \cos\alpha + y \sin\alpha = p}
+\]
+Cette équation est l'\emph{équation normale de Hesse} d'une droite :
+Elle représente la droite située à distance $p = OH$ de l'origine $O$, où le projeté orthogonal $H$ de $O$ sur la droite a pour coordonnées polaires $[p; \alpha]$.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 13
+% ----------------------------------------------------
+\subsection*{Exercice 13 -- Équations polaires de cercles passant par le pôle}
+
+Soit $R > 0$. Identifier la nature géométrique et les éléments caractéristiques des courbes définies par :
+\begin{enumerate}[label=\arabic*.]
+    \item $r(\theta) = 2R \cos\theta \quad \text{pour } \theta \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$
+    \item $r(\theta) = 2R \sin\theta \quad \text{pour } \theta \in [0, \pi]$
+\end{enumerate}
+
+\begin{correctionbox}[-- Cercles tangents aux axes passant par l'origine]
+\textbf{1. Équation $r = 2R\cos\theta$ :}
+Multiplions les deux membres par $r$ (l'origine correspondant à $r = 0$) :
+\[
+r^2 = 2R(r\cos\theta)
+\]
+Puisque $r^2 = x^2 + y^2$ et $x = r\cos\theta$ :
+\[
+x^2 + y^2 = 2Rx \iff x^2 - 2Rx + y^2 = 0 \iff \mathbf{(x - R)^2 + y^2 = R^2}
+\]
+Il s'agit du \textbf{cercle de centre $\Omega(R, 0)$ et de rayon $R$}, tangent à l'axe des ordonnées en l'origine $O$.
+
+\textbf{2. Équation $r = 2R\sin\theta$ :}
+De même :
+\[
+r^2 = 2R(r\sin\theta) \iff x^2 + y^2 = 2Ry \iff \mathbf{x^2 + (y - R)^2 = R^2}
+\]
+Il s'agit du \textbf{cercle de centre $\Omega'(0, R)$ et de rayon $R$}, tangent à l'axe des abscisses en l'origine $O$.
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Sommes Trigonométriques, Noyau de Dirichlet \& Polynômes de Tchebychev}
+
+% ----------------------------------------------------
+% Exercice 14
+% ----------------------------------------------------
+\subsection*{Exercice 14 -- Sommes de cosinus en progression arithmétique \& Noyau de Dirichlet}
+
+Soit $x \in \R \setminus 2\pi\Z$ et $n \in \N^*$.
+\begin{enumerate}[label=\arabic*.]
+    \item En multipliant par $2\sin\left(\dfrac{x}{2}\right)$ et par télescopage trigonométrique, démontrer que :
+    \[
+    \sum_{k=1}^n \cos(kx) = \frac{\sin\left(\left(n+\frac{1}{2}\right)x\right) - \sin\left(\frac{x}{2}\right)}{2\sin\left(\frac{x}{2}\right)}
+    \]
+    \item En déduire l'expression explicite du \emph{Noyau de Dirichlet} d'ordre $n$ :
+    \[
+    D_n(x) = 1 + 2\sum_{k=1}^n \cos(kx) = \frac{\sin\left(\left(n+\frac{1}{2}\right)x\right)}{\sin\left(\frac{x}{2}\right)}
+    \]
+    \item Retrouver cette identité par sommation d'une progression géométrique complexe $\sum_{k=-n}^n \e^{ikx}$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Sommation télescopique \& Évaluation de séries de Fourier]
+\textbf{1. Méthode par sommation télescopique trigonométrique :}
+Utilisons la formule de Simpson pour le produit sinus-cosinus :
+\[
+2\sin\left(\frac{x}{2}\right)\cos(kx) = \sin\left(\left(k+\frac{1}{2}\right)x\right) - \sin\left(\left(k-\frac{1}{2}\right)x\right)
+\]
+Sommons cette relation pour $k$ variant de $1$ à $n$ :
+\[
+2\sin\left(\frac{x}{2}\right) \sum_{k=1}^n \cos(kx) = \sum_{k=1}^n \left[ \sin\left(\left(k+\frac{1}{2}\right)x\right) - \sin\left(\left(k-\frac{1}{2}\right)x\right) \right]
+\]
+La somme est purement télescopique : tous les termes intermédiaires s'annulent :
+\[
+2\sin\left(\frac{x}{2}\right) \sum_{k=1}^n \cos(kx) = \sin\left(\left(n+\frac{1}{2}\right)x\right) - \sin\left(\frac{x}{2}\right)
+\]
+Puisque $x \not\equiv 0 \pmod{2\pi}$, $\sin(x/2) \neq 0$. En divisant par $2\sin(x/2)$ :
+\[
+\mathbf{\sum_{k=1}^n \cos(kx) = \frac{\sin\left(\left(n+\frac{1}{2}\right)x\right) - \sin\left(\frac{x}{2}\right)}{2\sin\left(\frac{x}{2}\right)}}
+\]
+
+\textbf{2. Expression du Noyau de Dirichlet $D_n(x)$ :}
+Par définition :
+\[
+D_n(x) = 1 + 2\sum_{k=1}^n \cos(kx) = 1 + 2 \times \frac{\sin\left(\left(n+\frac{1}{2}\right)x\right) - \sin\left(\frac{x}{2}\right)}{2\sin\left(\frac{x}{2}\right)}
+\]
+\[
+D_n(x) = 1 + \frac{\sin\left(\left(n+\frac{1}{2}\right)x\right)}{\sin\left(\frac{x}{2}\right)} - \frac{\sin\left(\frac{x}{2}\right)}{\sin\left(\frac{x}{2}\right)} = 1 + \frac{\sin\left(\left(n+\frac{1}{2}\right)x\right)}{\sin\left(\frac{x}{2}\right)} - 1
+\]
+D'où l'expression compacte fondamentale :
+\[
+\mathbf{D_n(x) = \frac{\sin\left(\left(n+\frac{1}{2}\right)x\right)}{\sin\left(\frac{x}{2}\right)}}
+\]
+
+\textbf{3. Méthode par l'exponentielle complexe :}
+Puisque $\cos(kx) = \frac{\e^{ikx} + \e^{-ikx}}{2}$, le noyau s'écrit :
+\[
+D_n(x) = 1 + \sum_{k=1}^n (\e^{ikx} + \e^{-ikx}) = \sum_{k=-n}^n \e^{ikx}
+\]
+Il s'agit d'une suite géométrique de $2n+1$ termes, de premier terme $\e^{-inx}$ et de raison $q = \e^{ix} \neq 1$ :
+\[
+D_n(x) = \e^{-inx} \frac{1 - \e^{i(2n+1)x}}{1 - \e^{ix}}
+\]
+Factorisons par l'arc-moitié au numérateur et au dénominateur :
+\[
+D_n(x) = \e^{-inx} \frac{\e^{i\frac{2n+1}{2}x} \left( \e^{-i\frac{2n+1}{2}x} - \e^{i\frac{2n+1}{2}x} \right)}{\e^{i\frac{x}{2}} \left( \e^{-i\frac{x}{2}} - \e^{i\frac{x}{2}} \right)} = \e^{-inx} \e^{inx} \frac{-2i \sin\left(\left(n+\frac{1}{2}\right)x\right)}{-2i \sin\left(\frac{x}{2}\right)} = \mathbf{\frac{\sin\left(\left(n+\frac{1}{2}\right)x\right)}{\sin\left(\frac{x}{2}\right)}}
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 15
+% ----------------------------------------------------
+\subsection*{Exercice 15 -- Les Polynômes de Tchebychev de première espèce}
+
+\begin{enumerate}[label=\arabic*.]
+    \item En utilisant la formule de factorisation $\cos((n+1)\theta) + \cos((n-1)\theta) = 2\cos\theta \cos(n\theta)$, démontrer qu'il existe une unique suite de polynômes $(T_n)_{n \in \N}$ dans $\R[X]$ telle que :
+    \[
+    \forall \theta \in \R, \quad T_n(\cos\theta) = \cos(n\theta)
+    \]
+    et vérifiant la relation de récurrence :
+    \[
+    T_0(X) = 1, \quad T_1(X) = X, \quad \forall n \ge 1, \; T_{n+1}(X) = 2X T_n(X) - T_{n-1}(X)
+    \]
+    \item Calculer explicitement $T_2(X)$, $T_3(X)$, $T_4(X)$ et $T_5(X)$.
+    \item Démontrer que le réel $X = \cos\left(\frac{\pi}{5}\right)$ vérifie $T_5(X) = -1$, et retrouver la factorisation :
+    \[
+    T_5(X) + 1 = 16X^5 - 20X^3 + 5X + 1 = (X + 1)(4X^2 - 2X - 1)^2
+    \]
+\end{enumerate}
+
+\begin{correctionbox}[-- Polynômes orthogonaux \& Développements trigonométriques]
+\textbf{1. Existence et relation de récurrence :}
+Pour tout $\theta \in \R$ :
+\[
+\cos((n+1)\theta) = 2\cos\theta \cos(n\theta) - \cos((n-1)\theta)
+\]
+Pour $n = 0$ : $\cos(0\theta) = 1$, donc $T_0(X) = 1$.
+Pour $n = 1$ : $\cos(1\theta) = \cos\theta$, donc $T_1(X) = X$.
+Par récurrence, si $T_{n-1}$ et $T_n$ sont des polynômes satisfaisant l'identité, alors :
+\[
+T_{n+1}(\cos\theta) = 2\cos\theta T_n(\cos\theta) - T_{n-1}(\cos\theta)
+\]
+Le polynôme $T_{n+1}(X) = 2X T_n(X) - T_{n-1}(X)$ vérifie $T_{n+1}(\cos\theta) = \cos((n+1)\theta)$.
+L'égalité ayant lieu sur le segment $[-1, 1]$ infini, ce polynôme est unique.
+
+\textbf{2. Calcul des premiers polynômes de Tchebychev :}
+\begin{itemize}[label=$\bullet$]
+    \item $T_2(X) = 2X T_1(X) - T_0(X) = 2X(X) - 1 = \mathbf{2X^2 - 1}$.
+    \item $T_3(X) = 2X T_2(X) - T_1(X) = 2X(2X^2 - 1) - X = \mathbf{4X^3 - 3X}$.
+    \item $T_4(X) = 2X T_3(X) - T_2(X) = 2X(4X^3 - 3X) - (2X^2 - 1) = \mathbf{8X^4 - 8X^2 + 1}$.
+    \item $T_5(X) = 2X T_4(X) - T_3(X) = 2X(8X^4 - 8X^2 + 1) - (4X^3 - 3X) = \mathbf{16X^5 - 20X^3 + 5X}$.
+\end{itemize}
+
+\textbf{3. Application à l'angle $\theta = \pi/5$ :}
+Puisque $5 \times \frac{\pi}{5} = \pi$, on a $T_5\left(\cos\left(\frac{\pi}{5}\right)\right) = \cos(\pi) = -1$.
+Le réel $X = \cos(\pi/5)$ est donc racine de $T_5(X) + 1 = 0$ :
+\[
+16X^5 - 20X^3 + 5X + 1 = 0
+\]
+$X = -1$ est racine évidente (car $T_5(-1) = \cos(5\pi) = -1$).
+En effectuant la factorisation algébrique, on montre que :
+\[
+16X^5 - 20X^3 + 5X + 1 = (X + 1)(4X^2 - 2X - 1)^2
+\]
+Comme $\cos(\pi/5) > 0$, il s'agit nécessairement d'une racine du facteur quadratique $4X^2 - 2X - 1 = 0$.
+On retrouve ainsi, par la théorie des polynômes de Tchebychev, la valeur exacte $\mathbf{\cos(\pi/5) = \frac{1+\sqrt{5}}{4} = \frac{\Phi}{2}}$.
+\end{correctionbox}
+
+\end{document}
