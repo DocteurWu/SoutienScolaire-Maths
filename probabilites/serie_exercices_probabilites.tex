@@ -1,0 +1,1840 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+
+% ----------------------------------------------------
+% Couleurs officielles du projet (Charte LLG / MPSI)
+% ----------------------------------------------------
+\definecolor{llgblue}{RGB}{20, 50, 115}
+\definecolor{llglight}{RGB}{246, 249, 255}
+
+\definecolor{emeraldframe}{RGB}{18, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{12, 80, 52}
+
+\definecolor{prepaframe}{RGB}{30, 70, 135}
+\definecolor{prepaback}{RGB}{246, 249, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 105}
+
+\definecolor{alertframe}{RGB}{185, 75, 20}
+\definecolor{alertback}{RGB}{255, 249, 245}
+\definecolor{alerttitle}{RGB}{145, 55, 12}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=llgblue,
+    urlcolor=llgblue,
+    citecolor=llgblue
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité Mathématiques (1E3)}
+\fancyhead[C]{\small\textbf{Feuille de TD : Probabilités \& Variables Aléatoires}}
+\fancyhead[R]{\small Année 2021/2022}
+\fancyfoot[L]{\footnotesize LLG 1E3 -- Fiche de Travaux Dirigés}
+\fancyfoot[C]{\footnotesize Énoncés Exhaustifs \& Corrigés Détaillés d'Excellence}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% ----------------------------------------------------
+% Boîtes tcolorbox personnalisées
+% ----------------------------------------------------
+\newtcolorbox{coursbox}[1][]{
+  colback=llglight,
+  colframe=llgblue,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=llgblue,
+  title={Cadre Théorique \& Définitions Axiomatiques #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.35cm,
+  after skip=0.45cm
+}
+
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Corrigé rédigé pas à pas #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.35cm,
+  after skip=0.45cm
+}
+
+\newtcolorbox{remarquebox}[1][]{
+  colback=prepaback,
+  colframe=prepaframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=prepatitle,
+  title={Prolongement \& Regard Prépa / MPSI #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{alertebox}[1][]{
+  colback=alertback,
+  colframe=alertframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=alerttitle,
+  title={Vigilance méthodologique \& Pièges classiques #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+% Commandes mathématiques
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\un}{\mathbf{1}}
+
+\begin{document}
+
+% ====================================================
+% TITRE OFFICIEL DU RECUEIL
+% ====================================================
+\begin{center}
+    {\LARGE \bfseries Lycée Louis-le-Grand -- Paris}\\[0.2cm]
+    {\large Classe de Première 3 (1E3) -- Année scolaire 2021/2022}\\[0.3cm]
+    \begin{tcolorbox}[colback=llglight,colframe=llgblue,arc=3mm,boxrule=1.2pt,center]
+        \begin{center}
+            {\Large \bfseries \color{llgblue} TRAVAUX DIRIGÉS D'APPROFONDISSEMENT}\\[0.15cm]
+            {\large \bfseries Probabilités Conditionnelles, Formule de Bayes, Variables Aléatoires \& Loi Géométrique}\\[0.2cm]
+            \small Recueil intégral des 26 exercices de la feuille officielle -- Avril 2022\\[0.1cm]
+            \footnotesize Avec cours axiomatique de référence, corrigés d'excellence pas à pas et prolongements Classes Préparatoires MPSI
+        \end{center}
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.3cm}
+
+% ====================================================
+% COURS AXIOMATIQUE DE RÉFÉRENCE
+% ====================================================
+\section*{Synthèse Axiomatique du Cours (Cadre Kolmogorovien)}
+
+\begin{coursbox}[-- Espaces probabilisés, Événements \& Axiomatique de Kolmogorov]
+Soit $\Omega$ un ensemble non vide appelé \textbf{univers} des possibles.
+\begin{enumerate}
+    \item \textbf{Tribu des événements :} Une famille $\mathscr{F} \subset \mathscr{P}(\Omega)$ est appelée une \emph{tribu} (ou $\sigma$-algèbre) sur $\Omega$ si :
+    \begin{itemize}[label=$\bullet$]
+        \item $\Omega \in \mathscr{F}$ ;
+        \item $\forall A \in \mathscr{F}, \; \overline{A} = \Omega \setminus A \in \mathscr{F}$ (stabilité par passage au complémentaire) ;
+        \item Pour toute suite dénombrable $(A_n)_{n \in \N}$ d'éléments de $\mathscr{F}$, $\bigcup_{n=0}^{+\infty} A_n \in \mathscr{F}$ (stabilité par union dénombrable).
+    \end{itemize}
+    Lorsque $\Omega$ est fini, on choisit usuellement $\mathscr{F} = \mathscr{P}(\Omega)$. Les éléments de $\mathscr{F}$ sont appelés les \textbf{événements}.
+
+    \item \textbf{Mesure de probabilité :} Une application $P : \mathscr{F} \to [0, 1]$ est une \emph{probabilité} si :
+    \begin{itemize}[label=$\bullet$]
+        \item $P(\Omega) = 1$ (normalisation) ;
+        \item Pour toute suite $(A_n)_{n \in \N}$ d'événements deux à deux incompatibles ($A_i \cap A_j = \emptyset$ pour $i \neq j$) :
+        \[
+        P\left(\bigcup_{n=0}^{+\infty} A_n\right) = \sum_{n=0}^{+\infty} P(A_n) \quad (\sigma\text{-additivité})
+        \]
+    \end{itemize}
+    Le triplet $(\Omega, \mathscr{F}, P)$ est alors appelé un \textbf{espace probabilisé}.
+
+    \item \textbf{Propriétés élémentaires immédiates :}
+    \begin{itemize}[label=$\bullet$]
+        \item $P(\emptyset) = 0$ et $P(\overline{A}) = 1 - P(A)$.
+        \item Si $A \subset B$, alors $P(B \setminus A) = P(B) - P(A)$, d'où $P(A) \le P(B)$ (croissance).
+        \item \emph{Formule de Poincaré (crible à deux termes) :} $\forall A, B \in \mathscr{F}$,
+        \[
+        P(A \cup B) = P(A) + P(B) - P(A \cap B)
+        \]
+    \end{itemize}
+\end{enumerate}
+\end{coursbox}
+
+\begin{coursbox}[-- Probabilités conditionnelles, Indépendance \& Formules Fondamentales]
+\begin{enumerate}
+    \item \textbf{Probabilité conditionnelle :} Soit $B \in \mathscr{F}$ tel que $P(B) > 0$. Pour tout événement $A \in \mathscr{F}$, la probabilité conditionnelle de $A$ sachant $B$ est définie par :
+    \[
+    P_B(A) = P(A \mid B) = \frac{P(A \cap B)}{P(B)}
+    \]
+    L'application $P_B : \mathscr{F} \to [0, 1]$ définit elle-même une mesure de probabilité sur $(\Omega, \mathscr{F})$.
+
+    \item \textbf{Formule des probabilités composées :} Si $P(A_1 \cap \dots \cap A_{n-1}) > 0$, alors :
+    \[
+    P(A_1 \cap A_2 \cap \dots \cap A_n) = P(A_1) \times P_{A_1}(A_2) \times P_{A_1 \cap A_2}(A_3) \times \dots \times P_{A_1 \cap \dots \cap A_{n-1}}(A_n)
+    \]
+
+    \item \textbf{Système complet d'événements \& Formule des probabilités totales :}
+    Une famille finie ou dénombrable $(B_i)_{i \in I}$ d'événements forme un \emph{système complet d'événements} (ou partition de $\Omega$) si :
+    \[
+    \forall i \neq j, \; B_i \cap B_j = \emptyset \quad \text{et} \quad \bigcup_{i \in I} B_i = \Omega
+    \]
+    Si de plus $P(B_i) > 0$ pour tout $i \in I$, alors pour tout événement $A \in \mathscr{F}$ :
+    \[
+    P(A) = \sum_{i \in I} P(A \cap B_i) = \sum_{i \in I} P(B_i) \times P_{B_i}(A)
+    \]
+
+    \item \textbf{Formule de Bayes (Inversion des conditionnements) :}
+    Sous les mêmes hypothèses, si $P(A) > 0$, pour tout $k \in I$ :
+    \[
+    P_A(B_k) = \frac{P(B_k) \times P_{B_k}(A)}{\displaystyle\sum_{i \in I} P(B_i) \times P_{B_i}(A)}
+    \]
+
+    \item \textbf{Indépendance :} Deux événements $A$ et $B$ sont \emph{indépendants} si et seulement si :
+    \[
+    P(A \cap B) = P(A) \times P(B)
+    \]
+    Si $P(B) > 0$, cela équivaut à $P_B(A) = P(A)$.
+\end{enumerate}
+\end{coursbox}
+
+\begin{coursbox}[-- Variables Aléatoires Discrètes, Espérance \& Variance]
+\begin{enumerate}
+    \item \textbf{Variable aléatoire réelle (v.a.r.) :} Une application $X : \Omega \to \R$ est une variable aléatoire réelle discrète si son image $X(\Omega) = \{x_i \mid i \in I\}$ est au plus dénombrable, et pour tout $x \in \R$, $\{X = x\} = X^{-1}(\{x\}) \in \mathscr{F}$.
+    \item \textbf{Loi de probabilité :} Elle est entièrement caractérisée par les valeurs prises $x_i$ et les probabilités ponctuelles $p_i = P(X = x_i)$, avec $\sum_{i \in I} p_i = 1$.
+    \item \textbf{Espérance mathématique :} Sous réserve d'absolue convergence $\sum_{i \in I} |x_i| p_i < +\infty$ :
+    \[
+    \E(X) = \sum_{i \in I} x_i P(X = x_i)
+    \]
+    \item \textbf{Théorème de transfert :} Pour toute fonction $g : X(\Omega) \to \R$ telle que $\sum |g(x_i)| p_i < +\infty$ :
+    \[
+    \E(g(X)) = \sum_{i \in I} g(x_i) P(X = x_i)
+    \]
+    \item \textbf{Variance et Écart-type :}
+    \[
+    \V(X) = \E\left((X - \E(X))^2\right) = \E(X^2) - (\E(X))^2 \quad \text{(Formule de König-Huygens)}
+    \]
+    L'écart-type est $\sigma(X) = \sqrt{\V(X)}$.
+\end{enumerate}
+\end{coursbox}
+
+\vspace{0.4cm}
+
+\section{Vocabulaire Ensembliste \& Calculs Élémentaires}
+
+% ----------------------------------------------------
+% Exercice 1
+% ----------------------------------------------------
+\subsection*{Exercice 1 -- Traduction ensembliste d'événements}
+
+Soit $\Omega$ un univers et soient $A$, $B$ et $C$ trois événements de $\Omega$. Traduire en termes ensemblistes (en utilisant uniquement les symboles d'union, d'intersection et de passage au complémentaire) les événements suivants :
+\begin{enumerate}[label=\arabic*.]
+    \item $A$ et $B$ se réalisent.
+    \item Les trois événements se réalisent.
+    \item $C$ ne se réalise pas.
+    \item $A$ et $B$ se réalisent, mais pas $C$.
+    \item Parmi les 3 événements, seul $A$ se réalise.
+    \item Aucun des événements ne se réalise.
+    \item Au moins l'un des trois événements se réalise.
+    \item Au moins deux des trois événements se réalisent.
+    \item Au plus l'un des trois se réalise.
+    \item Exactement deux des trois se réalisent.
+\end{enumerate}
+
+\begin{correctionbox}[-- Traduction ensembliste \& Lois de De Morgan]
+\begin{enumerate}[label=\arabic*.]
+    \item \og $A$ et $B$ se réalisent \fg{} :
+    \[
+    \mathbf{A \cap B}
+    \]
+    \item \og Les trois événements se réalisent \fg{} :
+    \[
+    \mathbf{A \cap B \cap C}
+    \]
+    \item \og $C$ ne se réalise pas \fg{} :
+    \[
+    \mathbf{\overline{C}}
+    \]
+    \item \og $A$ et $B$ se réalisent, mais pas $C$ \fg{} :
+    \[
+    \mathbf{A \cap B \cap \overline{C}}
+    \]
+    \item \og Seul $A$ se réalise \fg{} ($A$ a lieu et ni $B$ ni $C$ n'ont lieu) :
+    \[
+    \mathbf{A \cap \overline{B} \cap \overline{C}} \quad (\text{ou encore } A \setminus (B \cup C))
+    \]
+    \item \og Aucun des événements ne se réalise \fg{} :
+    D'après les lois de De Morgan, le contraire de \og au moins l'un se réalise \fg{} est :
+    \[
+    \mathbf{\overline{A} \cap \overline{B} \cap \overline{C} = \overline{A \cup B \cup C}}
+    \]
+    \item \og Au moins l'un des trois événements se réalise \fg{} :
+    \[
+    \mathbf{A \cup B \cup C}
+    \]
+    \item \og Au moins deux des trois événements se réalisent \fg{} (au moins une paire est réalisée) :
+    \[
+    \mathbf{(A \cap B) \cup (B \cap C) \cup (C \cap A)}
+    \]
+    \item \og Au plus l'un des trois se réalise \fg{} :
+    C'est l'événement contraire de \og au moins deux se réalisent \fg{} :
+    \[
+    \mathbf{\overline{(A \cap B) \cup (B \cap C) \cup (C \cap A)}}
+    \]
+    On peut également l'écrire comme la réunion disjointe des configurations où aucun ne se réalise et où un seul se réalise :
+    \[
+    (\overline{A} \cap \overline{B} \cap \overline{C}) \cup (A \cap \overline{B} \cap \overline{C}) \cup (\overline{A} \cap B \cap \overline{C}) \cup (\overline{A} \cap \overline{B} \cap C)
+    \]
+    \item \og Exactement deux des trois se réalisent \fg{} :
+    Deux se réalisent et le troisième ne se réalise pas :
+    \[
+    \mathbf{(A \cap B \cap \overline{C}) \cup (A \cap \overline{B} \cap C) \cup (\overline{A} \cap B \cap C)}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 2
+% ----------------------------------------------------
+\subsection*{Exercice 2 -- Calculs dans un espace probabilisé \& Événements incompatibles}
+
+Dans un espace probabilisé $(\Omega, P)$, on donne deux événements $A$ et $B$ \textbf{incompatibles} tels que $P(A) = 0{,}2$ et $P(B) = 0{,}7$. Calculer :
+\begin{enumerate}[label=\arabic*.]
+    \item $P(\overline{A})$
+    \item $P(A \cap B)$
+    \item $P(A \cup B)$
+    \item $P(\overline{A} \cap \overline{B})$
+    \item $P(\overline{A} \cup \overline{B})$
+\end{enumerate}
+
+\begin{correctionbox}[-- Propriétés de la mesure de probabilité]
+\begin{enumerate}[label=\arabic*.]
+    \item Par la règle de l'événement contraire :
+    \[
+    P(\overline{A}) = 1 - P(A) = 1 - 0{,}2 = \mathbf{0{,}8}
+    \]
+    \item Les événements $A$ et $B$ étant incompatibles par hypothèse, $A \cap B = \emptyset$. Par suite :
+    \[
+    P(A \cap B) = P(\emptyset) = \mathbf{0}
+    \]
+    \item Pour deux événements incompatibles, l'additivité de la probabilité donne :
+    \[
+    P(A \cup B) = P(A) + P(B) = 0{,}2 + 0{,}7 = \mathbf{0{,}9}
+    \]
+    \item D'après la première loi de De Morgan, $\overline{A} \cap \overline{B} = \overline{A \cup B}$. Ainsi :
+    \[
+    P(\overline{A} \cap \overline{B}) = P(\overline{A \cup B}) = 1 - P(A \cup B) = 1 - 0{,}9 = \mathbf{0{,}1}
+    \]
+    \item D'après la seconde loi de De Morgan, $\overline{A} \cup \overline{B} = \overline{A \cap B}$. Comme $A \cap B = \emptyset$ :
+    \[
+    P(\overline{A} \cup \overline{B}) = P(\overline{\emptyset}) = P(\Omega) = \mathbf{1}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 3
+% ----------------------------------------------------
+\subsection*{Exercice 3 -- Dé à six faces truqué}
+
+Un dé truqué à 6 faces est tel qu'un chiffre pair a deux fois plus de chance de sortir qu'un chiffre impair. Calculer la probabilité d'obtenir un $6$.
+
+\begin{correctionbox}[-- Modélisation d'une loi de probabilité pondérée]
+L'univers des issues possibles est $\Omega = \{1, 2, 3, 4, 5, 6\}$.
+Les faces impaires sont $\{1, 3, 5\}$ et les faces paires sont $\{2, 4, 6\}$.
+Notons $p$ la probabilité d'apparition de chaque chiffre impair :
+\[
+P(\{1\}) = P(\{3\}) = P(\{5\}) = p
+\]
+D'après l'énoncé, chaque face paire a une probabilité double d'apparaître :
+\[
+P(\{2\}) = P(\{4\}) = P(\{6\}) = 2p
+\]
+La somme des probabilités des événements élémentaires sur l'univers $\Omega$ vaut $1$ :
+\[
+\sum_{k=1}^6 P(\{k\}) = P(\{1\}) + P(\{3\}) + P(\{5\}) + P(\{2\}) + P(\{4\}) + P(\{6\}) = 1
+\]
+\[
+3 \times p + 3 \times (2p) = 3p + 6p = 9p = 1 \implies p = \frac{1}{9}
+\]
+La probabilité d'obtenir le chiffre $6$ est donc :
+\[
+P(\{6\}) = 2p = 2 \times \frac{1}{9} = \mathbf{\frac{2}{9}}
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 4
+% ----------------------------------------------------
+\subsection*{Exercice 4 -- Caractérisation de la loi uniforme discrète}
+
+Soit $n \ge 1$. Déterminer la probabilité $P$ sur $[\![1, n]\!]$ telle que la probabilité du segment d'entiers $[\![1, k]\!]$ soit proportionnelle à $k$.
+
+\begin{correctionbox}[-- Identification par télescopage \& Équiprobabilité]
+L'univers est l'ensemble fini $\Omega = [\![1, n]\!] = \{1, 2, \dots, n\}$.
+L'hypothèse stipule qu'il existe une constante de proportionnalité $C \in \R$ telle que :
+\[
+\forall k \in [\![1, n]\!], \quad P([\![1, k]\!]) = C \times k
+\]
+\begin{enumerate}
+    \item \textbf{Détermination de la constante $C$ :}
+    Pour $k = n$, le segment $[\![1, n]\!]$ coïncide avec l'univers $\Omega$. Par l'axiome de normalisation d'une mesure de probabilité :
+    \[
+    P(\Omega) = P([\![1, n]\!]) = 1 \iff C \times n = 1 \iff C = \frac{1}{n}
+    \]
+    Ainsi, pour tout $k \in [\![1, n]\!]$, $P([\![1, k]\!]) = \dfrac{k}{n}$.
+
+    \item \textbf{Calcul des probabilités élémentaires $P(\{k\})$ :}
+    \begin{itemize}[label=$\bullet$]
+        \item Pour $k = 1$ : $P(\{1\}) = P([\![1, 1]\!]) = \dfrac{1}{n}$.
+        \item Pour tout $k \in [\![2, n]\!]$, l'ensemble $[\![1, k]\!]$ est l'union disjointe de $[\![1, k-1]\!]$ et du singleton $\{k\}$. Par additivité :
+        \[
+        P([\![1, k]\!]) = P([\![1, k-1]\!]) + P(\{k\})
+        \]
+        On en déduit par différence :
+        \[
+        P(\{k\}) = P([\![1, k]\!]) - P([\![1, k-1]\!]) = \frac{k}{n} - \frac{k-1}{n} = \mathbf{\frac{1}{n}}
+        \]
+    \end{itemize}
+\end{enumerate}
+\textbf{Conclusion :} Tous les événements élémentaires ont la même probabilité $1/n$. La probabilité $P$ est donc \textbf{la loi uniforme discrète (ou équiprobable)} sur l'ensemble $[\![1, n]\!]$.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 5
+% ----------------------------------------------------
+\subsection*{Exercice 5 -- Standard téléphonique à deux lignes}
+
+Un standard téléphonique est composé de deux lignes. On note :
+\begin{itemize}[label=$\bullet$]
+    \item $E_1$ : \og la ligne 1 est occupée \fg{},
+    \item $E_2$ : \og la ligne 2 est occupée \fg{}.
+\end{itemize}
+On donne $P(E_1) = 0{,}5$, $P(E_2) = 0{,}6$ et $P(E_1 \cap E_2) = 0{,}3$.
+Calculer les probabilités suivantes :
+\begin{enumerate}[label=\arabic*.]
+    \item Au moins une ligne est occupée.
+    \item Le standard répond sans attente.
+\end{enumerate}
+
+\begin{correctionbox}[-- Crible de Poincaré \& Interprétation opérationnelle]
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Probabilité qu'au moins une ligne soit occupée :}
+    Cet événement est la réunion $E_1 \cup E_2$. D'après la formule de Poincaré :
+    \[
+    P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1 \cap E_2) = 0{,}5 + 0{,}6 - 0{,}3 = \mathbf{0{,}8}
+    \]
+
+    \item \textbf{Probabilité que le standard réponde sans attente :}
+    Un appelant obtient le standard sans attente dès lors qu'il existe \textbf{au moins une ligne libre}, c'est-à-dire lorsque les deux lignes ne sont pas simultanément occupées.
+    L'événement est donc le contraire de \og les deux lignes sont occupées \fg{} ($\overline{E_1 \cap E_2}$) :
+    \[
+    P(\text{au moins une ligne libre}) = 1 - P(E_1 \cap E_2) = 1 - 0{,}3 = \mathbf{0{,}7}
+    \]
+    \emph{Remarque méthodologique :} Si l'on interprète \og sans attente \fg{} au sens strict où \textbf{toutes} les lignes sont libres (aucune n'est occupée, soit $\overline{E_1} \cap \overline{E_2} = \overline{E_1 \cup E_2}$), sa probabilité vaut :
+    \[
+    P(\overline{E_1 \cup E_2}) = 1 - P(E_1 \cup E_2) = 1 - 0{,}8 = \mathbf{0{,}2}
+    \]
+    En pratique des télécommunications, la disponibilité immédiate du service requiert qu'au moins un canal soit ouvert, soit la probabilité de $0{,}7$.
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Expériences Successives, Modélisation \& Paradoxes Classiques}
+
+% ----------------------------------------------------
+% Exercice 6
+% ----------------------------------------------------
+\subsection*{Exercice 6 -- Somme des faces de deux dés cubiques}
+
+On lance deux dés cubiques équilibrés numérotés de 1 à 6. Calculer la probabilité que la somme des deux chiffres soit égale à 6.
+
+\begin{correctionbox}[-- Dénombrement sur un univers produit]
+L'expérience aléatoire consiste à lancer deux dés équilibrés discernables (par exemple un dé rouge et un dé vert).
+L'univers des issues possibles est l'ensemble produit :
+\[
+\Omega = \{ (i, j) \mid 1 \le i \le 6, \; 1 \le j \le 6 \} = [\![1, 6]\!]^2
+\]
+Puisque les dés sont équilibrés et les lancers indépendants, cet univers est muni de la probabilité uniforme (équiprobabilité).
+Le nombre total d'issues possibles est :
+\[
+\operatorname{Card}(\Omega) = 6 \times 6 = 36
+\]
+Soit $A$ l'événement : \og la somme des deux chiffres obtenus est égale à 6 \fg{}.
+Les couples $(i, j)$ satisfaisant $i + j = 6$ avec $1 \le i, j \le 6$ sont :
+\[
+A = \{ (1, 5), \; (2, 4), \; (3, 3), \; (4, 2), \; (5, 1) \}
+\]
+Il y a exactement $5$ couples favorables. Par la formule de Laplace en situation d'équiprobabilité :
+\[
+P(A) = \frac{\operatorname{Card}(A)}{\operatorname{Card}(\Omega)} = \mathbf{\frac{5}{36}} \approx 0{,}1389
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 7
+% ----------------------------------------------------
+\subsection*{Exercice 7 -- Répartition des sexes dans une fratrie de quatre enfants}
+
+Calculer la probabilité qu'une famille de 4 enfants ait deux garçons. On supposera l'équiprobabilité des naissances masculines et féminines et l'indépendance des naissances.
+
+\begin{correctionbox}[-- Schéma de Bernoulli \& Coefficients binomiaux]
+Chaque naissance est une épreuve de Bernoulli à deux issues possibles : Garçon ($G$) avec probabilité $p = 1/2$, ou Fille ($F$) avec probabilité $q = 1/2$.
+Pour une fratrie de 4 enfants, l'univers est l'ensemble des quadruplets ordonnés selon l'ordre de naissance :
+\[
+\Omega = \{G, F\}^4, \quad \operatorname{Card}(\Omega) = 2^4 = 16
+\]
+Toutes les séquences de 4 naissances sont équiprobables, de probabilité $(1/2)^4 = 1/16$.
+Soit $E$ l'événement : \og la famille compte exactement deux garçons et deux filles \fg{}.
+Le nombre de séquences comportant exactement deux garçons parmi les 4 enfants correspond au nombre de manières de choisir les $2$ rangs de naissance des garçons parmi les $4$ possibles, soit le coefficient binomial :
+\[
+\operatorname{Card}(E) = \binom{4}{2} = \frac{4 \times 3}{2 \times 1} = 6
+\]
+Les $6$ configurations favorables sont :
+\[
+GGFF, \; GFGF, \; GFFG, \; FGGF, \; FGFG, \; FFGG
+\]
+La probabilité recherchée est donc :
+\[
+P(E) = \frac{\binom{4}{2}}{2^4} = \frac{6}{16} = \mathbf{\frac{3}{8}} = 0{,}375
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 8
+% ----------------------------------------------------
+\subsection*{Exercice 8 -- Tirage de billets de loterie}
+
+Dans une loterie, $100$ billets sont vendus et il y a $7$ billets gagnants. Quelle est la probabilité de gagner au moins un lot si on achète deux billets ?
+
+\begin{correctionbox}[-- Raisonnement par l'événement contraire \& Tirage sans remise]
+Soit $E$ l'événement : \og gagner au moins un lot en achetant deux billets \fg{}.
+L'événement contraire $\overline{E}$ est : \og ne gagner aucun lot \fg{}, c'est-à-dire acheter deux billets perdants.
+
+Le nombre total de billets est $100$, parmi lesquels $7$ sont gagnants et $93$ sont perdants.
+Acheter deux billets revient à effectuer un tirage simultané (ou successif sans remise) de $2$ billets parmi $100$ :
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Méthode séquentielle (probabilités composées) :}
+    La probabilité que le premier billet soit perdant est $\frac{93}{100}$. Sachant que le premier est perdant, il reste $92$ billets perdants parmi les $99$ billets restants :
+    \[
+    P(\overline{E}) = \frac{93}{100} \times \frac{92}{99} = \frac{8556}{9900} = \frac{713}{825}
+    \]
+    \item \textbf{Méthode combinatoire :}
+    \[
+    P(\overline{E}) = \frac{\binom{93}{2}}{\binom{100}{2}} = \frac{\frac{93 \times 92}{2}}{\frac{100 \times 99}{2}} = \frac{93 \times 92}{100 \times 99}
+    \]
+\end{itemize}
+Par conséquent, la probabilité de l'événement $E$ est :
+\[
+P(E) = 1 - P(\overline{E}) = 1 - \frac{8556}{9900} = \frac{9900 - 8556}{9900} = \frac{1344}{9900} = \mathbf{\frac{112}{825}} \approx \mathbf{0{,}1358} \quad (13{,}58\,\%)
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 9
+% ----------------------------------------------------
+\subsection*{Exercice 9 -- Performance d'un tireur à la cible}
+
+Un tireur atteint sa cible une fois sur trois. Calculer le nombre minimal de tirs nécessaires pour qu'il atteigne sa cible au moins une fois avec une probabilité supérieure ou égale à $80\,\%$.
+
+\begin{correctionbox}[-- Inéquation probabiliste \& Répétition d'épreuves indépendantes]
+À chaque tir, la probabilité de toucher la cible est $p = 1/3$. La probabilité de manquer la cible lors d'un tir est donc :
+\[
+q = 1 - p = 1 - \frac{1}{3} = \frac{2}{3}
+\]
+Les tirs successifs étant mutuellement indépendants, la probabilité de manquer la cible lors de $n$ tirs consécutifs est égale au produit des probabilités d'échec :
+\[
+P(\text{manquer les } n \text{ tirs}) = q^n = \left(\frac{2}{3}\right)^n
+\]
+L'événement \og atteindre la cible au moins une fois \fg{} est l'événement contraire de \og manquer tous les tirs \fg{}. Sa probabilité s'écrit :
+\[
+P_n = 1 - \left(\frac{2}{3}\right)^n
+\]
+On cherche le plus petit entier naturel $n \ge 1$ satisfaisant la condition $P_n \ge 0{,}80$ :
+\[
+1 - \left(\frac{2}{3}\right)^n \ge 0{,}80 \iff \left(\frac{2}{3}\right)^n \le 0{,}20 = \frac{1}{5}
+\]
+Calculons les premières puissances de $\frac{2}{3}$ :
+\begin{itemize}[label=$\bullet$]
+    \item Pour $n = 1$ : $\left(\frac{2}{3}\right)^1 \approx 0{,}667 > 0{,}20$.
+    \item Pour $n = 2$ : $\left(\frac{2}{3}\right)^2 = \frac{4}{9} \approx 0{,}444 > 0{,}20$.
+    \item Pour $n = 3$ : $\left(\frac{2}{3}\right)^3 = \frac{8}{27} \approx 0{,}296 > 0{,}20$.
+    \item Pour $n = 4$ : $\left(\frac{2}{3}\right)^4 = \frac{16}{81} \approx 0{,}1975 \le 0{,}20$.
+\end{itemize}
+Puisque la suite $\left((2/3)^n\right)$ est strictement décroissante, l'inéquation est vérifiée pour tout $n \ge 4$.
+Il faut donc effectuer au minimum \textbf{$4$ tirs} pour atteindre la cible au moins une fois avec une certitude supérieure à $80\,\%$.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 10
+% ----------------------------------------------------
+\subsection*{Exercice 10 -- Expérience en deux étapes : Jeton \& Lancers de dé}
+
+Un sac contient deux jetons numérotés 1 et 2. On tire un jeton au hasard, puis on lance un dé autant de fois que le chiffre inscrit sur le jeton.
+
+Calculer la probabilité que la somme du nombre lu sur le jeton et du (ou des) nombre(s) lu(s) sur le dé soit égale à 7.
+
+\begin{correctionbox}[-- Partition selon le tirage initial \& Probabilités totales]
+Notons $J$ le chiffre porté par le jeton tiré. Puisque les jetons sont choisis au hasard de façon équiprobable :
+\[
+P(J = 1) = \frac{1}{2} \quad \text{et} \quad P(J = 2) = \frac{1}{2}
+\]
+Les deux événements $\{J = 1\}$ et $\{J = 2\}$ constituent une partition de l'univers.
+Notons $S$ la somme totale obtenue.
+\begin{enumerate}
+    \item \textbf{Cas où le jeton 1 est tiré ($J = 1$) :}
+    On effectue alors un unique lancer de dé, noté $D_1 \in \{1, \dots, 6\}$.
+    La somme totale est $S = J + D_1 = 1 + D_1$.
+    \[
+    S = 7 \iff 1 + D_1 = 7 \iff D_1 = 6
+    \]
+    La probabilité conditionnelle sachant $J = 1$ est donc :
+    \[
+    P(S = 7 \mid J = 1) = P(D_1 = 6) = \frac{1}{6}
+    \]
+
+    \item \textbf{Cas où le jeton 2 est tiré ($J = 2$) :}
+    On effectue alors deux lancers de dé, notés $D_1$ et $D_2$.
+    La somme totale est $S = J + D_1 + D_2 = 2 + D_1 + D_2$.
+    \[
+    S = 7 \iff 2 + D_1 + D_2 = 7 \iff D_1 + D_2 = 5
+    \]
+    Les couples $(D_1, D_2) \in [\![1, 6]\!]^2$ dont la somme vaut $5$ sont :
+    \[
+    (1, 4), \; (2, 3), \; (3, 2), \; (4, 1)
+    \]
+    Il y a $4$ couples favorables parmi les $36$ couples possibles. La probabilité conditionnelle sachant $J = 2$ est donc :
+    \[
+    P(S = 7 \mid J = 2) = \frac{4}{36} = \frac{1}{9}
+    \]
+\end{enumerate}
+D'après la formule des probabilités totales :
+\[
+P(S = 7) = P(J = 1) \times P(S = 7 \mid J = 1) + P(J = 2) \times P(S = 7 \mid J = 2)
+\]
+\[
+P(S = 7) = \frac{1}{2} \times \frac{1}{6} + \frac{1}{2} \times \frac{1}{9} = \frac{1}{12} + \frac{1}{18} = \frac{3 + 2}{36} = \mathbf{\frac{5}{36}} \approx 0{,}1389
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 11
+% ----------------------------------------------------
+\subsection*{Exercice 11 -- Paradoxe des deux enfants de M. Smith}
+
+M. Smith a deux enfants. On sonne à la porte de M. Smith. Un des deux enfants ouvre.
+Calculer la probabilité que M. Smith ait deux garçons en fonction de la salutation de l'enfant :
+\begin{enumerate}[label=\arabic*.]
+    \item \og Bonjour, je suis un garçon et je suis l'aîné. \fg{}
+    \item \og Bonjour, je suis un garçon. \fg{}
+\end{enumerate}
+
+\begin{correctionbox}[-- Analyse du protocole d'information \& Conditionnement]
+L'univers des fratries ordonnées par âge (aîné, cadet) est :
+\[
+\Omega = \{ (G, G), \; (G, F), \; (F, G), \; (F, F) \}
+\]
+Chaque configuration a une probabilité \emph{a priori} de $1/4$.
+
+\textbf{1. Salutation 1 : \og Je suis un garçon et je suis l'aîné \fg{} :}
+L'information transmise spécifie explicitement que l'aîné est un garçon.
+L'événement conditionnant est donc :
+\[
+B_1 = \{ (G, G), \; (G, F) \} \implies P(B_1) = \frac{2}{4} = \frac{1}{2}
+\]
+L'événement dont on cherche la probabilité est $A = \{(G, G)\}$. Puisque $A \cap B_1 = A$ :
+\[
+P(A \mid B_1) = \frac{P(A \cap B_1)}{P(B_1)} = \frac{1/4}{1/2} = \mathbf{\frac{1}{2}}
+\]
+
+\textbf{2. Salutation 2 : \og Je suis un garçon \fg{} :}
+Ce cas dépend crucialement du \emph{protocole d'observation} :
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Modélisation physique rigoureuse (ouverture aléatoire de la porte) :}
+    L'un des deux enfants vient ouvrir la porte avec probabilité $1/2$ pour chacun.
+    Notons $O_G$ l'événement : \og l'enfant qui ouvre est un garçon \fg{}.
+    \begin{itemize}
+        \item Si la fratrie est $(G, G)$ : les deux sont des garçons, donc $P(O_G \mid GG) = 1$.
+        \item Si la fratrie est $(G, F)$ : seul l'un est garçon, donc $P(O_G \mid GF) = 1/2$.
+        \item Si la fratrie est $(F, G)$ : de même, $P(O_G \mid FG) = 1/2$.
+        \item Si la fratrie est $(F, F)$ : aucun garçon, donc $P(O_G \mid FF) = 0$.
+    \end{itemize}
+    Par la formule des probabilités totales :
+    \[
+    P(O_G) = \frac{1}{4}(1) + \frac{1}{4}\left(\frac{1}{2}\right) + \frac{1}{4}\left(\frac{1}{2}\right) + \frac{1}{4}(0) = \frac{1}{4} + \frac{1}{8} + \frac{1}{8} = \frac{1}{2}
+    \]
+    Par la formule de Bayes :
+    \[
+    P(GG \mid O_G) = \frac{P(GG \cap O_G)}{P(O_G)} = \frac{P(GG) P(O_G \mid GG)}{P(O_G)} = \frac{\frac{1}{4} \times 1}{\frac{1}{2}} = \mathbf{\frac{1}{2}}
+    \]
+    \item \textbf{Interprétation textuelle classique (conditionnement pur par \og au moins un garçon \fg{}) :}
+    Si l'énoncé est interprété comme la simple révélation de l'événement $C = \text{\og la famille compte au moins un garçon \fg{}} = \{(G, G), (G, F), (F, G)\}$, alors :
+    \[
+    P(GG \mid C) = \frac{P(GG)}{P(C)} = \frac{1/4}{3/4} = \mathbf{\frac{1}{3}}
+    \]
+\end{itemize}
+Dans le cadre de l'épreuve où un enfant réel s'est présenté à la porte, la réponse physique exacte est $\mathbf{1/2}$.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 12
+% ----------------------------------------------------
+\subsection*{Exercice 12 -- Paradoxe de Monty Hall (Le jeu des trois boîtes)}
+
+Dans un jeu télévisé, $1$ boîte est gagnante et $2$ sont perdantes. Vous pointez au hasard une boîte et le présentateur retire parmi les deux boîtes restantes une boîte perdante. Il reste donc deux boîtes. Il vous faut alors choisir une de ces deux boîtes.
+\begin{enumerate}[label=\arabic*.]
+    \item Justifier que parmi les deux boîtes restantes, il y en a une gagnante et l'autre perdante.
+    \item Le présentateur vous dit qu'au départ vous aviez 1 chance sur 3 de gagner mais que maintenant grâce à lui vous avez une chance sur deux de gagner. Saurez-vous le démentir ?
+\end{enumerate}
+
+\begin{correctionbox}[-- Analyse bayésienne de Monty Hall]
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Justification de la composition des boîtes restantes :}
+    Sur les trois boîtes initiales, il y a exactement une boîte gagnante ($G$) et deux boîtes perdantes ($P_1, P_2$).
+    Deux cas mutuellement exclusifs se présentent lors de votre choix initial :
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Cas 1 :} Vous avez pointé la boîte gagnante $G$. Les deux boîtes restantes sont alors les deux boîtes perdantes $P_1$ et $P_2$. Le présentateur élimine l'une d'elles. La boîte restante non choisie est donc une perdante, et votre boîte est la gagnante. L'ensemble des deux boîtes finales contient bien 1 gagnante et 1 perdante.
+        \item \emph{Cas 2 :} Vous avez pointé une boîte perdante (par exemple $P_1$). Les deux boîtes restantes sont alors $G$ et $P_2$. Le présentateur est obligé d'éliminer la boîte perdante $P_2$. La boîte restante non choisie est donc obligatoirement la boîte gagnante $G$. L'ensemble des deux boîtes finales contient encore exactement 1 gagnante et 1 perdante.
+    \end{itemize}
+    Dans tous les cas de figure, parmi les deux boîtes restantes, il y a nécessairement une gagnante et une perdante.
+
+    \item \textbf{Réfutation de l'affirmation du présentateur :}
+    L'affirmation du présentateur est \textbf{fausse}. Il commet l'erreur de considérer que les deux boîtes finales sont équiprobables, ce qui n'est pas le cas car son action n'est pas aléatoire : il sait où se trouve le lot et élimine délibérément une perdante.
+    Calculons la probabilité de gain selon la stratégie adoptée :
+    \begin{itemize}[label=$\bullet$]
+        \item \textbf{Stratégie \og Garder son choix initial \fg{} :}
+        Vous gagnez si et seulement si votre choix initial était la boîte gagnante :
+        \[
+        P(\text{Gain en gardant}) = \mathbf{\frac{1}{3}}
+        \]
+        \item \textbf{Stratégie \og Changer de boîte \fg{} :}
+        D'après l'analyse de la question 1, si vous avez initialement choisi une boîte perdante (ce qui arrive avec probabilité $2/3$), le présentateur est forcé de dévoiler l'autre perdante, ce qui laisse la boîte gagnante comme seule alternative. En changeant, vous gagnez donc à coup sûr dès que votre premier choix était faux :
+        \[
+        P(\text{Gain en changeant}) = P(\text{Premier choix perdant}) = 1 - \frac{1}{3} = \mathbf{\frac{2}{3}}
+        \]
+    \end{itemize}
+    \textbf{Conclusion :} Changer de boîte \textbf{double} vos chances de gagner (passant de $1/3$ à $2/3$). La probabilité n'est absolument pas de $1/2$ !
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 13
+% ----------------------------------------------------
+\subsection*{Exercice 13 -- Optimisation de la mixité d'un tirage}
+
+Soit $n \in \N^*$. Une population est composée de $(n+1)$ individus mâles et $(n-1)$ individus femelles. On choisit deux individus au hasard.
+Déterminer $n$ afin que la probabilité d'obtenir deux individus de sexes différents soit maximale.
+
+\begin{correctionbox}[-- Modélisation combinatoire \& Étude de fonction discrète]
+La population totale compte $(n+1) + (n-1) = 2n$ individus.
+On effectue un tirage simultané de deux individus sans remise parmi les $2n$.
+Le nombre total de tirages possibles est :
+\[
+\operatorname{Card}(\Omega) = \binom{2n}{2} = \frac{2n(2n-1)}{2} = n(2n-1)
+\]
+L'événement \og obtenir deux individus de sexes différents \fg{} correspond au choix d'un mâle parmi les $n+1$ et d'une femelle parmi les $n-1$.
+Le nombre d'issues favorables est donc :
+\[
+\binom{n+1}{1} \times \binom{n-1}{1} = (n+1)(n-1) = n^2 - 1
+\]
+La probabilité de cet événement est donc donnée par la suite :
+\[
+P(n) = \frac{n^2 - 1}{n(2n-1)} = \frac{n^2 - 1}{2n^2 - n}
+\]
+Pour trouver le maximum de $P(n)$ sur $\N^*$, étudions la fonction réelle sous-jacente $f$ définie sur $[1, +\infty[$ par :
+\[
+f(x) = \frac{x^2 - 1}{2x^2 - x}
+\]
+La fonction $f$ est dérivable sur $[1, +\infty[$. Calculons sa dérivée :
+\[
+f'(x) = \frac{2x(2x^2 - x) - (x^2 - 1)(4x - 1)}{(2x^2 - x)^2}
+\]
+Développons le numérateur :
+\[
+(4x^3 - 2x^2) - (4x^3 - x^2 - 4x + 1) = 4x^3 - 2x^2 - 4x^3 + x^2 + 4x - 1 = -x^2 + 4x - 1
+\]
+D'où :
+\[
+f'(x) = \frac{-x^2 + 4x - 1}{(2x^2 - x)^2}
+\]
+Les zéros du trinôme $-x^2 + 4x - 1$ s'obtiennent par le discriminant $\Delta = 16 - 4 = 12 = (2\sqrt{3})^2$ :
+\[
+x_1 = \frac{-4 + 2\sqrt{3}}{-2} = 2 - \sqrt{3} \approx 0{,}268 \notin [1, +\infty[
+\]
+\[
+x_2 = \frac{-4 - 2\sqrt{3}}{-2} = 2 + \sqrt{3} \approx 3{,}732
+\]
+Sur $[1, 2+\sqrt{3}]$, $f'(x) \ge 0$ ($f$ est croissante), et sur $[2+\sqrt{3}, +\infty[$, $f'(x) \le 0$ ($f$ est décroissante).
+Le maximum réel est atteint en $x_0 = 2+\sqrt{3} \approx 3{,}732$.
+L'entier optimal $n \in \N^*$ est donc soit $n = 3$, soit $n = 4$. Évaluons $P(n)$ pour ces valeurs :
+\begin{itemize}[label=$\bullet$]
+    \item Pour $n = 2$ : $P(2) = \frac{2^2 - 1}{2(4-1)} = \frac{3}{6} = 0{,}5000$.
+    \item Pour $n = 3$ : $P(3) = \frac{3^2 - 1}{3(6-1)} = \frac{8}{15} \approx 0{,}5333$.
+    \item Pour $n = 4$ : $P(4) = \frac{4^2 - 1}{4(8-1)} = \frac{15}{28} \approx \mathbf{0{,}5357}$.
+    \item Pour $n = 5$ : $P(5) = \frac{5^2 - 1}{5(10-1)} = \frac{24}{45} = \frac{8}{15} \approx 0{,}5333$.
+\end{itemize}
+Comme $\frac{15}{28} > \frac{8}{15}$ ($15 \times 15 = 225 > 28 \times 8 = 224$), la probabilité maximale absolue est atteinte pour :
+\[
+\mathbf{n = 4}
+\]
+La population comprend alors $5$ mâles et $3$ femelles (total 8 individus).
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 14
+% ----------------------------------------------------
+\subsection*{Exercice 14 -- Le paradoxe des anniversaires}
+
+Calculer la probabilité de l'événement $A$ : \og dans un groupe de 10 personnes, au moins deux sont nées le même jour \fg{}. On considérera qu'une année compte 365 jours et qu'il y a équiprobabilité des jours de naissance.
+
+\begin{correctionbox}[-- Probabilités d'injections \& Phénomène de seuil]
+Chaque personne du groupe a sa date d'anniversaire parmi les $365$ jours de l'année.
+L'univers des affectations d'anniversaires aux $10$ personnes est :
+\[
+\Omega = [\![1, 365]\!]^{10}, \quad \operatorname{Card}(\Omega) = 365^{10}
+\]
+L'événement contraire $\overline{A}$ est : \og les 10 personnes ont toutes des dates d'anniversaire distinctes deux à deux \fg{}.
+Il s'agit du nombre d'arrangements de $10$ éléments choisis sans répétition parmi $365$ :
+\[
+\operatorname{Card}(\overline{A}) = A_{365}^{10} = 365 \times 364 \times 363 \times \dots \times 356
+\]
+La probabilité de l'événement contraire est donc :
+\[
+P(\overline{A}) = \frac{A_{365}^{10}}{365^{10}} = \frac{365}{365} \times \frac{364}{365} \times \frac{363}{365} \times \dots \times \frac{356}{365} = \prod_{k=0}^9 \left(1 - \frac{k}{365}\right)
+\]
+Évaluons ce produit numériquement :
+\[
+P(\overline{A}) \approx 0{,}88305
+\]
+Par suite, la probabilité qu'au moins deux personnes partagent le même jour anniversaire est :
+\[
+P(A) = 1 - P(\overline{A}) \approx 1 - 0{,}88305 = \mathbf{0{,}11695} \approx \mathbf{11{,}7\,\%}
+\]
+\end{correctionbox}
+
+\begin{remarquebox}[-- Approximation exponentielle \& Seuil critique $n \approx 23$]
+Pour $n \ll 365$, on effectue l'approximation classique au premier ordre $\ln(1 - u) \approx -u$ :
+\[
+\ln P(\overline{A}) = \sum_{k=0}^{n-1} \ln\left(1 - \frac{k}{365}\right) \approx -\sum_{k=0}^{n-1} \frac{k}{365} = -\frac{n(n-1)}{2 \times 365}
+\]
+D'où :
+\[
+P(A) \approx 1 - \exp\left(-\frac{n(n-1)}{730}\right)
+\]
+Pour $n = 10$ : $\frac{10 \times 9}{730} = \frac{90}{730} \approx 0{,}1233$, d'où $P(A) \approx 1 - \e^{-0{,}1233} \approx 11{,}6\,\%$.
+Cette formule montre que le seuil de bascule où $P(A) \ge 50\,\%$ est franchi dès $n = 23$ personnes.
+\end{remarquebox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 15
+% ----------------------------------------------------
+\subsection*{Exercice 15 -- Racines d'un trinôme aléatoire du second degré}
+
+On jette 3 fois un dé à 6 faces et on note $a$, $b$ et $c$ les résultats obtenus. On note $Q(x) = ax^2 + bx + c$.
+Déterminer la probabilité pour que :
+\begin{enumerate}[label=\arabic*.]
+    \item $Q$ ait deux racines réelles distinctes.
+    \item $Q$ ait une racine double.
+    \item $Q$ n'ait pas de racine réelle.
+\end{enumerate}
+\emph{Indication :} On pourra dresser un tableau à double entrée donnant le produit $4ac$ puis comparer à $b^2$.
+
+\begin{correctionbox}[-- Dénombrement systématique \& Discriminant stochastique]
+Le triplet $(a, b, c)$ est choisi uniformément dans $\Omega = [\![1, 6]\!]^3$. Le nombre total d'issues est :
+\[
+\operatorname{Card}(\Omega) = 6^3 = 216
+\]
+Le nombre de racines réelles du trinôme $Q(x) = ax^2 + bx + c$ dépend exclusivement du signe de son discriminant :
+\[
+\Delta = b^2 - 4ac
+\]
+Puisque $b \in \{1, 2, 3, 4, 5, 6\}$, la quantité $b^2$ prend ses valeurs dans l'ensemble :
+\[
+\{1, 4, 9, 16, 25, 36\}
+\]
+Dressons le tableau des $36$ valeurs possibles pour le produit $4ac$ selon le couple $(a, c) \in [\![1, 6]\!]^2$ :
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    $4ac$ & $c = 1$ & $c = 2$ & $c = 3$ & $c = 4$ & $c = 5$ & $c = 6$ \\
+    \hline
+    $a = 1$ & \textbf{4} & \textbf{8} & \textbf{12} & \textbf{16} & \textbf{20} & \textbf{24} \\
+    \hline
+    $a = 2$ & \textbf{8} & \textbf{16} & \textbf{24} & \textbf{32} & \textbf{40} & \textbf{48} \\
+    \hline
+    $a = 3$ & \textbf{12} & \textbf{24} & \textbf{36} & \textbf{48} & \textbf{60} & \textbf{72} \\
+    \hline
+    $a = 4$ & \textbf{16} & \textbf{32} & \textbf{48} & \textbf{64} & \textbf{80} & \textbf{96} \\
+    \hline
+    $a = 5$ & \textbf{20} & \textbf{40} & \textbf{60} & \textbf{80} & \textbf{100} & \textbf{120} \\
+    \hline
+    $a = 6$ & \textbf{24} & \textbf{48} & \textbf{72} & \textbf{96} & \textbf{120} & \textbf{144} \\
+    \hline
+\end{tabular}
+\end{center}
+
+Pour chaque valeur de $b \in [\![1, 6]\!]$, dénombrons les couples $(a, c)$ satisfaisant $4ac < b^2$, $4ac = b^2$ et $4ac > b^2$ :
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Si $b = 1$} ($b^2 = 1$) : Le minimum de $4ac$ étant $4$, on a toujours $4ac > 1$.
+    \begin{itemize}
+        \item $4ac < 1$ : $0$ cas.
+        \item $4ac = 1$ : $0$ cas.
+        \item $4ac > 1$ : $36$ cas.
+    \end{itemize}
+    \item \textbf{Si $b = 2$} ($b^2 = 4$) :
+    \begin{itemize}
+        \item $4ac < 4$ : $0$ cas.
+        \item $4ac = 4$ : $1$ cas, pour $(a, c) = (1, 1)$.
+        \item $4ac > 4$ : $36 - 1 = 35$ cas.
+    \end{itemize}
+    \item \textbf{Si $b = 3$} ($b^2 = 9$) :
+    \begin{itemize}
+        \item $4ac < 9$ : correspond à $4ac \in \{4, 8\}$, soit $(1, 1), (1, 2), (2, 1)$ : $\mathbf{3}$ cas.
+        \item $4ac = 9$ : $0$ cas ($4ac$ est pair).
+        \item $4ac > 9$ : $36 - 3 = 33$ cas.
+    \end{itemize}
+    \item \textbf{Si $b = 4$} ($b^2 = 16$) :
+    \begin{itemize}
+        \item $4ac < 16$ : correspond à $4ac \in \{4, 8, 12\}$, soit $(1, 1), (1, 2), (2, 1), (1, 3), (3, 1)$ : $\mathbf{5}$ cas.
+        \item $4ac = 16$ : $(1, 4), (2, 2), (4, 1)$ : $\mathbf{3}$ cas.
+        \item $4ac > 16$ : $36 - (5 + 3) = 28$ cas.
+    \end{itemize}
+    \item \textbf{Si $b = 5$} ($b^2 = 25$) :
+    \begin{itemize}
+        \item $4ac < 25$ : correspond à $4ac \in \{4, 8, 12, 16, 20, 24\}$, soit :
+        $(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6)$ (6 cas) ; $(2, 1), (2, 2), (2, 3)$ (3 cas) ; $(3, 1), (3, 2)$ (2 cas) ; $(4, 1)$ (1 cas) ; $(5, 1)$ (1 cas) ; $(6, 1)$ (1 cas). Total = $6 + 3 + 2 + 1 + 1 + 1 = \mathbf{14}$ cas.
+        \item $4ac = 25$ : $0$ cas.
+        \item $4ac > 25$ : $36 - 14 = 22$ cas.
+    \end{itemize}
+    \item \textbf{Si $b = 6$} ($b^2 = 36$) :
+    \begin{itemize}
+        \item $4ac < 36$ : en ajoutant à la liste précédente les couples donnant $4ac = 28$ (aucun), $4ac = 32$ ($(2, 4), (4, 2)$) : $14 + 2 = \mathbf{16}$ cas.
+        \item $4ac = 36$ : $(a, c) = (1, 9)$ (impossible sur un dé) et $(3, 3)$ : $\mathbf{1}$ cas.
+        \item $4ac > 36$ : $36 - (16 + 1) = 19$ cas.
+    \end{itemize}
+\end{itemize}
+
+Récapitulons par sommation sur l'ensemble des 6 valeurs de $b$ :
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Deux racines réelles distinctes ($\Delta > 0 \iff 4ac < b^2$) :}
+    \[
+    N(\Delta > 0) = 0 + 0 + 3 + 5 + 14 + 16 = \mathbf{38} \text{ cas}
+    \]
+    \[
+    P(\Delta > 0) = \frac{38}{216} = \mathbf{\frac{19}{108}} \approx 0{,}1759
+    \]
+
+    \item \textbf{Une racine double ($\Delta = 0 \iff 4ac = b^2$) :}
+    \[
+    N(\Delta = 0) = 0 + 1 + 0 + 3 + 0 + 1 = \mathbf{5} \text{ cas}
+    \]
+    \[
+    P(\Delta = 0) = \mathbf{\frac{5}{216}} \approx 0{,}0231
+    \]
+
+    \item \textbf{Aucune racine réelle ($\Delta < 0 \iff 4ac > b^2$) :}
+    \[
+    N(\Delta < 0) = 36 + 35 + 33 + 28 + 22 + 19 = \mathbf{173} \text{ cas}
+    \]
+    \[
+    P(\Delta < 0) = \mathbf{\frac{173}{216}} \approx 0{,}8009
+    \]
+\end{enumerate}
+\emph{Vérification de cohérence :} $38 + 5 + 173 = 216$. Le dénombrement est rigoureusement exhaustif.
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Probabilités Conditionnelles, Formule de Bayes \& Marches Aléatoires}
+
+% ----------------------------------------------------
+% Exercice 16
+% ----------------------------------------------------
+\subsection*{Exercice 16 -- Équipements de transport \& Conditionnement simple}
+
+Dans une population, $40\,\%$ des individus possèdent une voiture, $25\,\%$ possèdent une moto et $15\,\%$ possèdent les deux moyens de transport.
+On choisit un individu au hasard.
+\begin{enumerate}[label=\arabic*.]
+    \item Calculer la probabilité qu'il possède une moto sachant qu'il a une voiture.
+    \item Calculer la probabilité qu'il possède une voiture sachant qu'il a une moto.
+    \item Calculer la probabilité de ne pas avoir de voiture si on a une moto.
+\end{enumerate}
+
+\begin{correctionbox}[-- Application directe de la définition conditionnelle]
+Notons $V$ l'événement \og l'individu a une voiture \fg{} et $M$ l'événement \og l'individu a une moto \fg{}.
+Les données de l'énoncé s'écrivent :
+\[
+P(V) = 0{,}40, \quad P(M) = 0{,}25, \quad P(V \cap M) = 0{,}15
+\]
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Probabilité d'avoir une moto sachant qu'on a une voiture ($P_V(M)$) :}
+    \[
+    P_V(M) = \frac{P(V \cap M)}{P(V)} = \frac{0{,}15}{0{,}40} = \frac{15}{40} = \mathbf{\frac{3}{8}} = \mathbf{0{,}375} \quad (37{,}5\,\%)
+    \]
+    Parmi les automobilistes, $37{,}5\,\%$ possèdent également une moto.
+
+    \item \textbf{Probabilité d'avoir une voiture sachant qu'on a une moto ($P_M(V)$) :}
+    \[
+    P_M(V) = \frac{P(M \cap V)}{P(M)} = \frac{0{,}15}{0{,}25} = \frac{15}{25} = \mathbf{\frac{3}{5}} = \mathbf{0{,}60} \quad (60\,\%)
+    \]
+    Parmi les motards, $60\,\%$ possèdent également une voiture.
+
+    \item \textbf{Probabilité de ne pas avoir de voiture sachant qu'on a une moto ($P_M(\overline{V})$) :}
+    Par la propriété de l'événement contraire pour une probabilité conditionnelle :
+    \[
+    P_M(\overline{V}) = 1 - P_M(V) = 1 - 0{,}60 = \mathbf{0{,}40} \quad (40\,\%)
+    \]
+    \emph{Vérification directe :} $P_M(\overline{V}) = \frac{P(M \cap \overline{V})}{P(M)} = \frac{P(M) - P(M \cap V)}{P(M)} = \frac{0{,}25 - 0{,}15}{0{,}25} = \frac{0{,}10}{0{,}25} = 0{,}40$.
+\end{enumerate}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 17
+% ----------------------------------------------------
+\subsection*{Exercice 17 -- Dépistage d'un virus \& Paradoxe des faux positifs}
+
+Dans une population, il y a $5\,\%$ de personnes infectées ($I$) par un méchant virus. On met au point un test de dépistage qui, lorsqu'on est infecté, est positif ($T$) dans $80\,\%$ des cas, et lorsqu'on n'est pas infecté, est négatif ($\overline{T}$) dans $90\,\%$ des cas. On choisit au hasard une personne dans la population.
+\begin{enumerate}[label=\arabic*.]
+    \item Calculer la probabilité d'être infecté et testé positif.
+    \item Calculer la probabilité d'être positif.
+    \item Calculer, au millième près, la probabilité d'être infecté si on est déclaré positif. Commentez.
+\end{enumerate}
+
+\begin{correctionbox}[-- Arbre pondéré, probabilités totales \& Inversion bayésienne]
+Traduisons les données probabilistes :
+\begin{itemize}[label=$\bullet$]
+    \item Prévalence : $P(I) = 0{,}05 \implies P(\overline{I}) = 1 - 0{,}05 = 0{,}95$.
+    \item Sensibilité : $P_I(T) = 0{,}80 \implies P_I(\overline{T}) = 1 - 0{,}80 = 0{,}20$.
+    \item Spécificité : $P_{\overline{I}}(\overline{T}) = 0{,}90 \implies P_{\overline{I}}(T) = 1 - 0{,}90 = 0{,}10$.
+\end{itemize}
+
+\textbf{1. Probabilité d'être infecté et testé positif ($P(I \cap T)$) :}
+D'après la formule des probabilités composées :
+\[
+P(I \cap T) = P(I) \times P_I(T) = 0{,}05 \times 0{,}80 = \mathbf{0{,}040} \quad (4\,\%)
+\]
+
+\textbf{2. Probabilité d'être testé positif ($P(T)$) :}
+Les événements $I$ et $\overline{I}$ formant un système complet d'événements, appliquons la formule des probabilités totales :
+\[
+P(T) = P(I \cap T) + P(\overline{I} \cap T) = P(I) \times P_I(T) + P(\overline{I}) \times P_{\overline{I}}(T)
+\]
+\[
+P(T) = 0{,}040 + 0{,}95 \times 0{,}10 = 0{,}040 + 0{,}095 = \mathbf{0{,}135} \quad (13{,}5\,\%)
+\]
+
+\textbf{3. Probabilité d'être infecté sachant le test positif ($P_T(I)$) :}
+D'après la formule de Bayes :
+\[
+P_T(I) = \frac{P(I \cap T)}{P(T)} = \frac{0{,}040}{0{,}135} = \frac{40}{135} = \frac{8}{27} \approx 0{,}29629\dots
+\]
+Au millième près :
+\[
+\mathbf{P_T(I) \approx 0{,}296} \quad (29{,}6\,\%)
+\]
+
+\textbf{Commentaire approfondi (Le paradoxe des faux positifs) :}
+Ce résultat semble contre-intuitif au premier abord : bien que le test présente des caractéristiques techniques apparemment très honorables ($80\,\%$ de sensibilité et $90\,\%$ de spécificité), une personne testée positive a \textbf{moins d'une chance sur trois d'être réellement malade ($29{,}6\,\%$)} ! Plus de $70\,\%$ des personnes positives sont de faux positifs.
+\emph{Explication mathématique :} La maladie étant rare dans la population générale ($5\,\%$), les $10\,\%$ de faux positifs générés au sein des $95\,\%$ de personnes saines représentent en valeur absolue $0{,}095$ de la population, ce qui écrase largement les $0{,}040$ de vrais positifs issus des personnes malades.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 18
+% ----------------------------------------------------
+\subsection*{Exercice 18 -- Fiabilité d'une prédiction échographique}
+
+À l'échographie, on se trompe 1 fois sur 10 si c'est un garçon et 1 fois sur 20 si c'est une fille. On prédit à un couple la naissance d'une fille.
+Calculer la probabilité pour que cela soit vrai.
+
+\begin{correctionbox}[-- Probabilité d'une hypothèse sachant un signal]
+Définissons précisément les événements :
+\begin{itemize}[label=$\bullet$]
+    \item $G$ : \og l'enfant est un garçon \fg{}, avec $P(G) = 1/2$.
+    \item $F$ : \og l'enfant est une fille \fg{}, avec $P(F) = 1/2$.
+    \item $\Pi_F$ : \og l'échographiste prédit une fille \fg{}.
+\end{itemize}
+L'énoncé stipule que le praticien se trompe :
+\begin{itemize}[label=$\bullet$]
+    \item 1 fois sur 10 si c'est un garçon : $P_G(\Pi_F) = \frac{1}{10}$ (l'enfant est un garçon mais on prédit une fille).
+    \item 1 fois sur 20 si c'est une fille : $P_F(\Pi_G) = \frac{1}{20} \implies P_F(\Pi_F) = 1 - \frac{1}{20} = \frac{19}{20}$ (l'enfant est une fille et la prédiction est correcte).
+\end{itemize}
+
+Calculons la probabilité globale d'obtenir une prédiction \og fille \fg{} par la formule des probabilités totales avec la partition $\{F, G\}$ :
+\[
+P(\Pi_F) = P(F \cap \Pi_F) + P(G \cap \Pi_F) = P(F) \times P_F(\Pi_F) + P(G) \times P_G(\Pi_F)
+\]
+\[
+P(\Pi_F) = \frac{1}{2} \times \frac{19}{20} + \frac{1}{2} \times \frac{1}{10} = \frac{19}{40} + \frac{2}{40} = \frac{21}{40}
+\]
+La probabilité que la prédiction soit vraie est la probabilité que l'enfant soit effectivement une fille sachant que l'échographie a annoncé une fille :
+\[
+P_{\Pi_F}(F) = \frac{P(F \cap \Pi_F)}{P(\Pi_F)} = \frac{\frac{19}{40}}{\frac{21}{40}} = \mathbf{\frac{19}{21}} \approx \mathbf{0{,}9048} \quad (90{,}5\,\%)
+\]
+Il y a donc environ $90{,}5\,\%$ de chances que l'enfant attendu soit effectivement une fille.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 19
+% ----------------------------------------------------
+\subsection*{Exercice 19 -- Chaîne de Markov \& Comportement asymptotique d'un pingouin}
+
+Un pingouin dans un zoo a le choix entre un toboggan ou un sautoir pour aller se baigner. Pour la première baignade, le choix est équiprobable.
+Par la suite, lorsqu'il a choisi le toboggan, il reprend le toboggan $7$ fois sur $10$ lors de la baignade suivante.
+Lorsqu'il a choisi le sautoir, il prend le toboggan $6$ fois sur $10$ lors de la baignade suivante.
+
+Pour $n \in \N^*$, on note $T_n$ l'événement \og le pingouin choisit le toboggan lors de sa $n$\textsuperscript{ème} baignade \fg{} et on pose $p_n = P(T_n)$.
+\begin{enumerate}[label=\arabic*.]
+    \item Justifier que $p_{n+1} = 0{,}1 p_n + 0{,}6$.
+    \item Soit la suite $(v_n)_{n \in \N^*}$ définie par $v_n = p_n - \dfrac{2}{3}$.
+    \begin{enumerate}
+        \item Montrer que $(v_n)$ est une suite géométrique dont on précisera la raison et le premier terme.
+        \item En déduire l'expression de $p_n$ en fonction de $n$.
+    \end{enumerate}
+    \item Après de très nombreuses baignades, que dire de la probabilité que le pingouin prenne le toboggan ?
+\end{enumerate}
+
+\begin{correctionbox}[-- Suite arithmético-géométrique \& Mesure stationnaire]
+\textbf{1. Établissement de la relation de récurrence :}
+À la $n$\textsuperscript{ème} baignade, les événements $T_n$ (\og toboggan \fg{}) et $\overline{T_n}$ (\og sautoir \fg{}) forment un système complet d'événements.
+Les probabilités de transition fournies par le texte s'écrivent :
+\[
+P_{T_n}(T_{n+1}) = \frac{7}{10} = 0{,}7 \quad \text{et} \quad P_{\overline{T_n}}(T_{n+1}) = \frac{6}{10} = 0{,}6
+\]
+D'après la formule des probabilités totales :
+\[
+p_{n+1} = P(T_{n+1}) = P(T_n \cap T_{n+1}) + P(\overline{T_n} \cap T_{n+1}) = P(T_n) P_{T_n}(T_{n+1}) + P(\overline{T_n}) P_{\overline{T_n}}(T_{n+1})
+\]
+Comme $P(T_n) = p_n$ et $P(\overline{T_n}) = 1 - p_n$ :
+\[
+p_{n+1} = 0{,}7 p_n + 0{,}6 (1 - p_n) = 0{,}7 p_n + 0{,}6 - 0{,}6 p_n = \mathbf{0{,}1 p_n + 0{,}6}
+\]
+
+\textbf{2. (a) Nature géométrique de la suite $(v_n)$ :}
+Pour tout $n \in \N^*$, exprimons $v_{n+1}$ en fonction de $v_n$ :
+\[
+v_{n+1} = p_{n+1} - \frac{2}{3} = (0{,}1 p_n + 0{,}6) - \frac{2}{3}
+\]
+En remplaçant $p_n = v_n + \frac{2}{3}$ :
+\[
+v_{n+1} = 0{,}1 \left(v_n + \frac{2}{3}\right) + \frac{3}{5} - \frac{2}{3} = 0{,}1 v_n + \frac{1}{15} + \frac{3}{5} - \frac{2}{3}
+\]
+Réduisons la constante au même dénominateur $15$ :
+\[
+\frac{1}{15} + \frac{9}{15} - \frac{10}{15} = \frac{1 + 9 - 10}{15} = 0
+\]
+D'où, pour tout $n \ge 1$ :
+\[
+\mathbf{v_{n+1} = 0{,}1 v_n}
+\]
+$(v_n)$ est donc une \textbf{suite géométrique de raison $q = 0{,}1 = \dfrac{1}{10}$}.
+Son premier terme est :
+\[
+v_1 = p_1 - \frac{2}{3} = \frac{1}{2} - \frac{2}{3} = \frac{3 - 4}{6} = \mathbf{-\frac{1}{6}}
+\]
+
+\textbf{2. (b) Formule explicite de $p_n$ en fonction de $n$ :}
+Par propriété des suites géométriques :
+\[
+\forall n \in \N^*, \quad v_n = v_1 \times q^{n-1} = -\frac{1}{6} \times (0{,}1)^{n-1}
+\]
+Puisque $p_n = v_n + \frac{2}{3}$, on en déduit :
+\[
+\mathbf{p_n = -\frac{1}{6} (0{,}1)^{n-1} + \frac{2}{3}}
+\]
+
+\textbf{3. Comportement asymptotique ($n \to +\infty$) :}
+Puisque la raison $q = 0{,}1$ vérifie $|q| < 1$, on a :
+\[
+\lim_{n \to +\infty} (0{,}1)^{n-1} = 0
+\]
+On en conclut immédiatement que :
+\[
+\mathbf{\lim_{n \to +\infty} p_n = \frac{2}{3}}
+\]
+Après un très grand nombre de baignades, la probabilité que le pingouin prenne le toboggan se stabilise autour de $\mathbf{2/3}$ (environ $66{,}7\,\%$, et $33{,}3\,\%$ pour le sautoir), indépendamment de son choix initial lors de la toute première baignade.
+\end{correctionbox}
+
+\begin{remarquebox}[-- Regard MPSI : Matrice de transition stochastique \& État stationnaire]
+Le système dynamique modélise une chaîne de Markov homogène à deux états $\{T, S\}$.
+Sa matrice de transition stochastique est :
+\[
+M = \begin{pmatrix} 0{,}7 & 0{,}3 \\ 0{,}6 & 0{,}4 \end{pmatrix}
+\]
+Le vecteur ligne de probabilités vérifie la relation matricielle $\Pi_{n+1} = \Pi_n M$.
+L'état stationnaire (mesure invariante) $\Pi_\infty = (\pi_T, \pi_S)$ satisfait $\Pi_\infty M = \Pi_\infty$ avec $\pi_T + \pi_S = 1$.
+Le système linéaire associé :
+\[
+\begin{cases} 0{,}7 \pi_T + 0{,}6 \pi_S = \pi_T \\ \pi_T + \pi_S = 1 \end{cases} \iff 0{,}6 \pi_S = 0{,}3 \pi_T \iff \pi_T = 2\pi_S
+\]
+Avec $\pi_T + \pi_S = 1$, on retrouve instantanément $\pi_T = 2/3$ et $\pi_S = 1/3$.
+\end{remarquebox}
+
+\vspace{0.4cm}
+
+\section{Variables Aléatoires, Espérance, Variance \& Optimisation}
+
+% ----------------------------------------------------
+% Exercice 20
+% ----------------------------------------------------
+\subsection*{Exercice 20 -- Loi de la somme de deux dés cubiques équilibrés}
+
+Donner la loi de probabilité de la somme des chiffres d'un lancer de deux dés cubiques équilibrés à 6 faces.
+
+\begin{correctionbox}[-- Univers image \& Convolution discrète]
+Soit $D_1$ et $D_2$ les variables aléatoires indépendantes correspondant aux chiffres obtenus sur chacun des deux dés.
+Pour tout $k \in [\![1, 6]\!]$, $P(D_1 = k) = P(D_2 = k) = 1/6$.
+La somme $S = D_1 + D_2$ prend ses valeurs dans l'univers image :
+\[
+S(\Omega) = [\![2, 12]\!] = \{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}
+\]
+Le nombre total d'issues pour le couple $(D_1, D_2)$ est $6 \times 6 = 36$, toutes équiprobables.
+Pour chaque valeur $k \in [\![2, 12]\!]$, le nombre d'issues réalisant $D_1 + D_2 = k$ est donné par $6 - |k - 7|$ :
+\begin{itemize}[label=$\bullet$]
+    \item $S = 2$ : $(1, 1)$ $\implies 1$ issue, $P(S=2) = 1/36$.
+    \item $S = 3$ : $(1, 2), (2, 1)$ $\implies 2$ issues, $P(S=3) = 2/36$.
+    \item $S = 4$ : $(1, 3), (2, 2), (3, 1)$ $\implies 3$ issues, $P(S=4) = 3/36$.
+    \item $S = 5$ : $(1, 4), (2, 3), (3, 2), (4, 1)$ $\implies 4$ issues, $P(S=5) = 4/36$.
+    \item $S = 6$ : $(1, 5), (2, 4), (3, 3), (4, 2), (5, 1)$ $\implies 5$ issues, $P(S=6) = 5/36$.
+    \item $S = 7$ : $(1, 6), (2, 5), (3, 4), (4, 3), (5, 2), (6, 1)$ $\implies 6$ issues, $P(S=7) = 6/36$.
+    \item Par symétrie axiale autour de 7 :
+    $P(S=8) = 5/36, \; P(S=9) = 4/36, \; P(S=10) = 3/36, \; P(S=11) = 2/36, \; P(S=12) = 1/36$.
+\end{itemize}
+
+La loi de probabilité s'exprime sous forme de tableau :
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    $s_i$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+    \hline
+    $P(S = s_i)$ & $\frac{1}{36}$ & $\frac{2}{36}$ & $\frac{3}{36}$ & $\frac{4}{36}$ & $\frac{5}{36}$ & $\frac{6}{36}$ & $\frac{5}{36}$ & $\frac{4}{36}$ & $\frac{3}{36}$ & $\frac{2}{36}$ & $\frac{1}{36}$ \\
+    \hline
+\end{tabular}
+\end{center}
+\emph{Remarque de calcul :} Par linéarité de l'espérance, $\E(S) = \E(D_1) + \E(D_2) = 3{,}5 + 3{,}5 = 7$.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 21
+% ----------------------------------------------------
+\subsection*{Exercice 21 -- Jeu de l'urne \& Optimisation de la composition}
+
+Une urne contient une boule rouge et $n$ boules blanches ($n \ge 1$). On tire successivement et avec remise deux boules de l'urne.
+\begin{enumerate}[label=\arabic*.]
+    \item Exprimer en fonction de $n$ la probabilité des événements suivants :
+    \begin{itemize}[label=$\bullet$]
+        \item $M$ : \og Les deux boules sont de la même couleur \fg{}.
+        \item $N$ : \og Les deux boules sont de couleur différente \fg{}.
+    \end{itemize}
+    \item On considère le jeu suivant : le joueur perd $(n+1)^2$ euros si $M$ est réalisé et gagne $2(n+1)^2$ euros sinon. On appelle $X$ la variable aléatoire égale au gain algébrique du joueur.
+    \begin{enumerate}
+        \item Déterminer la loi de probabilité de $X$.
+        \item Démontrer que $\E(X) = -n^2 + 4n - 1$.
+        \item Pour quelles valeurs de $n$ le jeu est-il favorable au joueur ?
+        \item Déterminer le nombre de boules blanches afin que le jeu soit le plus favorable possible au joueur.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}[-- Espérance paramétrique \& Trinôme quadratique]
+L'urne contient au total $n + 1$ boules (1 rouge, $n$ blanches).
+Le tirage s'effectuant avec remise, les deux tirages sont indépendants et les probabilités sont invariantes :
+\[
+P(R) = \frac{1}{n+1} \quad \text{et} \quad P(B) = \frac{n}{n+1}
+\]
+\textbf{1. Probabilités de $M$ et $N$ :}
+\begin{itemize}[label=$\bullet$]
+    \item L'événement $M$ est la réunion disjointe des événements $RR$ et $BB$ :
+    \[
+    P(M) = P(RR) + P(BB) = \left(\frac{1}{n+1}\right)^2 + \left(\frac{n}{n+1}\right)^2 = \mathbf{\frac{n^2 + 1}{(n+1)^2}}
+    \]
+    \item L'événement $N$ est l'événement contraire de $M$ (ou réunion $RB \cup BR$) :
+    \[
+    P(N) = 1 - P(M) = 2 \times \frac{1}{n+1} \times \frac{n}{n+1} = \mathbf{\frac{2n}{(n+1)^2}}
+    \]
+\end{itemize}
+
+\textbf{2. (a) Loi de probabilité de $X$ :}
+La variable aléatoire $X$ prend deux valeurs : $-(n+1)^2$ (en cas de perte) et $2(n+1)^2$ (en cas de gain).
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|}
+    \hline
+    $x_i$ & $-(n+1)^2$ & $2(n+1)^2$ \\
+    \hline
+    $P(X = x_i)$ & $\dfrac{n^2 + 1}{(n+1)^2}$ & $\dfrac{2n}{(n+1)^2}$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{2. (b) Calcul de l'espérance mathématique $\E(X)$ :}
+Par définition de l'espérance :
+\[
+\E(X) = -(n+1)^2 \times \frac{n^2 + 1}{(n+1)^2} + 2(n+1)^2 \times \frac{2n}{(n+1)^2}
+\]
+Les facteurs $(n+1)^2$ se simplifient rigoureusement :
+\[
+\E(X) = -(n^2 + 1) + 2(2n) = \mathbf{-n^2 + 4n - 1}
+\]
+
+\textbf{2. (c) Valeurs de $n$ pour lesquelles le jeu est favorable :}
+Le jeu est favorable au joueur si et seulement si son espérance est strictement positive :
+\[
+\E(X) > 0 \iff -n^2 + 4n - 1 > 0
+\]
+Le discriminant du trinôme vaut $\Delta = 4^2 - 4(-1)(-1) = 16 - 4 = 12 = (2\sqrt{3})^2$.
+Les deux racines réelles sont :
+\[
+n_1 = \frac{-4 + 2\sqrt{3}}{-2} = 2 - \sqrt{3} \approx 0{,}268 \quad \text{et} \quad n_2 = \frac{-4 - 2\sqrt{3}}{-2} = 2 + \sqrt{3} \approx 3{,}732
+\]
+Le trinôme ayant son coefficient de tête négatif ($-1 < 0$), il est strictement positif pour $n \in \,]2-\sqrt{3}, 2+\sqrt{3}[$.
+Puisque $n$ est un entier naturel non nul ($n \in \N^*$), les seules valeurs entières favorables sont :
+\[
+\mathbf{n \in \{1, 2, 3\}}
+\]
+
+\textbf{2. (d) Optimisation de l'espérance :}
+Considérons la fonction trinôme $g(x) = -x^2 + 4x - 1$.
+La parabole admet pour sommet $x_0 = -\frac{b}{2a} = -\frac{4}{2(-1)} = 2$.
+Ce sommet étant un entier ($2 \in \N^*$), le gain moyen maximal est atteint très exactement pour :
+\[
+\mathbf{n = 2 \text{ boules blanches}}
+\]
+Le gain espéré maximal par partie s'élève alors à :
+\[
+\E_{\max} = g(2) = -(2)^2 + 4(2) - 1 = -4 + 8 - 1 = \mathbf{3\text{ \euro}}
+\]
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 22
+% ----------------------------------------------------
+\subsection*{Exercice 22 -- Contrôle qualité industriel \& Tarification sous garantie}
+
+Le coût de production d'un objet est de $950$ euros. Cet objet peut présenter un défaut $A$, un défaut $B$, ou bien en même temps le défaut $A$ et le défaut $B$.
+La garantie permet de faire des réparations aux frais du fabricant avec les coûts suivants :
+\begin{itemize}[label=$\bullet$]
+    \item $100$ euros pour le défaut $A$,
+    \item $150$ euros pour le défaut $B$.
+\end{itemize}
+On admet que $90\,\%$ des objets produits n'ont aucun défaut, $5\,\%$ ont (au moins) le défaut $A$, et $4\,\%$ ont les deux défauts $A$ et $B$.
+\begin{enumerate}[label=\arabic*.]
+    \item On note $X$ la variable aléatoire qui, à chaque objet choisi au hasard, associe son prix de revient, c'est-à-dire son coût de production augmenté du coût de réparation éventuel. Déterminer la loi de probabilité de $X$.
+    \item Calculer l'espérance mathématique $\E(X)$.
+    \item On admet que tous les objets produits sont vendus.
+    \begin{enumerate}
+        \item L'usine peut-elle espérer réaliser des bénéfices en vendant $960$ euros chaque objet vendu ?
+        \item L'usine veut réaliser un bénéfice moyen de $100$ euros par objet. Expliquer comment doit-on alors choisir le prix de vente de l'objet produit.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}[-- Analyse des coûts marginaux sous garantie]
+Déterminons d'abord les probabilités conjointes des défauts :
+\begin{itemize}[label=$\bullet$]
+    \item \og Aucun défaut \fg{} : $\overline{A} \cap \overline{B}$ avec $P(\overline{A} \cap \overline{B}) = 0{,}90$.
+    \item \og Deux défauts \fg{} : $A \cap B$ avec $P(A \cap B) = 0{,}04$.
+    \item \og Au moins le défaut $A$ \fg{} : $P(A) = 0{,}05$.
+    Par suite, la probabilité d'avoir uniquement le défaut $A$ (et pas le défaut $B$) est :
+    \[
+    P(A \cap \overline{B}) = P(A) - P(A \cap B) = 0{,}05 - 0{,}04 = 0{,}01
+    \]
+    \item Par partition de l'univers, la probabilité d'avoir uniquement le défaut $B$ est :
+    \[
+    P(\overline{A} \cap B) = 1 - P(\overline{A} \cap \overline{B}) - P(A \cap \overline{B}) - P(A \cap B) = 1 - 0{,}90 - 0{,}01 - 0{,}04 = 0{,}05
+    \]
+\end{itemize}
+
+\textbf{1. Loi de probabilité de $X$ :}
+Le coût de production de base est $950$ \euro{}. Évaluons $X$ selon les quatre cas :
+\begin{itemize}[label=$\bullet$]
+    \item Aucun défaut : $X = 950$ \euro{}, probabilité $0{,}90$.
+    \item Uniquement défaut $A$ : $X = 950 + 100 = 1050$ \euro{}, probabilité $0{,}01$.
+    \item Uniquement défaut $B$ : $X = 950 + 150 = 1100$ \euro{}, probabilité $0{,}05$.
+    \item Les deux défauts $A$ et $B$ : $X = 950 + 100 + 150 = 1200$ \euro{}, probabilité $0{,}04$.
+\end{itemize}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    $x_i$ & $950$ & $1050$ & $1100$ & $1200$ \\
+    \hline
+    $P(X = x_i)$ & $0{,}90$ & $0{,}01$ & $0{,}05$ & $0{,}04$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{2. Calcul de l'espérance mathématique $\E(X)$ :}
+\[
+\E(X) = 950 \times 0{,}90 + 1050 \times 0{,}01 + 1100 \times 0{,}05 + 1200 \times 0{,}04
+\]
+\[
+\E(X) = 855 + 10{,}50 + 55 + 48 = \mathbf{968{,}50\text{ \euro}}
+\]
+Le prix de revient moyen d'un objet (coût de fabrication plus provisions de garantie) est de $968{,}50$ \euro{}.
+
+\textbf{3. (a) Rentabilité à un prix de vente de $960$ \euro{} :}
+Si l'entreprise commercialise chaque objet à $V = 960$ \euro{}, le bénéfice aléatoire unitaire est $B = V - X = 960 - X$.
+Par linéarité de l'espérance :
+\[
+\E(B) = 960 - \E(X) = 960 - 968{,}50 = \mathbf{-8{,}50\text{ \euro}}
+\]
+Puisque le bénéfice moyen est strictement négatif, \textbf{l'entreprise ne peut absolument pas espérer réaliser de bénéfice}. Elle subira au contraire une perte moyenne de $8{,}50$ euros par pièce vendue.
+
+\textbf{3. (b) Fixation du prix pour un bénéfice moyen de $100$ \euro{} :}
+Pour dégager une marge bénéficiaire moyenne de $\E(B) = 100$ \euro{}, le prix de vente $V$ doit satisfaire :
+\[
+\E(B) = V - \E(X) = 100 \iff V = \E(X) + 100 = 968{,}50 + 100 = \mathbf{1068{,}50\text{ \euro}}
+\]
+L'entreprise doit donc fixer son prix de vente à \textbf{$1068{,}50$ euros} par unité.
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 23
+% ----------------------------------------------------
+\subsection*{Exercice 23 -- Distribution linéaire discrète \& Espérance inverse}
+
+Une variable aléatoire $X$ prend ses valeurs dans $[\![1, n]\!]$ et vérifie $P(X = k) = C \cdot k$ pour tout $k \in [\![1, n]\!]$, où $C$ est une constante réelle.
+\begin{enumerate}[label=\arabic*.]
+    \item Exprimer $\E(X)$ en fonction de $n$. (On utilisera la formule de la somme des carrés des $n$ premiers entiers naturels non nuls).
+    \item On pose $Y = 1/X$. Exprimer $\E(Y)$ en fonction de $n$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Sommation de puissances \& Théorème de transfert]
+\textbf{1. Détermination de la constante $C$ et de $\E(X)$ :}
+La somme des probabilités élémentaires doit valoir 1 :
+\[
+\sum_{k=1}^n P(X = k) = \sum_{k=1}^n C k = C \sum_{k=1}^n k = C \times \frac{n(n+1)}{2} = 1
+\]
+On en déduit la constante de normalisation :
+\[
+C = \frac{2}{n(n+1)}
+\]
+Calculons l'espérance $\E(X)$ :
+\[
+\E(X) = \sum_{k=1}^n k P(X = k) = \sum_{k=1}^n k (C k) = C \sum_{k=1}^n k^2
+\]
+En utilisant l'identité classique de sommation des carrés $\sum_{k=1}^n k^2 = \dfrac{n(n+1)(2n+1)}{6}$ :
+\[
+\E(X) = \frac{2}{n(n+1)} \times \frac{n(n+1)(2n+1)}{6} = \mathbf{\frac{2n + 1}{3}}
+\]
+
+\textbf{2. Calcul de l'espérance de la variable inverse $Y = 1/X$ :}
+D'après le théorème de transfert, avec $g(x) = 1/x$ :
+\[
+\E(Y) = \E\left(\frac{1}{X}\right) = \sum_{k=1}^n \frac{1}{k} P(X = k) = \sum_{k=1}^n \frac{1}{k} (C k) = \sum_{k=1}^n C
+\]
+Le terme sommé est constant et indépendant de $k$. Il y a $n$ termes dans la somme :
+\[
+\E(Y) = n \times C = n \times \frac{2}{n(n+1)} = \mathbf{\frac{2}{n + 1}}
+\]
+\end{correctionbox}
+
+\begin{remarquebox}[-- Inégalité de Cauchy-Schwarz \& Convexité de l'inverse]
+D'après l'inégalité de Cauchy-Schwarz appliquée aux variables aléatoires $\sqrt{X}$ et $1/\sqrt{X}$, ou par la stricte convexité de la fonction inverse $x \mapsto 1/x$ sur $\R_+^*$ (inégalité de Jensen) :
+\[
+\E(X) \times \E\left(\frac{1}{X}\right) \ge 1
+\]
+Ici :
+\[
+\E(X) \times \E(Y) = \frac{2n + 1}{3} \times \frac{2}{n + 1} = \frac{4n + 2}{3n + 3} = \frac{4 + \frac{2}{n}}{3 + \frac{3}{n}} > 1 \quad (\forall n \ge 2)
+\]
+Pour $n \to +\infty$, ce produit converge vers la constante $4/3 > 1$.
+\end{remarquebox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 24
+% ----------------------------------------------------
+\subsection*{Exercice 24 -- Tirage sans remise jusqu'à la carte gagnante}
+
+Parmi $n$ cartes, une seule carte est gagnante. On tire une carte au hasard parmi les $n$ cartes sans remise. On note $X$ le nombre de tirages nécessaires pour obtenir la carte gagnante.
+\begin{enumerate}[label=\arabic*.]
+    \item Donner la loi de probabilité de $X$.
+    \item Montrer que $\E(X) = \dfrac{n+1}{2}$ et que $\V(X) = \dfrac{n^2 - 1}{12}$.
+\end{enumerate}
+
+\begin{correctionbox}[-- Invariance par permutation, Espérance \& Variance uniforme]
+\textbf{1. Loi de probabilité de $X$ :}
+Le tirage se fait sans remise jusqu'à l'obtention de l'unique carte gagnante. Le nombre de tirages $X$ peut prendre n'importe quelle valeur entière entre $1$ et $n$, donc $X(\Omega) = [\![1, n]\!]$.
+
+\emph{Méthode 1 (Probabilités composées) :}
+Pour que la carte gagnante sorte exactement au $k$\textsuperscript{ème} tirage, il faut tirer $k-1$ cartes perdantes consécutives, puis tirer la carte gagnante au $k$\textsuperscript{ème} tirage :
+\[
+P(X = k) = \frac{n-1}{n} \times \frac{n-2}{n-1} \times \frac{n-3}{n-2} \times \dots \times \frac{n-(k-1)}{n-(k-2)} \times \frac{1}{n-(k-1)}
+\]
+Par télescopage multiplicatif complet de tous les numérateurs et dénominateurs intermédiaires :
+\[
+P(X = k) = \mathbf{\frac{1}{n}}
+\]
+
+\emph{Méthode 2 (Principe de symétrie combinatoire) :}
+Les $n$ cartes étant mélangées au hasard, l'unique carte gagnante a la même probabilité $1/n$ d'occuper la première, la deuxième, \dots, ou la $n$\textsuperscript{ème} position de la pile.
+La variable $X$ suit donc \textbf{la loi uniforme discrète} sur $[\![1, n]\!]$.
+
+\textbf{2. Calcul de l'espérance et de la variance :}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Espérance mathématique :}
+    \[
+    \E(X) = \sum_{k=1}^n k P(X = k) = \frac{1}{n} \sum_{k=1}^n k = \frac{1}{n} \times \frac{n(n+1)}{2} = \mathbf{\frac{n+1}{2}}
+    \]
+    \item \textbf{Moment d'ordre 2 :}
+    \[
+    \E(X^2) = \sum_{k=1}^n k^2 P(X = k) = \frac{1}{n} \sum_{k=1}^n k^2 = \frac{1}{n} \times \frac{n(n+1)(2n+1)}{6} = \frac{(n+1)(2n+1)}{6}
+    \]
+    \item \textbf{Variance par la formule de König-Huygens :}
+    \[
+    \V(X) = \E(X^2) - (\E(X))^2 = \frac{(n+1)(2n+1)}{6} - \left(\frac{n+1}{2}\right)^2
+    \]
+    Mettons $(n+1)$ en facteur :
+    \[
+    \V(X) = (n+1) \left[ \frac{2n+1}{6} - \frac{n+1}{4} \right] = (n+1) \left[ \frac{2(2n+1) - 3(n+1)}{12} \right]
+    \]
+    \[
+    \V(X) = (n+1) \left[ \frac{4n + 2 - 3n - 3}{12} \right] = (n+1) \times \frac{n - 1}{12} = \mathbf{\frac{n^2 - 1}{12}}
+    \]
+\end{itemize}
+\end{correctionbox}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 25
+% ----------------------------------------------------
+\subsection*{Exercice 25 -- Gestion de stock : Flotte de véhicules de location}
+
+Un garagiste dispose de deux voitures de location. Chacune est utilisable en moyenne $4$ jours sur $5$, de façon indépendante. Il loue les voitures avec une marge brute de $300$ euros par jour et par voiture.
+On considère $X$ la variable aléatoire égale au nombre de clients se présentant chaque jour pour louer une voiture. On suppose que $X(\Omega) = \{0, 1, 2, 3\}$ avec :
+\[
+P(X = 0) = 0{,}1, \quad P(X = 1) = 0{,}3, \quad P(X = 2) = 0{,}4, \quad P(X = 3) = 0{,}2
+\]
+\begin{enumerate}[label=\arabic*.]
+    \item On note $Y$ le nombre de voitures disponibles par jour. Déterminer la loi de $Y$.
+    \item On note $Z$ la variable aléatoire : \og nombre de clients satisfaits par jour \fg{}. On considère que $X$ et $Y$ sont indépendantes. Déterminer la loi de $Z$.
+    \item Calculer la marge brute moyenne par jour.
+\end{enumerate}
+
+\begin{correctionbox}[-- Modélisation conjointe \& Variable bivariée $Z = \min(X, Y)$]
+\textbf{1. Loi de probabilité de $Y$ (Nombre de véhicules disponibles) :}
+Chaque véhicule est disponible avec une probabilité $p = 4/5 = 0{,}8$. Les deux véhicules étant indépendants, la variable $Y$ suit une loi binomiale $\mathcal{B}(2; \, 0{,}8)$ :
+\begin{itemize}[label=$\bullet$]
+    \item $P(Y = 0) = (1 - 0{,}8)^2 = (0{,}2)^2 = \mathbf{0{,}04}$
+    \item $P(Y = 1) = 2 \times 0{,}8 \times 0{,}2 = \mathbf{0{,}32}$
+    \item $P(Y = 2) = (0{,}8)^2 = \mathbf{0{,}64}$
+\end{itemize}
+
+\textbf{2. Loi de probabilité de $Z$ (Nombre de clients satisfaits) :}
+Le garagiste ne peut servir que le minimum entre la demande $X$ et son stock disponible $Y$ :
+\[
+Z = \min(X, Y)
+\]
+Puisque $Y \in \{0, 1, 2\}$, la variable $Z$ prend ses valeurs dans $\{0, 1, 2\}$.
+L'indépendance de $X$ et $Y$ implique $P(X = i \cap Y = j) = P(X = i) \times P(Y = j)$.
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Événement $\{Z = 0\}$ :} Aucun client n'est satisfait. Cela se produit si $X = 0$ (aucun client ne se présente) OU si $Y = 0$ (aucune voiture n'est disponible) :
+    \[
+    P(Z = 0) = P(Y = 0) + P(Y > 0) \times P(X = 0) = 0{,}04 + (0{,}32 + 0{,}64) \times 0{,}10
+    \]
+    \[
+    P(Z = 0) = 0{,}04 + 0{,}96 \times 0{,}10 = 0{,}04 + 0{,}096 = \mathbf{0{,}136}
+    \]
+    \item \textbf{Événement $\{Z = 1\}$ :} Exactement 1 client est satisfait :
+    Cela correspond soit à $(Y = 1 \text{ et } X \ge 1)$, soit à $(Y = 2 \text{ et } X = 1)$ :
+    \[
+    P(Z = 1) = P(Y = 1) \times P(X \ge 1) + P(Y = 2) \times P(X = 1)
+    \]
+    Avec $P(X \ge 1) = 1 - P(X = 0) = 0{,}90$ :
+    \[
+    P(Z = 1) = 0{,}32 \times 0{,}90 + 0{,}64 \times 0{,}30 = 0{,}288 + 0{,}192 = \mathbf{0{,}480}
+    \]
+    \item \textbf{Événement $\{Z = 2\}$ :} Exactement 2 clients sont satisfaits :
+    Cela nécessite d'avoir 2 voitures disponibles et au moins 2 clients ($Y = 2 \text{ et } X \ge 2$) :
+    \[
+    P(Z = 2) = P(Y = 2) \times P(X \ge 2) = 0{,}64 \times (P(X = 2) + P(X = 3)) = 0{,}64 \times (0{,}40 + 0{,}20)
+    \]
+    \[
+    P(Z = 2) = 0{,}64 \times 0{,}60 = \mathbf{0{,}384}
+    \]
+\end{itemize}
+\emph{Vérification de la somme :} $0{,}136 + 0{,}480 + 0{,}384 = 1{,}000$.
+La loi de $Z$ est résumée dans le tableau suivant :
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    $z_i$ & 0 & 1 & 2 \\
+    \hline
+    $P(Z = z_i)$ & $0{,}136$ & $0{,}480$ & $0{,}384$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{3. Marge brute moyenne journalière :}
+Calculons d'abord le nombre moyen de clients satisfaits par jour $\E(Z)$ :
+\[
+\E(Z) = 0 \times 0{,}136 + 1 \times 0{,}480 + 2 \times 0{,}384 = 0{,}480 + 0{,}768 = \mathbf{1{,}248\text{ clients}}
+\]
+La marge brute journalière s'élève à $M = 300 \times Z$. Par linéarité de l'espérance :
+\[
+\E(M) = 300 \times \E(Z) = 300 \times 1{,}248 = \mathbf{374{,}40\text{ \euro}}
+\]
+Le garagiste réalise une marge brute moyenne de \textbf{$374{,}40$ euros par jour}.
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+\section{Loi Géométrique \& Approfondissements Prépa MPSI}
+
+% ----------------------------------------------------
+% Exercice 26
+% ----------------------------------------------------
+\subsection*{Exercice 26 -- Résultats préliminaires \& Séries géométriques dérivées}
+
+Soit $p \in \,]0, 1[$. Une variable aléatoire suit une \emph{loi géométrique} de paramètre $p$ si elle donne le nombre d'essais nécessaires pour obtenir le premier succès lors de la répétition d'expériences aléatoires indépendantes dont la probabilité de succès est $p$. On pose $q = 1 - p$.
+
+Cette loi est aussi appelée \emph{loi du premier succès}. Son univers des possibles est l'ensemble infini $\N^*$.
+\begin{enumerate}[label=\arabic*.]
+    \item Montrer que pour tout $x \in \,]-1, 1[$ et tout $i \in \N$, on a :
+    \[
+    \sum_{k=i}^{+\infty} x^k = \frac{x^i}{1 - x}
+    \]
+    \item Démontrer de deux façons différentes que, pour tout $n \ge 1$ et tout $q \neq 1$ :
+    \[
+    \sum_{k=1}^n k q^{k-1} = \frac{n q^{n+1} - (n+1) q^n + 1}{(1 - q)^2}
+    \]
+    \begin{itemize}[label=$\bullet$]
+        \item \emph{Première méthode :} Utiliser l'identité $k = \sum_{j=1}^k 1$ puis intervertir les deux signes somme.
+        \item \emph{Deuxième méthode :} Considérer la fonction $f$ définie sur $]-1, 1[$ par $f(x) = \sum_{k=0}^n x^k$ et dériver de deux manières.
+    \end{itemize}
+    \item En déduire que pour tout $x \in \,]-1, 1[$ :
+    \[
+    \sum_{k=1}^{+\infty} k x^{k-1} = \frac{1}{(1 - x)^2} \quad \text{et} \quad \sum_{k=1}^{+\infty} k^2 x^{k-1} = \frac{x + 1}{(1 - x)^3}
+    \]
+    \item \textbf{Théorie complète de la loi géométrique :} Soit $X \sim \mathcal{G}(p)$ sur $\N^*$.
+    \begin{enumerate}
+        \item Démontrer que $\sum_{k=1}^{+\infty} P(X = k) = 1$.
+        \item Calculer l'espérance mathématique $\E(X)$ et la variance $\V(X)$.
+        \item Démontrer la propriété fondamentale d'\textbf{absence de mémoire} :
+        \[
+        \forall (s, t) \in (\N^*)^2, \quad P(X > s + t \mid X > s) = P(X > t)
+        \]
+    \end{enumerate}
+\end{enumerate}
+
+\begin{correctionbox}[-- Séries géométriques, sommation triangulaire \& Loi du premier succès]
+\textbf{1. Somme géométrique infinie décalée :}
+Pour tout $N \ge i$, la somme partielle s'écrit en factorisant par le premier terme $x^i$ :
+\[
+\sum_{k=i}^N x^k = x^i \sum_{m=0}^{N-i} x^m = x^i \times \frac{1 - x^{N-i+1}}{1 - x}
+\]
+Puisque $|x| < 1$, $\lim_{N \to +\infty} x^{N-i+1} = 0$. En passant à la limite quand $N \to +\infty$ :
+\[
+\sum_{k=i}^{+\infty} x^k = \lim_{N \to +\infty} x^i \left(\frac{1 - x^{N-i+1}}{1 - x}\right) = \mathbf{\frac{x^i}{1 - x}}
+\]
+
+\textbf{2. Démonstration de l'identité de la somme géométrique dérivée finie :}
+
+\textbf{Méthode 1 : Interversion d'une double somme (Sommation triangulaire)}
+Écrivons le coefficient $k$ sous la forme télescopique $k = \sum_{j=1}^k 1$ :
+\[
+S_n = \sum_{k=1}^n k q^{k-1} = \sum_{k=1}^n \left( \sum_{j=1}^k 1 \right) q^{k-1} = \sum_{k=1}^n \sum_{j=1}^k q^{k-1}
+\]
+L'ensemble des indices de sommation est le triangle discret $\mathcal{T} = \{ (j, k) \in \N^2 \mid 1 \le j \le k \le n \}$.
+En intervertissant l'ordre de sommation, l'indice $j$ varie de $1$ à $n$ et, pour $j$ fixé, $k$ varie de $j$ à $n$ :
+\[
+S_n = \sum_{j=1}^n \left( \sum_{k=j}^n q^{k-1} \right)
+\]
+La somme intérieure est la somme de $n - j + 1$ termes consécutifs d'une suite géométrique de premier terme $q^{j-1}$ et de raison $q$ :
+\[
+\sum_{k=j}^n q^{k-1} = q^{j-1} \times \frac{1 - q^{n-j+1}}{1 - q} = \frac{q^{j-1} - q^n}{1 - q}
+\]
+Injectons cette expression dans la somme sur $j$ :
+\[
+S_n = \sum_{j=1}^n \frac{q^{j-1} - q^n}{1 - q} = \frac{1}{1 - q} \left[ \sum_{j=1}^n q^{j-1} - \sum_{j=1}^n q^n \right]
+\]
+Or $\sum_{j=1}^n q^{j-1} = \frac{1 - q^n}{1 - q}$ et la seconde somme compte $n$ termes constants valant $q^n$ :
+\[
+S_n = \frac{1}{1 - q} \left[ \frac{1 - q^n}{1 - q} - n q^n \right] = \frac{(1 - q^n) - n q^n(1 - q)}{(1 - q)^2}
+\]
+Développons le numérateur :
+\[
+1 - q^n - n q^n + n q^{n+1} = n q^{n+1} - (n+1) q^n + 1
+\]
+On obtient exactement la formule annoncée :
+\[
+\mathbf{\sum_{k=1}^n k q^{k-1} = \frac{n q^{n+1} - (n+1) q^n + 1}{(1 - q)^2}}
+\]
+
+\textbf{Méthode 2 : Dérivation analytique d'une fonction polynomiale}
+Soit $f$ la fonction définie pour tout $x \neq 1$ par la somme géométrique finie :
+\[
+f(x) = \sum_{k=0}^n x^k = \frac{1 - x^{n+1}}{1 - x}
+\]
+$f$ est une fonction rationnelle, indéfiniment dérivable sur $\R \setminus \{1\}$.
+Calculons sa dérivée $f'(x)$ de deux façons :
+\begin{itemize}[label=$\bullet$]
+    \item Par dérivation terme à terme de la somme polynomiale :
+    \[
+    f'(x) = \sum_{k=1}^n k x^{k-1}
+    \]
+    \item Par la formule de dérivation d'un quotient $\left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2}$ avec $u(x) = 1 - x^{n+1}$ et $v(x) = 1 - x$ :
+    \[
+    u'(x) = -(n+1)x^n \quad \text{et} \quad v'(x) = -1
+    \]
+    \[
+    f'(x) = \frac{-(n+1)x^n(1 - x) - (1 - x^{n+1})(-1)}{(1 - x)^2} = \frac{-(n+1)x^n + (n+1)x^{n+1} + 1 - x^{n+1}}{(1 - x)^2}
+    \]
+    En regroupant les termes en $x^{n+1}$ et $x^n$ :
+    \[
+    f'(x) = \frac{n x^{n+1} - (n+1) x^n + 1}{(1 - x)^2}
+    \]
+\end{itemize}
+Par unicité de la dérivée, l'évaluation en $x = q$ démontre immédiatement le résultat.
+
+\textbf{3. Sommes des séries dérivées infinies ($|x| < 1$) :}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Première série dérivée :}
+    Puisque $|x| < 1$, par croissance comparée, $\lim_{n \to +\infty} n x^{n+1} = 0$ et $\lim_{n \to +\infty} (n+1) x^n = 0$.
+    En faisant tendre $n$ vers $+\infty$ dans l'identité précédente :
+    \[
+    \mathbf{\sum_{k=1}^{+\infty} k x^{k-1} = \lim_{n \to +\infty} \frac{n x^{n+1} - (n+1) x^n + 1}{(1 - x)^2} = \frac{1}{(1 - x)^2}}
+    \]
+    \item \textbf{Seconde série dérivée :}
+    Multiplions la relation précédente par $x$ :
+    \[
+    g(x) = \sum_{k=1}^{+\infty} k x^k = \frac{x}{(1 - x)^2}
+    \]
+    Dérivons la fonction $g$ sur $]-1, 1[$ :
+    \[
+    g'(x) = \sum_{k=1}^{+\infty} k^2 x^{k-1} = \frac{1 \cdot (1 - x)^2 - x \cdot 2(1 - x)(-1)}{(1 - x)^4} = \frac{(1 - x)\left[(1 - x) + 2x\right]}{(1 - x)^4} = \mathbf{\frac{x + 1}{(1 - x)^3}}
+    \]
+\end{itemize}
+
+\textbf{4. Théorie complète de la loi géométrique $\mathcal{G}(p)$ :}
+
+\textbf{(a) Condition de normalisation de la loi :}
+Pour tout $k \in \N^*$, le premier succès survient à l'étape $k$ si et seulement si les $k-1$ premiers essais sont des échecs (probabilité $q^{k-1}$) et le $k$\textsuperscript{ème} essai est un succès (probabilité $p$) :
+\[
+P(X = k) = p q^{k-1}
+\]
+Vérifions que la somme totale des probabilités vaut 1 en utilisant la question 1 avec $i = 0$ :
+\[
+\sum_{k=1}^{+\infty} P(X = k) = \sum_{k=1}^{+\infty} p q^{k-1} = p \sum_{m=0}^{+\infty} q^m = p \times \frac{1}{1 - q} = p \times \frac{1}{p} = \mathbf{1}
+\]
+
+\textbf{(b) Calcul de l'espérance et de la variance :}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Espérance :}
+    En appliquant la formule de la première série dérivée avec $x = q = 1 - p$ :
+    \[
+    \E(X) = \sum_{k=1}^{+\infty} k P(X = k) = p \sum_{k=1}^{+\infty} k q^{k-1} = p \times \frac{1}{(1 - q)^2} = \frac{p}{p^2} = \mathbf{\frac{1}{p}}
+    \]
+    \emph{Interprétation concrète :} Si un événement a une chance sur 6 de se produire ($p = 1/6$), il faut attendre en moyenne $\E(X) = 6$ lancers pour l'observer.
+    \item \textbf{Moment d'ordre 2 factoriel :}
+    \[
+    \E(X(X-1)) = \sum_{k=1}^{+\infty} k(k-1) p q^{k-1} = p q \sum_{k=2}^{+\infty} k(k-1) q^{k-2}
+    \]
+    La série $\sum_{k=2}^{+\infty} k(k-1) q^{k-2}$ est la dérivée seconde de $\frac{1}{1-q}$, égale à $\frac{2}{(1-q)^3} = \frac{2}{p^3}$.
+    \[
+    \E(X(X-1)) = p q \times \frac{2}{p^3} = \frac{2q}{p^2}
+    \]
+    \item \textbf{Variance par la formule de König-Huygens :}
+    \[
+    \V(X) = \E(X^2) - (\E(X))^2 = \E(X(X-1)) + \E(X) - (\E(X))^2
+    \]
+    \[
+    \V(X) = \frac{2q}{p^2} + \frac{1}{p} - \frac{1}{p^2} = \frac{2(1-p) + p - 1}{p^2} = \frac{2 - 2p + p - 1}{p^2} = \mathbf{\frac{1 - p}{p^2} = \frac{q}{p^2}}
+    \]
+\end{itemize}
+
+\textbf{(c) Propriété d'absence de mémoire :}
+Calculons d'abord la probabilité de queue de distribution $P(X > n)$ pour tout entier $n \ge 0$ :
+L'événement $\{X > n\}$ signifie que les $n$ premiers essais ont tous été des échecs consécutifs :
+\[
+P(X > n) = \sum_{k=n+1}^{+\infty} P(X = k) = p \sum_{k=n+1}^{+\infty} q^{k-1} = p \times \frac{q^n}{1 - q} = q^n = (1 - p)^n
+\]
+Soient $(s, t) \in (\N^*)^2$. Par définition de la probabilité conditionnelle :
+\[
+P(X > s + t \mid X > s) = \frac{P(\{X > s + t\} \cap \{X > s\})}{P(X > s)}
+\]
+Puisque $\{X > s + t\} \subset \{X > s\}$, leur intersection est $\{X > s + t\}$ :
+\[
+P(X > s + t \mid X > s) = \frac{P(X > s + t)}{P(X > s)} = \frac{q^{s+t}}{q^s} = q^t = \mathbf{P(X > t)}
+\]
+\textbf{Interprétation :} Si l'on a déjà attendu $s$ essais sans succès, la loi du temps d'attente restant pour voir surgir le premier succès est exactement la même que si l'on partait de zéro. Le processus n'a aucune usure ni mémoire du passé.
+\end{correctionbox}
+
+\begin{remarquebox}[-- Théorème de caractérisation de la loi géométrique]
+La loi géométrique est l'\textbf{unique loi de probabilité discrète sur $\N^*$} possédant la propriété d'absence de mémoire.
+En effet, si $G(n) = P(X > n)$, la relation d'absence de mémoire entraîne $G(s+t) = G(s) G(t)$ pour tous $s, t \in \N$.
+Par récurrence immédiate, $G(n) = (G(1))^n = q^n$, avec $q = P(X > 1) = 1 - P(X = 1) \in \,]0, 1[$.
+On retrouve ainsi universellement $P(X = k) = G(k-1) - G(k) = q^{k-1}(1 - q) = p q^{k-1}$.
+Dans le cadre continu (variables aléatoires à densité), l'unique analogue sans mémoire est la \emph{loi exponentielle} $\mathcal{E}(\lambda)$.
+\end{remarquebox}
+
+\end{document}

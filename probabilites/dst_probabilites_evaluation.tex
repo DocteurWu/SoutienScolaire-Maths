@@ -1,0 +1,899 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs,mathtools}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes,arrows.meta}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+
+% ----------------------------------------------------
+% Couleurs officielles du projet (Charte LLG / MPSI)
+% ----------------------------------------------------
+\definecolor{llgblue}{RGB}{20, 50, 115}
+\definecolor{llglight}{RGB}{246, 249, 255}
+
+\definecolor{emeraldframe}{RGB}{18, 110, 75}
+\definecolor{emeraldback}{RGB}{242, 250, 246}
+\definecolor{emeraldtitle}{RGB}{12, 80, 52}
+
+\definecolor{prepaframe}{RGB}{30, 70, 135}
+\definecolor{prepaback}{RGB}{246, 249, 255}
+\definecolor{prepatitle}{RGB}{20, 50, 105}
+
+\definecolor{alertframe}{RGB}{185, 75, 20}
+\definecolor{alertback}{RGB}{255, 249, 245}
+\definecolor{alerttitle}{RGB}{145, 55, 12}
+
+% Configuration des hyperliens
+\hypersetup{
+    colorlinks=true,
+    linkcolor=llgblue,
+    urlcolor=llgblue,
+    citecolor=llgblue
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\textbf{Lycée Louis-le-Grand} -- 1\textsuperscript{ère} Spécialité Mathématiques (1E3)}
+\fancyhead[C]{\small\textbf{DST : Probabilités conditionnelles \& Variables aléatoires}}
+\fancyhead[R]{\small Jeudi 19 mai 2022}
+\fancyfoot[L]{\footnotesize LLG 2021/2022 -- Devoir Sur Table (1E3)}
+\fancyfoot[C]{\footnotesize Énoncé \& Corrigé Intégral Rigoureux}
+\fancyfoot[R]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+
+% ----------------------------------------------------
+% Boîtes tcolorbox personnalisées
+% ----------------------------------------------------
+\newtcolorbox{correctionbox}[1][]{
+  colback=emeraldback,
+  colframe=emeraldframe,
+  fonttitle=\bfseries\color{white},
+  coltitle=white,
+  colbacktitle=emeraldtitle,
+  title={Corrigé officiel détaillé et barème indicatif #1},
+  arc=2mm,
+  boxrule=0.8pt,
+  titlerule=0.5pt,
+  breakable,
+  before skip=0.4cm,
+  after skip=0.5cm
+}
+
+\newtcolorbox{remarquebox}[1][]{
+  colback=prepaback,
+  colframe=prepaframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=prepatitle,
+  title={Prolongement \& Regard Prépa / MPSI #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+\newtcolorbox{alertebox}[1][]{
+  colback=alertback,
+  colframe=alertframe,
+  fonttitle=\bfseries\small\color{white},
+  coltitle=white,
+  colbacktitle=alerttitle,
+  title={Point de vigilance méthodologique \& Pièges fréquents #1},
+  arc=1.5mm,
+  boxrule=0.6pt,
+  titlerule=0.4pt,
+  breakable,
+  before skip=0.25cm,
+  after skip=0.35cm
+}
+
+% Commandes mathématiques usuelles
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\un}{\mathbf{1}}
+
+\begin{document}
+
+% ====================================================
+% EN-TÊTE OFFICIEL DU DEVOIR
+% ====================================================
+\begin{center}
+    {\LARGE \bfseries Lycée Louis-le-Grand -- Paris}\\[0.2cm]
+    {\large Classe de Première 3 (1E3) -- Année scolaire 2021/2022}\\[0.3cm]
+    \begin{tcolorbox}[colback=llglight,colframe=llgblue,arc=3mm,boxrule=1.2pt,center]
+        \begin{center}
+            {\Large \bfseries \color{llgblue} DEVOIR SUR TABLE DE MATHÉMATIQUES}\\[0.15cm]
+            {\large \bfseries Probabilités conditionnelles, Indépendance, Arbres \& Variables aléatoires}\\[0.2cm]
+            \small Date : Jeudi 19 mai 2022 \quad $\vert$ \quad Durée : 2 heures \quad $\vert$ \quad Calculatrice autorisée selon la réglementation
+        \end{center}
+    \end{tcolorbox}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[colback=white,colframe=llgblue!60,arc=1.5mm,boxrule=0.6pt]
+\small\textbf{Consignes générales d'évaluation :}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+    \item La clarté des raisonnements, la précision de la rédaction et la rigueur dans l'emploi du vocabulaire ensembliste et probabiliste constituent des critères déterminants d'appréciation.
+    \item Tous les arbres de probabilités doivent être construits avec soin, en faisant figurer les événements sur les nœuds et les probabilités conditionnelles exactes sur chaque branche.
+    \item Toute formule générale de cours (formule des probabilités totales, formule de Bayes, définition de l'espérance mathématique) doit être explicitement citée avant son application numérique.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.4cm}
+
+% ====================================================
+% PARTIE I : ÉNONCÉ INTÉGRAL ÉLÈVE (BARÈME /20)
+% ====================================================
+\begin{center}
+    {\Large \bfseries \color{llgblue} \underline{Sujet du Devoir Surveillé (Barème sur 20 points)}}
+\end{center}
+
+\vspace{0.2cm}
+
+% ----------------------------------------------------
+% Exercice 1 (5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 1 \hfill (5 points)}
+
+Le directeur d'une grande entreprise a proposé à l'ensemble de ses salariés un stage de formation à l'utilisation d'un nouveau logiciel. Ce stage a été suivi par $25\,\%$ des salariés.
+
+Dans cette entreprise, $52\,\%$ des salariés sont des femmes, parmi lesquelles $40\,\%$ ont suivi le stage.
+
+On interroge au hasard un salarié de l'entreprise et on considère les événements :
+\begin{itemize}[label=$\bullet$]
+    \item $F$ : \og le salarié interrogé est une femme \fg{},
+    \item $S$ : \og le salarié interrogé a suivi le stage \fg{}.
+\end{itemize}
+$\overline{F}$ et $\overline{S}$ désignent respectivement les événements contraires des événements $F$ et $S$.
+
+\begin{enumerate}
+    \item Donner la probabilité de l'événement $S$.
+    \item Recopier et compléter les pointillés de l'arbre pondéré ci-dessous sur les quatre branches indiquées :
+    \begin{center}
+    \begin{tikzpicture}[xscale=2.4, yscale=1.1, thick, >=Stealth]
+        \node (R) at (0, 0) {};
+        \node (F) at (1.5, 0.8) {$F$};
+        \node (Fbar) at (1.5, -0.8) {$\overline{F}$};
+        \node (FS) at (3.2, 1.2) {$S$};
+        \node (FSbar) at (3.2, 0.4) {$\overline{S}$};
+        \node (FbarS) at (3.2, -0.4) {$S$};
+        \node (FbarSbar) at (3.2, -1.2) {$\overline{S}$};
+        
+        \draw (R) -- (F) node[midway, above left] {$\dots$};
+        \draw (R) -- (Fbar) node[midway, below left] {$\dots$};
+        \draw (F) -- (FS) node[midway, above] {$\dots$};
+        \draw (F) -- (FSbar) node[midway, below] {$\dots$};
+        \draw (Fbar) -- (FbarS) node[midway, above] {$\dots$};
+        \draw (Fbar) -- (FbarSbar) node[midway, below] {$\dots$};
+    \end{tikzpicture}
+    \end{center}
+    \item Démontrer que la probabilité que la personne interrogée soit une femme ayant suivi le stage est égale à $0{,}208$.
+    \item On sait que la personne interrogée a suivi le stage. Quelle est la probabilité que ce soit une femme ?
+    \item Le directeur affirme que, parmi les hommes salariés de l'entreprise, moins de $10\,\%$ ont suivi le stage. Justifier l'affirmation du directeur.
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 2 (4 points)
+% ----------------------------------------------------
+\subsection*{Exercice 2 \hfill (4 points)}
+
+Au cours de la fabrication d'une paire de lunettes, la paire de verres doit subir deux traitements notés $\mathrm{T}_1$ et $\mathrm{T}_2$.
+
+On prélève au hasard une paire de verres dans la production. On désigne par :
+\begin{itemize}[label=$\bullet$]
+    \item $A$ l'événement : \og la paire de verres présente un défaut pour le traitement $\mathrm{T}_1$ \fg{},
+    \item $B$ l'événement : \og la paire de verres présente un défaut pour le traitement $\mathrm{T}_2$ \fg{}.
+\end{itemize}
+On note respectivement $\overline{A}$ et $\overline{B}$ les événements contraires de $A$ et $B$.
+
+Une étude a montré que :
+\begin{itemize}[label=$\bullet$]
+    \item la probabilité qu'une paire de verres présente un défaut pour le traitement $\mathrm{T}_1$, notée $P(A)$, est égale à $0{,}1$.
+    \item la probabilité qu'une paire de verres présente un défaut pour le traitement $\mathrm{T}_2$, notée $P(B)$, est égale à $0{,}2$.
+    \item la probabilité qu'une paire de verres ne présente aucun des deux défauts est $0{,}75$.
+\end{itemize}
+
+\begin{enumerate}
+    \item Recopier et compléter le tableau suivant avec les probabilités correspondantes :
+    \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        & $A$ & $\overline{A}$ & Total \\
+        \hline
+        $B$ & $\dots$ & $\dots$ & $\dots$ \\
+        \hline
+        $\overline{B}$ & $\dots$ & $\dots$ & $\dots$ \\
+        \hline
+        Total & $\dots$ & $\dots$ & $1$ \\
+        \hline
+    \end{tabular}
+    \end{center}
+    \item 
+    \begin{enumerate}
+        \item Déterminer, en justifiant la réponse, la probabilité qu'une paire de verres, prélevée au hasard dans la production, présente un défaut pour au moins un des deux traitements $\mathrm{T}_1$ ou $\mathrm{T}_2$.
+        \item Donner la probabilité qu'une paire de verres, prélevée au hasard dans la production, présente deux défauts, un pour chaque traitement $\mathrm{T}_1$ et $\mathrm{T}_2$.
+        \item Les événements $A$ et $B$ sont-ils indépendants ? Justifier la réponse.
+    \end{enumerate}
+    \item Calculer la probabilité qu'une paire de verres, prélevée au hasard dans la production, présente un défaut pour un seul des deux traitements.
+    \item Calculer la probabilité qu'une paire de verres, prélevée au hasard dans la production, présente un défaut pour le traitement $\mathrm{T}_2$, sachant que cette paire de verres présente un défaut pour le traitement $\mathrm{T}_1$.
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 3 (4,5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 3 \hfill (4,5 points)}
+
+Le coyote est un animal sauvage proche du loup, qui vit en Amérique du Nord. Dans l'état d'Oklahoma, aux États-Unis, $70\,\%$ des coyotes sont touchés par une maladie appelée \emph{ehrlichiose}.
+
+Il existe un test aidant à la détection de cette maladie. Lorsque ce test est appliqué à un coyote, son résultat est soit positif, soit négatif, et on sait que :
+\begin{itemize}[label=$\bullet$]
+    \item Si le coyote est malade, le test est positif dans $97\,\%$ des cas.
+    \item Si le coyote n'est pas malade, le test est négatif dans $95\,\%$ des cas.
+\end{itemize}
+
+\textbf{Partie A}
+
+Des vétérinaires capturent un coyote d'Oklahoma au hasard et lui font subir un test pour l'ehrlichiose. On considère les événements suivants :
+\begin{itemize}[label=$\bullet$]
+    \item $M$ : \og le coyote est malade \fg{},
+    \item $T$ : \og le test du coyote est positif \fg{}.
+\end{itemize}
+On note $\overline{M}$ et $\overline{T}$ respectivement les événements contraires de $M$ et $T$.
+
+\begin{enumerate}
+    \item Recopier et compléter l'arbre pondéré ci-dessous qui modélise la situation :
+    \begin{center}
+    \begin{tikzpicture}[xscale=2.4, yscale=1.1, thick, >=Stealth]
+        \node (R) at (0, 0) {};
+        \node (M) at (1.5, 0.8) {$M$};
+        \node (Mbar) at (1.5, -0.8) {$\overline{M}$};
+        \node (MT) at (3.2, 1.2) {$T$};
+        \node (MTbar) at (3.2, 0.4) {$\overline{T}$};
+        \node (MbarT) at (3.2, -0.4) {$T$};
+        \node (MbarTbar) at (3.2, -1.2) {$\overline{T}$};
+        
+        \draw (R) -- (M) node[midway, above left] {$\dots$};
+        \draw (R) -- (Mbar) node[midway, below left] {$\dots$};
+        \draw (M) -- (MT) node[midway, above] {$\dots$};
+        \draw (M) -- (MTbar) node[midway, below] {$\dots$};
+        \draw (Mbar) -- (MbarT) node[midway, above] {$\dots$};
+        \draw (Mbar) -- (MbarTbar) node[midway, below] {$\dots$};
+    \end{tikzpicture}
+    \end{center}
+    \item Déterminer la probabilité que le coyote soit malade et que son test soit positif.
+    \item Démontrer que la probabilité de $T$ est égale à $0{,}694$.
+    \item On appelle \og valeur prédictive positive du test \fg{} la probabilité que le coyote soit effectivement malade sachant que son test est positif. Calculer la valeur prédictive positive du test. On arrondira le résultat au millième.
+    \item 
+    \begin{enumerate}
+        \item Par analogie avec la question précédente, proposer une définition de la \og valeur prédictive négative du test \fg{} et calculer cette valeur en arrondissant au millième.
+        \item Comparer les valeurs prédictives positive et négative du test, et interpréter.
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 4 (5 points)
+% ----------------------------------------------------
+\subsection*{Exercice 4 \hfill (5 points)}
+
+Une urne contient des jetons blancs et noirs tous indiscernables au toucher. Une partie consiste à prélever au hasard successivement et avec remise deux jetons de cette urne.
+
+On établit la règle de jeu suivante :
+\begin{itemize}[label=$\bullet$]
+    \item un joueur perd $9$ euros si les deux jetons tirés sont de couleur blanche ;
+    \item un joueur perd $1$ euro si les deux jetons tirés sont de couleur noire ;
+    \item un joueur gagne $5$ euros si les deux jetons tirés sont de couleurs différentes.
+\end{itemize}
+
+\begin{enumerate}
+    \item On considère que l'urne contient $2$ jetons noirs et $3$ jetons blancs.
+    \begin{enumerate}
+        \item Modéliser la situation à l'aide d'un arbre pondéré.
+        \item Calculer la probabilité de perdre $9$ \euro{} sur une partie.
+    \end{enumerate}
+    \item On considère maintenant que l'urne contient $3$ jetons blancs et au moins deux jetons noirs mais on ne connaît pas le nombre exact de jetons noirs. On appellera $N$ le nombre de jetons noirs ($N \ge 2$).
+    \begin{enumerate}
+        \item Soit $X$ la variable aléatoire donnant le gain du jeu pour une partie. Déterminer la loi de probabilité de cette variable aléatoire.
+        \item Résoudre l'inéquation pour $x$ réel :
+        \[
+        -x^2 + 30x - 81 > 0
+        \]
+        \item En utilisant le résultat de la question précédente, déterminer le nombre de jetons noirs que l'urne doit contenir afin que ce jeu soit favorable au joueur.
+        \item Combien de jetons noirs le joueur doit-il demander afin d'obtenir un gain moyen maximal ?
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Exercice 5 (1,5 point)
+% ----------------------------------------------------
+\subsection*{Exercice 5 \hfill (1,5 point)}
+
+$A$ et $B$ sont deux avions ayant respectivement $2$ et $4$ moteurs. Les moteurs sont supposés indépendants les uns des autres, et ils ont une probabilité $p \in [0, 1]$ de tomber en panne.
+
+Chaque avion arrive à destination si \textbf{moins de la moitié} de ses moteurs tombe en panne.
+
+Quel avion choisissez-vous ? (On discutera en fonction de $p$).
+
+\newpage
+
+% ====================================================
+% PARTIE II : CORRIGÉ OFFICIEL DÉTAILLÉ & PROLONGEMENTS MPSI
+% ====================================================
+\begin{center}
+    {\Large \bfseries \color{emeraldtitle} \underline{Corrigé Intégral Officiel \& Approfondissements Prépa}}
+\end{center}
+
+\vspace{0.3cm}
+
+% ----------------------------------------------------
+% Correction Exercice 1
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 1 \hfill (5 points)}
+
+\begin{correctionbox}[-- Analyse ensembliste, arbre pondéré \& Formule de Bayes]
+\textbf{1. Probabilité de l'événement $S$ :}
+D'après l'énoncé, le stage de formation proposé par la direction a été suivi par $25\,\%$ de l'ensemble des salariés de l'entreprise. Ainsi :
+\[
+\mathbf{P(S) = 0{,}25}
+\]
+
+\textbf{2. Arbre pondéré modélisant la situation :}
+Identifions précisément les probabilités données par le texte :
+\begin{itemize}[label=$\bullet$]
+    \item La proportion de femmes dans l'entreprise est de $52\,\%$, d'où $P(F) = 0{,}52$. Par la loi de l'événement contraire :
+    \[
+    P(\overline{F}) = 1 - P(F) = 1 - 0{,}52 = 0{,}48
+    \]
+    \item Parmi les femmes, $40\,\%$ ont suivi le stage, ce qui traduit la probabilité conditionnelle :
+    \[
+    P_F(S) = 0{,}40 \implies P_F(\overline{S}) = 1 - P_F(S) = 1 - 0{,}40 = 0{,}60
+    \]
+    \item Pour les branches issues du nœud $\overline{F}$, la probabilité conditionnelle $P_{\overline{F}}(S)$ s'obtient à l'aide de la formule des probabilités totales appliquée à la partition $\{F, \overline{F}\}$ :
+    \[
+    P(S) = P(F \cap S) + P(\overline{F} \cap S) = P(F) \times P_F(S) + P(\overline{F}) \times P_{\overline{F}}(S)
+    \]
+    En injectant les valeurs connues :
+    \[
+    0{,}25 = 0{,}52 \times 0{,}40 + 0{,}48 \times P_{\overline{F}}(S) = 0{,}208 + 0{,}48 \times P_{\overline{F}}(S)
+    \]
+    On en déduit :
+    \[
+    0{,}48 \times P_{\overline{F}}(S) = 0{,}25 - 0{,}208 = 0{,}042 \implies P_{\overline{F}}(S) = \frac{0{,}042}{0{,}48} = \frac{42}{480} = \frac{7}{80} = \mathbf{0{,}0875}
+    \]
+    D'où son contraire :
+    \[
+    P_{\overline{F}}(\overline{S}) = 1 - 0{,}0875 = \mathbf{0{,}9125}
+    \]
+\end{itemize}
+
+L'arbre pondéré complet s'établit donc ainsi :
+\begin{center}
+\begin{tikzpicture}[xscale=2.6, yscale=1.2, thick, >=Stealth]
+    \node[circle, fill=llgblue!20, inner sep=2pt] (R) at (0, 0) {$\Omega$};
+    \node (F) at (1.5, 0.9) {$F$};
+    \node (Fbar) at (1.5, -0.9) {$\overline{F}$};
+    \node (FS) at (3.3, 1.4) {$S$};
+    \node (FSbar) at (3.3, 0.5) {$\overline{S}$};
+    \node (FbarS) at (3.3, -0.5) {$S$};
+    \node (FbarSbar) at (3.3, -1.4) {$\overline{S}$};
+    
+    \draw[->] (R) -- (F) node[midway, above left, text=llgblue] {$0{,}52$};
+    \draw[->] (R) -- (Fbar) node[midway, below left, text=llgblue] {$0{,}48$};
+    
+    \draw[->] (F) -- (FS) node[midway, above, text=emeraldframe] {$0{,}40$};
+    \draw[->] (F) -- (FSbar) node[midway, below, text=emeraldframe] {$0{,}60$};
+    
+    \draw[->] (Fbar) -- (FbarS) node[midway, above, text=alertframe] {$0{,}0875$};
+    \draw[->] (Fbar) -- (FbarSbar) node[midway, below, text=alertframe] {$0{,}9125$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{3. Calcul de $P(F \cap S)$ :}
+D'après la formule des probabilités composées :
+\[
+P(F \cap S) = P(F) \times P_F(S) = 0{,}52 \times 0{,}40 = \mathbf{0{,}208}
+\]
+La probabilité que le salarié interrogé soit une femme ayant suivi le stage est exactement égale à $0{,}208$ (soit $20{,}8\,\%$ des salariés).
+
+\textbf{4. Probabilité conditionnelle inverse $P_S(F)$ (Formule de Bayes) :}
+Sachant que le salarié a suivi le stage, la probabilité qu'il s'agisse d'une femme est donnée par la définition de la probabilité conditionnelle :
+\[
+P_S(F) = \frac{P(F \cap S)}{P(S)} = \frac{0{,}208}{0{,}25} = \frac{208}{250} = \frac{104}{125} = \mathbf{0{,}832}
+\]
+Ainsi, $83{,}2\,\%$ des personnes ayant suivi le stage sont des femmes.
+
+\textbf{5. Justification de l'affirmation du directeur :}
+Le directeur affirme que parmi les hommes salariés de l'entreprise, moins de $10\,\%$ ont suivi le stage.
+L'ensemble des hommes salariés correspond à l'événement $\overline{F}$. La proportion d'hommes ayant suivi le stage est donnée par la probabilité conditionnelle $P_{\overline{F}}(S)$.
+Par le calcul mené à la question 2 :
+\[
+P_{\overline{F}}(S) = \frac{P(\overline{F} \cap S)}{P(\overline{F})} = \frac{P(S) - P(F \cap S)}{P(\overline{F})} = \frac{0{,}25 - 0{,}208}{0{,}48} = \frac{0{,}042}{0{,}48} = 0{,}0875 = 8{,}75\,\%
+\]
+Comme $8{,}75\,\% < 10\,\%$, \textbf{l'affirmation du directeur est parfaitement justifiée}.
+\end{correctionbox}
+
+\begin{remarquebox}[-- Formalisme de Kolmogorov \& Théorème de Bayes]
+Soit $(\Omega, \mathscr{T}, P)$ un espace probabilisé. Si $(A_i)_{i \in I}$ forme un système complet d'événements (partition dénombrable de $\Omega$ par des événements de probabilités non nulles), alors pour tout événement $B$ tel que $P(B) > 0$ et tout indice $k \in I$ :
+\[
+P(A_k \mid B) = \frac{P(A_k \cap B)}{P(B)} = \frac{P(A_k) P(B \mid A_k)}{\displaystyle\sum_{i \in I} P(A_i) P(B \mid A_i)}
+\]
+Cette formule constitue l'\emph{inversion de Bayes}. En pratique, elle permet d'actualiser la distribution \emph{a priori} $(P(A_i))$ en une distribution \emph{a posteriori} $(P(A_i \mid B))$ dès lors qu'un symptôme ou résultat $B$ est observé. Ici, le fait de savoir qu'un salarié a suivi le stage fait passer la probabilité qu'il soit une femme de $P(F) = 0{,}52$ à $P_S(F) = 0{,}832$.
+\end{remarquebox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 2
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 2 \hfill (4 points)}
+
+\begin{correctionbox}[-- Tableau de contingence, indépendance \& corrélation d'événements]
+\textbf{1. Tableau de contingence complété :}
+Rappelons les données de l'énoncé :
+\begin{itemize}[label=$\bullet$]
+    \item $P(A) = 0{,}1 \implies P(\overline{A}) = 1 - 0{,}1 = 0{,}9$.
+    \item $P(B) = 0{,}2 \implies P(\overline{B}) = 1 - 0{,}2 = 0{,}8$.
+    \item \og Aucun des deux défauts \fg{} correspond à l'événement $\overline{A} \cap \overline{B}$, d'où $P(\overline{A} \cap \overline{B}) = 0{,}75$.
+\end{itemize}
+En complétant les lignes et colonnes par soustraction :
+\begin{itemize}[label=$\bullet$]
+    \item Sur la ligne $\overline{B}$ : $P(A \cap \overline{B}) = P(\overline{B}) - P(\overline{A} \cap \overline{B}) = 0{,}80 - 0{,}75 = \mathbf{0{,}05}$.
+    \item Sur la colonne $A$ : $P(A \cap B) = P(A) - P(A \cap \overline{B}) = 0{,}10 - 0{,}05 = \mathbf{0{,}05}$.
+    \item Sur la ligne $B$ : $P(\overline{A} \cap B) = P(B) - P(A \cap B) = 0{,}20 - 0{,}05 = \mathbf{0{,}15}$.
+    \item Vérification sur la colonne $\overline{A}$ : $P(\overline{A} \cap B) + P(\overline{A} \cap \overline{B}) = 0{,}15 + 0{,}75 = 0{,}90 = P(\overline{A})$.
+\end{itemize}
+
+Le tableau s'écrit de manière rigoureuse :
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    & \textbf{$A$} & \textbf{$\overline{A}$} & \textbf{Total} \\
+    \hline
+    \textbf{$B$} & $\mathbf{0{,}05}$ & $\mathbf{0{,}15}$ & $\mathbf{0{,}20}$ \\
+    \hline
+    \textbf{$\overline{B}$} & $\mathbf{0{,}05}$ & $\mathbf{0{,}75}$ & $\mathbf{0{,}80}$ \\
+    \hline
+    \textbf{Total} & $\mathbf{0{,}10}$ & $\mathbf{0{,}90}$ & $\mathbf{1{,}00}$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{2. (a) Probabilité de présenter au moins un défaut :}
+L'événement \og présenter au moins un défaut \fg{} est la réunion $A \cup B$. Son événement contraire est \og ne présenter aucun défaut \fg{}, soit $\overline{A} \cap \overline{B}$. Par les lois de De Morgan :
+\[
+\overline{A \cup B} = \overline{A} \cap \overline{B}
+\]
+D'où :
+\[
+P(A \cup B) = 1 - P(\overline{A} \cap \overline{B}) = 1 - 0{,}75 = \mathbf{0{,}25}
+\]
+\emph{Remarque de contrôle :} Par la formule de Poincaré :
+\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0{,}10 + 0{,}20 - 0{,}05 = 0{,}25
+\]
+
+\textbf{2. (b) Probabilité de présenter deux défauts :}
+L'événement \og présenter deux défauts, un pour chaque traitement \fg{} est l'intersection $A \cap B$.
+D'après la lecture directe du tableau de contingence :
+\[
+\mathbf{P(A \cap B) = 0{,}05}
+\]
+
+\textbf{2. (c) Test d'indépendance de $A$ et $B$ :}
+Deux événements $A$ et $B$ sont indépendants si et seulement si $P(A \cap B) = P(A) \times P(B)$.
+Calculons le produit des probabilités marginales :
+\[
+P(A) \times P(B) = 0{,}10 \times 0{,}20 = 0{,}02
+\]
+Or, nous avons établi que :
+\[
+P(A \cap B) = 0{,}05
+\]
+Comme $P(A \cap B) \neq P(A) \times P(B)$ ($0{,}05 \neq 0{,}02$), \textbf{les événements $A$ et $B$ ne sont pas indépendants}.
+
+\textbf{3. Probabilité de présenter un défaut pour un seul des deux traitements :}
+Cet événement correspond à la différence symétrique $A \mathbin{\Delta} B = (A \cap \overline{B}) \cup (\overline{A} \cap B)$.
+Puisque ces deux événements sont incompatibles :
+\[
+P(A \mathbin{\Delta} B) = P(A \cap \overline{B}) + P(\overline{A} \cap B) = 0{,}05 + 0{,}15 = \mathbf{0{,}20}
+\]
+On peut également l'obtenir par : $P(A \cup B) - P(A \cap B) = 0{,}25 - 0{,}05 = 0{,}20$.
+
+\textbf{4. Probabilité conditionnelle $P_A(B)$ :}
+Il s'agit de la probabilité que la paire de verres présente le défaut $\mathrm{T}_2$ sachant qu'elle présente le défaut $\mathrm{T}_1$ :
+\[
+P_A(B) = \frac{P(A \cap B)}{P(A)} = \frac{0{,}05}{0{,}10} = \mathbf{0{,}50}
+\]
+\end{correctionbox}
+
+\begin{remarquebox}[-- Covariance d'indicatrices et corrélation positive]
+Notons $\un_A$ et $\un_B$ les variables aléatoires indicatrices des événements $A$ et $B$.
+Leur covariance s'écrit :
+\[
+\operatorname{Cov}(\un_A, \un_B) = \E(\un_A \un_B) - \E(\un_A)\E(\un_B) = P(A \cap B) - P(A)P(B) = 0{,}05 - 0{,}02 = +0{,}03 > 0
+\]
+Le signe strictement positif indique une \emph{corrélation positive} entre les défauts : la présence d'un défaut $\mathrm{T}_1$ augmente drastiquement la survenue du défaut $\mathrm{T}_2$, faisant passer sa probabilité de $P(B) = 20\,\%$ à $P_A(B) = 50\,\%$. Industriellement, cela révèle qu'une anomalie en amont sur la ligne de traitement fragilise le verre pour le traitement suivant.
+\end{remarquebox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 3
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 3 \hfill (4,5 points)}
+
+\begin{correctionbox}[-- Dépistage épidémiologique : Sensibilité, Spécificité \& VPP/VPN]
+\textbf{1. Arbre pondéré complet modélisant le test :}
+Identifions les paramètres épidémiologiques :
+\begin{itemize}[label=$\bullet$]
+    \item Prévalence de l'ehrlichiose : $P(M) = 0{,}70 \implies P(\overline{M}) = 1 - 0{,}70 = 0{,}30$.
+    \item Sensibilité du test : $P_M(T) = 0{,}97 \implies P_M(\overline{T}) = 1 - 0{,}97 = 0{,}03$ (taux de faux négatifs parmi les malades).
+    \item Spécificité du test : $P_{\overline{M}}(\overline{T}) = 0{,}95 \implies P_{\overline{M}}(T) = 1 - 0{,}95 = 0{,}05$ (taux de faux positifs parmi les animaux sains).
+\end{itemize}
+
+L'arbre pondéré s'établit ainsi :
+\begin{center}
+\begin{tikzpicture}[xscale=2.6, yscale=1.2, thick, >=Stealth]
+    \node[circle, fill=llgblue!20, inner sep=2pt] (R) at (0, 0) {$\Omega$};
+    \node (M) at (1.5, 0.9) {$M$};
+    \node (Mbar) at (1.5, -0.9) {$\overline{M}$};
+    \node (MT) at (3.3, 1.4) {$T$};
+    \node (MTbar) at (3.3, 0.5) {$\overline{T}$};
+    \node (MbarT) at (3.3, -0.5) {$T$};
+    \node (MbarTbar) at (3.3, -1.4) {$\overline{T}$};
+    
+    \draw[->] (R) -- (M) node[midway, above left, text=llgblue] {$0{,}70$};
+    \draw[->] (R) -- (Mbar) node[midway, below left, text=llgblue] {$0{,}30$};
+    
+    \draw[->] (M) -- (MT) node[midway, above, text=emeraldframe] {$0{,}97$};
+    \draw[->] (M) -- (MTbar) node[midway, below, text=emeraldframe] {$0{,}03$};
+    
+    \draw[->] (Mbar) -- (MbarT) node[midway, above, text=alertframe] {$0{,}05$};
+    \draw[->] (Mbar) -- (MbarTbar) node[midway, below, text=alertframe] {$0{,}95$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{2. Probabilité de l'événement $M \cap T$ :}
+D'après la formule des probabilités composées :
+\[
+P(M \cap T) = P(M) \times P_M(T) = 0{,}70 \times 0{,}97 = \mathbf{0{,}679}
+\]
+
+\textbf{3. Démontrer que $P(T) = 0{,}694$ :}
+Les événements $M$ et $\overline{M}$ forment une partition de l'univers $\Omega$. D'après la formule des probabilités totales :
+\[
+P(T) = P(M \cap T) + P(\overline{M} \cap T) = P(M) \times P_M(T) + P(\overline{M}) \times P_{\overline{M}}(T)
+\]
+En injectant les valeurs numériques :
+\[
+P(T) = 0{,}679 + 0{,}30 \times 0{,}05 = 0{,}679 + 0{,}015 = \mathbf{0{,}694}
+\]
+Ce résultat confirme rigoureusement la valeur attendue.
+
+\textbf{4. Calcul de la Valeur Prédictive Positive (VPP) :}
+La valeur prédictive positive est la probabilité conditionnelle $P_T(M)$ :
+\[
+P_T(M) = \frac{P(M \cap T)}{P(T)} = \frac{0{,}679}{0{,}694} = \frac{679}{694} \approx 0{,}978386\dots
+\]
+Au millième près :
+\[
+\mathbf{\mathrm{VPP} = P_T(M) \approx 0{,}978} \quad (\text{soit } 97{,}8\,\%)
+\]
+
+\textbf{5. (a) Définition et calcul de la Valeur Prédictive Négative (VPN) :}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Définition :} La valeur prédictive négative du test, notée $\mathrm{VPN}$, est la probabilité que le coyote soit effectivement sain (non malade) sachant que son test est négatif, soit la probabilité conditionnelle $P_{\overline{T}}(\overline{M})$.
+    \item \textbf{Calcul :} Par définition :
+    \[
+    P_{\overline{T}}(\overline{M}) = \frac{P(\overline{M} \cap \overline{T})}{P(\overline{T})} = \frac{P(\overline{M}) \times P_{\overline{M}}(\overline{T})}{1 - P(T)}
+    \]
+    Avec $P(\overline{T}) = 1 - 0{,}694 = 0{,}306$ et $P(\overline{M} \cap \overline{T}) = 0{,}30 \times 0{,}95 = 0{,}285$, on obtient :
+    \[
+    P_{\overline{T}}(\overline{M}) = \frac{0{,}285}{0{,}306} = \frac{285}{306} = \frac{95}{102} \approx 0{,}93137\dots
+    \]
+    Au millième près :
+    \[
+    \mathbf{\mathrm{VPN} = P_{\overline{T}}(\overline{M}) \approx 0{,}931} \quad (\text{soit } 93{,}1\,\%)
+    \]
+\end{itemize}
+
+\textbf{5. (b) Comparaison et interprétation clinique :}
+On constate que :
+\[
+\mathrm{VPP} \approx 0{,}978 > \mathrm{VPN} \approx 0{,}931
+\]
+\begin{itemize}[label=$\bullet$]
+    \item Le taux d'erreur sur un test positif est de $1 - \mathrm{VPP} = 1 - 0{,}978 = 0{,}022$, soit seulement \textbf{$2{,}2\,\%$} de faux positifs parmi les individus testés positifs.
+    \item Le taux d'erreur sur un test négatif est de $1 - \mathrm{VPN} = 1 - 0{,}931 = 0{,}069$, soit environ \textbf{$6{,}9\,\%$} de faux négatifs parmi les individus testés négatifs.
+\end{itemize}
+\textbf{Interprétation :} Un résultat positif est donc plus fiable et plus probant qu'un résultat négatif. Ce phénomène s'explique par la très forte prévalence de la maladie dans la population de coyotes d'Oklahoma ($70\,\%$) : la forte proportion initiale d'animaux infectés renforce la certitude d'un diagnostic positif, mais augmente le risque relatif qu'un animal infecté échappe au test (faux négatif).
+\end{correctionbox}
+
+\begin{alertebox}[-- Influence de la prévalence sur la valeur prédictive]
+En épidémiologie, la sensibilité ($P_M(T)$) et la spécificité ($P_{\overline{M}}(\overline{T})$) sont des caractéristiques intrinsèques du test biologique, mais la $\mathrm{VPP}$ et la $\mathrm{VPN}$ dépendent de manière cruciale de la \textbf{prévalence} $p = P(M)$ :
+\[
+\mathrm{VPP}(p) = \frac{p \times \mathrm{Se}}{p \times \mathrm{Se} + (1-p)(1-\mathrm{Sp})}
+\]
+Dans une population où la maladie est rare ($p \to 0$), la $\mathrm{VPP}$ s'effondre vers $0$ même avec une excellente spécificité de $95\,\%$ (c'est le fameux \emph{paradoxe des faux positifs}). Ici, au contraire, la très forte prévalence ($p = 0{,}70$) tire la $\mathrm{VPP}$ à plus de $97{,}8\,\%$.
+\end{alertebox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 4
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 4 \hfill (5 points)}
+
+\begin{correctionbox}[-- Variable aléatoire, espérance, signe du trinôme \& Optimisation]
+\textbf{1. Cas particulier : $2$ jetons noirs et $3$ jetons blancs ($N = 2$, total $5$ jetons)}
+
+\textbf{(a) Arbre pondéré :}
+Le tirage s'effectuant avec remise, les deux tirages sont indépendants et les probabilités restent invariantes :
+\[
+P(B) = \frac{3}{5} = 0{,}6 \quad \text{et} \quad P(N) = \frac{2}{5} = 0{,}4
+\]
+\begin{center}
+\begin{tikzpicture}[xscale=2.6, yscale=1.1, thick, >=Stealth]
+    \node[circle, fill=llgblue!20, inner sep=2pt] (R) at (0, 0) {$\Omega$};
+    \node (B1) at (1.5, 0.8) {$B_1$};
+    \node (N1) at (1.5, -0.8) {$N_1$};
+    \node (B2B) at (3.3, 1.2) {$B_2$};
+    \node (N2B) at (3.3, 0.4) {$N_2$};
+    \node (B2N) at (3.3, -0.4) {$B_2$};
+    \node (N2N) at (3.3, -1.2) {$N_2$};
+    
+    \draw[->] (R) -- (B1) node[midway, above left] {$3/5$};
+    \draw[->] (R) -- (N1) node[midway, below left] {$2/5$};
+    
+    \draw[->] (B1) -- (B2B) node[midway, above] {$3/5$};
+    \draw[->] (B1) -- (N2B) node[midway, below] {$2/5$};
+    
+    \draw[->] (N1) -- (B2N) node[midway, above] {$3/5$};
+    \draw[->] (N1) -- (N2N) node[midway, below] {$2/5$};
+\end{tikzpicture}
+\end{center}
+
+\textbf{(b) Probabilité de perdre $9$ \euro{} :}
+Perdre $9$ euros correspond au tirage de deux jetons blancs consécutifs ($B_1 \cap B_2$) :
+\[
+P(X = -9) = P(B_1) \times P(B_2) = \left(\frac{3}{5}\right)^2 = \frac{9}{25} = \mathbf{0{,}36}
+\]
+
+\textbf{2. Cas général : $3$ jetons blancs et $N$ jetons noirs ($N \ge 2$, total $N+3$ jetons)}
+
+\textbf{(a) Loi de probabilité de la variable aléatoire $X$ :}
+Le gain algébrique $X$ prend ses valeurs dans l'ensemble $\{-9, -1, 5\}$.
+Les probabilités associées s'expriment en fonction de $N$ :
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Deux jetons blancs ($X = -9$) :}
+    \[
+    P(X = -9) = \left(\frac{3}{N+3}\right)^2 = \mathbf{\frac{9}{(N+3)^2}}
+    \]
+    \item \textbf{Deux jetons noirs ($X = -1$) :}
+    \[
+    P(X = -1) = \left(\frac{N}{N+3}\right)^2 = \mathbf{\frac{N^2}{(N+3)^2}}
+    \]
+    \item \textbf{Deux jetons de couleurs différentes ($X = 5$) :}
+    Il y a deux ordres possibles : $(B_1 \cap N_2)$ ou $(N_1 \cap B_2)$ :
+    \[
+    P(X = 5) = 2 \times \frac{3}{N+3} \times \frac{N}{N+3} = \mathbf{\frac{6N}{(N+3)^2}}
+    \]
+\end{itemize}
+\emph{Vérification de la somme :}
+\[
+\sum_{x \in X(\Omega)} P(X = x) = \frac{9 + N^2 + 6N}{(N+3)^2} = \frac{(N+3)^2}{(N+3)^2} = 1
+\]
+La loi de probabilité de $X$ est résumée dans le tableau suivant :
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    $x_i$ & $-9$ & $-1$ & $5$ \\
+    \hline
+    $P(X = x_i)$ & $\dfrac{9}{(N+3)^2}$ & $\dfrac{N^2}{(N+3)^2}$ & $\dfrac{6N}{(N+3)^2}$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{(b) Résolution de l'inéquation $-x^2 + 30x - 81 > 0$ :}
+Considérons le trinôme du second degré $P(x) = -x^2 + 30x - 81$.
+Son discriminant vaut :
+\[
+\Delta = b^2 - 4ac = 30^2 - 4(-1)(-81) = 900 - 324 = 576 = 24^2
+\]
+Comme $\Delta > 0$, le trinôme admet deux racines réelles distinctes :
+\[
+x_1 = \frac{-b - \sqrt{\Delta}}{2a} = \frac{-30 - 24}{-2} = \frac{-54}{-2} = 27
+\]
+\[
+x_2 = \frac{-b + \sqrt{\Delta}}{2a} = \frac{-30 + 24}{-2} = \frac{-6}{-2} = 3
+\]
+Le coefficient dominant étant $a = -1 < 0$, la parabole est orientée vers le bas. Le trinôme est donc strictement positif à l'intérieur de ses racines :
+\[
+-x^2 + 30x - 81 > 0 \iff \mathbf{x \in \,]3, 27[}
+\]
+
+\textbf{(c) Nombre de jetons noirs pour un jeu favorable :}
+Le jeu est favorable au joueur si et seulement si son espérance mathématique est strictement positive : $\E(X) > 0$.
+Calculons $\E(X)$ :
+\[
+\E(X) = \sum_{i=1}^3 x_i P(X = x_i) = (-9) \times \frac{9}{(N+3)^2} + (-1) \times \frac{N^2}{(N+3)^2} + 5 \times \frac{6N}{(N+3)^2}
+\]
+\[
+\E(X) = \frac{-81 - N^2 + 30N}{(N+3)^2} = \mathbf{\frac{-N^2 + 30N - 81}{(N+3)^2}}
+\]
+Comme $N \ge 2$, le dénominateur $(N+3)^2$ est strictement positif. Par conséquent :
+\[
+\E(X) > 0 \iff -N^2 + 30N - 81 > 0
+\]
+D'après la question 2.(b), cette condition équivaut à $N \in \,]3, 27[$.
+Puisque le nombre de jetons noirs $N$ est un entier naturel, le jeu est favorable au joueur si et seulement si :
+\[
+N \in \boldsymbol{[\![4, 26]\!]}
+\]
+Il faut donc que l'urne contienne entre \textbf{$4$ et $26$ jetons noirs inclus}.
+
+\textbf{(d) Nombre de jetons noirs maximisant le gain moyen :}
+Le gain moyen est modélisé par la fonction $f$ définie sur $[2, +\infty[$ par :
+\[
+f(N) = \frac{-N^2 + 30N - 81}{(N+3)^2}
+\]
+La fonction $f$ est rationnelle, continue et dérivable sur $[2, +\infty[$. Posons :
+\[
+u(N) = -N^2 + 30N - 81 \implies u'(N) = -2N + 30
+\]
+\[
+v(N) = (N+3)^2 \implies v'(N) = 2(N+3)
+\]
+Calculons la dérivée $f'(N)$ en factorisant par $(N+3)$ au numérateur :
+\[
+f'(N) = \frac{u'(N)v(N) - u(N)v'(N)}{(v(N))^2} = \frac{(-2N + 30)(N+3)^2 - 2(N+3)(-N^2 + 30N - 81)}{(N+3)^4}
+\]
+\[
+f'(N) = \frac{(N+3)\left[(-2N + 30)(N+3) - 2(-N^2 + 30N - 81)\right]}{(N+3)^4}
+\]
+Développons l'expression entre crochets :
+\[
+(-2N^2 - 6N + 30N + 90) - (-2N^2 + 60N - 162) = -2N^2 + 24N + 90 + 2N^2 - 60N + 162 = -36N + 252
+\]
+D'où :
+\[
+f'(N) = \frac{-36N + 252}{(N+3)^3} = \mathbf{\frac{-36(N - 7)}{(N+3)^3}}
+\]
+Étudions le signe de $f'(N)$ sur $[2, +\infty[$ :
+\begin{itemize}[label=$\bullet$]
+    \item Pour $N \in [2, 7[$, $-36(N-7) > 0$ donc $f'(N) > 0$ : la fonction $f$ est strictement croissante.
+    \item En $N = 7$, $f'(7) = 0$.
+    \item Pour $N > 7$, $-36(N-7) < 0$ donc $f'(N) < 0$ : la fonction $f$ est strictement décroissante.
+\end{itemize}
+La fonction $f$ admet donc un maximum absolu strict en $N = 7$.
+L'entier recherché est donc :
+\[
+\mathbf{N = 7}
+\]
+Le joueur doit exiger exactement \textbf{$7$ jetons noirs} dans l'urne.
+Le gain moyen maximal réalisable s'élève à :
+\[
+\E_{\max} = f(7) = \frac{-(7)^2 + 30(7) - 81}{(7+3)^2} = \frac{-49 + 210 - 81}{100} = \frac{80}{100} = \mathbf{0{,}80\text{ \euro}}
+\]
+\end{correctionbox}
+
+\vspace{0.4cm}
+
+% ----------------------------------------------------
+% Correction Exercice 5
+% ----------------------------------------------------
+\subsection*{Correction détaillée de l'Exercice 5 \hfill (1,5 point)}
+
+\begin{correctionbox}[-- Problème de Mosteller : Fiabilité comparée de systèmes redondants]
+Soit $p \in [0, 1]$ la probabilité élémentaire qu'un moteur tombe en panne. La fiabilité de chaque moteur est donc $q = 1-p$.
+Les pannes étant mutuellement indépendantes, le nombre de pannes suit une loi binomiale.
+
+Un avion arrive à destination si \textbf{strictement moins de la moitié} de ses moteurs tombent en panne :
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Avion A ($2$ moteurs) :} Strictement moins de la moitié de $2$ signifie $0$ panne.
+    L'avion A arrive à bon port si et seulement si ses deux moteurs fonctionnent.
+    Notons $X$ le nombre de moteurs en panne : $X \sim \mathcal{B}(2, p)$.
+    \[
+    P_A = P(X = 0) = (1-p)^2
+    \]
+    \item \textbf{Avion B ($4$ moteurs) :} Strictement moins de la moitié de $4$ signifie $0$ ou $1$ panne.
+    Notons $Y$ le nombre de moteurs en panne : $Y \sim \mathcal{B}(4, p)$.
+    \[
+    P_B = P(Y = 0) + P(Y = 1) = \binom{4}{0} (1-p)^4 + \binom{4}{1} p(1-p)^3 = (1-p)^4 + 4p(1-p)^3
+    \]
+    En factorisant par $(1-p)^3$ :
+    \[
+    P_B = (1-p)^3 \left[(1-p) + 4p\right] = (1-p)^3 (1 + 3p)
+    \]
+\end{itemize}
+
+\textbf{Comparaison des fiabilités $P_B - P_A$ :}
+Pour déterminer quel avion offre la plus grande sécurité, étudions le signe de la différence $D(p) = P_B - P_A$ sur $[0, 1]$ :
+\[
+D(p) = (1-p)^3 (1+3p) - (1-p)^2 = (1-p)^2 \left[(1-p)(1+3p) - 1\right]
+\]
+Développons le crochet :
+\[
+(1-p)(1+3p) - 1 = 1 + 3p - p - 3p^2 - 1 = 2p - 3p^2 = p(2 - 3p)
+\]
+D'où la factorisation remarquable :
+\[
+\mathbf{D(p) = P_B - P_A = p (1-p)^2 (2 - 3p)}
+\]
+
+\textbf{Discussion exhaustive selon la valeur de $p$ :}
+Puisque $p \ge 0$ et $(1-p)^2 \ge 0$ sur $[0, 1]$, le signe de $D(p)$ est exclusivement gouverné par le facteur affine $2 - 3p$ :
+\begin{enumerate}
+    \item \textbf{Cas d'indifférence ($D(p) = 0$) :}
+    \[
+    D(p) = 0 \iff p = 0 \quad \text{ou} \quad p = 1 \quad \text{ou} \quad p = \frac{2}{3}
+    \]
+    \begin{itemize}[label=$\bullet$]
+        \item Si $p = 0$ (moteurs parfaits), $P_A = P_B = 1$.
+        \item Si $p = 1$ (moteurs systématiquement défaillants), $P_A = P_B = 0$.
+        \item Si $p = \frac{2}{3}$, $P_A = \left(\frac{1}{3}\right)^2 = \frac{1}{9}$ et $P_B = \left(\frac{1}{3}\right)^3 (1+2) = \frac{3}{27} = \frac{1}{9}$.
+    \end{itemize}
+    Dans ces trois cas, le choix de l'avion est \textbf{indifférent}.
+
+    \item \textbf{Cas où les moteurs sont fiables ($p \in \left]0, \frac{2}{3}\right[$) :}
+    Alors $2 - 3p > 0$, donc $D(p) > 0 \iff P_B > P_A$.
+    \textbf{On choisit impérativement l'avion B (à $4$ moteurs)}.
+    \emph{Exemple pratique :} Pour des moteurs aéronautiques modernes très fiables ($p = 0{,}01$), l'avion B offre une probabilité de crash de l'ordre de $6 \times 10^{-4}$ contre $2 \times 10^{-2}$ pour l'avion A.
+
+    \item \textbf{Cas où les moteurs sont très défaillants ($p \in \left]\frac{2}{3}, 1\right[$) :}
+    Alors $2 - 3p < 0$, donc $D(p) < 0 \iff P_A > P_B$.
+    \textbf{On choisit l'avion A (à $2$ moteurs)}.
+\end{enumerate}
+
+\textbf{Conclusion synthétique :}
+\[
+\begin{cases}
+    \text{Si } 0 < p < \dfrac{2}{3}, & \textbf{Choisir l'avion B (4 moteurs)} \\[0.25cm]
+    \text{Si } p = 0, \; p = \dfrac{2}{3} \text{ ou } p = 1, & \textbf{Choix indifférent} \\[0.25cm]
+    \text{Si } \dfrac{2}{3} < p < 1, & \textbf{Choisir l'avion A (2 moteurs)}
+\end{cases}
+\]
+\end{correctionbox}
+
+\begin{remarquebox}[-- Regard Prépa : Pourquoi plus de moteurs peut-il être néfaste ?]
+Ce problème, introduit par le mathématicien et statisticien Frederick Mosteller dans \emph{Fifty Challenging Problems in Probability} (1965), illustre la dialectique fondamentale de la théorie de la fiabilité :
+\begin{itemize}[label=$\bullet$]
+    \item Multiplier les composants apporte de la \textbf{redondance passive} bénéfique lorsque le composant élémentaire est robuste ($p < 2/3$).
+    \item Mais chaque moteur supplémentaire représente également une \textbf{source additionnelle de défaillance}. Si les moteurs sont intrinsèquement mauvais ($p > 2/3$), avoir 4 moteurs augmente considérablement le risque d'en voir tomber au moins 2 en panne ($P(Y \ge 2)$) par rapport au risque de voir tomber les 2 seuls moteurs d'un bi-moteur ($P(X = 2)$).
+\end{itemize}
+Le seuil critique $p^* = 2/3$ constitue le point de bifurcation où la redondance bascule de la protection vers la vulnérabilité.
+\end{remarquebox}
+
+\end{document}
