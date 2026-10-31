@@ -1,0 +1,2888 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+\tcbuselibrary{skins,breakable}
+
+\tcolorboxenvironment{proof}{
+  blanker,breakable,left=3mm,
+  before skip=10pt,after skip=10pt,
+  borderline west={1.5mm}{0pt}{gray!40}
+}
+
+\newtcolorbox{correctionbox}{
+  colback=blue!5!white,
+  colframe=blue!60!black,
+  title=\textbf{Correction détaillée},
+  fonttitle=\bfseries,
+  arc=2mm,
+  breakable
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\providecommand{\euro}{\text{\officialeuro}}
+
+\title{\textbf{Chapitre 2 : Le Second Degré et Polynômes}\\\large Fiche complète de TD d'approfondissement (Exercices 1 à 41) et corrections détaillées\\{\small Niveau : Première Spécialité Mathématiques (Lycée Louis-le-Grand)}}
+\author{Soutien Scolaire -- Mathématiques}
+\date{Année scolaire 2021--2022}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\vspace{1cm}
+\hrule
+\vspace{1cm}
+
+\section*{Première partie : Exercices 1 à 20}
+
+% ----------------------------------------------------
+% EXERCICE 1
+% ----------------------------------------------------
+\subsection*{Exercice 1 : Un résultat de cours}
+Démontrer que pour tous nombres réels $x$ et $y$ :
+\[
+x^2 = y^2 \iff (x = y \quad \text{ou} \quad x = -y).
+\]
+
+\begin{correctionbox}
+Soient $x$ et $y$ deux nombres réels.
+\begin{enumerate}
+    \item Par soustraction membre à membre :
+    \[
+    x^2 = y^2 \iff x^2 - y^2 = 0.
+    \]
+    \item On factorise le membre de gauche à l'aide de l'identité remarquable $a^2 - b^2 = (a-b)(a+b)$ :
+    \[
+    x^2 - y^2 = 0 \iff (x - y)(x + y) = 0.
+    \]
+    \item Dans le corps des réels $\R$ (qui est intègre), un produit de facteurs est nul si et seulement si l'un au moins des facteurs est nul (règle du produit nul) :
+    \[
+    (x - y)(x + y) = 0 \iff x - y = 0 \quad \text{ou} \quad x + y = 0 \iff x = y \quad \text{ou} \quad x = -y.
+    \]
+\end{enumerate}
+Chaque étape étant une équivalence logique stricte, on en déduit que :
+\[
+\forall (x, y) \in \R^2, \quad x^2 = y^2 \iff (x = y \quad \text{ou} \quad x = -y).
+\]
+
+\textbf{Remarque :} En utilisant la fonction valeur absolue, ce résultat fondamental s'énonce de façon équivalente sous la forme :
+\[
+x^2 = y^2 \iff |x| = |y|.
+\]
+Il met en garde contre l'erreur fréquente consistant à « prendre la racine carrée » sans précaution, puisque $\sqrt{x^2} = |x|$ et non $x$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 2
+% ----------------------------------------------------
+\subsection*{Exercice 2 : Équation rationnelle et valeur interdite}
+Résoudre dans $\R$ l'équation :
+\[
+\frac{x^2 + 2x + 1}{x + 1} = 0.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Ensemble de définition (valeur interdite) :}
+    Le quotient $\frac{x^2+2x+1}{x+1}$ est défini si et seulement si son dénominateur est non nul :
+    \[
+    x + 1 \neq 0 \iff x \neq -1.
+    \]
+    L'ensemble de validité de l'équation est donc $\mathcal{D} = \R \setminus \{-1\}$.
+
+    \item \textbf{Résolution sur le domaine $\mathcal{D}$ :}
+    Pour tout $x \in \mathcal{D}$, un quotient est nul si et seulement si son numérateur s'annule :
+    \[
+    \frac{x^2 + 2x + 1}{x + 1} = 0 \iff x^2 + 2x + 1 = 0.
+    \]
+    On reconnaît l'identité remarquable du carré d'une somme :
+    \[
+    (x + 1)^2 = 0 \iff x + 1 = 0 \iff x = -1.
+    \]
+
+    \item \textbf{Confrontation avec le domaine de définition :}
+    L'unique solution candidate est $x = -1$.
+    Or, $-1 \notin \mathcal{D}$ car il annule le dénominateur (il s'agit d'une valeur interdite).
+
+    \item \textbf{Conclusion :}
+    L'équation ne possède aucune solution dans $\R$ :
+    \[
+    \mathcal{S} = \emptyset.
+    \]
+\end{enumerate}
+\textbf{Remarque méthodologique :} Simplifier directement l'expression par $x+1$ sans poser le domaine préalable :
+\[
+\frac{(x+1)^2}{x+1} = x+1
+\]
+induirait en erreur et mènerait à la fausse conclusion $x = -1$. Une simplification de fraction n'est valide que sur son ensemble de définition !
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 3
+% ----------------------------------------------------
+\subsection*{Exercice 3 : Somme d'inverses et réduction au même dénominateur}
+Résoudre dans $\R$ l'équation :
+\[
+\frac{1}{x-1} + \frac{1}{x-2} + \frac{1}{x-3} = 0.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Domaine de définition :}
+    L'équation a un sens si et seulement si aucun des dénominateurs ne s'annule :
+    \[
+    x - 1 \neq 0, \quad x - 2 \neq 0 \quad \text{et} \quad x - 3 \neq 0.
+    \]
+    Le domaine de résolution est donc :
+    \[
+    \mathcal{D} = \R \setminus \{1\,,\, 2\,,\, 3\}.
+    \]
+
+    \item \textbf{Réduction au même dénominateur :}
+    Pour tout $x \in \mathcal{D}$, le dénominateur commun est le produit $(x-1)(x-2)(x-3)$.
+    L'équation devient :
+    \[
+    \frac{(x-2)(x-3) + (x-1)(x-3) + (x-1)(x-2)}{(x-1)(x-2)(x-3)} = 0.
+    \]
+    Pour $x \in \mathcal{D}$, cette équation équivaut à l'annulation du numérateur $N(x) = 0$.
+    Développons séparément chacun des produits :
+    \begin{align*}
+    (x-2)(x-3) &= x^2 - 5x + 6, \\
+    (x-1)(x-3) &= x^2 - 4x + 3, \\
+    (x-1)(x-2) &= x^2 - 3x + 2.
+    \end{align*}
+    En additionnant ces trois polynômes :
+    \[
+    N(x) = (x^2 - 5x + 6) + (x^2 - 4x + 3) + (x^2 - 3x + 2) = 3x^2 - 12x + 11.
+    \]
+    L'équation se ramène donc, pour $x \in \mathcal{D}$, à :
+    \[
+    3x^2 - 12x + 11 = 0.
+    \]
+
+    \item \textbf{Résolution de l'équation du second degré :}
+    Calculons le discriminant du trinôme :
+    \[
+    \Delta = (-12)^2 - 4 \times 3 \times 11 = 144 - 132 = 12 > 0.
+    \]
+    Comme $\Delta > 0$, l'équation admet deux racines réelles distinctes :
+    \[
+    x_1 = \frac{-(-12) - \sqrt{12}}{2 \times 3} = \frac{12 - 2\sqrt{3}}{6} = \frac{6 - \sqrt{3}}{3} = 2 - \frac{\sqrt{3}}{3},
+    \]
+    \[
+    x_2 = \frac{-(-12) + \sqrt{12}}{2 \times 3} = \frac{12 + 2\sqrt{3}}{6} = \frac{6 + \sqrt{3}}{3} = 2 + \frac{\sqrt{3}}{3}.
+    \]
+
+    \item \textbf{Vérification d'appartenance au domaine $\mathcal{D}$ :}
+    Puisque $1 < \sqrt{3} < 2$, on a $\frac{1}{3} < \frac{\sqrt{3}}{3} < \frac{2}{3} < 1$.
+    Par suite :
+    \[
+    1 < \frac{4}{3} < 2 - \frac{\sqrt{3}}{3} < \frac{5}{3} < 2 \implies x_1 \notin \{1, 2, 3\},
+    \]
+    \[
+    2 < \frac{7}{3} < 2 + \frac{\sqrt{3}}{3} < \frac{8}{3} < 3 \implies x_2 \notin \{1, 2, 3\}.
+    \]
+    Les deux solutions candidates appartiennent bien à l'ensemble de validité $\mathcal{D}$.
+
+    \item \textbf{Conclusion :}
+    L'ensemble des solutions de l'équation est :
+    \[
+    \mathcal{S} = \left\{ \frac{6 - \sqrt{3}}{3}\,,\, \frac{6 + \sqrt{3}}{3} \right\} = \left\{ 2 - \frac{\sqrt{3}}{3}\,,\, 2 + \frac{\sqrt{3}}{3} \right\}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 4
+% ----------------------------------------------------
+\subsection*{Exercice 4 : Résolution sans discriminant (Relations de Viète)}
+Résoudre dans $\R$, sans calculer le discriminant $\Delta$, l'équation :
+\[
+2021x^2 + x - 2022 = 0.
+\]
+
+\begin{correctionbox}
+Soit $P(x) = 2021x^2 + x - 2022$. Il s'agit d'un trinôme du second degré $ax^2 + bx + c$ avec $a = 2021$, $b = 1$ et $c = -2022$.
+\begin{enumerate}
+    \item \textbf{Recherche d'une racine évidente par la somme des coefficients :}
+    Calculons la somme des coefficients de ce trinôme :
+    \[
+    a + b + c = 2021 + 1 + (-2022) = 2022 - 2022 = 0.
+    \]
+    Or, pour tout polynôme $P(x) = ax^2 + bx + c$, on a $P(1) = a(1)^2 + b(1) + c = a + b + c$.
+    Comme la somme des coefficients est nulle, le nombre $1$ est racine évidente de l'équation :
+    \[
+    P(1) = 0 \implies x_1 = 1.
+    \]
+
+    \item \textbf{Détermination de la seconde racine via le produit des racines :}
+    Soit $x_2$ la seconde racine de l'équation. D'après les relations de Viète liant les racines aux coefficients d'un polynôme du second degré :
+    \[
+    P = x_1 \times x_2 = \frac{c}{a}.
+    \]
+    En remplaçant par les valeurs numériques et en utilisant $x_1 = 1$ :
+    \[
+    1 \times x_2 = \frac{-2022}{2021} \implies x_2 = -\frac{2022}{2021}.
+    \]
+
+    \item \textbf{Vérification par la somme des racines :}
+    On contrôle la cohérence à l'aide de la somme des racines :
+    \[
+    S = x_1 + x_2 = 1 + \left(-\frac{2022}{2021}\right) = \frac{2021 - 2022}{2021} = -\frac{1}{2021} = -\frac{b}{a},
+    \]
+    ce qui corrobore parfaitement le résultat.
+
+    \item \textbf{Conclusion :}
+    L'ensemble des solutions de l'équation est :
+    \[
+    \mathcal{S} = \left\{ -\frac{2022}{2021}\,,\, 1 \right\}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 5
+% ----------------------------------------------------
+\subsection*{Exercice 5 : Problème géométrique d'optimisation d'aire}
+Soit $ABCD$ un carré de côté $4\text{ cm}$. On choisit un point $E$ sur le segment $[AB]$.
+On construit à l'intérieur du carré :
+\begin{itemize}
+    \item le carré $AEFG$ de côté $AE$ ;
+    \item le triangle $EHB$, rectangle et isocèle en $H$, d'hypoténuse $[EB]$ portée par le segment $[AB]$.
+\end{itemize}
+Déterminer la position du point $E$ sur le segment $[AB]$ pour que la somme des aires du carré $AEFG$ et du triangle $EHB$ soit égale à $5\text{ cm}^2$.
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Choix de l'inconnue et domaine géométrique :}
+    On pose $x = AE$ en centimètres.
+    Le point $E$ appartenant au segment $[AB]$ de longueur $4\text{ cm}$, l'inconnue $x$ vérifie :
+    \[
+    x \in [0\,,\, 4].
+    \]
+
+    \item \textbf{Calcul des aires en fonction de $x$ :}
+    \begin{itemize}
+        \item \textbf{Aire du carré $AEFG$ :}
+        Le côté du carré est $AE = x$, donc son aire est :
+        \[
+        \mathcal{A}_1(x) = x^2.
+        \]
+        \item \textbf{Aire du triangle $EHB$ :}
+        Puisque $E \in [AB]$, la longueur de l'hypoténuse $[EB]$ est $EB = AB - AE = 4 - x$.
+        Le triangle $EHB$ étant rectangle et isocèle en $H$, on a $EH = HB$. D'après le théorème de Pythagore dans le triangle $EHB$ :
+        \[
+        EH^2 + HB^2 = EB^2 \iff 2 EH^2 = (4-x)^2 \iff EH^2 = \frac{(4-x)^2}{2}.
+        \]
+        L'aire du triangle rectangle $EHB$ est donnée par la moitié du produit des côtés de l'angle droit :
+        \[
+        \mathcal{A}_2(x) = \frac{1}{2} \times EH \times HB = \frac{1}{2} EH^2 = \frac{1}{2} \times \frac{(4-x)^2}{2} = \frac{(4-x)^2}{4}.
+        \]
+    \end{itemize}
+    L'aire totale colorée de la figure est donc :
+    \[
+    \mathcal{A}(x) = \mathcal{A}_1(x) + \mathcal{A}_2(x) = x^2 + \frac{(4-x)^2}{4}.
+    \]
+
+    \item \textbf{Mise en équation :}
+    La condition imposée est $\mathcal{A}(x) = 5$, ce qui se traduit par :
+    \[
+    x^2 + \frac{(4-x)^2}{4} = 5.
+    \]
+    En multipliant les deux membres par $4$ :
+    \begin{align*}
+    4x^2 + (4-x)^2 = 20 &\iff 4x^2 + (16 - 8x + x^2) = 20 \\
+    &\iff 5x^2 - 8x + 16 - 20 = 0 \\
+    &\iff 5x^2 - 8x - 4 = 0.
+    \end{align*}
+
+    \item \textbf{Résolution de l'équation du second degré :}
+    Calculons le discriminant :
+    \[
+    \Delta = (-8)^2 - 4 \times 5 \times (-4) = 64 + 80 = 144 = 12^2 > 0.
+    \]
+    Les deux racines réelles sont :
+    \[
+    x_1 = \frac{-(-8) - 12}{2 \times 5} = \frac{8 - 12}{10} = -\frac{4}{10} = -0{,}4,
+    \]
+    \[
+    x_2 = \frac{-(-8) + 12}{2 \times 5} = \frac{8 + 12}{10} = \frac{20}{10} = 2.
+    \]
+
+    \item \textbf{Confrontation avec la contrainte géométrique :}
+    Puisque $x$ représente une distance sur le segment $[AB]$, on doit avoir $x \in [0, 4]$.
+    La valeur $x_1 = -0{,}4$ est strictement négative, elle est donc exclue.
+    La seule valeur admissible est $x_2 = 2$.
+
+    \item \textbf{Conclusion :}
+    L'aire demandée est égale à $5\text{ cm}^2$ si et seulement si $AE = 2\text{ cm}$, ce qui signifie que le point $E$ est exactement le \textbf{milieu} du segment $[AB]$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 6
+% ----------------------------------------------------
+\subsection*{Exercice 6 : Inégalité fondamentale sur la somme d'un réel et de son inverse}
+\begin{enumerate}
+    \item Démontrer que pour tout nombre réel $x > 0$ :
+    \[
+    x + \frac{1}{x} \ge 2.
+    \]
+    \item Déterminer la condition nécessaire et suffisante pour que l'égalité ait lieu.
+    \item Établir l'inégalité analogue satisfaite pour tout réel $x < 0$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Soit $x \in \R_+^* = ]0\,,\, +\infty[$.
+    Pour comparer la quantité $x + \frac{1}{x}$ au nombre $2$, étudions le signe de leur différence :
+    \[
+    D(x) = x + \frac{1}{x} - 2.
+    \]
+    Réduisons au même dénominateur $x > 0$ :
+    \[
+    D(x) = \frac{x^2 - 2x + 1}{x} = \frac{(x - 1)^2}{x}.
+    \]
+    Or :
+    \begin{itemize}
+        \item Pour tout réel $x$, $(x - 1)^2 \ge 0$ car le carré d'un nombre réel est toujours positif ou nul ;
+        \item Par hypothèse, $x > 0$.
+    \end{itemize}
+    Le quotient d'un nombre positif ou nul par un nombre strictement positif est positif ou nul :
+    \[
+    \forall x > 0, \quad \frac{(x-1)^2}{x} \ge 0 \iff x + \frac{1}{x} - 2 \ge 0 \iff x + \frac{1}{x} \ge 2.
+    \]
+
+    \item L'égalité a lieu si et seulement si la différence s'annule :
+    \[
+    x + \frac{1}{x} = 2 \iff \frac{(x-1)^2}{x} = 0 \iff (x-1)^2 = 0 \iff x - 1 = 0 \iff x = 1.
+    \]
+    Le minimum de la fonction $x \mapsto x + \frac{1}{x}$ sur $]0, +\infty[$ est donc atteint en un unique point : $x = 1$, et vaut $2$.
+
+    \item Supposons maintenant $x < 0$. Alors $-x > 0$.
+    Appliquons le résultat de la première question au réel strictement positif $y = -x > 0$ :
+    \[
+    (-x) + \frac{1}{-x} \ge 2 \iff -\left(x + \frac{1}{x}\right) \ge 2.
+    \]
+    En multipliant les deux membres par $-1$ (ce qui inverse le sens de l'inégalité) :
+    \[
+    \forall x < 0, \quad x + \frac{1}{x} \le -2.
+    \]
+    L'égalité a lieu si et seulement si $-x = 1 \iff x = -1$.
+\end{enumerate}
+\textbf{Remarque culturelle :} Ce résultat est une illustration immédiate de l'inégalité arithmético-géométrique (AM-GM) appliquée aux deux réels strictement positifs $a = x$ et $b = \frac{1}{x}$ :
+\[
+\frac{a + b}{2} \ge \sqrt{ab} \iff \frac{x + \frac{1}{x}}{2} \ge \sqrt{x \times \frac{1}{x}} = 1 \iff x + \frac{1}{x} \ge 2.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 7
+% ----------------------------------------------------
+\subsection*{Exercice 7 : Modélisation d'intérêts composés (Mathématiques financières)}
+Un épargnant dépose chaque année la somme de $1\,000$~\euro{} sur un compte bancaire rémunéré à un taux annuel constant à intérêts composés noté $t = \frac{p}{100}$ :
+\begin{itemize}
+    \item un premier versement de $1\,000$~\euro{} à la date initiale ($T = 0$) ;
+    \item un deuxième versement de $1\,000$~\euro{} un an plus tard ($T = 1$) ;
+    \item un troisième versement de $1\,000$~\euro{} deux ans après l'ouverture ($T = 2$).
+\end{itemize}
+Immédiatement après le troisième versement, le capital total accumulé s'élève à $3\,090{,}90$~\euro{}.
+Déterminer la valeur exacte du taux d'intérêt $t$, puis le pourcentage annuel $p$.
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Modélisation de la valeur acquise au bout de 2 ans :}
+    À la date $T = 2$ :
+    \begin{itemize}
+        \item Le premier versement de $1\,000$~\euro{} a été placé pendant $2$ ans ; avec le taux d'intérêt annuel composé $t$, il a été multiplié par le coefficient $(1+t)^2$ et vaut $1\,000(1+t)^2$.
+        \item Le deuxième versement de $1\,000$~\euro{} a été placé pendant $1$ an ; il vaut $1\,000(1+t)$.
+        \item Le troisième versement de $1\,000$~\euro{} vient d'être déposé à $T = 2$ ; sa valeur est donc $1\,000$.
+    \end{itemize}
+    La somme totale disponible s'écrit donc :
+    \[
+    C(t) = 1\,000(1+t)^2 + 1\,000(1+t) + 1\,000 = 3\,090{,}90.
+    \]
+
+    \item \textbf{Mise sous forme d'équation polynomiale du second degré :}
+    En factorisant par $1\,000$ :
+    \[
+    1\,000 \bigl( (1+t)^2 + (1+t) + 1 \bigr) = 3\,090{,}90.
+    \]
+    Développons le terme entre parenthèses :
+    \[
+    (1+t)^2 + (1+t) + 1 = (1 + 2t + t^2) + 1 + t + 1 = t^2 + 3t + 3.
+    \]
+    L'équation devient :
+    \[
+    1\,000(t^2 + 3t + 3) = 3\,090{,}90 \iff t^2 + 3t + 3 = 3{,}0909 \iff t^2 + 3t - 0{,}0909 = 0.
+    \]
+
+    \item \textbf{Résolution de l'équation :}
+    Calculons le discriminant :
+    \[
+    \Delta = 3^2 - 4 \times 1 \times (-0{,}0909) = 9 + 0{,}3636 = 9{,}3636.
+    \]
+    Cherchons la racine carrée de ce discriminant :
+    \[
+    9{,}3636 = \frac{93\,636}{10\,000} = \left(\frac{306}{100}\right)^2 = (3{,}06)^2.
+    \]
+    En effet : $306^2 = (300 + 6)^2 = 90\,000 + 3\,600 + 36 = 93\,636$.
+    Ainsi, $\sqrt{\Delta} = 3{,}06$. Les deux racines sont :
+    \[
+    t_1 = \frac{-3 - 3{,}06}{2} = \frac{-6{,}06}{2} = -3{,}03,
+    \]
+    \[
+    t_2 = \frac{-3 + 3{,}06}{2} = \frac{0{,}06}{2} = 0{,}03.
+    \]
+
+    \item \textbf{Conclusion :}
+    Un taux de placement bancaire étant nécessairement positif ($t > 0$), la racine négative $t_1 = -3{,}03$ est dépourvue de sens économique.
+    On en déduit que le taux d'intérêt est :
+    \[
+    t = 0{,}03 \quad \text{soit un taux annuel de } p = 3\,\%.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 8
+% ----------------------------------------------------
+\subsection*{Exercice 8 : Détermination de l'expression d'un trinôme par interpolation}
+Déterminer l'expression développée et réduite de la fonction polynôme du second degré $f$ dont la courbe représentative (une parabole $\mathcal{P}$) passe par les points de coordonnées $(-6\,;\,0)$, $(1\,;\,0)$ et $(0\,;\,2)$.
+
+\begin{correctionbox}
+Soit $f(x) = ax^2 + bx + c$ avec $a \in \R^*$ le trinôme du second degré recherché.
+\begin{enumerate}
+    \item \textbf{Utilisation des racines et de la forme factorisée :}
+    La parabole coupe l'axe des abscisses aux points d'abscisses $-6$ et $1$. Les nombres $-6$ et $1$ sont donc les racines de $f$ :
+    \[
+    f(-6) = 0 \quad \text{et} \quad f(1) = 0.
+    \]
+    D'après le cours, tout trinôme admettant deux racines réelles distinctes $x_1$ et $x_2$ s'écrit sous forme factorisée :
+    \[
+    f(x) = a(x - x_1)(x - x_2) = a\bigl(x - (-6)\bigr)(x - 1) = a(x + 6)(x - 1).
+    \]
+
+    \item \textbf{Détermination du coefficient dominant $a$ :}
+    La parabole passe par le point $(0\,;\,2)$, ce qui signifie que l'ordonnée à l'origine vaut $2$, soit $f(0) = 2$ :
+    \[
+    f(0) = 2 \iff a(0 + 6)(0 - 1) = 2 \iff -6a = 2 \iff a = -\frac{2}{6} = -\frac{1}{3}.
+    \]
+
+    \item \textbf{Développement et forme réduite :}
+    On développe l'expression obtenue :
+    \[
+    f(x) = -\frac{1}{3}(x + 6)(x - 1) = -\frac{1}{3}(x^2 + 5x - 6) = -\frac{1}{3}x^2 - \frac{5}{3}x + 2.
+    \]
+
+    \item \textbf{Vérification des éléments géométriques :}
+    \begin{itemize}
+        \item $f(0) = 2$ ;
+        \item $f(1) = -\frac{1}{3} - \frac{5}{3} + 2 = -2 + 2 = 0$ ;
+        \item $f(-6) = -\frac{1}{3}(36) - \frac{5}{3}(-6) + 2 = -12 + 10 + 2 = 0$.
+    \end{itemize}
+    Toutes les conditions de l'énoncé sont rigoureusement vérifiées.
+\end{enumerate}
+\textbf{Conclusion :} L'expression recherchée est :
+\[
+f(x) = -\frac{1}{3}x^2 - \frac{5}{3}x + 2.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 9
+% ----------------------------------------------------
+\subsection*{Exercice 9 : Équation avec racine carrée et changement de variable}
+Résoudre dans $\R$ l'équation :
+\[
+6x - 13\sqrt{x} - 5 = 0.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Ensemble d'admissibilité :}
+    L'expression $\sqrt{x}$ n'a de sens réel que si le radicande est positif ou nul.
+    Le domaine de validité est donc :
+    \[
+    \mathcal{D} = [0\,,\, +\infty[.
+    \]
+
+    \item \textbf{Changement de variable :}
+    Pour tout $x \in \mathcal{D}$, on a $x = \bigl(\sqrt{x}\bigr)^2$.
+    Posons la variable auxiliaire $X = \sqrt{x}$.
+    Une racine carrée étant toujours positive ou nulle, la nouvelle inconnue $X$ doit vérifier la contrainte :
+    \[
+    X \ge 0.
+    \]
+    Sous cette condition, l'équation se réécrit comme une équation polynomiale du second degré en $X$ :
+    \[
+    6X^2 - 13X - 5 = 0.
+    \]
+
+    \item \textbf{Résolution en $X$ :}
+    Calculons le discriminant :
+    \[
+    \Delta = (-13)^2 - 4 \times 6 \times (-5) = 169 + 120 = 289.
+    \]
+    Puisque $289 = 17^2 > 0$, l'équation en $X$ admet deux racines réelles distinctes :
+    \[
+    X_1 = \frac{-(-13) - 17}{2 \times 6} = \frac{13 - 17}{12} = -\frac{4}{12} = -\frac{1}{3},
+    \]
+    \[
+    X_2 = \frac{-(-13) + 17}{2 \times 6} = \frac{13 + 17}{12} = \frac{30}{12} = \frac{5}{2}.
+    \]
+
+    \item \textbf{Retour à la variable $x$ :}
+    \begin{itemize}
+        \item La valeur candidate $X_1 = -\frac{1}{3}$ est strictement négative, ce qui contredit la condition impérative $X = \sqrt{x} \ge 0$. Cette racine est donc \textbf{rejetée}.
+        \item La valeur candidate $X_2 = \frac{5}{2}$ est strictement positive, donc admissible :
+        \[
+        \sqrt{x} = \frac{5}{2} \iff x = \left(\frac{5}{2}\right)^2 = \frac{25}{4}.
+        \]
+    \end{itemize}
+
+    \item \textbf{Conclusion :}
+    L'équation admet une unique solution réelle :
+    \[
+    \mathcal{S} = \left\{ \frac{25}{4} \right\}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 10
+% ----------------------------------------------------
+\subsection*{Exercice 10 : Inéquations bicarrées}
+Résoudre dans $\R$ les inéquations suivantes :
+\begin{enumerate}
+    \item $x^4 + 13x^2 + 36 > 0$
+    \item $x^4 - 13x^2 + 36 > 0$
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Résolution de l'inéquation (1) :} $x^4 + 13x^2 + 36 > 0$.
+    Pour tout nombre réel $x \in \R$ :
+    \[
+    x^2 \ge 0 \implies x^4 = (x^2)^2 \ge 0 \quad \text{et} \quad 13x^2 \ge 0.
+    \]
+    Comme $36 > 0$, la somme d'éléments positifs ou nuls et d'une constante strictement positive est strictement positive :
+    \[
+    \forall x \in \R, \quad x^4 + 13x^2 + 36 \ge 36 > 0.
+    \]
+    L'inégalité est vérifiée pour tout nombre réel. Par conséquent :
+    \[
+    \mathcal{S}_1 = \R.
+    \]
+
+    \item \textbf{Résolution de l'inéquation (2) :} $x^4 - 13x^2 + 36 > 0$.
+    \begin{itemize}
+        \item \textbf{Changement de variable :} Posons $X = x^2$. L'inconnue $X$ est soumise à la condition $X \ge 0$.
+        Le polynôme s'écrit sous la forme du trinôme :
+        \[
+        P(X) = X^2 - 13X + 36.
+        \]
+        \item \textbf{Racines et factorisation de $P(X)$ :}
+        On cherche deux nombres ayant pour somme $S = 13$ et pour produit $P = 36$. Ces deux nombres sont immédiatement $4$ et $9$.
+        Le trinôme se factorise donc sous la forme :
+        \[
+        P(X) = (X - 4)(X - 9).
+        \]
+        \item \textbf{Signe du trinôme en $X$ :}
+        Le coefficient dominant de $P(X)$ est $1 > 0$. Le trinôme est strictement positif à l'extérieur de ses racines :
+        \[
+        P(X) > 0 \iff X \in ]-\infty\,,\, 4[ \cup ]9\,,\, +\infty[.
+        \]
+        \item \textbf{Prise en compte de la contrainte $X = x^2 \ge 0$ :}
+        La condition devient :
+        \[
+        0 \le X < 4 \quad \text{ou} \quad X > 9.
+        \]
+        En revenant à l'inconnue réelle $x$ :
+        \begin{itemize}
+            \item $0 \le x^2 < 4 \iff |x| < 2 \iff -2 < x < 2 \iff x \in ]-2\,,\, 2[$.
+            \item $x^2 > 9 \iff |x| > 3 \iff x < -3 \quad \text{ou} \quad x > 3 \iff x \in ]-\infty\,,\, -3[ \cup ]3\,,\, +\infty[$.
+        \end{itemize}
+    \end{itemize}
+    L'ensemble des solutions de la seconde inéquation est la réunion de ces intervalles disjoints :
+    \[
+    \mathcal{S}_2 = ]-\infty\,,\, -3[ \cup ]-2\,,\, 2[ \cup ]3\,,\, +\infty[.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 11
+% ----------------------------------------------------
+\subsection*{Exercice 11 : Équation polynomiale d'ordre supérieur réductible}
+Résoudre dans $\R$ l'équation :
+\[
+x^7 + 3x^5 - 4x^3 = 0.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Factorisation par le monôme de plus bas degré :}
+    On factorise par le terme commun $x^3$ :
+    \[
+    x^3 (x^4 + 3x^2 - 4) = 0.
+    \]
+    D'après la règle du produit nul :
+    \[
+    x^3 = 0 \iff x = 0
+    \]
+    ou
+    \[
+    x^4 + 3x^2 - 4 = 0.
+    \]
+
+    \item \textbf{Résolution de l'équation bicarrée $x^4 + 3x^2 - 4 = 0$ :}
+    Effectuons le changement de variable $X = x^2$ sous la contrainte $X \ge 0$. L'équation devient :
+    \[
+    X^2 + 3X - 4 = 0.
+    \]
+    La somme des coefficients vaut $1 + 3 + (-4) = 0$, donc $X_1 = 1$ est une racine évidente.
+    Le produit des racines étant $\frac{c}{a} = -4$, la seconde racine est $X_2 = -4$.
+
+    \item \textbf{Retour à la variable $x$ :}
+    \begin{itemize}
+        \item Pour $X_2 = -4$ : l'équation $x^2 = -4$ n'admet aucune solution réelle car pour tout $x \in \R$, $x^2 \ge 0 > -4$.
+        \item Pour $X_1 = 1$ : l'équation $x^2 = 1$ admet deux solutions réelles :
+        \[
+        x = 1 \quad \text{ou} \quad x = -1.
+        \]
+    \end{itemize}
+
+    \item \textbf{Conclusion :}
+    En combinant la solution nulle $x = 0$ et les solutions issues de l'équation bicarrée, on obtient :
+    \[
+    \mathcal{S} = \{-1\,,\, 0\,,\, 1\}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 12
+% ----------------------------------------------------
+\subsection*{Exercice 12 : Équation symétrique (ou réciproque)}
+Résoudre dans $\R$ l'équation :
+\[
+x^2 + x - 4 + \frac{1}{x} + \frac{1}{x^2} = 0.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Ensemble de validité :}
+    Les fractions rationnelles $\frac{1}{x}$ et $\frac{1}{x^2}$ imposent $x \neq 0$.
+    L'ensemble de validité de l'équation est donc :
+    \[
+    \mathcal{D} = \R^* = \R \setminus \{0\}.
+    \]
+
+    \item \textbf{Regroupement symétrique des termes :}
+    Pour tout $x \in \mathcal{D}$, réorganisons les termes en groupant les puissances opposées :
+    \[
+    \left(x^2 + \frac{1}{x^2}\right) + \left(x + \frac{1}{x}\right) - 4 = 0.
+    \]
+
+    \item \textbf{Changement de variable symétrique :}
+    Posons la nouvelle variable :
+    \[
+    X = x + \frac{1}{x}.
+    \]
+    Élevons cette égalité au carré à l'aide de la première identité remarquable :
+    \[
+    X^2 = \left(x + \frac{1}{x}\right)^2 = x^2 + 2 \times x \times \frac{1}{x} + \frac{1}{x^2} = x^2 + 2 + \frac{1}{x^2}.
+    \]
+    On en déduit l'expression du terme quadratique en fonction de $X$ :
+    \[
+    x^2 + \frac{1}{x^2} = X^2 - 2.
+    \]
+
+    \item \textbf{Résolution de l'équation auxiliaire en $X$ :}
+    En substituant dans l'équation de départ :
+    \[
+    (X^2 - 2) + X - 4 = 0 \iff X^2 + X - 6 = 0.
+    \]
+    Factorisons ce trinôme en remarquant que $2$ et $-3$ ont pour somme $-1$ et produit $-6$ :
+    \[
+    (X - 2)(X + 3) = 0 \iff X = 2 \quad \text{ou} \quad X = -3.
+    \]
+
+    \item \textbf{Résolution en $x$ pour chaque valeur de $X$ :}
+    \begin{itemize}
+        \item \textbf{Premier cas : $X = 2$}
+        \[
+        x + \frac{1}{x} = 2 \iff \frac{x^2 - 2x + 1}{x} = 0 \iff (x - 1)^2 = 0 \iff x = 1.
+        \]
+        La valeur $x = 1$ appartient bien à $\mathcal{D}$.
+        \item \textbf{Second cas : $X = -3$}
+        \[
+        x + \frac{1}{x} = -3 \iff \frac{x^2 + 3x + 1}{x} = 0 \iff x^2 + 3x + 1 = 0.
+        \]
+        Calculons le discriminant de ce trinôme :
+        \[
+        \Delta = 3^2 - 4 \times 1 \times 1 = 9 - 4 = 5 > 0.
+        \]
+        L'équation admet deux racines réelles distinctes :
+        \[
+        x_1 = \frac{-3 - \sqrt{5}}{2} \quad \text{et} \quad x_2 = \frac{-3 + \sqrt{5}}{2}.
+        \]
+        Ces deux valeurs sont non nulles (car $\sqrt{5} \neq 3$), elles appartiennent donc à $\mathcal{D}$.
+    \end{itemize}
+
+    \item \textbf{Conclusion :}
+    L'équation admet trois solutions réelles distinctes :
+    \[
+    \mathcal{S} = \left\{ \frac{-3 - \sqrt{5}}{2}\,,\, \frac{-3 + \sqrt{5}}{2}\,,\, 1 \right\}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 13
+% ----------------------------------------------------
+\subsection*{Exercice 13 : Équation à paramètre et discussion du discriminant}
+Discuter selon les valeurs du paramètre réel $m$ le nombre et la nature des solutions réelles de l'équation :
+\[
+x^2 - (m+1)x + 4 = 0.
+\]
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Nature de l'équation :}
+    Pour toute valeur du paramètre $m \in \R$, le coefficient dominant devant $x^2$ vaut $1 \neq 0$. L'équation est donc toujours une équation polynomiale du second degré en $x$.
+
+    \item \textbf{Calcul et factorisation du discriminant :}
+    Le discriminant de l'équation est :
+    \[
+    \Delta(m) = \bigl(-(m+1)\bigr)^2 - 4 \times 1 \times 4 = (m+1)^2 - 16 = (m+1)^2 - 4^2.
+    \]
+    En utilisant l'identité remarquable $A^2 - B^2 = (A-B)(A+B)$ :
+    \[
+    \Delta(m) = (m + 1 - 4)(m + 1 + 4) = (m - 3)(m + 5).
+    \]
+
+    \item \textbf{Étude du signe de $\Delta(m)$ :}
+    $\Delta(m)$ est un trinôme du second degré en $m$ dont les racines sont $-5$ et $3$. Le coefficient de $m^2$ étant $1 > 0$, $\Delta(m)$ est strictement négatif entre les racines et strictement positif à l'extérieur.
+
+    \item \textbf{Discussion complète :}
+    \begin{itemize}
+        \item \textbf{Si $m \in ]-\infty\,,\, -5[ \cup ]3\,,\, +\infty[$ :}
+        $\Delta(m) > 0$. L'équation admet \textbf{deux solutions réelles distinctes} :
+        \[
+        x_1 = \frac{m + 1 - \sqrt{(m-3)(m+5)}}{2} \quad \text{et} \quad x_2 = \frac{m + 1 + \sqrt{(m-3)(m+5)}}{2}.
+        \]
+        \item \textbf{Si $m = -5$ :}
+        $\Delta(-5) = 0$. L'équation admet \textbf{une unique racine réelle double} :
+        \[
+        x_0 = \frac{m + 1}{2} = \frac{-5 + 1}{2} = -2.
+        \]
+        \item \textbf{Si $m = 3$ :}
+        $\Delta(3) = 0$. L'équation admet \textbf{une unique racine réelle double} :
+        \[
+        x_0 = \frac{m + 1}{2} = \frac{3 + 1}{2} = 2.
+        \]
+        \item \textbf{Si $m \in ]-5\,,\, 3[$ :}
+        $\Delta(m) < 0$. L'équation n'admet \textbf{aucune solution réelle} :
+        \[
+        \mathcal{S} = \emptyset.
+        \]
+    \end{itemize}
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 14
+% ----------------------------------------------------
+\subsection*{Exercice 14 : Équations paramétriques et dégénérescence de degré}
+Discuter selon les valeurs du paramètre réel $m$ le nombre de solutions réelles des équations suivantes :
+\begin{enumerate}
+    \item $(m-1)x^2 + 2x - 5 = 0$
+    \item $3x^2 - mx + 4 = 0$
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Première équation :} $(m-1)x^2 + 2x - 5 = 0$.
+    Le coefficient devant le terme de plus haut degré dépend de $m$. Il est impératif de distinguer le cas où ce coefficient s'annule :
+    \begin{itemize}
+        \item \textbf{Cas 1 : $m = 1$ (dégénérescence du degré).}
+        Le coefficient dominant est nul. L'équation n'est plus du second degré mais affine du premier degré :
+        \[
+        0 \cdot x^2 + 2x - 5 = 0 \iff 2x = 5 \iff x = \frac{5}{2}.
+        \]
+        L'équation admet alors \textbf{une unique solution réelle} : $\mathcal{S} = \left\{\frac{5}{2}\right\}$.
+
+        \item \textbf{Cas 2 : $m \neq 1$ (équation du second degré).}
+        Le coefficient dominant $m - 1$ est non nul. Calculons le discriminant :
+        \[
+        \Delta(m) = 2^2 - 4(m-1)(-5) = 4 + 20(m-1) = 4 + 20m - 20 = 20m - 16 = 4(5m - 4).
+        \]
+        Étudions le signe de $\Delta(m)$ :
+        \begin{itemize}
+            \item Si $5m - 4 < 0 \iff m < \frac{4}{5}$ : $\Delta(m) < 0$, l'équation n'admet \textbf{aucune solution réelle} ($\mathcal{S} = \emptyset$).
+            \item Si $5m - 4 = 0 \iff m = \frac{4}{5}$ : $\Delta(m) = 0$, l'équation admet \textbf{une unique racine réelle double} :
+            \[
+            x_0 = \frac{-2}{2(m-1)} = \frac{-1}{\frac{4}{5} - 1} = \frac{-1}{-\frac{1}{5}} = 5.
+            \]
+            \item Si $m > \frac{4}{5}$ avec $m \neq 1$ : $\Delta(m) > 0$, l'équation admet \textbf{deux solutions réelles distinctes} :
+            \[
+            x_1 = \frac{-2 - \sqrt{4(5m-4)}}{2(m-1)} = \frac{-1 - \sqrt{5m-4}}{m-1},
+            \]
+            \[
+            x_2 = \frac{-2 + \sqrt{4(5m-4)}}{2(m-1)} = \frac{-1 + \sqrt{5m-4}}{m-1}.
+            \]
+        \end{itemize}
+    \end{itemize}
+    \textbf{Synthèse pour l'équation (1) :}
+    \begin{itemize}
+        \item Si $m < \frac{4}{5}$ : $0$ solution réelle ;
+        \item Si $m = \frac{4}{5}$ ou $m = 1$ : exactement $1$ solution réelle ;
+        \item Si $m \in ]\frac{4}{5}\,,\, 1[ \cup ]1\,,\, +\infty[$ : exactement $2$ solutions réelles distinctes.
+    \end{itemize}
+
+    \item \textbf{Seconde équation :} $3x^2 - mx + 4 = 0$.
+    Le coefficient dominant vaut $3 \neq 0$ : c'est une équation du second degré pour tout $m \in \R$.
+    Calculons le discriminant :
+    \[
+    \Delta(m) = (-m)^2 - 4 \times 3 \times 4 = m^2 - 48 = (m - 4\sqrt{3})(m + 4\sqrt{3}).
+    \]
+    \begin{itemize}
+        \item Si $m \in ]-\infty\,,\, -4\sqrt{3}[ \cup ]4\sqrt{3}\,,\, +\infty[$ : $\Delta(m) > 0$, l'équation admet \textbf{deux solutions réelles distinctes} :
+        \[
+        x_1 = \frac{m - \sqrt{m^2 - 48}}{6} \quad \text{et} \quad x_2 = \frac{m + \sqrt{m^2 - 48}}{6}.
+        \]
+        \item Si $m = -4\sqrt{3}$ ou $m = 4\sqrt{3}$ : $\Delta(m) = 0$, l'équation admet \textbf{une unique racine réelle double} :
+        \[
+        x_0 = \frac{m}{6} = \pm \frac{4\sqrt{3}}{6} = \pm \frac{2\sqrt{3}}{3}.
+        \]
+        \item Si $m \in ]-4\sqrt{3}\,,\, 4\sqrt{3}[$ : $\Delta(m) < 0$, l'équation n'admet \textbf{aucune solution réelle} ($\mathcal{S} = \emptyset$).
+    \end{itemize}
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 15
+% ----------------------------------------------------
+\subsection*{Exercice 15 : Équations à paramètres littéraux multiples}
+Résoudre et discuter dans $\R$, en fonction des paramètres réels $a$ et $b$, les équations suivantes :
+\begin{enumerate}
+    \item $bx^2 - ax + bx - a = 0$
+    \item $(ax)^2 - 3abx + 3b^2 = 0$
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Première équation :} $bx^2 - ax + bx - a = 0$.
+    Regroupons les termes par factorisation directe :
+    \[
+    (bx^2 + bx) - (ax + a) = bx(x + 1) - a(x + 1) = (bx - a)(x + 1) = 0.
+    \]
+    Discutons selon les valeurs de $b$ :
+    \begin{itemize}
+        \item \textbf{Si $b = 0$ :} L'équation devient $-a(x+1) = 0$.
+        \begin{itemize}
+            \item Si $a = 0$ : l'équation s'écrit $0 = 0$, elle est vérifiée pour tout $x \in \R$, donc $\mathcal{S} = \R$.
+            \item Si $a \neq 0$ : l'équation équivaut à $x + 1 = 0$, d'où $\mathcal{S} = \{-1\}$.
+        \end{itemize}
+        \item \textbf{Si $b \neq 0$ :} L'équation est du second degré. Par le produit nul :
+        \[
+        bx - a = 0 \iff x = \frac{a}{b} \quad \text{ou} \quad x + 1 = 0 \iff x = -1.
+        \]
+        \begin{itemize}
+            \item Si $\frac{a}{b} = -1 \iff a = -b$ : les deux racines coïncident, l'équation admet une unique racine double $x_0 = -1$, donc $\mathcal{S} = \{-1\}$.
+            \item Si $a \neq -b$ : l'équation admet deux racines distinctes, donc $\mathcal{S} = \left\{-1\,,\, \frac{a}{b}\right\}$.
+        \end{itemize}
+    \end{itemize}
+    \textbf{Remarque par le discriminant :} Sous forme développée $bx^2 + (b-a)x - a = 0$, le discriminant est :
+    \[
+    \Delta = (b-a)^2 - 4b(-a) = (b-a)^2 + 4ab = b^2 - 2ab + a^2 + 4ab = (a+b)^2 \ge 0.
+    \]
+    Comme $\Delta \ge 0$, l'équation admet toujours au moins une solution réelle pour $b \neq 0$.
+
+    \item \textbf{Seconde équation :} $(ax)^2 - 3abx + 3b^2 = 0 \iff a^2 x^2 - 3abx + 3b^2 = 0$.
+    \begin{itemize}
+        \item \textbf{Si $a = 0$ :} L'équation se réduit à :
+        \[
+        3b^2 = 0 \iff b = 0.
+        \]
+        \begin{itemize}
+            \item Si $b = 0$ (donc $a = 0$ et $b = 0$) : $0 = 0$ est toujours vrai, donc $\mathcal{S} = \R$.
+            \item Si $b \neq 0$ (avec $a = 0$) : l'équation $3b^2 = 0$ n'a aucune solution, donc $\mathcal{S} = \emptyset$.
+        \end{itemize}
+        \item \textbf{Si $a \neq 0$ :} Le coefficient dominant est $a^2 > 0$ ; l'équation est du second degré.
+        Calculons son discriminant :
+        \[
+        \Delta = (-3ab)^2 - 4(a^2)(3b^2) = 9a^2 b^2 - 12a^2 b^2 = -3a^2 b^2 = -3(ab)^2.
+        \]
+        Puisqu'un carré est toujours positif ou nul, $(ab)^2 \ge 0$, donc :
+        \[
+        \Delta = -3(ab)^2 \le 0.
+        \]
+        \begin{itemize}
+            \item Si $b = 0$ : alors $\Delta = 0$. L'équation devient $a^2 x^2 = 0 \iff x = 0$ (racine double unique), donc $\mathcal{S} = \{0\}$.
+            \item Si $b \neq 0$ : comme $a \neq 0$, on a $ab \neq 0$, donc $\Delta = -3(ab)^2 < 0$.
+            L'équation n'admet aucune solution réelle : $\mathcal{S} = \emptyset$.
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 16
+% ----------------------------------------------------
+\subsection*{Exercice 16 : Existence garantie de racines réelles pour une équation littérale}
+Soient $a, b, c$ trois nombres réels fixés.
+\begin{enumerate}
+    \item Démontrer que l'équation d'inconnue $x$ :
+    \[
+    (x-a)(x-b) = c^2
+    \]
+    admet au moins une solution réelle pour tout triplet $(a, b, c) \in \R^3$.
+    \item À quelle condition nécessaire et suffisante sur $a, b, c$ l'équation admet-elle une unique solution réelle ?
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Développons le membre de gauche et rassemblons tous les termes :
+    \[
+    (x-a)(x-b) = c^2 \iff x^2 - (a+b)x + ab - c^2 = 0.
+    \]
+    Il s'agit d'une équation polynomiale du second degré en $x$, dont le coefficient dominant est $1 \neq 0$.
+    Calculons son discriminant :
+    \[
+    \Delta = \bigl(-(a+b)\bigr)^2 - 4 \times 1 \times (ab - c^2) = (a+b)^2 - 4ab + 4c^2.
+    \]
+    Développons le premier bloc :
+    \[
+    (a+b)^2 - 4ab = a^2 + 2ab + b^2 - 4ab = a^2 - 2ab + b^2 = (a-b)^2.
+    \]
+    Le discriminant s'écrit donc sous la forme remarquable d'une somme de deux carrés :
+    \[
+    \Delta = (a-b)^2 + 4c^2.
+    \]
+    Or, pour tous réels $a, b, c$, les carrés $(a-b)^2 \ge 0$ et $c^2 \ge 0$ sont positifs ou nuls.
+    Par conséquent :
+    \[
+    \forall (a, b, c) \in \R^3, \quad \Delta = (a-b)^2 + 4c^2 \ge 0.
+    \]
+    Le discriminant étant positif ou nul pour tout choix de paramètres réels, l'équation admet toujours au moins une racine réelle.
+
+    \item Une équation du second degré admet une unique solution réelle (racine double) si et seulement si son discriminant est strictement nul :
+    \[
+    \Delta = 0 \iff (a-b)^2 + 4c^2 = 0.
+    \]
+    Une somme de deux nombres réels positifs ou nuls est nulle si et seulement si chacun d'eux est nul :
+    \[
+    \begin{cases}
+    (a-b)^2 = 0 \\
+    4c^2 = 0
+    \end{cases}
+    \iff
+    \begin{cases}
+    a - b = 0 \\
+    c = 0
+    \end{cases}
+    \iff
+    \begin{cases}
+    a = b \\
+    c = 0.
+    \end{cases}
+    \]
+    Lorsque cette condition est remplie, l'unique racine double est :
+    \[
+    x_0 = \frac{a+b}{2} = a.
+    \]
+    \textbf{Conclusion :} L'équation admet une unique solution réelle si et seulement si $a = b$ et $c = 0$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 17
+% ----------------------------------------------------
+\subsection*{Exercice 17 : Radicaux imbriqués et trinôme (I)}
+\begin{enumerate}
+    \item Développer et simplifier le nombre $(4\sqrt{3} - \sqrt{6})^2$.
+    \item En déduire la résolution dans $\R$ de l'équation :
+    \[
+    4x^2 - (\sqrt{6} + 4\sqrt{3})x + \sqrt{18} = 0.
+    \]
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Développons le carré $(4\sqrt{3} - \sqrt{6})^2$ à l'aide de l'identité remarquable $(u-v)^2 = u^2 - 2uv + v^2$ :
+    \begin{align*}
+    (4\sqrt{3} - \sqrt{6})^2 &= (4\sqrt{3})^2 - 2(4\sqrt{3})(\sqrt{6}) + (\sqrt{6})^2 \\
+    &= 16 \times 3 - 8\sqrt{18} + 6 \\
+    &= 48 - 8\sqrt{9 \times 2} + 6 \\
+    &= 54 - 8 \times 3\sqrt{2} \\
+    &= 54 - 24\sqrt{2}.
+    \end{align*}
+
+    \item Résolvons l'équation du second degré $4x^2 - (\sqrt{6} + 4\sqrt{3})x + \sqrt{18} = 0$.
+    Ici, $a = 4$, $b = -(\sqrt{6} + 4\sqrt{3})$ et $c = \sqrt{18} = 3\sqrt{2}$.
+    Calculons le discriminant :
+    \[
+    \Delta = \bigl(-(\sqrt{6} + 4\sqrt{3})\bigr)^2 - 4 \times 4 \times \sqrt{18} = (\sqrt{6} + 4\sqrt{3})^2 - 16\sqrt{18}.
+    \]
+    Développons le premier terme :
+    \[
+    (\sqrt{6} + 4\sqrt{3})^2 = 6 + 2 \times 4\sqrt{18} + 48 = 54 + 8\sqrt{18} = 54 + 24\sqrt{2}.
+    \]
+    Comme $16\sqrt{18} = 16 \times 3\sqrt{2} = 48\sqrt{2}$, il vient :
+    \[
+    \Delta = (54 + 24\sqrt{2}) - 48\sqrt{2} = 54 - 24\sqrt{2}.
+    \]
+    D'après le calcul de la question 1, on identifie immédiatement :
+    \[
+    \Delta = (4\sqrt{3} - \sqrt{6})^2.
+    \]
+    Comme $4\sqrt{3} = \sqrt{48} > \sqrt{6}$, la quantité $4\sqrt{3} - \sqrt{6}$ est strictement positive. Par conséquent :
+    \[
+    \sqrt{\Delta} = 4\sqrt{3} - \sqrt{6}.
+    \]
+    Les deux racines réelles sont données par :
+    \[
+    x_1 = \frac{(\sqrt{6} + 4\sqrt{3}) - (4\sqrt{3} - \sqrt{6})}{2 \times 4} = \frac{2\sqrt{6}}{8} = \frac{\sqrt{6}}{4},
+    \]
+    \[
+    x_2 = \frac{(\sqrt{6} + 4\sqrt{3}) + (4\sqrt{3} - \sqrt{6})}{2 \times 4} = \frac{8\sqrt{3}}{8} = \sqrt{3}.
+    \]
+
+    \item \textbf{Conclusion :}
+    L'ensemble des solutions de l'équation est :
+    \[
+    \mathcal{S} = \left\{ \frac{\sqrt{6}}{4}\,,\, \sqrt{3} \right\}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 18
+% ----------------------------------------------------
+\subsection*{Exercice 18 : Radicaux imbriqués et trinôme (II)}
+\begin{enumerate}
+    \item Développer et simplifier le nombre $(3 - \sqrt{2})^2$.
+    \item Résoudre dans $\R$ l'équation :
+    \[
+    x^2 + (1 + \sqrt{2})x + 2(\sqrt{2} - 1) = 0.
+    \]
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Développons le carré $(3 - \sqrt{2})^2$ :
+    \[
+    (3 - \sqrt{2})^2 = 3^2 - 2 \times 3 \times \sqrt{2} + (\sqrt{2})^2 = 9 - 6\sqrt{2} + 2 = 11 - 6\sqrt{2}.
+    \]
+
+    \item Résolvons l'équation $x^2 + (1 + \sqrt{2})x + 2(\sqrt{2} - 1) = 0$.
+    Ici $a = 1$, $b = 1 + \sqrt{2}$ et $c = 2(\sqrt{2} - 1)$.
+    Calculons son discriminant :
+    \[
+    \Delta = (1 + \sqrt{2})^2 - 4 \times 1 \times 2(\sqrt{2} - 1) = (1 + \sqrt{2})^2 - 8(\sqrt{2} - 1).
+    \]
+    Développons les deux expressions :
+    \[
+    (1 + \sqrt{2})^2 = 1 + 2\sqrt{2} + 2 = 3 + 2\sqrt{2},
+    \]
+    \[
+    -8(\sqrt{2} - 1) = -8\sqrt{2} + 8.
+    \]
+    En additionnant ces résultats :
+    \[
+    \Delta = (3 + 2\sqrt{2}) + (-8\sqrt{2} + 8) = 11 - 6\sqrt{2}.
+    \]
+    D'après la question 1, on reconnaît :
+    \[
+    \Delta = (3 - \sqrt{2})^2.
+    \]
+    Comme $3 > \sqrt{2} \approx 1{,}414$, on a $3 - \sqrt{2} > 0$, d'où :
+    \[
+    \sqrt{\Delta} = 3 - \sqrt{2}.
+    \]
+    Les deux racines réelles de l'équation sont :
+    \[
+    x_1 = \frac{-(1 + \sqrt{2}) - (3 - \sqrt{2})}{2} = \frac{-1 - \sqrt{2} - 3 + \sqrt{2}}{2} = \frac{-4}{2} = -2,
+    \]
+    \[
+    x_2 = \frac{-(1 + \sqrt{2}) + (3 - \sqrt{2})}{2} = \frac{-1 - \sqrt{2} + 3 - \sqrt{2}}{2} = \frac{2 - 2\sqrt{2}}{2} = 1 - \sqrt{2}.
+    \]
+
+    \item \textbf{Conclusion :}
+    L'ensemble des solutions est :
+    \[
+    \mathcal{S} = \{-2\,,\, 1 - \sqrt{2}\}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 19
+% ----------------------------------------------------
+\subsection*{Exercice 19 : Le rectangle d'or et la proportion divine}
+Un rectangle de longueur $L$ et de largeur $\ell$ (avec $L > \ell > 0$) est appelé « rectangle d'or » lorsque, après lui avoir retiré un carré de côté $\ell$, le rectangle résiduel (de dimensions $\ell$ et $L - \ell$) est semblable au rectangle initial, c'est-à-dire que le rapport de sa longueur sur sa largeur est conservé.
+On pose $\Phi = \frac{L}{\ell}$.
+\begin{enumerate}
+    \item Montrer que $\Phi$ est l'unique racine strictement positive de l'équation $x^2 - x - 1 = 0$.
+    \item En déduire la valeur exacte de $\Phi$ (le « nombre d'or »).
+    \item Établir les relations algébriques remarquables suivantes :
+    \[
+    \frac{1}{\Phi} = \Phi - 1, \quad \Phi^2 = \Phi + 1, \quad \Phi^3 = 2\Phi + 1 \quad \text{et} \quad \Phi^4 = 3\Phi + 2.
+    \]
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Mise en équation géométrique :}
+    Dans le rectangle initial, le rapport longueur sur largeur est $\frac{L}{\ell} = \Phi > 1$.
+    Le rectangle restant a pour côtés $\ell$ et $L - \ell$.
+    Sa plus grande dimension étant $\ell$ et sa plus petite étant $L - \ell$, la condition de proportionnalité (similitude) s'énonce :
+    \[
+    \frac{L}{\ell} = \frac{\ell}{L - \ell}.
+    \]
+    Divisons par $\ell$ le numérateur et le dénominateur du membre de droite :
+    \[
+    \frac{\ell}{L - \ell} = \frac{1}{\frac{L}{\ell} - 1} = \frac{1}{\Phi - 1}.
+    \]
+    La relation devient ainsi :
+    \[
+    \Phi = \frac{1}{\Phi - 1}.
+    \]
+    Puisque $\Phi > 1$, on peut multiplier par $\Phi - 1$ sans introduire d'équivoque :
+    \[
+    \Phi(\Phi - 1) = 1 \iff \Phi^2 - \Phi - 1 = 0.
+    \]
+    Le réel $\Phi$ est donc racine de l'équation du second degré $x^2 - x - 1 = 0$.
+
+    \item \textbf{Calcul de la valeur exacte du nombre d'or :}
+    Résolvons l'équation $x^2 - x - 1 = 0$.
+    Son discriminant est :
+    \[
+    \Delta = (-1)^2 - 4 \times 1 \times (-1) = 1 + 4 = 5 > 0.
+    \]
+    L'équation admet deux racines réelles distinctes :
+    \[
+    x_1 = \frac{1 - \sqrt{5}}{2} \quad \text{et} \quad x_2 = \frac{1 + \sqrt{5}}{2}.
+    \]
+    Comme $\sqrt{5} \approx 2{,}236 > 1$, la racine $x_1$ est strictement négative ($x_1 \approx -0{,}618$).
+    Puisque $\Phi = \frac{L}{\ell}$ est le rapport de deux grandeurs géométriques strictement positives, on a impérativement $\Phi > 0$.
+    On en déduit que le nombre d'or est :
+    \[
+    \Phi = \frac{1 + \sqrt{5}}{2} \approx 1{,}6180339887\dots
+    \]
+
+    \item \textbf{Relations algébriques et puissances de $\Phi$ :}
+    \begin{itemize}
+        \item De l'égalité $\Phi^2 - \Phi - 1 = 0$, en divisant par $\Phi > 0$ :
+        \[
+        \Phi - 1 - \frac{1}{\Phi} = 0 \iff \frac{1}{\Phi} = \Phi - 1.
+        \]
+        \item En isolant $\Phi^2$ dans l'équation :
+        \[
+        \Phi^2 = \Phi + 1.
+        \]
+        \item En multipliant cette relation par $\Phi$ :
+        \[
+        \Phi^3 = \Phi \times \Phi^2 = \Phi(\Phi + 1) = \Phi^2 + \Phi = (\Phi + 1) + \Phi = 2\Phi + 1.
+        \]
+        \item En multipliant à nouveau par $\Phi$ :
+        \[
+        \Phi^4 = \Phi(2\Phi + 1) = 2\Phi^2 + \Phi = 2(\Phi + 1) + \Phi = 3\Phi + 2.
+        \]
+    \end{itemize}
+    \textbf{Remarque culturelle :} On reconnaît les nombres de Fibonacci $(F_n)_{n \in \N} = (1, 1, 2, 3, 5, 8, \dots)$ tels que pour tout $n \ge 1$ :
+    \[
+    \Phi^n = F_n \Phi + F_{n-1}.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 20
+% ----------------------------------------------------
+\subsection*{Exercice 20 : Radical imbriqué infini et point fixe}
+On considère l'expression formelle définie par une infinité de radicaux imbriqués :
+\[
+A = \sqrt{1 + \sqrt{1 + \sqrt{1 + \sqrt{1 + \cdots}}}}
+\]
+Afin de donner une assise analytique rigoureuse à cet objet, on introduit la suite réelle $(u_n)_{n \in \N}$ définie par :
+\[
+u_0 = 1 \quad \text{et} \quad \forall n \in \N, \quad u_{n+1} = \sqrt{1 + u_n}.
+\]
+\begin{enumerate}
+    \item Démontrer par récurrence que pour tout entier naturel $n$, on a : $1 \le u_n \le 2$.
+    \item Démontrer que la suite $(u_n)_{n \in \N}$ est strictement croissante.
+    \item Justifier que la suite $(u_n)_{n \in \N}$ converge vers une limite finie $\ell \in [1\,,\, 2]$.
+    \item Déterminer la valeur exacte de $\ell$ et faire le lien avec le nombre d'or $\Phi$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Démonstration par récurrence du bornage :}
+    Pour tout $n \in \N$, notons la propriété $\mathcal{P}(n) : 1 \le u_n \le 2$.
+    \begin{itemize}
+        \item \textbf{Initialisation :} Pour $n = 0$, $u_0 = 1$. L'encadrement $1 \le 1 \le 2$ est vérifié, donc $\mathcal{P}(0)$ est vraie.
+        \item \textbf{Hérédité :} Soit $n \in \N$. Supposons $\mathcal{P}(n)$ vraie, c'est-à-dire $1 \le u_n \le 2$.
+        Ajoutons $1$ aux trois membres de cette inégalité :
+        \[
+        2 \le 1 + u_n \le 3.
+        \]
+        La fonction racine carrée $x \mapsto \sqrt{x}$ étant strictement croissante sur $[0\,,\, +\infty[$ :
+        \[
+        \sqrt{2} \le \sqrt{1 + u_n} \le \sqrt{3} \iff \sqrt{2} \le u_{n+1} \le \sqrt{3}.
+        \]
+        Or, on a clairement $1 < \sqrt{2}$ et $\sqrt{3} < \sqrt{4} = 2$.
+        On en déduit donc l'encadrement :
+        \[
+        1 \le u_{n+1} \le 2,
+        \]
+        ce qui prouve la véracité de $\mathcal{P}(n+1)$.
+    \end{itemize}
+    Par le principe de récurrence simple, on conclut que :
+    \[
+    \forall n \in \N, \quad 1 \le u_n \le 2.
+    \]
+
+    \item \textbf{Stricte croissance de la suite $(u_n)_{n \in \N}$ :}
+    Démontrons par récurrence sur $n \in \N$ la propriété $\mathcal{Q}(n) : u_n < u_{n+1}$.
+    \begin{itemize}
+        \item \textbf{Initialisation :} Pour $n = 0$, on a $u_0 = 1$ et $u_1 = \sqrt{1 + 1} = \sqrt{2} \approx 1{,}414$.
+        Comme $1 < \sqrt{2}$, la relation $u_0 < u_1$ est vérifiée. Donc $\mathcal{Q}(0)$ est vraie.
+        \item \textbf{Hérédité :} Soit $n \in \N$. Supposons que $\mathcal{Q}(n)$ soit vraie, c'est-à-dire $u_n < u_{n+1}$.
+        En ajoutant $1$ :
+        \[
+        1 + u_n < 1 + u_{n+1}.
+        \]
+        Par stricte croissance de la fonction racine carrée sur $[0, +\infty[$ :
+        \[
+        \sqrt{1 + u_n} < \sqrt{1 + u_{n+1}} \iff u_{n+1} < u_{n+2}.
+        \]
+        La propriété $\mathcal{Q}(n+1)$ est ainsi établie.
+    \end{itemize}
+    Par récurrence, on conclut que pour tout $n \in \N$, $u_n < u_{n+1}$.
+    La suite $(u_n)_{n \in \N}$ est donc strictement croissante.
+
+    \item \textbf{Convergence de la suite :}
+    La suite réelle $(u_n)_{n \in \N}$ est :
+    \begin{itemize}
+        \item strictement croissante ;
+        \item majorée par $2$.
+    \end{itemize}
+    D'après le \textbf{théorème de convergence monotone}, toute suite croissante et majorée converge dans $\R$.
+    Ainsi, $(u_n)_{n \in \N}$ converge vers une limite finie $\ell \in \R$.
+    De plus, comme pour tout $n \in \N$, $1 \le u_n \le 2$, le passage à la limite dans les inégalités larges garantit que :
+    \[
+    1 \le \ell \le 2.
+    \]
+
+    \item \textbf{Détermination de la limite $\ell$ et lien avec le nombre d'or :}
+    La fonction $f : x \mapsto \sqrt{1 + x}$ est continue sur son domaine de définition $[-1\,,\, +\infty[$, donc en particulier sur l'intervalle $[1\,,\, 2]$.
+    En faisant tendre $n$ vers $+\infty$ dans la relation de récurrence $u_{n+1} = f(u_n)$, on obtient par continuité de $f$ l'équation de point fixe :
+    \[
+    \ell = f(\ell) \iff \ell = \sqrt{1 + \ell}.
+    \]
+    Puisque $\ell \ge 1 > 0$, les deux membres sont strictement positifs. On peut élever au carré par équivalence :
+    \[
+    \ell^2 = 1 + \ell \iff \ell^2 - \ell - 1 = 0.
+    \]
+    On retrouve l'équation caractéristique du nombre d'or étudiée à l'exercice 19.
+    Les deux solutions de cette équation sont :
+    \[
+    \ell_1 = \frac{1 - \sqrt{5}}{2} < 0 \quad \text{et} \quad \ell_2 = \frac{1 + \sqrt{5}}{2} > 0.
+    \]
+    Comme la limite $\ell$ doit vérifier $\ell \ge 1 > 0$, la racine négative $\ell_1$ est écartée.
+    L'unique limite possible est donc :
+    \[
+    \ell = \frac{1 + \sqrt{5}}{2} = \Phi.
+    \]
+
+    \item \textbf{Conclusion :}
+    La suite converge vers le nombre d'or $\Phi$. Par conséquent, la quantité formelle $A$ s'interprète rigoureusement comme la limite de la suite $(u_n)$, et vaut exactement :
+    \[
+    A = \lim_{n \to +\infty} u_n = \frac{1 + \sqrt{5}}{2} = \Phi \approx 1{,}6180339887\dots
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+
+\section{Systèmes d'équations et modélisation}
+
+% ----------------------------------------------------
+% EXERCICE 21
+% ----------------------------------------------------
+\subsection*{Exercice 21}
+Une parabole $\mathcal{C}_f$ représentant une fonction polynôme du second degré $f$ passe par les points $A(4\,;\,0)$, $B(7\,;\,0)$ et $C(0\,;\,-14)$. Déterminer l'expression de $f(x)$ sous forme développée.
+
+\begin{correctionbox}
+\textbf{1. Exploitation des points d'intersection avec l'axe des abscisses :}\\
+La parabole $\mathcal{C}_f$ coupe l'axe des abscisses aux points $A(4\,;\,0)$ et $B(7\,;\,0)$. Les réels $4$ et $7$ sont donc les deux racines distinctes du trinôme du second degré $f$.
+
+Par conséquent, d'après le théorème de factorisation des fonctions polynômes du second degré, $f(x)$ admet une factorisation de la forme :
+\[
+f(x) = a(x - 4)(x - 7), \quad \text{où } a \in \mathbb{R}^*.
+\]
+
+\textbf{2. Détermination du coefficient dominant $a$ :}\\
+Le point $C(0\,;\,-14)$ appartient à la courbe $\mathcal{C}_f$, donc ses coordonnées vérifient l'équation de la parabole, soit $f(0) = -14$.
+En substituant $x = 0$ dans l'expression factorisée :
+\[
+a(0 - 4)(0 - 7) = -14 \iff a \times (-4) \times (-7) = -14 \iff 28a = -14 \iff a = -\frac{14}{28} = -\frac{1}{2}.
+\]
+
+\textbf{3. Obtention de la forme développée :}\\
+On développe le produit :
+\[
+f(x) = -\frac{1}{2}(x - 4)(x - 7) = -\frac{1}{2}(x^2 - 11x + 28) = -\frac{1}{2}x^2 + \frac{11}{2}x - 14.
+\]
+
+\textbf{Conclusion et vérification :}\\
+L'expression développée cherchée est :
+\[
+\boxed{f(x) = -\frac{1}{2}x^2 + \frac{11}{2}x - 14}
+\]
+\textit{Vérification rapide :}
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item $f(4) = -\frac{1}{2}(16) + \frac{11}{2}(4) - 14 = -8 + 22 - 14 = 0$ ;
+    \item $f(7) = -\frac{1}{2}(49) + \frac{77}{2} - 14 = \frac{28}{2} - 14 = 14 - 14 = 0$ ;
+    \item $f(0) = -14$.
+\end{itemize}
+Toutes les conditions sont rigoureusement satisfaites.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 22
+% ----------------------------------------------------
+\subsection*{Exercice 22}
+Résoudre dans $\mathbb{R}^2$ le système suivant :
+\[
+\begin{cases}
+x^2 + y^2 = \dfrac{82}{9} \\[2mm]
+xy = 1
+\end{cases}
+\]
+
+\begin{correctionbox}
+Soit $(x, y) \in \mathbb{R}^2$ un couple solution. Puisque $xy = 1 \ne 0$, les réels $x$ et $y$ sont nécessairement non nuls et ont le même signe.
+
+\textbf{Méthode 1 : Utilisation des identités remarquables symétriques (très élégante)}\\
+Exprimons $(x+y)^2$ et $(x-y)^2$ à l'aide des deux équations du système :
+\[
+\begin{aligned}
+(x+y)^2 &= x^2 + y^2 + 2xy = \frac{82}{9} + 2 \times 1 = \frac{82 + 18}{9} = \frac{100}{9} = \left(\frac{10}{3}\right)^2, \\[2mm]
+(x-y)^2 &= x^2 + y^2 - 2xy = \frac{82}{9} - 2 \times 1 = \frac{82 - 18}{9} = \frac{64}{9} = \left(\frac{8}{3}\right)^2.
+\end{aligned}
+\]
+On en déduit :
+\[
+x+y = \pm \frac{10}{3} \quad \text{et} \quad x-y = \pm \frac{8}{3}.
+\]
+Les réels $x$ et $y$ ont pour produit $P = xy = 1$ et pour somme $S = x+y \in \left\{ -\frac{10}{3}, \frac{10}{3} \right\}$.
+Ils sont donc les racines de l'équation du second degré $X^2 - SX + P = 0$.
+
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item \textbf{Premier cas : $S = \frac{10}{3}$ et $P = 1$}\\
+    L'équation s'écrit :
+    \[
+    X^2 - \frac{10}{3}X + 1 = 0 \iff 3X^2 - 10X + 3 = 0.
+    \]
+    Discriminant : $\Delta = (-10)^2 - 4 \times 3 \times 3 = 100 - 36 = 64 = 8^2 > 0$.\\
+    Les racines sont :
+    \[
+    X_1 = \frac{10 - 8}{6} = \frac{2}{6} = \frac{1}{3} \quad \text{et} \quad X_2 = \frac{10 + 8}{6} = \frac{18}{6} = 3.
+    \]
+    On obtient deux couples de solutions : $\left(3\,;\,\frac{1}{3}\right)$ et $\left(\frac{1}{3}\,;\,3\right)$.
+
+    \item \textbf{Deuxième cas : $S = -\frac{10}{3}$ et $P = 1$}\\
+    L'équation s'écrit :
+    \[
+    X^2 + \frac{10}{3}X + 1 = 0 \iff 3X^2 + 10X + 3 = 0.
+    \]
+    Les racines sont les opposées du cas précédent :
+    \[
+    X_3 = -3 \quad \text{et} \quad X_4 = -\frac{1}{3}.
+    \]
+    On obtient deux autres couples : $\left(-3\,;\,-\frac{1}{3}\right)$ et $\left(-\frac{1}{3}\,;\,-3\right)$.
+\end{itemize}
+
+\textbf{Méthode 2 : Par substitution et équation bicarrée}\\
+Puisque $x \ne 0$, la seconde équation donne $y = \frac{1}{x}$. En substituant dans la première :
+\[
+x^2 + \frac{1}{x^2} = \frac{82}{9} \iff x^4 - \frac{82}{9}x^2 + 1 = 0 \iff 9(x^2)^2 - 82x^2 + 9 = 0.
+\]
+En posant $u = x^2 \ge 0$, on obtient l'équation du second degré $9u^2 - 82u + 9 = 0$.\\
+Son discriminant vaut $\Delta = (-82)^2 - 4 \times 9 \times 9 = 6724 - 324 = 6400 = 80^2$.\\
+Les racines sont :
+\[
+u_1 = \frac{82 - 80}{18} = \frac{2}{18} = \frac{1}{9} \quad \text{et} \quad u_2 = \frac{82 + 80}{18} = \frac{162}{18} = 9.
+\]
+D'où :
+\[
+x^2 = 9 \iff x \in \{-3, 3\} \quad \text{ou} \quad x^2 = \frac{1}{9} \iff x \in \left\{ -\frac{1}{3}, \frac{1}{3} \right\}.
+\]
+Comme $y = \frac{1}{x}$, on retrouve exactement les quatre couples.
+
+\textbf{Conclusion :}\\
+L'ensemble des solutions du système dans $\mathbb{R}^2$ est :
+\[
+\boxed{\mathcal{S} = \left\{ \left(3\,;\,\frac{1}{3}\right),\, \left(\frac{1}{3}\,;\,3\right),\, \left(-3\,;\,-\frac{1}{3}\right),\, \left(-\frac{1}{3}\,;\,-3\right) \right\}}
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 23
+% ----------------------------------------------------
+\subsection*{Exercice 23}
+Calculer les longueurs des côtés de l'angle droit d'un triangle rectangle dont l'aire est de $84\text{ cm}^2$ et dont l'hypoténuse a pour mesure $25\text{ cm}$.
+
+\begin{correctionbox}
+\textbf{1. Mise en équation :}\\
+Soient $x$ et $y$ les longueurs (exprimées en $\text{cm}$) des deux côtés de l'angle droit. Ce sont des réels strictement positifs ($x > 0$ et $y > 0$).
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item L'aire d'un triangle rectangle est donnée par $\mathcal{A} = \frac{1}{2}xy$. L'énoncé donne :
+    \[
+    \frac{1}{2}xy = 84 \iff xy = 168.
+    \]
+    \item D'après le théorème de Pythagore, la somme des carrés des côtés de l'angle droit est égale au carré de l'hypoténuse :
+    \[
+    x^2 + y^2 = 25^2 = 625.
+    \]
+\end{itemize}
+Le problème équivaut donc à résoudre le système symétrique :
+\[
+\begin{cases}
+x^2 + y^2 = 625 \\
+xy = 168
+\end{cases}
+\quad \text{avec } x > 0, \, y > 0.
+\]
+
+\textbf{2. Détermination de la somme $S = x + y$ :}\\
+En utilisant l'identité remarquable du carré d'une somme :
+\[
+(x + y)^2 = x^2 + y^2 + 2xy = 625 + 2 \times 168 = 625 + 336 = 961.
+\]
+Calculons la racine carrée de $961$ : on remarque que $30^2 = 900$ et $31^2 = (30+1)^2 = 900 + 60 + 1 = 961$.\\
+Comme $x > 0$ et $y > 0$, la somme $x+y$ est strictement positive, d'où :
+\[
+x + y = \sqrt{961} = 31.
+\]
+
+\textbf{3. Résolution par l'équation produit-somme :}\\
+Les réels $x$ et $y$ ont pour somme $S = 31$ et pour produit $P = 168$. Ils sont donc les deux solutions de l'équation polynomiale du second degré :
+\[
+X^2 - 31X + 168 = 0.
+\]
+Calculons le discriminant :
+\[
+\Delta = (-31)^2 - 4 \times 1 \times 168 = 961 - 672 = 289.
+\]
+On reconnaît $289 = 17^2$ (puisque $17^2 = 289$).\\
+Puisque $\Delta > 0$, l'équation admet deux racines réelles distinctes :
+\[
+X_1 = \frac{31 - 17}{2} = \frac{14}{2} = 7, \qquad X_2 = \frac{31 + 17}{2} = \frac{48}{2} = 24.
+\]
+
+\textbf{Conclusion :}\\
+Les côtés de l'angle droit du triangle mesurent \textbf{$7\text{ cm}$} et \textbf{$24\text{ cm}$}.\\
+\textit{Vérification :} $7^2 + 24^2 = 49 + 576 = 625 = 25^2$, et $\frac{1}{2} \times 7 \times 24 = 7 \times 12 = 84\text{ cm}^2$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 24
+% ----------------------------------------------------
+\subsection*{Exercice 24}
+La somme des deux chiffres d'un entier naturel $x$ est $13$. En ajoutant $34$ à leur produit, on obtient un nombre dont les chiffres sont ceux de $x$ dans l'ordre inverse. Trouver $x$.
+
+\begin{correctionbox}
+\textbf{1. Choix des inconnues et modélisation :}\\
+Soit $x$ un entier naturel s'écrivant avec deux chiffres en base 10.
+Notons $a$ le chiffre des dizaines et $b$ le chiffre des unités.
+Par définition de l'écriture décimale :
+\[
+x = 10a + b, \quad \text{avec } a \in \{1, 2, \dots, 9\} \text{ et } b \in \{0, 1, \dots, 9\}.
+\]
+Le nombre formé par les mêmes chiffres dans l'ordre inverse s'écrit $10b + a$.
+
+\textbf{2. Traduction des contraintes de l'énoncé :}\\
+L'énoncé fournit deux conditions :
+\begin{enumerate}
+    \item La somme des deux chiffres est égale à $13$ :
+    \[
+    a + b = 13 \iff b = 13 - a.
+    \]
+    \item En ajoutant $34$ au produit des deux chiffres, on obtient le nombre inversé :
+    \[
+    ab + 34 = 10b + a.
+    \]
+\end{enumerate}
+
+\textbf{3. Résolution par substitution :}\\
+Remplaçons $b$ par $13 - a$ dans la seconde équation :
+\[
+a(13 - a) + 34 = 10(13 - a) + a.
+\]
+Développons et réduisons chaque membre :
+\[
+\begin{aligned}
+13a - a^2 + 34 &= 130 - 10a + a \\
+-a^2 + 13a + 34 &= 130 - 9a.
+\end{aligned}
+\]
+Transposons tous les termes dans le membre de droite pour obtenir un coefficient dominant positif :
+\[
+a^2 - 9a - 13a + 130 - 34 = 0 \iff a^2 - 22a + 96 = 0.
+\]
+
+\textbf{4. Résolution de l'équation du second degré :}\\
+Discriminant du trinôme :
+\[
+\Delta = (-22)^2 - 4 \times 1 \times 96 = 484 - 384 = 100 = 10^2 > 0.
+\]
+Les deux racines réelles sont :
+\[
+a_1 = \frac{22 - 10}{2} = \frac{12}{2} = 6, \qquad a_2 = \frac{22 + 10}{2} = \frac{32}{2} = 16.
+\]
+Puisque $a$ est un chiffre entre $1$ et $9$, la solution $a_2 = 16$ est à rejeter. On retient donc uniquement :
+\[
+a = 6.
+\]
+On en déduit la valeur du chiffre des unités :
+\[
+b = 13 - a = 13 - 6 = 7.
+\]
+
+\textbf{Conclusion et vérification :}\\
+L'entier naturel cherché est :
+\[
+\boxed{x = 67}
+\]
+\textit{Vérification :}
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item Somme des chiffres : $6 + 7 = 13$ (conforme) ;
+    \item Produit des chiffres augmenté de $34$ : $6 \times 7 + 34 = 42 + 34 = 76$ ;
+    \item $76$ est bien le nombre formé en inversant les chiffres de $67$.
+\end{itemize}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 25
+% ----------------------------------------------------
+\subsection*{Exercice 25}
+Deux résistances en dérivation ont une résistance équivalente de $1{,}5\,\Omega$ et en série une résistance équivalente de $8\,\Omega$. Déterminer les deux résistances.
+
+\begin{correctionbox}
+\textbf{1. Rappels physiques et formulation mathématique :}\\
+Soient $R_1 > 0$ et $R_2 > 0$ les valeurs (exprimées en ohms, $\Omega$) des deux résistances.
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item \textbf{Association en série :} la résistance équivalente est la somme des résistances :
+    \[
+    R_{\text{série}} = R_1 + R_2 = 8.
+    \]
+    \item \textbf{Association en dérivation (parallèle) :} l'inverse de la résistance équivalente est la somme des inverses :
+    \[
+    \frac{1}{R_{\text{dér}}} = \frac{1}{R_1} + \frac{1}{R_2} = \frac{R_1 + R_2}{R_1 R_2} \iff R_{\text{dér}} = \frac{R_1 R_2}{R_1 + R_2} = 1{,}5.
+    \]
+\end{itemize}
+
+\textbf{2. Détermination du produit $R_1 R_2$ :}\\
+En remplaçant $R_1 + R_2$ par $8$ dans l'équation de dérivation :
+\[
+\frac{R_1 R_2}{8} = 1{,}5 \iff R_1 R_2 = 1{,}5 \times 8 = 12.
+\]
+
+\textbf{3. Résolution du système somme-produit :}\\
+Les réels strictement positifs $R_1$ et $R_2$ ont pour somme $S = 8$ et pour produit $P = 12$. Ils sont donc les racines de l'équation polynomiale du second degré :
+\[
+X^2 - 8X + 12 = 0.
+\]
+On factorise immédiatement le trinôme par recherche de racines évidentes :
+\[
+(X - 2)(X - 6) = 0.
+\]
+Les solutions de cette équation sont $X_1 = 2$ et $X_2 = 6$.
+
+\textbf{Conclusion :}\\
+Les deux résistances valent :
+\[
+\boxed{R_1 = 2\,\Omega \quad \text{et} \quad R_2 = 6\,\Omega \quad (\text{à l'ordre près})}
+\]
+\textit{Vérification :} En série : $2 + 6 = 8\,\Omega$. En dérivation : $\frac{2 \times 6}{2 + 6} = \frac{12}{8} = 1{,}5\,\Omega$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 26
+% ----------------------------------------------------
+\subsection*{Exercice 26}
+Un cycliste A a effectué un parcours de $55\text{ km}$ en $18\text{ min}$ de moins qu'un cycliste B, alors qu'il roule à une vitesse supérieure de $3\text{ km}\cdot\text{h}^{-1}$. Calculer la vitesse des deux cyclistes.
+
+\begin{correctionbox}
+\textbf{1. Choix des variables et mise en équation :}\\
+Soit $v_B$ la vitesse du cycliste B, exprimée en $\text{km}\cdot\text{h}^{-1}$ ($v_B > 0$).\\
+Le cycliste A roule à une vitesse supérieure de $3\text{ km}\cdot\text{h}^{-1}$, sa vitesse est donc :
+\[
+v_A = v_B + 3.
+\]
+La distance totale parcourue par chaque cycliste est $d = 55\text{ km}$.
+Les durées des parcours (en heures) sont données par la relation fondamentale de la cinématique uniforme $t = \frac{d}{v}$ :
+\[
+t_A = \frac{55}{v_A} = \frac{55}{v_B + 3} \quad \text{et} \quad t_B = \frac{55}{v_B}.
+\]
+L'écart temporel entre les deux cyclistes est de $18\text{ min}$. Convertissons cette durée en heures :
+\[
+18\text{ min} = \frac{18}{60}\text{ h} = \frac{3}{10}\text{ h} = 0{,}3\text{ h}.
+\]
+Le cycliste A met moins de temps que le cycliste B, ce qui donne la relation :
+\[
+t_B - t_A = \frac{3}{10} \iff \frac{55}{v_B} - \frac{55}{v_B + 3} = \frac{3}{10}.
+\]
+
+\textbf{2. Réduction à une équation du second degré :}\\
+Mettons le membre de gauche au même dénominateur :
+\[
+55 \left( \frac{(v_B + 3) - v_B}{v_B(v_B + 3)} \right) = \frac{3}{10} \iff \frac{55 \times 3}{v_B(v_B + 3)} = \frac{3}{10}.
+\]
+En simplifiant par $3$ (qui est non nul) de chaque côté de l'égalité :
+\[
+\frac{55}{v_B(v_B + 3)} = \frac{1}{10}.
+\]
+Le produit en croix donne :
+\[
+v_B(v_B + 3) = 55 \times 10 = 550 \iff v_B^2 + 3v_B - 550 = 0.
+\]
+
+\textbf{3. Résolution de l'équation du second degré :}\\
+Calculons le discriminant du trinôme :
+\[
+\Delta = 3^2 - 4 \times 1 \times (-550) = 9 + 2200 = 2209.
+\]
+Calculons $\sqrt{2209}$ : puisque $40^2 = 1600$ et $50^2 = 2500$, le nombre cherché est compris entre $40$ et $50$. Comme son dernier chiffre est $9$, il ne peut s'agir que de $43$ ou $47$.
+Or $47^2 = (50 - 3)^2 = 2500 - 300 + 9 = 2209$. Ainsi $\sqrt{\Delta} = 47$.
+
+L'équation admet deux racines réelles :
+\[
+v_{B,1} = \frac{-3 - 47}{2} = -\frac{50}{2} = -25, \qquad v_{B,2} = \frac{-3 + 47}{2} = \frac{44}{2} = 22.
+\]
+Une vitesse étant une grandeur physique strictement positive, on écarte la racine négative $-25$. On a donc :
+\[
+v_B = 22\text{ km}\cdot\text{h}^{-1}.
+\]
+On en déduit la vitesse du cycliste A :
+\[
+v_A = v_B + 3 = 22 + 3 = 25\text{ km}\cdot\text{h}^{-1}.
+\]
+
+\textbf{Conclusion et vérification :}\\
+\[
+\boxed{v_A = 25\text{ km}\cdot\text{h}^{-1} \quad \text{et} \quad v_B = 22\text{ km}\cdot\text{h}^{-1}}
+\]
+\textit{Vérification :}
+$t_B = \frac{55}{22}\text{ h} = \frac{5}{2}\text{ h} = 2\text{ h } 30\text{ min}$, et $t_A = \frac{55}{25}\text{ h} = \frac{11}{5}\text{ h} = 2{,}2\text{ h} = 2\text{ h } 12\text{ min}$.
+L'écart est bien de $2\text{ h } 30\text{ min} - 2\text{ h } 12\text{ min} = 18\text{ min}$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 27
+% ----------------------------------------------------
+\subsection*{Exercice 27}
+Soit $n \in \mathbb{N}$. Déterminer suivant les valeurs de l'entier $n$ le nombre de solutions dans $\mathbb{R}^2$ du système :
+\[
+\begin{cases}
+x + y = n \\
+xy = n
+\end{cases}
+\]
+
+\begin{correctionbox}
+\textbf{1. Propriété caractéristique des racines :}\\
+Un couple de réels $(x, y) \in \mathbb{R}^2$ est solution du système symétrique si et seulement si $x$ et $y$ sont les racines réelles de l'équation polynomiale du second degré de variable $X$ :
+\[
+X^2 - SX + P = 0 \iff X^2 - nX + n = 0.
+\]
+
+\textbf{2. Étude du discriminant :}\\
+Le discriminant de ce trinôme dépend du paramètre $n$ :
+\[
+\Delta(n) = (-n)^2 - 4 \times 1 \times n = n^2 - 4n = n(n - 4).
+\]
+Le nombre de solutions réelles de l'équation dépend directement du signe de $\Delta(n)$ sur $\mathbb{N}$ :
+
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item \textbf{Pour $n = 0$ :}
+    $\Delta(0) = 0$. Le trinôme devient $X^2 = 0$, qui admet l'unique racine double $X_0 = 0$.
+    On a alors $x = y = 0$.
+    Le système admet un \textbf{unique couple solution} : $(0\,;\,0)$.
+
+    \item \textbf{Pour $n \in \{1, 2, 3\}$ :}
+    Le tableau de signes de la fonction $t \mapsto t(t-4)$ montre que pour $t \in ]0, 4[$, $\Delta(t) < 0$ :
+    \begin{itemize}
+        \item Si $n = 1$, $\Delta(1) = 1(1 - 4) = -3 < 0$ ;
+        \item Si $n = 2$, $\Delta(2) = 2(2 - 4) = -4 < 0$ ;
+        \item Si $n = 3$, $\Delta(3) = 3(3 - 4) = -3 < 0$.
+    \end{itemize}
+    Puisque $\Delta(n) < 0$, l'équation $X^2 - nX + n = 0$ ne possède aucune solution réelle.
+    Le système n'admet donc \textbf{aucune solution dans $\mathbb{R}^2$} ($0$ solution).
+
+    \item \textbf{Pour $n = 4$ :}
+    $\Delta(4) = 4(4 - 4) = 0$. L'équation $X^2 - 4X + 4 = 0 \iff (X - 2)^2 = 0$ admet une unique racine double $X_0 = 2$.
+    On a alors $x = y = 2$.
+    Le système admet un \textbf{unique couple solution} : $(2\,;\,2)$.
+
+    \item \textbf{Pour $n \ge 5$ :}
+    On a $n > 4$, donc $\Delta(n) = n(n - 4) > 0$.
+    L'équation du second degré admet deux racines réelles distinctes :
+    \[
+    X_1 = \frac{n - \sqrt{n(n-4)}}{2} \quad \text{et} \quad X_2 = \frac{n + \sqrt{n(n-4)}}{2}.
+    \]
+    Comme $X_1 \ne X_2$, on obtient exactement deux couples ordonnés $(x, y)$ distincts en affectant ces deux racines à $(x, y)$ :
+    \[
+    (x, y) = (X_1, X_2) \quad \text{ou} \quad (x, y) = (X_2, X_1).
+    \]
+    Le système admet donc \textbf{exactement $2$ couples solutions distincts}.
+\end{itemize}
+
+\textbf{Synthèse des résultats :}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Valeur du paramètre $n \in \mathbb{N}$} & \textbf{Signe de $\Delta(n)$} & \textbf{Nombre de solutions du système} \\
+\hline
+$n \in \{1, 2, 3\}$ & $\Delta(n) < 0$ & \textbf{Aucune solution} ($0$ couple) \\
+\hline
+$n = 0$ ou $n = 4$ & $\Delta(n) = 0$ & \textbf{1 unique couple solution} : $(0,0)$ pour $n=0$, $(2,2)$ pour $n=4$ \\
+\hline
+$n \ge 5$ & $\Delta(n) > 0$ & \textbf{2 couples solutions distincts} \\
+\hline
+\end{tabular}
+\end{center}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 28
+% ----------------------------------------------------
+\subsection*{Exercice 28}
+Déterminer les valeurs de $z$ telles que le système suivant admette des solutions dans $\mathbb{R}^2$ :
+\[
+\begin{cases}
+x^2 + y^2 + z^2 = 4 \\
+x + y + z = 3
+\end{cases}
+\]
+Interpréter géométriquement ce résultat (on pourra s'aider de GeoGebra).
+
+\begin{correctionbox}
+\textbf{1. Approche analytique (trinôme du second degré en $x$) :}\\
+Considérons le réel $z \in \mathbb{R}$ comme un paramètre fixé.
+Le système équivaut à trouver l'existence d'au moins un couple de réels $(x, y)$ vérifiant :
+\[
+\begin{cases}
+x^2 + y^2 = 4 - z^2 \\
+x + y = 3 - z
+\end{cases}
+\]
+De la seconde équation, exprimons $y$ en fonction de $x$ et $z$ :
+\[
+y = (3 - z) - x.
+\]
+Injectons cette expression dans la première équation :
+\[
+x^2 + \bigl((3 - z) - x\bigr)^2 = 4 - z^2.
+\]
+Développons le terme quadratique :
+\[
+x^2 + \bigl((3 - z)^2 - 2(3 - z)x + x^2\bigr) = 4 - z^2
+\]
+\[
+\iff 2x^2 - 2(3 - z)x + (9 - 6z + z^2) - (4 - z^2) = 0
+\]
+\[
+\iff 2x^2 + 2(z - 3)x + (2z^2 - 6z + 5) = 0.
+\]
+Cette équation d'inconnue $x$ est une équation polynomiale du second degré (le coefficient dominant est $2 \neq 0$).
+Elle admet des solutions réelles si et seulement si son discriminant $\Delta_x$ est supérieur ou égal à zéro.
+
+Calculons $\Delta_x$ (ou le discriminant réduit $\Delta'_x = \frac{\Delta_x}{4}$) :
+\[
+\begin{aligned}
+\Delta'_x = \left(\frac{b}{2}\right)^2 - ac &= (z - 3)^2 - 2(2z^2 - 6z + 5) \\
+&= (z^2 - 6z + 9) - (4z^2 - 12z + 10) \\
+&= -3z^2 + 6z - 1.
+\end{aligned}
+\]
+Le système admet au moins une solution si et seulement si :
+\[
+-3z^2 + 6z - 1 \ge 0 \iff 3z^2 - 6z + 1 \le 0.
+\]
+
+\textbf{2. Résolution de l'inéquation en $z$ :}\\
+Étudions le trinôme $T(z) = 3z^2 - 6z + 1$ :
+\[
+\Delta_z = (-6)^2 - 4 \times 3 \times 1 = 36 - 12 = 24 = (2\sqrt{6})^2 > 0.
+\]
+Le trinôme admet deux racines réelles distinctes :
+\[
+z_1 = \frac{6 - 2\sqrt{6}}{2 \times 3} = 1 - \frac{\sqrt{6}}{3}, \qquad z_2 = \frac{6 + 2\sqrt{6}}{2 \times 3} = 1 + \frac{\sqrt{6}}{3}.
+\]
+Le coefficient de $z^2$ étant strictement positif ($a = 3 > 0$), le trinôme $3z^2 - 6z + 1$ est négatif ou nul entre ses racines.
+
+\textbf{Conclusion pour $z$ :}\\
+L'ensemble des valeurs de $z$ pour lesquelles le système admet des solutions est l'intervalle fermé :
+\[
+\boxed{z \in \left[ 1 - \frac{\sqrt{6}}{3} \,;\, 1 + \frac{\sqrt{6}}{3} \right]}
+\]
+\textit{Remarque :} On a $1 - \frac{\sqrt{6}}{3} \approx 1 - 0{,}816 = 0{,}184$ et $1 + \frac{\sqrt{6}}{3} \approx 1{,}816$. Comme $|z| < 2$, on a bien $4 - z^2 > 0$.
+
+\textbf{3. Méthode alternative : Inégalité de Cauchy-Schwarz / Convexité}\\
+Pour tous réels $x$ et $y$, on a $(x - y)^2 \ge 0 \iff 2(x^2 + y^2) \ge (x + y)^2$.\\
+En substituant $x^2 + y^2 = 4 - z^2$ et $x + y = 3 - z$, on obtient immédiatement :
+\[
+2(4 - z^2) \ge (3 - z)^2 \iff 8 - 2z^2 \ge 9 - 6z + z^2 \iff 3z^2 - 6z + 1 \le 0,
+\]
+ce qui confirme instantanément l'encadrement ci-dessus.
+
+\textbf{4. Interprétation géométrique dans l'espace $\mathbb{R}^3$ :}\\
+Muni d'un repère orthonormé $(O; \vec{i}, \vec{j}, \vec{k})$ :
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item L'équation $x^2 + y^2 + z^2 = 4 = 2^2$ est celle de la \textbf{sphère} $\mathcal{S}$ de centre l'origine $O(0,0,0)$ et de rayon $R = 2$.
+    \item L'équation $x + y + z = 3$ est celle d'un \textbf{plan} $\mathcal{P}$ de vecteur normal $\vec{n}(1, 1, 1)$.
+    \item La distance du centre $O$ au plan $\mathcal{P}$ vaut :
+    \[
+    d(O, \mathcal{P}) = \frac{|0 + 0 + 0 - 3|}{\sqrt{1^2 + 1^2 + 1^2}} = \frac{3}{\sqrt{3}} = \sqrt{3}.
+    \]
+    Comme $d(O, \mathcal{P}) = \sqrt{3} \approx 1{,}732 < R = 2$, le plan coupe la sphère selon un \textbf{cercle de l'espace} $\mathcal{C}$, de rayon :
+    \[
+    r = \sqrt{R^2 - d^2} = \sqrt{4 - 3} = 1.
+    \]
+    Le centre de ce cercle est le projeté orthogonal $\Omega$ de $O$ sur $\mathcal{P}$, c'est-à-dire le point $\Omega(1, 1, 1)$.
+    Les valeurs de $z$ correspondent à la projection orthogonale de ce cercle $\mathcal{C}$ sur l'axe vertical $(Oz)$. L'altitude minimale et l'altitude maximale des points du cercle sont précisément $z_{\min} = 1 - \frac{\sqrt{6}}{3}$ et $z_{\max} = 1 + \frac{\sqrt{6}}{3}$.
+\end{itemize}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 29
+% ----------------------------------------------------
+\subsection*{Exercice 29}
+Résoudre dans $\mathbb{R}^2$ le système :
+\[
+\begin{cases}
+x^2 + xy + y^2 = 7 \\
+(x^2 + 1)(y^2 + 1) + 2xy = 14
+\end{cases}
+\]
+Vérifier vos solutions à l'aide de GeoGebra.
+
+\begin{correctionbox}
+\textbf{1. Transformation et combinaison algébrique :}\\
+Développons la seconde équation du système :
+\[
+(x^2 + 1)(y^2 + 1) + 2xy = 14 \iff x^2 y^2 + x^2 + y^2 + 1 + 2xy = 14.
+\]
+Remarquons que :
+\[
+x^2 + y^2 + 2xy = (x^2 + xy + y^2) + xy.
+\]
+En réinjectant cette écriture dans l'équation développée :
+\[
+(xy)^2 + (x^2 + xy + y^2) + xy + 1 = 14.
+\]
+Or, la première équation nous donne $x^2 + xy + y^2 = 7$. Remplaçons cette somme par $7$ :
+\[
+(xy)^2 + 7 + xy + 1 = 14 \iff (xy)^2 + xy + 8 = 14 \iff (xy)^2 + xy - 6 = 0.
+\]
+
+\textbf{2. Détermination des valeurs du produit $Z = xy$ :}\\
+Posons la variable auxiliaire $Z = xy$. L'équation devient :
+\[
+Z^2 + Z - 6 = 0.
+\]
+Discriminant : $\Delta = 1^2 - 4 \times 1 \times (-6) = 25 = 5^2$.
+Les solutions sont :
+\[
+Z_1 = \frac{-1 - 5}{2} = -3 \quad \text{et} \quad Z_2 = \frac{-1 + 5}{2} = 2.
+\]
+Nous distinguons donc deux cas disjoints.
+
+\textbf{Premier cas : $xy = 2$}\\
+La première équation donne $x^2 + 2 + y^2 = 7 \iff x^2 + y^2 = 5$.\\
+Calculons la somme $S = x + y$ :
+\[
+(x + y)^2 = x^2 + y^2 + 2xy = 5 + 2 \times 2 = 9 \implies x + y = 3 \quad \text{ou} \quad x + y = -3.
+\]
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item Si $x + y = 3$ et $xy = 2$ : $x$ et $y$ sont les racines de $X^2 - 3X + 2 = 0 \iff (X - 1)(X - 2) = 0$.
+    On obtient les couples : $(1\,;\,2)$ et $(2\,;\,1)$.
+    \item Si $x + y = -3$ et $xy = 2$ : $x$ et $y$ sont les racines de $X^2 + 3X + 2 = 0 \iff (X + 1)(X + 2) = 0$.
+    On obtient les couples : $(-1\,;\,-2)$ et $(-2\,;\,-1)$.
+\end{itemize}
+
+\textbf{Deuxième cas : $xy = -3$}\\
+La première équation donne $x^2 - 3 + y^2 = 7 \iff x^2 + y^2 = 10$.\\
+Puisque $xy = -3 \ne 0$, on a $y = -\frac{3}{x}$. Substituons dans $x^2 + y^2 = 10$ :
+\[
+x^2 + \frac{9}{x^2} = 10 \iff x^4 - 10x^2 + 9 = 0.
+\]
+En posant $u = x^2 \ge 0$, on a l'équation $u^2 - 10u + 9 = 0 \iff (u - 1)(u - 9) = 0$.\\
+D'où $x^2 = 1$ ou $x^2 = 9$.
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item Si $x^2 = 1 \iff x = \pm 1$ :
+    \begin{itemize}
+        \item Pour $x = 1$ : $y = -\frac{3}{1} = -3 \implies (1\,;\,-3)$ ;
+        \item Pour $x = -1$ : $y = -\frac{3}{-1} = 3 \implies (-1\,;\,3)$.
+    \end{itemize}
+    \item Si $x^2 = 9 \iff x = \pm 3$ :
+    \begin{itemize}
+        \item Pour $x = 3$ : $y = -\frac{3}{3} = -1 \implies (3\,;\,-1)$ ;
+        \item Pour $x = -3$ : $y = -\frac{3}{-3} = 1 \implies (-3\,;\,1)$.
+    \end{itemize}
+\end{itemize}
+
+\textbf{Conclusion :}\\
+Le système admet exactement \textbf{8 couples de solutions} dans $\mathbb{R}^2$ :
+\[
+\boxed{\mathcal{S} = \bigl\{ (1\,;\,2),\, (2\,;\,1),\, (-1\,;\,-2),\, (-2\,;\,-1),\, (1\,;\,-3),\, (-1\,;\,3),\, (3\,;\,-1),\, (-3\,;\,1) \bigr\}}
+\]
+\textit{Vérification GeoGebra :} En traçant les courbes implicites d'équations $x^2 + xy + y^2 = 7$ (qui est une ellipse inclinée) et $(x^2+1)(y^2+1)+2xy = 14$ (courbe algébrique de degré 4), on observe exactement $8$ points d'intersection qui coïncident avec les coordonnées déterminées.
+\end{correctionbox}
+
+
+% ==============================================================================
+% SECTION 2 : AUTOUR DU DEGRÉ 3
+% ==============================================================================
+\section{Autour du degré 3}
+
+% ----------------------------------------------------
+% EXERCICE 30
+% ----------------------------------------------------
+\subsection*{Exercice 30 (Identification polynomiale de degré 2)}
+Soient $a, b, c, a', b'$ et $c'$ des réels et $f$ et $g$ les fonctions définies sur $\mathbb{R}$ par :
+\[
+f(x) = ax^2 + bx + c \quad \text{et} \quad g(x) = a'x^2 + b'x + c'.
+\]
+\begin{enumerate}
+    \item Montrer que : La fonction $f$ est la fonction nulle sur $\mathbb{R} \iff a = b = c = 0$.
+    \item Montrer que : $f = g \iff \begin{cases} a = a' \\ b = b' \\ c = c' \end{cases}$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Étude de l'équivalence pour la fonction nulle :}\\
+    $\bullet$ \textbf{Sens réciproque ($\Longleftarrow$) :} Si $a = b = c = 0$, alors pour tout $x \in \mathbb{R}$, on a :
+    \[
+    f(x) = 0 \times x^2 + 0 \times x + 0 = 0.
+    \]
+    La fonction $f$ est donc identiquement nulle sur $\mathbb{R}$.
+
+    $\bullet$ \textbf{Sens direct ($\Longrightarrow$) :} Supposons que $f$ est la fonction nulle sur $\mathbb{R}$, c'est-à-dire :
+    \[
+    \forall x \in \mathbb{R}, \quad ax^2 + bx + c = 0.
+    \]
+    Évaluons cette égalité en trois points particuliers judicieusement choisis :
+    \begin{itemize}[leftmargin=*,label=\textbullet]
+        \item Pour $x = 0$ :
+        \[
+        f(0) = a(0)^2 + b(0) + c = 0 \implies c = 0.
+        \]
+        L'expression se simplifie donc en $f(x) = ax^2 + bx$.
+        \item Pour $x = 1$ :
+        \[
+        f(1) = a(1)^2 + b(1) = 0 \implies a + b = 0 \quad (L_1).
+        \]
+        \item Pour $x = -1$ :
+        \[
+        f(-1) = a(-1)^2 + b(-1) = 0 \implies a - b = 0 \quad (L_2).
+        \]
+    \end{itemize}
+    En effectuant la demi-somme et la demi-différence des relations $(L_1)$ et $(L_2)$ :
+    \[
+    (L_1) + (L_2) \implies 2a = 0 \implies a = 0,
+    \]
+    \[
+    (L_1) - (L_2) \implies 2b = 0 \implies b = 0.
+    \]
+    On a donc bien établi que $a = 0$, $b = 0$ et $c = 0$.
+
+    \textit{Autre démonstration par l'absurde :} Si $(a, b) \neq (0, 0)$, alors $f$ est une fonction polynomiale de degré $1$ ou $2$, elle admet donc au plus $2$ racines réelles distinctes. Elle ne peut donc pas s'annuler sur tout $\mathbb{R}$. Par conséquent, $a = b = c = 0$.
+
+    \item \textbf{Égalité de deux fonctions polynomiales :}\\
+    Deux fonctions $f$ et $g$ sont égales sur $\mathbb{R}$ si et seulement si leur différence $f - g$ est la fonction nulle sur $\mathbb{R}$ :
+    \[
+    f = g \iff \forall x \in \mathbb{R}, \quad (f - g)(x) = 0.
+    \]
+    Or, pour tout $x \in \mathbb{R}$ :
+    \[
+    (f - g)(x) = (ax^2 + bx + c) - (a'x^2 + b'x + c') = (a - a')x^2 + (b - b')x + (c - c').
+    \]
+    La fonction $f - g$ est une fonction polynôme du second degré de coefficients $(a - a')$, $(b - b')$ et $(c - c')$. D'après le résultat démontré à la question 1, elle est nulle sur $\mathbb{R}$ si et seulement si tous ses coefficients sont nuls :
+    \[
+    \begin{cases}
+    a - a' = 0 \\
+    b - b' = 0 \\
+    c - c' = 0
+    \end{cases}
+    \iff
+    \begin{cases}
+    a = a' \\
+    b = b' \\
+    c = c'
+    \end{cases}
+    \]
+    Ce résultat fondamental justifie rigoureusement la \textbf{méthode d'identification des coefficients} pour les polynômes.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 31
+% ----------------------------------------------------
+\subsection*{Exercice 31 (Factorisation d'un polynôme de degré 3)}
+Soient $a, b, c$ et $d$ des réels ($a \neq 0$).
+Soit $f$ la fonction polynomiale définie sur $\mathbb{R}$ par $f(x) = ax^3 + bx^2 + cx + d$. Soit $r$ une racine de $f$.
+\begin{enumerate}
+    \item Montrer qu'il existe une fonction polynomiale $g$ de degré 2 telle que pour tout $x \in \mathbb{R}$, $f(x) = (x - r)g(x)$.
+    \item Application : Résoudre dans $\mathbb{R}$ l'équation $3x^3 - 2x^2 + 5x - 6 = 0$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Démonstration de l'existence de la factorisation :}\\
+    Puisque $r$ est une racine de $f$, on a $f(r) = 0$. On peut donc écrire, pour tout réel $x$ :
+    \[
+    f(x) = f(x) - f(r) = (ax^3 + bx^2 + cx + d) - (ar^3 + br^2 + cr + d).
+    \]
+    En regroupant les termes selon les puissances de même degré :
+    \[
+    f(x) = a(x^3 - r^3) + b(x^2 - r^2) + c(x - r).
+    \]
+    Utilisons les identités remarquables de factorisation :
+    \[
+    x^2 - r^2 = (x - r)(x + r) \quad \text{et} \quad x^3 - r^3 = (x - r)(x^2 + xr + r^2).
+    \]
+    Le terme $(x - r)$ apparaît en facteur commun :
+    \[
+    \begin{aligned}
+    f(x) &= a(x - r)(x^2 + xr + r^2) + b(x - r)(x + r) + c(x - r) \\
+    &= (x - r) \Bigl[ a(x^2 + xr + r^2) + b(x + r) + c \Bigr] \\
+    &= (x - r) \Bigl[ ax^2 + (ar + b)x + (ar^2 + br + c) \Bigr].
+    \end{aligned}
+    \]
+    Posons alors la fonction $g$ définie sur $\mathbb{R}$ par :
+    \[
+    g(x) = ax^2 + (ar + b)x + (ar^2 + br + c).
+    \]
+    Comme $a \ne 0$, $g$ est bien une fonction polynomiale de degré 2, et on a :
+    \[
+    \forall x \in \mathbb{R}, \quad f(x) = (x - r)g(x).
+    \]
+
+    \item \textbf{Application : Résolution de $3x^3 - 2x^2 + 5x - 6 = 0$ :}\\
+    Posons $P(x) = 3x^3 - 2x^2 + 5x - 6$.
+    \begin{itemize}[leftmargin=*,label=\textbullet]
+        \item \textbf{Recherche d'une racine évidente :}
+        Testons $x = 1$ :
+        \[
+        P(1) = 3(1)^3 - 2(1)^2 + 5(1) - 6 = 3 - 2 + 5 - 6 = 0.
+        \]
+        Donc $r = 1$ est une racine évidente de $P$.
+
+        \item \textbf{Factorisation par $(x - 1)$ :}
+        D'après la question 1, il existe des réels $A, B, C$ tels que :
+        \[
+        P(x) = (x - 1)(Ax^2 + Bx + C), \quad \text{avec } A = 3.
+        \]
+        Développons cette expression :
+        \[
+        (x - 1)(3x^2 + Bx + C) = 3x^3 + (B - 3)x^2 + (C - B)x - C.
+        \]
+        Par identification avec $3x^3 - 2x^2 + 5x - 6$ (valable d'après l'unicité prouvée à l'exercice 30) :
+        \[
+        \begin{cases}
+        B - 3 = -2 \implies B = 1 \\
+        C - B = 5 \implies C - 1 = 5 \implies C = 6 \\
+        -C = -6 \implies C = 6
+        \end{cases}
+        \]
+        Le système est parfaitement cohérent, d'où :
+        \[
+        P(x) = (x - 1)(3x^2 + x + 6).
+        \]
+
+        \item \textbf{Résolution de l'équation $P(x) = 0$ :}
+        Un produit de facteurs est nul si et seulement si l'un au moins des facteurs est nul :
+        \[
+        (x - 1)(3x^2 + x + 6) = 0 \iff x - 1 = 0 \quad \text{ou} \quad 3x^2 + x + 6 = 0.
+        \]
+        Étudions le trinôme du second degré $3x^2 + x + 6$ :
+        \[
+        \Delta = 1^2 - 4 \times 3 \times 6 = 1 - 72 = -71 < 0.
+        \]
+        Puisque $\Delta < 0$, ce trinôme n'admet aucune racine réelle.
+    \end{itemize}
+
+    \textbf{Conclusion :}\\
+    L'équation admet une unique solution dans $\mathbb{R}$ :
+    \[
+    \boxed{\mathcal{S} = \{ 1 \}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 32
+% ----------------------------------------------------
+\subsection*{Exercice 32}
+Montrer que le nombre réel suivant est un entier naturel :
+\[
+A = \sqrt[3]{3\sqrt{21} + 8} - \sqrt[3]{3\sqrt{21} - 8} \in \mathbb{N}.
+\]
+\textit{Indication :} On pourra montrer que $A$ est une solution d'une équation de degré 3.
+
+\begin{correctionbox}
+\textbf{1. Analyse des radicaux et pose des variables auxiliaires :}\\
+Posons :
+\[
+u = \sqrt[3]{3\sqrt{21} + 8} \quad \text{et} \quad v = \sqrt[3]{3\sqrt{21} - 8}.
+\]
+Remarquons que $3\sqrt{21} = \sqrt{9 \times 21} = \sqrt{189} > \sqrt{64} = 8$, donc $3\sqrt{21} - 8 > 0$. Les réels $u$ et $v$ sont donc strictement positifs, et comme $3\sqrt{21} + 8 > 3\sqrt{21} - 8$, on a $u > v$, de sorte que $A = u - v > 0$.
+
+\textbf{2. Calcul du produit $uv$ :}\\
+En regroupant sous un même radical cubique :
+\[
+uv = \sqrt[3]{(3\sqrt{21} + 8)(3\sqrt{21} - 8)}.
+\]
+Grâce à l'identité remarquable $(a+b)(a-b) = a^2 - b^2$ :
+\[
+(3\sqrt{21} + 8)(3\sqrt{21} - 8) = (3\sqrt{21})^2 - 8^2 = 9 \times 21 - 64 = 189 - 64 = 125.
+\]
+Comme $125 = 5^3$, on en déduit que :
+\[
+uv = \sqrt[3]{125} = 5.
+\]
+
+\textbf{3. Établissement de l'équation satisfaite par $A$ :}\\
+Calculons $A^3 = (u - v)^3$ en utilisant le développement du binôme de Newton sous la forme factorisée :
+\[
+(u - v)^3 = u^3 - 3u^2 v + 3uv^2 - v^3 = (u^3 - v^3) - 3uv(u - v).
+\]
+Calculons chaque bloc séparément :
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item $u^3 - v^3 = (3\sqrt{21} + 8) - (3\sqrt{21} - 8) = 8 + 8 = 16$ ;
+    \item $uv = 5$ ;
+    \item $u - v = A$.
+\end{itemize}
+En injectant ces données dans l'égalité cubique :
+\[
+A^3 = 16 - 3 \times 5 \times A = 16 - 15A.
+\]
+Par conséquent, le réel $A$ est une solution de l'équation polynomiale du troisième degré :
+\[
+A^3 + 15A - 16 = 0.
+\]
+
+\textbf{4. Résolution de l'équation $X^3 + 15X - 16 = 0$ dans $\mathbb{R}$ :}\\
+Soit $P(X) = X^3 + 15X - 16$.
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item $X = 1$ est une racine évidente de $P$ car $1^3 + 15(1) - 16 = 16 - 16 = 0$.
+    \item Factorisons $P(X)$ par $(X - 1)$ :
+    \[
+    X^3 + 15X - 16 = (X - 1)(X^2 + X + 16).
+    \]
+    \textit{Vérification du développement :}
+    $(X - 1)(X^2 + X + 16) = X^3 + X^2 + 16X - X^2 - X - 16 = X^3 + 15X - 16$.
+    \item Étudions le facteur du second degré $Q(X) = X^2 + X + 16$ :
+    \[
+    \Delta_Q = 1^2 - 4 \times 1 \times 16 = 1 - 64 = -63 < 0.
+    \]
+    Le discriminant étant strictement négatif, ce trinôme ne s'annule pour aucune valeur réelle et reste strictement positif sur $\mathbb{R}$.
+\end{itemize}
+L'équation $X^3 + 15X - 16 = 0$ admet donc \textbf{une unique racine réelle}, qui est $X = 1$.
+
+\textbf{Conclusion :}\\
+Puisque $A$ est un réel vérifiant cette équation, on a nécessairement :
+\[
+\boxed{A = 1 \in \mathbb{N}}
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 33
+% ----------------------------------------------------
+\subsection*{Exercice 33}
+\begin{enumerate}
+    \item Déterminer un polynôme $P$ de degré 3 vérifiant les deux conditions suivantes :
+    \begin{enumerate}[label=(\alph*)]
+        \item $\forall x \in \mathbb{R}, \quad P(x+1) - P(x) = x(x+1)$
+        \item $P(0) = 0$
+    \end{enumerate}
+    \item Pour tout entier naturel $n \ge 1$, on pose $S(n) = \displaystyle\sum_{k=1}^n k(k+1)$.\\
+    Montrer que $S(n) = \dfrac{n(n+1)(n+2)}{3}$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Recherche du polynôme $P$ :}\\
+    Puisque $P$ est de degré $3$, il s'écrit sous la forme générale :
+    \[
+    P(x) = ax^3 + bx^2 + cx + d, \quad \text{avec } a \neq 0.
+    \]
+    \begin{itemize}[leftmargin=*,label=\textbullet]
+        \item La condition (b) donne directement :
+        \[
+        P(0) = d = 0.
+        \]
+        Ainsi, $P(x) = ax^3 + bx^2 + cx$.
+        \item Développons la différence finie $P(x+1) - P(x)$ :
+        \[
+        P(x+1) - P(x) = a\bigl((x+1)^3 - x^3\bigr) + b\bigl((x+1)^2 - x^2\bigr) + c\bigl((x+1) - x\bigr).
+        \]
+        Calculons chaque terme :
+        \[
+        (x+1)^3 - x^3 = (x^3 + 3x^2 + 3x + 1) - x^3 = 3x^2 + 3x + 1,
+        \]
+        \[
+        (x+1)^2 - x^2 = (x^2 + 2x + 1) - x^2 = 2x + 1,
+        \]
+        \[
+        (x+1) - x = 1.
+        \]
+        En regroupant par puissances de $x$ :
+        \[
+        \begin{aligned}
+        P(x+1) - P(x) &= a(3x^2 + 3x + 1) + b(2x + 1) + c \\
+        &= 3ax^2 + (3a + 2b)x + (a + b + c).
+        \end{aligned}
+        \]
+        \item Or, la condition (a) impose que pour tout réel $x$ :
+        \[
+        P(x+1) - P(x) = x(x+1) = x^2 + x.
+        \]
+        \item Par identification des coefficients (valable sur les polynômes réels) :
+        \[
+        \begin{cases}
+        3a = 1 \\[1mm]
+        3a + 2b = 1 \\[1mm]
+        a + b + c = 0
+        \end{cases}
+        \iff
+        \begin{cases}
+        a = \dfrac{1}{3} \\[2mm]
+        1 + 2b = 1 \implies b = 0 \\[1mm]
+        \dfrac{1}{3} + 0 + c = 0 \implies c = -\dfrac{1}{3}
+        \end{cases}
+        \]
+    \end{itemize}
+    Le polynôme cherché est donc :
+    \[
+    \boxed{P(x) = \frac{1}{3}x^3 - \frac{1}{3}x = \frac{1}{3}x(x^2 - 1) = \frac{1}{3}(x - 1)x(x + 1)}
+    \]
+
+    \item \textbf{Calcul de la somme $S(n)$ par télescopage :}\\
+    Pour tout entier $k \ge 1$, la condition vérifiée par le polynôme $P$ donne :
+    \[
+    k(k+1) = P(k+1) - P(k).
+    \]
+    En sommant cette identité pour $k$ allant de $1$ à $n$ :
+    \[
+    S(n) = \sum_{k=1}^n k(k+1) = \sum_{k=1}^n \bigl( P(k+1) - P(k) \bigr).
+    \]
+    La somme est télescopique : tous les termes intermédiaires s'annulent deux à deux :
+    \[
+    S(n) = \bigl( P(2) - P(1) \bigr) + \bigl( P(3) - P(2) \bigr) + \dots + \bigl( P(n+1) - P(n) \bigr) = P(n+1) - P(1).
+    \]
+    Or $P(1) = \frac{1}{3}(1)(1-1)(1+1) = 0$.\\
+    Il vient donc simplement :
+    \[
+    S(n) = P(n+1).
+    \]
+    Évaluons $P(n+1)$ à l'aide de la forme factorisée $P(x) = \frac{1}{3}(x-1)x(x+1)$ :
+    \[
+    S(n) = \frac{1}{3}\bigl((n+1) - 1\bigr)(n+1)\bigl((n+1) + 1\bigr) = \frac{1}{3}n(n+1)(n+2).
+    \]
+    On a donc bien démontré que pour tout $n \in \mathbb{N}^*$ :
+    \[
+    \boxed{S(n) = \frac{n(n+1)(n+2)}{3}}
+    \]
+    \textit{Remarque culturelle :} On retrouve bien la somme classique $\sum_{k=1}^n (k^2+k) = \frac{n(n+1)(2n+1)}{6} + \frac{n(n+1)}{2} = \frac{n(n+1)}{6}[2n+1+3] = \frac{n(n+1)(2n+4)}{6} = \frac{n(n+1)(n+2)}{3}$.
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 34
+% ----------------------------------------------------
+\subsection*{Exercice 34}
+Soit $n$ un entier naturel non nul. On considère le polynôme $P$ défini sur $\mathbb{R}$ par :
+\[
+P(x) = x^3 - 3nx^2 + (3n^2 - 1)x - n(n^2 - 1).
+\]
+Déterminer les racines de $P$.
+
+\begin{correctionbox}
+\textbf{1. Recherche d'une racine remarquable en fonction de $n$ :}\\
+Observons la structure des coefficients : le terme constant est $-n(n^2 - 1) = -n^3 + n$.
+Évaluons le polynôme en $x = n$ :
+\[
+\begin{aligned}
+P(n) &= n^3 - 3n(n^2) + (3n^2 - 1)n - n(n^2 - 1) \\
+&= n^3 - 3n^3 + 3n^3 - n - n^3 + n \\
+&= (1 - 3 + 3 - 1)n^3 + (-1 + 1)n \\
+&= 0.
+\end{aligned}
+\]
+Ainsi, pour tout entier $n \ge 1$, $x = n$ est une racine de $P$.
+
+\textbf{2. Factorisation de $P(x)$ par $(x - n)$ :}\\
+D'après le cours sur la division euclidienne et la factorisation polynomiale, il existe un trinôme $Q(x) = x^2 + Bx + C$ tel que :
+\[
+P(x) = (x - n)(x^2 + Bx + C).
+\]
+Développons ce produit :
+\[
+(x - n)(x^2 + Bx + C) = x^3 + (B - n)x^2 + (C - nB)x - nC.
+\]
+En identifiant les coefficients avec $P(x) = x^3 - 3nx^2 + (3n^2 - 1)x - n(n^2 - 1)$ :
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item Coefficient de $x^2$ : $B - n = -3n \implies B = -2n$ ;
+    \item Terme constant : $-nC = -n(n^2 - 1) \implies C = n^2 - 1$ ;
+    \item Vérification sur le terme en $x$ : $C - nB = (n^2 - 1) - n(-2n) = n^2 - 1 + 2n^2 = 3n^2 - 1$, ce qui concorde rigoureusement.
+\end{itemize}
+Le polynôme se factorise donc sous la forme :
+\[
+P(x) = (x - n)\bigl(x^2 - 2nx + (n^2 - 1)\bigr).
+\]
+
+\textbf{3. Résolution du trinôme du second degré :}\\
+Considérons le trinôme $Q(x) = x^2 - 2nx + (n^2 - 1)$.
+On reconnaît immédiatement le début d'une identité remarquable (forme canonique) :
+\[
+Q(x) = (x^2 - 2nx + n^2) - 1 = (x - n)^2 - 1^2.
+\]
+D'après l'identité remarquable $A^2 - B^2 = (A - B)(A + B)$ :
+\[
+Q(x) = \bigl((x - n) - 1\bigr)\bigl((x - n) + 1\bigr) = (x - n - 1)(x - n + 1).
+\]
+La factorisation complète de $P(x)$ est donc :
+\[
+P(x) = (x - (n - 1))(x - n)(x - (n + 1)).
+\]
+
+\textbf{Conclusion :}\\
+Le polynôme $P$ admet trois racines réelles distinctes, qui sont trois entiers consécutifs :
+\[
+\boxed{x_1 = n - 1, \qquad x_2 = n, \qquad x_3 = n + 1}
+\]
+\end{correctionbox}
+
+
+% ==============================================================================
+% SECTION 3 : DIVERS
+% ==============================================================================
+\section{Exercices divers et approfondissements}
+
+% ----------------------------------------------------
+% EXERCICE 35
+% ----------------------------------------------------
+\subsection*{Exercice 35}
+Soit $ABC$ un triangle tel que :
+\[
+AB^2 + AC^2 + BC^2 = AB \cdot AC + AC \cdot BC + AB \cdot BC.
+\]
+Justifier que $ABC$ est un triangle équilatéral.
+
+\begin{correctionbox}
+\textbf{1. Choix des notations :}\\
+Pour simplifier les écritures, posons les longueurs des trois côtés du triangle :
+\[
+a = BC, \quad b = AC, \quad c = AB.
+\]
+Puisque $a, b, c$ sont des longueurs de segments d'un vrai triangle, ce sont des réels strictement positifs.
+L'égalité de l'énoncé s'écrit alors :
+\[
+c^2 + b^2 + a^2 = c \cdot b + b \cdot a + c \cdot a \iff a^2 + b^2 + c^2 - ab - bc - ca = 0.
+\]
+
+\textbf{2. Transformation en somme de carrés :}\\
+Multiplions les deux membres de cette égalité par $2$ :
+\[
+2a^2 + 2b^2 + 2c^2 - 2ab - 2bc - 2ca = 0.
+\]
+Décomposons chaque terme $2x^2$ sous la forme $x^2 + x^2$ et regroupons astucieusement les termes pour faire apparaître trois identités remarquables :
+\[
+(a^2 - 2ab + b^2) + (b^2 - 2bc + c^2) + (c^2 - 2ca + a^2) = 0,
+\]
+ce qui s'écrit sous forme condensée :
+\[
+(a - b)^2 + (b - c)^2 + (c - a)^2 = 0.
+\]
+
+\textbf{3. Conclusion sur les longueurs :}\\
+Dans l'ensemble des réels $\mathbb{R}$, le carré de tout nombre est positif ou nul :
+\[
+\forall (a, b, c) \in \mathbb{R}^3, \quad (a - b)^2 \ge 0, \quad (b - c)^2 \ge 0, \quad (c - a)^2 \ge 0.
+\]
+Une somme de trois réels positifs ou nuls est nulle si et seulement si chacun des termes est nul simultanément :
+\[
+\begin{cases}
+(a - b)^2 = 0 \\
+(b - c)^2 = 0 \\
+(c - a)^2 = 0
+\end{cases}
+\iff
+\begin{cases}
+a - b = 0 \\
+b - c = 0 \\
+c - a = 0
+\end{cases}
+\iff
+\begin{cases}
+a = b \\
+b = c \\
+c = a
+\end{cases}
+\iff a = b = c.
+\]
+Ainsi, on a $AB = BC = CA$. Le triangle $ABC$ a ses trois côtés de même longueur :
+\[
+\boxed{\text{Le triangle } ABC \text{ est équilatéral.}}
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 36
+% ----------------------------------------------------
+\subsection*{Exercice 36}
+Soit $n$ un entier naturel non nul. Montrer qu'il existe un unique entier naturel $k$ tel que :
+\[
+\frac{k(k+1)}{2} \le n < \frac{(k+1)(k+2)}{2}.
+\]
+
+\begin{correctionbox}
+\textbf{Méthode 1 : Résolution analytique par encadrement du second degré}\\
+Considérons la fonction $f$ définie sur $[0, +\infty[$ par :
+\[
+f(x) = \frac{x(x+1)}{2} = \frac{1}{2}x^2 + \frac{1}{2}x.
+\]
+$f$ est une fonction polynôme du second degré de dérivée $f'(x) = x + \frac{1}{2} > 0$ sur $[0, +\infty[$.
+Elle est donc continue et strictement croissante sur $[0, +\infty[$, avec $f(0) = 0$ et $\lim_{x \to +\infty} f(x) = +\infty$.
+
+D'après le théorème de la bijection (corollaire du TVI), pour tout $n \in \mathbb{N}^*$, il existe un unique réel $x_0 \in ]0, +\infty[$ tel que $f(x_0) = n$ :
+\[
+\frac{x_0(x_0 + 1)}{2} = n \iff x_0^2 + x_0 - 2n = 0.
+\]
+Le discriminant de cette équation du second degré est :
+\[
+\Delta = 1^2 - 4(1)(-2n) = 1 + 8n > 0.
+\]
+L'équation admet deux racines réelles de signes contraires. L'unique racine strictement positive est :
+\[
+x_0 = \frac{-1 + \sqrt{1 + 8n}}{2}.
+\]
+Puisque la fonction $f$ est strictement croissante sur $[0, +\infty[$, l'encadrement $f(k) \le n < f(k+1)$ équivaut à :
+\[
+f(k) \le f(x_0) < f(k+1) \iff k \le x_0 < k+1.
+\]
+Cette double inégalité caractérise de manière unique la \textbf{partie entière} du réel $x_0$ :
+\[
+k = \lfloor x_0 \rfloor = \left\lfloor \frac{\sqrt{8n + 1} - 1}{2} \right\rfloor.
+\]
+Comme $n \ge 1$, on a $8n + 1 \ge 9$, d'où $\sqrt{8n + 1} \ge 3$, ce qui garantit $x_0 \ge \frac{3 - 1}{2} = 1$.
+Ainsi, $k = \lfloor x_0 \rfloor$ est un entier naturel bien défini, supérieur ou égal à $1$, et son existence ainsi que son unicité sont rigoureusement établies.
+
+\textbf{Méthode 2 : Partition de $\mathbb{N}^*$ par les nombres triangulaires}\\
+Notons $T_m = \frac{m(m+1)}{2}$ le $m$-ième nombre triangulaire.
+La suite $(T_m)_{m \in \mathbb{N}}$ est strictement croissante :
+\[
+0 = T_0 < 1 = T_1 < 3 = T_2 < 6 = T_3 < 10 = T_4 < \dots < T_m < T_{m+1} < \dots
+\]
+Les intervalles d'entiers semi-ouverts $I_k = [\![ T_k, T_{k+1} - 1 ]\!] = \{ m \in \mathbb{N} \mid T_k \le m < T_{k+1} \}$ pour $k \in \mathbb{N}$ forment une partition de $\mathbb{N}$ :
+\[
+\mathbb{N} = \bigsqcup_{k=0}^{+\infty} [\![ T_k, T_{k+1} - 1 ]\!].
+\]
+Puisque tout entier $n \ge 1$ appartient à un et un seul ensemble de la partition, il existe un unique $k \in \mathbb{N}$ tel que $T_k \le n < T_{k+1}$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 37
+% ----------------------------------------------------
+\subsection*{Exercice 37}
+On considère l'équation $ax^2 + bx + c = 0$ avec $a \neq 0$ et on suppose que cette équation admet deux solutions $x_1$ et $x_2$.
+Exprimer en fonction de $a$, $b$ et $c$ les expressions suivantes :
+\begin{enumerate}
+    \item $x_1^2 + x_2^2$
+    \item $\dfrac{1}{x_1} + \dfrac{1}{x_2}$ \quad (en supposant $c \neq 0$)
+    \item $\dfrac{1}{x_1^2} + \dfrac{1}{x_2^2}$ \quad (en supposant $c \neq 0$)
+    \item $\dfrac{x_1 + 1}{x_2 + 1} + \dfrac{x_2 + 1}{x_1 + 1}$ \quad (en supposant $x_1 \neq -1$ et $x_2 \neq -1$)
+\end{enumerate}
+
+\begin{correctionbox}
+\textbf{Rappel des relations fondamentales de Viète :}\\
+Puisque $x_1$ et $x_2$ sont les deux racines du trinôme $ax^2 + bx + c$, on a :
+\[
+S = x_1 + x_2 = -\frac{b}{a} \quad \text{et} \quad P = x_1 x_2 = \frac{c}{a}.
+\]
+
+\begin{enumerate}
+    \item \textbf{Calcul de $x_1^2 + x_2^2$ :}\\
+    À l'aide de l'identité remarquable $(x_1 + x_2)^2 = x_1^2 + x_2^2 + 2x_1 x_2$, on a :
+    \[
+    x_1^2 + x_2^2 = (x_1 + x_2)^2 - 2x_1 x_2 = S^2 - 2P.
+    \]
+    En remplaçant $S$ et $P$ par leurs valeurs :
+    \[
+    x_1^2 + x_2^2 = \left(-\frac{b}{a}\right)^2 - 2\left(\frac{c}{a}\right) = \frac{b^2}{a^2} - \frac{2c}{a} = \boxed{\frac{b^2 - 2ac}{a^2}}
+    \]
+
+    \item \textbf{Calcul de $\dfrac{1}{x_1} + \dfrac{1}{x_2}$ :}\\
+    Sous l'hypothèse $c \neq 0$ (assurant que $P \neq 0$, donc $x_1 \neq 0$ et $x_2 \neq 0$), on met au même dénominateur :
+    \[
+    \frac{1}{x_1} + \frac{1}{x_2} = \frac{x_1 + x_2}{x_1 x_2} = \frac{S}{P}.
+    \]
+    D'où :
+    \[
+    \frac{1}{x_1} + \frac{1}{x_2} = \frac{-\frac{b}{a}}{\frac{c}{a}} = \boxed{-\frac{b}{c}}
+    \]
+
+    \item \textbf{Calcul de $\dfrac{1}{x_1^2} + \dfrac{1}{x_2^2}$ :}\\
+    De même, en réduisant au même dénominateur :
+    \[
+    \frac{1}{x_1^2} + \frac{1}{x_2^2} = \frac{x_1^2 + x_2^2}{(x_1 x_2)^2} = \frac{S^2 - 2P}{P^2}.
+    \]
+    En injectant le résultat de la question 1 :
+    \[
+    \frac{1}{x_1^2} + \frac{1}{x_2^2} = \frac{\frac{b^2 - 2ac}{a^2}}{\left(\frac{c}{a}\right)^2} = \frac{\frac{b^2 - 2ac}{a^2}}{\frac{c^2}{a^2}} = \boxed{\frac{b^2 - 2ac}{c^2}}
+    \]
+
+    \item \textbf{Calcul de $\dfrac{x_1 + 1}{x_2 + 1} + \dfrac{x_2 + 1}{x_1 + 1}$ :}\\
+    La condition $x_1 \neq -1$ et $x_2 \neq -1$ signifie que $-1$ n'est pas racine du trinôme, soit $a(-1)^2 + b(-1) + c \neq 0 \iff a - b + c \neq 0$.
+    Mettons les deux fractions rationnelles au dénominateur commun $(x_1 + 1)(x_2 + 1)$ :
+    \[
+    E_4 = \frac{(x_1 + 1)^2 + (x_2 + 1)^2}{(x_2 + 1)(x_1 + 1)}.
+    \]
+    $\bullet$ Développons le numérateur $N$ :
+    \[
+    \begin{aligned}
+    N &= (x_1^2 + 2x_1 + 1) + (x_2^2 + 2x_2 + 1) \\
+    &= (x_1^2 + x_2^2) + 2(x_1 + x_2) + 2 \\
+    &= (S^2 - 2P) + 2S + 2 \\
+    &= \frac{b^2 - 2ac}{a^2} + 2\left(-\frac{b}{a}\right) + 2 \\
+    &= \frac{b^2 - 2ac - 2ab + 2a^2}{a^2}.
+    \end{aligned}
+    \]
+    $\bullet$ Développons le dénominateur $D$ :
+    \[
+    D = x_1 x_2 + (x_1 + x_2) + 1 = P + S + 1 = \frac{c}{a} - \frac{b}{a} + 1 = \frac{a - b + c}{a}.
+    \]
+    $\bullet$ En faisant le quotient $E_4 = \frac{N}{D}$ :
+    \[
+    E_4 = \frac{\frac{2a^2 + b^2 - 2ab - 2ac}{a^2}}{\frac{a - b + c}{a}} = \boxed{\frac{2a^2 + b^2 - 2ab - 2ac}{a(a - b + c)}}
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 38
+% ----------------------------------------------------
+\subsection*{Exercice 38}
+Un objet de masse $m$ est soumis aux forces gravitationnelles de deux corps de masse $M_1$ et $M_2$. On note $d$ la distance entre les deux corps et $x$ la distance entre l'objet et le corps de masse $M_1$.
+\begin{enumerate}
+    \item Calculer $x_e$, la valeur de $x$ telle que l'objet soit à l'équilibre.
+    \item Montrer que $x_e$ se met sous la forme $x_e = \dfrac{d}{1 + A}$ où $A$ est une fonction qui ne dépend que des masses $M_1$ et $M_2$.
+\end{enumerate}
+\textbf{Données :} Force gravitationnelle exercée par un corps de masse $M$ sur un objet de masse $m$ :
+$F = \mathcal{G}\dfrac{mM}{r^2}$, où $r$ est la distance entre l'objet et le corps et $\mathcal{G}$ la constante de gravitation universelle.
+
+\begin{correctionbox}
+\textbf{1. Calcul de la position d'équilibre $x_e$ :}\\
+Plaçons les corps sur un axe gradué : le corps de masse $M_1$ est à l'origine ($x = 0$) et le corps de masse $M_2$ à l'abscisse $x = d$. L'objet de masse $m$ est situé entre les deux corps, à la distance $x \in ]0, d[$ de $M_1$.
+Sa distance au corps $M_2$ est donc $d - x$.
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item La force gravitationnelle exercée par $M_1$ attire l'objet vers $M_1$ avec une intensité :
+    \[
+    F_1 = \mathcal{G} \frac{m M_1}{x^2}.
+    \]
+    \item La force gravitationnelle exercée par $M_2$ attire l'objet vers $M_2$ avec une intensité :
+    \[
+    F_2 = \mathcal{G} \frac{m M_2}{(d - x)^2}.
+    \]
+\end{itemize}
+Ces deux forces ayant des directions colinéaires et des sens opposés, l'objet est à l'équilibre si et seulement si leurs normes sont égales :
+\[
+F_1 = F_2 \iff \mathcal{G} \frac{m M_1}{x^2} = \mathcal{G} \frac{m M_2}{(d - x)^2}.
+\]
+Comme la constante gravitationnelle $\mathcal{G} > 0$ et la masse de l'objet $m > 0$ sont non nulles, on simplifie :
+\[
+\frac{M_1}{x^2} = \frac{M_2}{(d - x)^2} \iff M_1 (d - x)^2 = M_2 x^2.
+\]
+Puisque $x \in ]0, d[$, les quantités $x$ et $d - x$ sont strictement positives. En extrayant la racine carrée des deux membres :
+\[
+\sqrt{M_1}(d - x) = \sqrt{M_2} x.
+\]
+Développons et isolons l'inconnue $x$ :
+\[
+\sqrt{M_1} d - \sqrt{M_1} x = \sqrt{M_2} x \iff (\sqrt{M_1} + \sqrt{M_2})x = \sqrt{M_1} d.
+\]
+On en déduit l'unique position d'équilibre située entre les deux corps :
+\[
+\boxed{x_e = \frac{\sqrt{M_1}}{\sqrt{M_1} + \sqrt{M_2}} d}
+\]
+
+\textbf{2. Mise sous la forme réduite demandée :}\\
+Divisons le numérateur et le dénominateur de cette fraction par $\sqrt{M_1} > 0$ :
+\[
+x_e = \frac{\frac{\sqrt{M_1}}{\sqrt{M_1}}}{\frac{\sqrt{M_1} + \sqrt{M_2}}{\sqrt{M_1}}} d = \frac{1}{1 + \frac{\sqrt{M_2}}{\sqrt{M_1}}} d = \frac{d}{1 + \sqrt{\dfrac{M_2}{M_1}}}.
+\]
+L'expression est bien de la forme :
+\[
+\boxed{x_e = \frac{d}{1 + A} \quad \text{avec} \quad A = \sqrt{\frac{M_2}{M_1}}}
+\]
+La grandeur adimensionnelle $A$ ne dépend exclusivement que du rapport des deux masses $\dfrac{M_2}{M_1}$.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 39
+% ----------------------------------------------------
+\subsection*{Exercice 39}
+Deux triangles équilatéraux ont le même centre et leurs côtés sont parallèles deux à deux. L'aire de l'un est égale au double de l'aire de l'autre. Le côté du plus petit triangle a pour longueur $1$.
+Calculer la distance $d$ entre les côtés parallèles.
+
+\begin{correctionbox}
+\textbf{1. Rapport d'homothétie et côté du grand triangle :}\\
+Soient $T_1$ le petit triangle équilatéral et $T_2$ le grand triangle équilatéral.
+Notons $c_1 = 1$ la longueur du côté de $T_1$ et $c_2$ celle de $T_2$.
+Puisque les triangles ont leurs côtés parallèles et même centre $O$, ils sont homothétiques par rapport à leur centre commun $O$.
+Le rapport des aires de deux figures semblables est égal au carré du rapport d'homothétie $k > 0$ :
+\[
+\frac{\mathcal{A}(T_2)}{\mathcal{A}(T_1)} = k^2 = 2 \implies k = \sqrt{2}.
+\]
+La longueur du côté du grand triangle équilatéral vaut donc :
+\[
+c_2 = k \times c_1 = \sqrt{2} \times 1 = \sqrt{2}.
+\]
+
+\textbf{2. Calcul de la distance du centre aux côtés (apothème) :}\\
+Rappelons que dans un triangle équilatéral de côté $c$, la hauteur $h$ mesure :
+\[
+h = c \frac{\sqrt{3}}{2}.
+\]
+Le centre $O$ du triangle équilatéral (qui est à la fois centre de gravité, orthocentre et centre des cercles inscrit et circonscrit) est situé au tiers inférieur de chaque médiane/hauteur en partant de la base.
+La distance $r$ du centre $O$ à n'importe quel côté du triangle (rayon du cercle inscrit) est donc :
+\[
+r = \frac{1}{3} h = \frac{1}{3} \times \left( c \frac{\sqrt{3}}{2} \right) = \frac{c\sqrt{3}}{6}.
+\]
+Appliquons cette formule aux deux triangles :
+\begin{itemize}[leftmargin=*,label=\textbullet]
+    \item Distance du centre $O$ aux côtés de $T_1$ :
+    \[
+    r_1 = \frac{c_1\sqrt{3}}{6} = \frac{\sqrt{3}}{6}.
+    \]
+    \item Distance du centre $O$ aux côtés de $T_2$ :
+    \[
+    r_2 = \frac{c_2\sqrt{3}}{6} = \frac{\sqrt{2}\sqrt{3}}{6} = \frac{\sqrt{6}}{6}.
+    \]
+\end{itemize}
+
+\textbf{3. Calcul de la distance $d$ entre deux côtés parallèles :}\\
+Puisque les deux triangles ont la même orientation par rapport à leur centre commun (rapport d'homothétie positif $k = \sqrt{2} > 0$), deux côtés parallèles se situent dans la même direction par rapport au centre $O$.
+La distance $d$ séparant ces deux droites parallèles est donc la différence de leurs distances au centre :
+\[
+d = r_2 - r_1 = \frac{\sqrt{6}}{6} - \frac{\sqrt{3}}{6} = \frac{\sqrt{6} - \sqrt{3}}{6} = \frac{\sqrt{3}(\sqrt{2} - 1)}{6}.
+\]
+
+\textbf{Conclusion :}\\
+La distance exacte entre les côtés parallèles est :
+\[
+\boxed{d = \frac{\sqrt{6} - \sqrt{3}}{6} = \frac{\sqrt{3}(\sqrt{2} - 1)}{6}} \approx 0{,}1196
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 40
+% ----------------------------------------------------
+\subsection*{Exercice 40}
+Soit $ABC$ un triangle rectangle en $A$ tel que $AB = 4$ et $AC = 3$. Calculer la distance minimale d'un point de l'hypoténuse à $A$.
+
+\begin{correctionbox}
+\textbf{Méthode 1 : Propriété géométrique de la projection orthogonale}\\
+Soit $M$ un point quelconque appartenant au segment $[BC]$ (l'hypoténuse).
+La distance de $A$ à $M$ est minimale lorsque le vecteur $\vec{AM}$ est orthogonal à la droite $(BC)$, c'est-à-dire lorsque $M$ coïncide avec le projeté orthogonal de $A$ sur la droite $(BC)$, noté $H$.
+En effet, pour tout point $M$ de $[BC]$, le triangle $AHM$ est rectangle en $H$, et d'après le théorème de Pythagore :
+\[
+AM^2 = AH^2 + HM^2 \ge AH^2 \implies AM \ge AH,
+\]
+avec égalité si et seulement si $HM = 0$, soit $M = H$.
+Puisque les angles en $B$ et $C$ du triangle rectangle sont aigus, le pied de la hauteur $H$ se situe strictement à l'intérieur du segment $[BC]$.
+La distance minimale cherchée est donc la hauteur $AH$.
+
+$\bullet$ Calculons l'hypoténuse $BC$ via le théorème de Pythagore dans le triangle $ABC$ rectangle en $A$ :
+\[
+BC = \sqrt{AB^2 + AC^2} = \sqrt{4^2 + 3^2} = \sqrt{16 + 9} = \sqrt{25} = 5.
+\]
+$\bullet$ Exprimons l'aire du triangle $ABC$ de deux manières différentes :
+\[
+\mathcal{A}(ABC) = \frac{AB \times AC}{2} = \frac{BC \times AH}{2}.
+\]
+D'où :
+\[
+AB \times AC = BC \times AH \iff AH = \frac{AB \times AC}{BC} = \frac{4 \times 3}{5} = \frac{12}{5} = 2{,}4.
+\]
+
+\textbf{Méthode 2 : Optimisation d'un trinôme du second degré (analytique)}\\
+Munissons le plan d'un repère orthonormé d'origine $A$, où l'axe des abscisses porte $[AB)$ et l'axe des ordonnées porte $[AC)$.
+Dans ce repère, les sommets ont pour coordonnées $A(0\,;\,0)$, $B(4\,;\,0)$ et $C(0\,;\,3)$.
+La droite $(BC)$ a pour équation :
+\[
+\frac{x}{4} + \frac{y}{3} = 1 \iff y = -\frac{3}{4}x + 3.
+\]
+Un point $M(x, y)$ appartient à l'hypoténuse $[BC]$ si et seulement si $x \in [0, 4]$ et $y = 3 - \frac{3}{4}x$.
+Le carré de la distance $AM$ s'exprime comme une fonction de l'abscisse $x$ :
+\[
+f(x) = AM^2 = x^2 + y^2 = x^2 + \left(3 - \frac{3}{4}x\right)^2.
+\]
+Développons cette expression :
+\[
+f(x) = x^2 + \left(9 - \frac{9}{2}x + \frac{9}{16}x^2\right) = \frac{25}{16}x^2 - \frac{9}{2}x + 9.
+\]
+$f$ est une fonction polynôme du second degré de la forme $ax^2 + bx + c$ avec $a = \frac{25}{16} > 0$.
+Elle atteint son minimum absolu en son sommet :
+\[
+x_0 = -\frac{b}{2a} = \frac{9/2}{2 \times (25/16)} = \frac{9/2}{25/8} = \frac{9}{2} \times \frac{8}{25} = \frac{36}{25} = 1{,}44 \in [0, 4].
+\]
+La valeur minimale du carré de la distance est alors :
+\[
+\begin{aligned}
+f(x_0) &= \frac{25}{16}\left(\frac{36}{25}\right)^2 - \frac{9}{2}\left(\frac{36}{25}\right) + 9 \\
+&= \frac{25}{16} \times \frac{1296}{625} - \frac{162}{25} + 9 \\
+&= \frac{81}{25} - \frac{162}{25} + \frac{225}{25} = \frac{144}{25}.
+\end{aligned}
+\]
+On en déduit la distance minimale :
+\[
+AM_{\min} = \sqrt{\frac{144}{25}} = \frac{12}{5} = 2{,}4.
+\]
+
+\textbf{Conclusion :}\\
+La distance minimale d'un point de l'hypoténuse à $A$ vaut :
+\[
+\boxed{d_{\min} = \frac{12}{5} = 2{,}4}
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 41
+% ----------------------------------------------------
+\subsection*{Exercice 41}
+Une colonne de fourmis de longueur $\ell$ se déplace à vitesse constante $v_c$. La dernière fourmi remonte la colonne jusqu'à sa tête puis rejoint sa place à vitesse constante $v_f$. Pendant cet aller et retour, la colonne a avancé de la longueur $\ell$.
+\begin{enumerate}
+    \item On note $t_1$ le temps pour rejoindre la tête et $t_2$ le temps pour rejoindre la queue. Exprimer $t_1$ et $t_2$ en fonction de $v_c$ et $v_f$.
+    \item Déterminer $\dfrac{v_f}{v_c}$ puis déterminer la distance totale parcourue par la fourmi lors de cet aller et retour.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item \textbf{Expression de $t_1$ et $t_2$ (cinématique galiléenne) :}\\
+    Puisque la fourmi parvient à remonter la colonne, sa vitesse propre est strictement supérieure à celle de la colonne : $v_f > v_c$.
+    Plaçons-nous dans le référentiel en translation rectiligne uniforme lié à la colonne de fourmis (vitesse $v_c$ par rapport au sol) :
+    \begin{itemize}[leftmargin=*,label=\textbullet]
+        \item \textbf{Trajet aller (de la queue à la tête) :}
+        La fourmi et la colonne progressent dans le même sens.
+        La vitesse relative de la fourmi par rapport à la colonne est :
+        \[
+        v_{\text{rel, aller}} = v_f - v_c.
+        \]
+        La distance à couvrir dans ce référentiel est la longueur $\ell$ de la colonne.
+        La durée nécessaire pour atteindre la tête est donc :
+        \[
+        \boxed{t_1 = \frac{\ell}{v_f - v_c}}
+        \]
+        \textit{Remarque dans le référentiel terrestre :} À l'instant $t_1$, la tête s'est déplacée de $v_c t_1$. La fourmi a donc parcouru la distance $\ell + v_c t_1 = v_f t_1 \iff t_1(v_f - v_c) = \ell$, ce qui donne la même relation.
+
+        \item \textbf{Trajet retour (de la tête à la queue) :}
+        La fourmi fait demi-tour et se déplace dans le sens opposé au mouvement de la colonne.
+        La vitesse relative de rapprochement de la fourmi et de la queue est :
+        \[
+        v_{\text{rel, retour}} = v_f + v_c.
+        \]
+        La distance à couvrir pour regagner sa place à l'arrière est de nouveau la longueur $\ell$.
+        La durée nécessaire pour retrouver la queue est donc :
+        \[
+        \boxed{t_2 = \frac{\ell}{v_f + v_c}}
+        \]
+    \end{itemize}
+
+    \item \textbf{Détermination du rapport des vitesses et de la distance parcourue :}
+    \begin{itemize}[leftmargin=*,label=\textbullet]
+        \item \textbf{Équation temporelle :}
+        La durée totale de l'aller-retour est $T = t_1 + t_2$.
+        Pendant cette même durée $T$, la colonne avance à la vitesse constante $v_c$ d'une distance exactement égale à sa longueur $\ell$ :
+        \[
+        v_c T = \ell \iff T = \frac{\ell}{v_c}.
+        \]
+        En égalant les deux expressions de la durée totale $T$ :
+        \[
+        \frac{\ell}{v_f - v_c} + \frac{\ell}{v_f + v_c} = \frac{\ell}{v_c}.
+        \]
+        Comme la longueur $\ell > 0$ est non nulle, nous simplifions par $\ell$ :
+        \[
+        \frac{1}{v_f - v_c} + \frac{1}{v_f + v_c} = \frac{1}{v_c}.
+        \]
+
+        \item \textbf{Introduction du rapport sans dimension $x = \dfrac{v_f}{v_c}$ :}
+        Divisons le numérateur et le dénominateur de chaque terme du membre de gauche par $v_c > 0$ :
+        \[
+        \frac{1}{\frac{v_f}{v_c} - 1} + \frac{1}{\frac{v_f}{v_c} + 1} = 1.
+        \]
+        En posant $x = \dfrac{v_f}{v_c}$ (avec la contrainte physique $x > 1$) :
+        \[
+        \frac{1}{x - 1} + \frac{1}{x + 1} = 1.
+        \]
+        Réduisons au même dénominateur :
+        \[
+        \frac{(x + 1) + (x - 1)}{(x - 1)(x + 1)} = 1 \iff \frac{2x}{x^2 - 1} = 1.
+        \]
+        Comme $x > 1$, on a $x^2 - 1 \neq 0$. En effectuant le produit en croix :
+        \[
+        x^2 - 1 = 2x \iff x^2 - 2x - 1 = 0.
+        \]
+
+        \item \textbf{Résolution de l'équation du second degré :}
+        Le discriminant du trinôme est :
+        \[
+        \Delta = (-2)^2 - 4(1)(-1) = 4 + 4 = 8 = (2\sqrt{2})^2 > 0.
+        \]
+        Les racines sont :
+        \[
+        x_1 = \frac{2 - 2\sqrt{2}}{2} = 1 - \sqrt{2} < 0, \qquad x_2 = \frac{2 + 2\sqrt{2}}{2} = 1 + \sqrt{2}.
+        \]
+        Comme le rapport de vitesses est supérieur à $1$, on retient la seule racine admissible :
+        \[
+        \boxed{\frac{v_f}{v_c} = 1 + \sqrt{2}}
+        \]
+
+        \item \textbf{Distance totale parcourue par la fourmi dans le référentiel terrestre :}
+        La fourmi se déplace à la vitesse constante $v_f$ pendant toute la durée totale $T = \dfrac{\ell}{v_c}$.
+        La distance totale parcourue par la fourmi par rapport au sol est donc :
+        \[
+        d_f = v_f \times T = v_f \times \frac{\ell}{v_c} = \left(\frac{v_f}{v_c}\right)\ell.
+        \]
+        En remplaçant le rapport $\frac{v_f}{v_c}$ par sa valeur exacte :
+        \[
+        \boxed{d_f = (1 + \sqrt{2})\ell \approx 2{,}414\,\ell}
+        \]
+    \end{itemize}
+\end{enumerate}
+\end{correctionbox}
+
+\end{document}

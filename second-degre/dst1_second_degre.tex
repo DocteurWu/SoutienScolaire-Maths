@@ -1,0 +1,287 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{correctionbox}{
+  colback=green!5!white,
+  colframe=green!50!black,
+  title=\textbf{Corrigé officiel détaillé et barème indicatif},
+  fonttitle=\bfseries,
+  arc=2mm,
+  breakable
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+
+\title{\textbf{Évaluation Sommative : DST 1 -- Le Second Degré}\\\large Énoncé et Correction Intégrale Rigoureuse (Classe de Première -- LLG)}
+\author{Soutien Scolaire -- Mathématiques}
+\date{Octobre 2019}
+
+\begin{document}
+
+\maketitle
+
+\hrule
+\vspace{0.6cm}
+
+% ----------------------------------------------------
+% EXERCICE 1
+% ----------------------------------------------------
+\subsection*{Exercice 1}
+On se place dans un repère du plan. Une parabole représentant une fonction $f$ admet le point $S(-2\,;\,1)$ comme sommet et passe par le point $A(0\,;\,13)$.
+Déterminer l'expression développée de $f(x)$.
+
+\begin{correctionbox}
+Puisque le point $S(-2\,;\,1)$ est le sommet de la parabole représentant le trinôme $f$, la forme canonique de $f$ s'écrit :
+\[
+f(x) = a(x - \alpha)^2 + \beta = a\bigl(x - (-2)\bigr)^2 + 1 = a(x + 2)^2 + 1, \quad \text{avec } a \in \R^*.
+\]
+Le point $A(0\,;\,13)$ appartient à la parabole, donc $f(0) = 13$ :
+\[
+a(0 + 2)^2 + 1 = 13 \iff 4a + 1 = 13 \iff 4a = 12 \iff a = 3.
+\]
+On développe alors l'expression pour obtenir la forme développée :
+\[
+f(x) = 3(x+2)^2 + 1 = 3(x^2 + 4x + 4) + 1 = 3x^2 + 12x + 12 + 1 = 3x^2 + 12x + 13.
+\]
+\textbf{Conclusion :} L'expression développée est :
+\[
+f(x) = 3x^2 + 12x + 13.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 2
+% ----------------------------------------------------
+\subsection*{Exercice 2}
+On se place dans un repère du plan. On considère la parabole représentant la fonction $f$ définie sur $\R$ par :
+\[
+f(x) = x^2 - 3x + 4.
+\]
+Soit $d$ la droite d'équation $y = mx + p$ tangente à la parabole au point $A$ d'abscisse $3$. On admet que la parabole et $d$ ont un unique point d'intersection.
+\begin{enumerate}
+    \item Montrer que $p = 4 - 3m$.
+    \item Déterminer l'équation de la tangente $d$.
+\end{enumerate}
+
+\begin{correctionbox}
+\begin{enumerate}
+    \item Le point de tangence $A$ appartient à la parabole. Son ordonnée est donc :
+    \[
+    y_A = f(3) = 3^2 - 3 \times 3 + 4 = 9 - 9 + 4 = 4.
+    \]
+    Le point $A(3\,;\,4)$ est donc le point de contact. Puisque la droite $d$ passe par $A$, les coordonnées de $A$ vérifient l'équation de la droite :
+    \[
+    y_A = m x_A + p \iff 4 = 3m + p \iff p = 4 - 3m.
+    \]
+    \item Les abscisses des points d'intersection entre la parabole et la droite $d$ sont les solutions de l'équation $f(x) = mx + p$ :
+    \[
+    x^2 - 3x + 4 = mx + p \iff x^2 - (3+m)x + 4 - p = 0.
+    \]
+    En injectant la relation $p = 4 - 3m$, on a $4 - p = 4 - (4 - 3m) = 3m$. L'équation devient :
+    \[
+    x^2 - (m+3)x + 3m = 0.
+    \]
+    La droite $d$ étant tangente à la parabole, cette équation du second degré doit admettre une \textbf{racine double unique} (un seul point de contact). Son discriminant $\Delta$ doit donc être nul :
+    \[
+    \Delta = \bigl(-(m+3)\bigr)^2 - 4 \times 1 \times (3m) = (m+3)^2 - 12m = m^2 + 6m + 9 - 12m = m^2 - 6m + 9.
+    \]
+    On reconnaît l'identité remarquable :
+    \[
+    \Delta = (m - 3)^2.
+    \]
+    Ainsi :
+    \[
+    \Delta = 0 \iff (m-3)^2 = 0 \iff m = 3.
+    \]
+    On en déduit la valeur de $p$ :
+    \[
+    p = 4 - 3(3) = 4 - 9 = -5.
+    \]
+    \textbf{Conclusion :} L'équation de la tangente $d$ est :
+    \[
+    y = 3x - 5.
+    \]
+\end{enumerate}
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 3
+% ----------------------------------------------------
+\subsection*{Exercice 3}
+Deux coureurs parcourent une distance de $42\text{~km}$. Le premier coureur, qui a une vitesse moyenne supérieure de $2\text{~km}\cdot\text{h}^{-1}$ à celle du deuxième coureur, a un temps de parcours inférieur de $30\text{~min}$.
+
+Calculer la vitesse moyenne des deux coureurs.
+
+\begin{correctionbox}
+Notons :
+\begin{itemize}
+    \item $v_1$ la vitesse moyenne (en $\text{km}\cdot\text{h}^{-1}$) du premier coureur et $t_1$ son temps de parcours (en heures).
+    \item $v_2$ la vitesse moyenne (en $\text{km}\cdot\text{h}^{-1}$) du second coureur et $t_2$ son temps de parcours (en heures).
+\end{itemize}
+La distance étant de $42\text{~km}$, on a la relation fondamentale $d = v \times t$, soit $t = \frac{d}{v}$.
+D'après l'énoncé :
+\begin{itemize}
+    \item $v_1 = v_2 + 2$ avec $v_2 > 0$.
+    \item $t_1 = t_2 - 30\text{~min} = t_2 - \frac{1}{2}\text{~h}$.
+\end{itemize}
+Comme $t_1 = \frac{42}{v_1} = \frac{42}{v_2 + 2}$ et $t_2 = \frac{42}{v_2}$, l'égalité des temps s'écrit :
+\[
+\frac{42}{v_2 + 2} = \frac{42}{v_2} - \frac{1}{2} \iff \frac{42}{v_2} - \frac{42}{v_2 + 2} = \frac{1}{2}.
+\]
+En réduisant au même dénominateur :
+\[
+\frac{42(v_2 + 2) - 42 v_2}{v_2(v_2 + 2)} = \frac{1}{2} \iff \frac{84}{v_2(v_2 + 2)} = \frac{1}{2}.
+\]
+Par produit en croix :
+\[
+v_2(v_2 + 2) = 168 \iff v_2^2 + 2v_2 - 168 = 0.
+\]
+Le discriminant de ce trinôme vaut :
+\[
+\Delta = 2^2 - 4 \times 1 \times (-168) = 4 + 672 = 676 = 26^2.
+\]
+Les solutions réelles de l'équation sont :
+\[
+v_2 = \frac{-2 - 26}{2} = -14 \quad \text{et} \quad v_2 = \frac{-2 + 26}{2} = 12.
+\]
+Une vitesse étant une grandeur strictement positive, on écarte la racine négative $-14$. Il reste donc $v_2 = 12\text{~km}\cdot\text{h}^{-1}$.
+On en déduit la vitesse du premier coureur :
+\[
+v_1 = v_2 + 2 = 12 + 2 = 14\text{~km}\cdot\text{h}^{-1}.
+\]
+\textbf{Vérification :}
+\begin{itemize}
+    \item Premier coureur : $t_1 = \frac{42}{14} = 3\text{~h}$.
+    \item Second coureur : $t_2 = \frac{42}{12} = 3{,}5\text{~h} = 3\text{~h } 30\text{~min}$.
+    \item L'écart est bien de $30\text{~min}$.
+\end{itemize}
+\textbf{Conclusion :} La vitesse du premier coureur est de \textbf{$14\text{~km}\cdot\text{h}^{-1}$} et celle du second est de \textbf{$12\text{~km}\cdot\text{h}^{-1}$}.
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 4
+% ----------------------------------------------------
+\subsection*{Exercice 4}
+Résoudre dans $\R$ l'équation :
+\[
+2x^3 - 11x^2 + 4x + 5 = 0.
+\]
+
+\begin{correctionbox}
+Posons $P(x) = 2x^3 - 11x^2 + 4x + 5$.
+Recherchons une racine évidente parmi les diviseurs du terme constant $5$ ($\pm 1, \pm 5$) :
+\[
+P(1) = 2(1)^3 - 11(1)^2 + 4(1) + 5 = 2 - 11 + 4 + 5 = 0.
+\]
+Donc $1$ est une racine évidente de $P(x)$, ce qui permet de factoriser $P(x)$ par $(x - 1)$ :
+\[
+P(x) = (x - 1)(ax^2 + bx + c).
+\]
+En développant et en identifiant :
+\[
+(x - 1)(ax^2 + bx + c) = ax^3 + (b - a)x^2 + (c - b)x - c.
+\]
+Par identification des coefficients avec $2x^3 - 11x^2 + 4x + 5$ :
+\[
+\begin{cases}
+a = 2\\
+b - a = -11 \implies b = -11 + 2 = -9\\
+-c = 5 \implies c = -5
+\end{cases}
+\]
+On vérifie la cohérence du terme de degré 1 : $c - b = -5 - (-9) = 4$, ce qui concorde parfaitement.
+La factorisation est donc :
+\[
+P(x) = (x - 1)(2x^2 - 9x - 5).
+\]
+L'équation $P(x) = 0$ équivaut à :
+\[
+x - 1 = 0 \quad \text{ou} \quad 2x^2 - 9x - 5 = 0.
+\]
+Pour le second facteur du second degré, calculons son discriminant :
+\[
+\Delta = (-9)^2 - 4 \times 2 \times (-5) = 81 + 40 = 121 = 11^2.
+\]
+Les racines sont :
+\[
+x' = \frac{9 - 11}{2 \times 2} = \frac{-2}{4} = -\frac{1}{2}, \quad x'' = \frac{9 + 11}{4} = \frac{20}{4} = 5.
+\]
+\textbf{Conclusion :} L'ensemble des solutions réelles de l'équation est :
+\[
+\mathcal{S} = \left\{-\frac{1}{2}\,;\, 1\,;\, 5\right\}.
+\]
+\end{correctionbox}
+
+% ----------------------------------------------------
+% EXERCICE 5
+% ----------------------------------------------------
+\subsection*{Exercice 5}
+Résoudre dans $\R$ l'équation symétrique (palindromique) :
+\[
+6x^4 - 35x^3 + 62x^2 - 35x + 6 = 0.
+\]
+\textit{Indication :} Pour $x \ne 0$, on pourra factoriser par $x^2$ puis poser $X = x + \dfrac{1}{x}$.
+
+\begin{correctionbox}
+Remarquons tout d'abord que pour $x = 0$, le membre de gauche vaut $6 \ne 0$, donc $0$ n'est pas solution de l'équation.
+Pour tout $x \in \R^*$, nous pouvons diviser l'équation par $x^2$ :
+\[
+6x^2 - 35x + 62 - \frac{35}{x} + \frac{6}{x^2} = 0.
+\]
+Regroupons les termes de mêmes coefficients symétriques :
+\[
+6\left(x^2 + \frac{1}{x^2}\right) - 35\left(x + \frac{1}{x}\right) + 62 = 0.
+\]
+Effectuons le changement de variable $X = x + \dfrac{1}{x}$. En élevant au carré :
+\[
+X^2 = \left(x + \frac{1}{x}\right)^2 = x^2 + 2 \cdot x \cdot \frac{1}{x} + \frac{1}{x^2} = x^2 + 2 + \frac{1}{x^2} \implies x^2 + \frac{1}{x^2} = X^2 - 2.
+\]
+En substituant dans l'équation :
+\[
+6(X^2 - 2) - 35X + 62 = 0 \iff 6X^2 - 12 - 35X + 62 = 0 \iff 6X^2 - 35X + 50 = 0.
+\]
+Résolvons cette équation du second degré en $X$ :
+\[
+\Delta_X = (-35)^2 - 4 \times 6 \times 50 = 1225 - 1200 = 25 = 5^2.
+\]
+Les deux solutions pour $X$ sont :
+\[
+X_1 = \frac{35 - 5}{2 \times 6} = \frac{30}{12} = \frac{5}{2}, \quad X_2 = \frac{35 + 5}{12} = \frac{40}{12} = \frac{10}{3}.
+\]
+Il reste à revenir à la variable initiale $x$ en résolvant $x + \dfrac{1}{x} = X \iff x^2 - Xx + 1 = 0$ :
+\begin{itemize}
+    \item \textbf{Cas 1 :} $X = \dfrac{5}{2}$ :
+    \[
+    x^2 - \frac{5}{2}x + 1 = 0 \iff 2x^2 - 5x + 2 = 0.
+    \]
+    $\Delta_1 = (-5)^2 - 4(2)(2) = 25 - 16 = 9 = 3^2$.
+    \[
+    x = \frac{5 - 3}{4} = \frac{1}{2} \quad \text{ou} \quad x = \frac{5 + 3}{4} = 2.
+    \]
+    \item \textbf{Cas 2 :} $X = \dfrac{10}{3}$ :
+    \[
+    x^2 - \frac{10}{3}x + 1 = 0 \iff 3x^2 - 10x + 3 = 0.
+    \]
+    $\Delta_2 = (-10)^2 - 4(3)(3) = 100 - 36 = 64 = 8^2$.
+    \[
+    x = \frac{10 - 8}{6} = \frac{2}{6} = \frac{1}{3} \quad \text{ou} \quad x = \frac{10 + 8}{6} = \frac{18}{6} = 3.
+    \]
+\end{itemize}
+\textbf{Conclusion :} L'équation admet quatre solutions réelles deux à deux inverses :
+\[
+\mathcal{S} = \left\{\frac{1}{3}\,;\, \frac{1}{2}\,;\, 2\,;\, 3\right\}.
+\]
+\end{correctionbox}
+
+\end{document}
